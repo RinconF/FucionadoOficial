@@ -1,0 +1,239 @@
+﻿.encuesta-radio {
+    display: inline-block;
+    border-radius: 15px 0px 0px 15px;
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 25px;
+    height: 30px;
+    margin-right: 0px;
+}
+
+.encuesta-etiqueta {
+    font-size: 1.1em;
+    margin-left: 6px;
+    text-transform: none;
+}
+
+.SI {
+    display: inline;
+    background: rgba(22,160,133,1);
+    color: #fff;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    width: 70px;
+    margin-right: 30px;
+    padding: 5px;
+}
+
+.NO {
+    display: inline;
+    font-size: 1.2em;
+    color: #fff;
+    border: none;
+    background: #b92929;
+    border-radius: 10px;
+    width: 70px;
+    margin-left: 30px;
+    padding: 5px;
+}
+
+.encuesta-boton-contenedor {
+    display: inline;
+}
+
+.encuesta-boton_enviar {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #165a72;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 0px;
+    width: 145px;
+    transition: all 0.5s;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.encuesta-boton_atras {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #165a72;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 0px;
+    width: 145px;
+    transition: all 0.5s;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.encuesta-boton_volver_video {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: gray;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 0px;
+    width: 200px;
+    transition: all 0.5s;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.encuesta-boton_contenedor {
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: central;
+    margin-top: 20px;
+}
+
+.encuesta-pregunta {
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+.encuesta-ayuda-contenedor {
+    border-radius: 15px;
+    border: 1px solid gray;
+    padding: 10px 0 20px 10px;
+}
+
+.encuesta-aviso {
+    font-size: 1em;
+    text-align: justify;
+}
+
+.encuesta-ayuda {
+    display: block;
+    border-radius: 4px;
+    border: none;
+    text-align: left;
+    font-size: 1.1em;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.encuesta-opcion {
+    display: inline-block;
+    border-radius: 15px;
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 40px;
+    height: 30px;
+}
+
+.modal-i-gl-content label {
+    text-transform: none;
+}
+
+.encuesta-input-date {
+    font-size: 1.1em;
+    margin-left: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.encuesta-input-number {
+    font-size: 1.1em;
+    margin-bottom: 1.5em;
+}
+
+.mensaje {
+    display: inline-block;
+    text-align: center;
+    font-size: 36px; 
+    color: #ffffff; 
+    font-weight: bold;
+    padding: 30px 50px; 
+    background-color: rgb(31 43 55); 
+    border: none; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+}
+
+    .mensaje:hover {
+        transform: scale(1.1); 
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); 
+    }
+
+
+
+
+
+@media only screen and (max-width: 745px) {
+    #container {
+        padding: 0;
+        margin: 0;
+        padding-top: 35px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .encuesta-radio {
+        display: inline-block;
+        border-radius: 15px 0px 0px 15px;
+        background-color: gray;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: bold;
+        width: 25px;
+        height: 30px;
+        margin-right: 0px;
+    }
+
+    .encuesta-etiqueta {
+        font-size: 1.1em;
+        margin-left: 6px;
+        text-transform: none;
+    }
+
+    .SI {
+        display: inline;
+        background: rgba(22,160,133,1);
+        color: #fff;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 10px;
+        width: 70px;
+        margin-right: 30px;
+        padding: 5px;
+    }
+
+    .NO {
+        display: inline;
+        font-size: 1.2em;
+        color: #fff;
+        border: none;
+        background: #b92929;
+        border-radius: 10px;
+        width: 70px;
+        margin-left: 30px;
+        padding: 5px;
+    }
+
+    .modal-i-gl-content {
+        text-align: left;
+    }
+
+        .modal-i-gl-content label {
+            text-transform: none;
+        }
+}

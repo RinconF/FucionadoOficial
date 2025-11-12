@@ -1,0 +1,84 @@
+﻿.address-card-i {
+    background: rgba(0,0,0,.9);
+    z-index: 900;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    padding-top: 50px;
+}
+.address-card-i-body {
+    text-align: center;
+    padding: 25px 20px 20px 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-left: 3px solid rgba(58,196,125,1);
+    background: #fcfcfc;
+    width: max-content;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, .1);
+    margin: auto;
+    position: relative;
+}
+.address-card-i-body .btn-address-close {
+    border: none;
+    border-radius: 50%;
+    background: rgba(22, 160, 133, 1);
+    color: #fff;
+    padding: 5px 12px;
+    outline: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: -10px;
+}
+.address-card-i:before, .address-card-i:after {
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    left: 50px;
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+.address-card-i .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.address-card-i .row .col span {
+    color: #495057;
+}
+.address-card-i .row .col .address-card-i-element {
+    margin-top: 0px;
+    padding: 5px;
+    border: 1px solid #e1e1e1;
+    border-radius: 3px;
+    appearance:none;
+    -webkit-appearance:none;
+    cursor: pointer;
+    background: rgba(0,0,0,.03);
+}
+.address-card-i .row .col .address-card-i-element:hover {
+    border-color: rgba(58,196,125,0.8);
+}
+.address-card-i .row .col .address-card-i-element:focus {
+    border-color: rgba(58,196,125,0.8);
+}
+.address-card-i .row .col input {
+    width: 50px;
+}
+.address-card-i .row .col button {
+    font-size: 13px;
+    margin-top: 0px;
+    padding: 7px 20px;
+    background: rgba(58,196,125,1);
+    color: #fff;
+    border-radius: 3px;
+    transition: all 0.3s;
+    border: none;
+}
+.address-card-i .row .col button:hover {
+    background: rgba(58,196,125,0.7);
+}

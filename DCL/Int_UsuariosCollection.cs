@@ -1,0 +1,1 @@
+namespace DCL { public class Int_UsuariosCollection : GenericSortList<Int_Usuarios> { }}

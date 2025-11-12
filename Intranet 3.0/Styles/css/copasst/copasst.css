@@ -1,0 +1,733 @@
+﻿/* ==========================================
+   COPASST CSS OPTIMIZADO - SIN !IMPORTANT
+   Versión limpia y eficiente
+   ========================================== */
+
+:root {
+    --etib-primary: #4a6fa5;
+    --etib-secondary: #166a8f;
+    --etib-dark: #2c5f7d;
+    --etib-card-bg: rgba(255, 255, 255, 0.95);
+    --etib-overlay-bg: rgba(44, 62, 80, 0.9);
+    --etib-text-primary: #2c3e50;
+    --etib-text-secondary: #7f8c8d;
+    --etib-accent: #3498db;
+    --etib-success: #27ae60;
+    --etib-warning: #f39c12;
+    --etib-danger: #e74c3c;
+    --border-radius: 20px;
+    --border-radius-sm: 12px;
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   LAYOUT PRINCIPAL
+   ========================================== */
+
+.pnl_tag {
+    background: linear-gradient(90deg, rgba(255,112,82,1) 0%, rgba(251,135,111,1) 100%);
+    color: #fff;
+    text-transform: uppercase;
+    padding: 7px 17px !important;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+    position: relative;
+    width: fit-content;
+    margin: 20px auto 30px;
+    z-index: 2;
+}
+
+    .pnl_tag p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .pnl_tag i {
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+    .pnl_tag .fas,
+    .pnl_tag .fa {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        font-size: 12px;
+    }
+
+/* ==========================================
+   CONTENEDOR PRINCIPAL
+   ========================================== */
+
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================
+   GRID DE CARDS COPASST
+   ========================================== */
+
+.copasst-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin: 20px 0;
+}
+
+/* ==========================================
+   CARDS COPASST PRINCIPALES
+   ========================================== */
+
+.copasst-card {
+    background: var(--etib-card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(20px);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+    .copasst-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+
+/* Header de la card */
+.copasst-card-header {
+    background: linear-gradient(90deg, rgba(40,55,71,0.9) 0%, rgba(53,72,93,0.9) 100%);
+    color: #fff;
+    padding: 20px 24px;
+    margin: 0;
+}
+
+    .copasst-card-header h3 {
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+/* Cuerpo de la card */
+.copasst-card-body {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.98);
+    color: var(--etib-text-primary);
+    line-height: 1.6;
+    font-size: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .copasst-card-body h4 {
+        color: var(--etib-primary);
+        font-size: 16px;
+        font-weight: 600;
+        margin: 16px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+/* ==========================================
+   PREVIEW DE CONTENIDO
+   ========================================== */
+
+.content-preview {
+    max-height: 150px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+    .content-preview::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(transparent, rgba(255, 255, 255, 0.98));
+        pointer-events: none;
+    }
+
+/* ==========================================
+   BOTÓN VER MÁS
+   ========================================== */
+
+.btn-ver-mas {
+    background: linear-gradient(90deg, rgba(40,55,71,0.9) 0%, rgba(53,72,93,0.9) 100%);
+    color: white;
+    border: none;
+    padding: 4px 15px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: var(--transition);
+    align-self: flex-start;
+    box-shadow: 0 4px 15px rgba(74, 111, 165, 0.3);
+}
+
+    .btn-ver-mas:hover {
+        background: linear-gradient(135deg, var(--etib-secondary), var(--etib-dark));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(74, 111, 165, 0.4);
+        color: white;
+    }
+
+    .btn-ver-mas:focus {
+        outline: 2px solid var(--etib-accent);
+        outline-offset: 2px;
+    }
+
+/* ==========================================
+   PREVIEW DE INTEGRANTES EN CARDS
+   ========================================== */
+
+.integrantes-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.integrante-mini {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius-sm);
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+    .integrante-mini img {
+        width: 100%;
+        height: auto;
+        min-height: 60px;
+        max-height: 80px;
+        object-fit: cover;
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 8px;
+        aspect-ratio: 3/2;
+    }
+
+    .integrante-mini h5 {
+        color: var(--etib-primary);
+        font-size: 11px;
+        font-weight: 600;
+        margin: 6px 0 4px 0;
+        line-height: 1.2;
+    }
+
+    .integrante-mini h6 {
+        color: var(--etib-accent);
+        font-size: 9px;
+        font-weight: 500;
+        margin: 4px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .integrante-mini p {
+        color: var(--etib-text-secondary);
+        font-size: 8px;
+        margin: 4px 0 0 0;
+        font-weight: 500;
+    }
+
+/* ==========================================
+   MODAL PARA CONTENIDO COMPLETO
+   ========================================== */
+
+.modal-copasst {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1050;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+    .modal-copasst.show {
+        display: flex;
+    }
+
+.modal-copasst-content {
+    background: var(--etib-card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-copasst-header {
+    background: linear-gradient(90deg, rgba(40,55,71,0.9) 0%, rgba(53,72,93,0.9) 100%);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-copasst-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-copasst-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+    .modal-copasst-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+    }
+
+.modal-copasst-body {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+    color: var(--etib-text-primary);
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+    .modal-copasst-body h3 {
+        color: var(--etib-primary);
+        justify-self: center;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 20px 0 12px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .modal-copasst-body h4 {
+        color: var(--etib-primary);
+        justify-self: center;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 16px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .modal-copasst-body ul {
+        padding-left: 0;
+        list-style: none;
+    }
+
+        .modal-copasst-body ul li {
+            position: relative;
+            padding: 8px 0 8px 24px;
+            margin-bottom: 8px;
+            color: var(--etib-text-primary);
+            line-height: 1.5;
+        }
+
+            .modal-copasst-body ul li::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 6px;
+                height: 6px;
+                background: var(--etib-accent);
+                border-radius: 50%;
+            }
+
+/* ==========================================
+   INTEGRANTES EN MODAL
+   ========================================== */
+
+.integrantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.integrante-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--border-radius-sm);
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+    .integrante-card img {
+        width: 100%;
+        height: auto;
+        min-height: 120px;
+        max-height: 297px;
+        object-fit: scale-down;
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 8px;
+        aspect-ratio: 4/3;
+    }
+
+    .integrante-card h5 {
+        color: var(--etib-primary);
+        font-size: 13px;
+        font-weight: 600;
+        margin: 6px 0 4px 0;
+        line-height: 1.2;
+    }
+
+    .integrante-card h6 {
+        color: var(--etib-accent);
+        font-size: 11px;
+        font-weight: 500;
+        margin: 4px 0;
+        letter-spacing: 0.5px;
+    }
+
+    .integrante-card p {
+        color: var(--etib-text-secondary);
+        font-size: 10px;
+        margin: 4px 0 0 0;
+        font-weight: 500;
+    }
+
+/* ==========================================
+   SECCIÓN DE INTEGRANTES GENERALES
+   ========================================== */
+
+.container .row-cols-md-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+    .container .row-cols-md-4 .col {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: var(--border-radius-sm);
+        padding: 16px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+    }
+
+        .container .row-cols-md-4 .col:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Imágenes de integrantes */
+        .container .row-cols-md-4 .col img {
+            width: 100%;
+            height: auto;
+            min-height: 120px;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 4/3;
+        }
+
+        /* Textos de integrantes */
+        .container .row-cols-md-4 .col h5 {
+            color: var(--etib-primary);
+            font-size: 14px;
+            font-weight: 600;
+            margin: 8px 0 4px 0;
+            line-height: 1.3;
+        }
+
+        .container .row-cols-md-4 .col h6 {
+            color: var(--etib-accent);
+            font-size: 12px;
+            font-weight: 500;
+            margin: 4px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .container .row-cols-md-4 .col p {
+            color: var(--etib-text-secondary);
+            font-size: 11px;
+            margin: 4px 0 0 0;
+            font-weight: 500;
+        }
+
+/* ==========================================
+   TÍTULOS DE SECCIONES
+   ========================================== */
+
+.container h4 {
+    color: var(--etib-dark);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 30px 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+    .container h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--etib-primary), var(--etib-accent));
+        border-radius: 2px;
+    }
+
+/* ==========================================
+   COMPATIBILIDAD CON MASTER PAGE 
+   ========================================== */
+
+#MainContent .copasst-card:first-child {
+    margin-top: 0;
+}
+
+#MainContent .copasst-card:last-child {
+    margin-bottom: 0;
+}
+
+#MainContent br {
+    display: block;
+    height: 20px;
+}
+
+/* ==========================================
+   ANIMACIÓN PRINCIPAL
+   ========================================== */
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+/* Tablets grandes */
+@media screen and (max-width: 1200px) {
+    .copasst-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+    }
+
+    .container-fluid {
+        padding: 0 16px;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    .copasst-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: 16px 0;
+    }
+
+    .copasst-card {
+        min-height: 180px;
+    }
+
+    .copasst-card-header {
+        padding: 16px 20px;
+    }
+
+        .copasst-card-header h3 {
+            font-size: 14px;
+        }
+
+    .copasst-card-body {
+        padding: 20px 16px;
+        font-size: 14px;
+    }
+
+    .pnl_tag {
+        margin: 16px auto 20px;
+        padding: 10px 20px;
+    }
+
+        .pnl_tag p {
+            font-size: 13px;
+        }
+
+    .container .row-cols-md-4 {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+        .container .row-cols-md-4 .col {
+            padding: 12px;
+        }
+
+            .container .row-cols-md-4 .col img {
+                width: 100%;
+                height: auto;
+                min-height: 100px;
+                max-height: 120px;
+                object-fit: cover;
+                border-radius: var(--border-radius-sm);
+                margin-bottom: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                aspect-ratio: 4/3;
+            }
+
+    .integrantes-preview {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+}
+
+/* Móviles */
+@media screen and (max-width: 480px) {
+    .container-fluid {
+        padding: 0 12px;
+    }
+
+    .copasst-grid {
+        gap: 12px;
+        margin: 12px 0;
+    }
+
+    .copasst-card {
+        min-height: 160px;
+        border-radius: 16px;
+    }
+
+    .copasst-card-header {
+        padding: 14px 16px;
+        border-radius: 16px 16px 0 0;
+    }
+
+        .copasst-card-header h3 {
+            font-size: 13px;
+        }
+
+    .copasst-card-body {
+        padding: 16px 12px;
+        font-size: 13px;
+    }
+
+        .copasst-card-body h4 {
+            font-size: 15px;
+            margin: 12px 0 6px 0;
+        }
+
+    .pnl_tag {
+        margin: 12px auto 16px;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+
+        .pnl_tag p {
+            font-size: 12px;
+        }
+
+        .pnl_tag i {
+            font-size: 10px;
+        }
+
+    .container .row-cols-md-4 {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+        .container .row-cols-md-4 .col {
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+            .container .row-cols-md-4 .col img {
+                width: 100%;
+                height: auto;
+                min-height: 80px;
+                max-height: 100px;
+                object-fit: cover;
+                border-radius: 10px;
+                aspect-ratio: 4/3;
+            }
+
+            .container .row-cols-md-4 .col h5 {
+                font-size: 13px;
+            }
+
+            .container .row-cols-md-4 .col h6 {
+                font-size: 11px;
+            }
+
+            .container .row-cols-md-4 .col p {
+                font-size: 10px;
+            }
+
+    .container h4 {
+        font-size: 18px;
+        margin: 20px 0 16px 0;
+    }
+
+    .integrantes-preview {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}

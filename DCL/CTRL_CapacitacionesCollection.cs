@@ -1,0 +1,1 @@
+namespace DCL { public class CTRL_CapacitacionesCollection : GenericSortList<CTRL_Capacitaciones> { }}

@@ -1,0 +1,2 @@
+eolo:3000	asistente.desarrollo1	A1B2C3D4.
+bit	JAVIER.BERNAL	123456

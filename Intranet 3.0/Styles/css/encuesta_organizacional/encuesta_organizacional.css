@@ -1,0 +1,275 @@
+﻿.encuesta-container {
+    padding: 0px 300px 0px 320px;
+    margin: 0px;
+}
+
+#container{
+    padding-left: 110px
+}
+
+.encuesta-container-movil1 {
+    padding: 0px 5px 0px 5px;
+}
+
+.encuesta-container-movil2 {
+    padding: 0px 20px 0px 5px;
+}
+
+.encuesta-titulo {
+    font-size: 2.3em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.encuesta-subtitulo{
+    font-size:1.5em;
+}
+
+.encuesta-aviso {
+    font-size: 1.2em;
+}
+
+.encuesta-info {
+    font-size: 1.4em;
+}
+
+.encuesta-pregunta {
+    font-size: 1.2em;
+}
+
+.encuesta-boton_iniciar {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #165a72;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.1em;
+    padding: 0px;
+    width: 145px;
+    transition: all 0.5s;
+    margin: 5px;
+}
+
+.encuesta-boton-contenedor {
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: central;
+}
+
+.encuesta-txt {
+    border-radius: 15px;
+    width: 300px;
+    height: 35px;
+    text-align: center;
+    border-color: black;
+    color: black;
+    display: block;
+    margin: auto;
+}
+
+.txt_cc {
+    display: block;
+    border-radius: 15px;
+    background-color: #ccc;
+    border: 2px solid #666666;
+    color: #666666;
+    text-align: center;
+    padding: 3px;
+    width: 280px;
+    margin: 5px auto;
+}
+
+.encuesta-desplegable {
+    font-size: 1em;
+    color: black;
+    border-radius: 15px;
+    border-width: 2px;
+    border-color: black;
+    width: 300px;
+    height: 35px;
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+.encuesta-etiqueta-inicio{
+    text-align: center;
+    color: black;
+    font-size: 1.1em;
+    margin: 10px 0 0 0;
+}
+
+.encuesta-ayuda {
+    display: block;
+    border-radius: 4px;
+    border: none;
+    text-align: left;
+    font-size: 1.1em;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.encuesta-opcion {
+    display: inline-block;
+    border-radius: 15px;
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 40px;
+    height: 30px;
+}
+
+.encuesta-radio {
+    display: inline-block;
+    border-radius: 15px 0px 0px 15px;
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 25px;
+    height: 30px;
+}
+
+.encuesta-etiqueta{
+    display: inline-block;
+    border-radius: 0px 15px 15px 0px;
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 25px;
+    height: 30px;
+}
+
+.encuesta-ayuda-contenedor{
+    border-radius: 15px;
+    border:1px solid gray;
+    padding: 10px 0 20px 10px;
+}
+
+.encuesta-img {
+    width:50%;
+}
+
+.container-not-img {
+    position: fixed;
+    bottom: 1px;
+    right: 1px;
+}
+
+.col {
+    position: fixed;
+    width: 300px;
+    left: 100px;
+    border-radius: 5px;
+    padding: 30px 0px 30px 70px;
+    text-align: left;
+    color: white;
+}
+
+.col1 {
+    top: 200px;
+    background-color: #ff4a22;
+}
+
+.col2 {
+    top: 350px;
+    background-color: #28b463;
+}
+
+#prueba, #prueba2{
+    display: none
+}
+
+#container-prueba{
+    padding: 0;
+    margin: 0;
+    padding-top: 35px;
+    text-align: center;
+    width: 100%;
+}
+
+#container-prueba2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+#container-prueba3 {
+    padding: 0;
+    padding-left: 130px;
+    margin: 0px;
+}
+
+#container-prueba4 {
+    padding: 0;
+    margin: 0;
+    padding-top: 35px;
+    text-align: center;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+    #container {
+        padding: 0;
+        margin: 0;
+        padding-top: 35px;
+        text-align: center;
+        width: 100%;
+    }
+
+    #container_not {
+        display: none;
+    }
+
+    #not_img {
+        display: none;
+    }
+
+    #encuesta-container {
+        padding: 0;
+        padding-left: 140px;
+        margin: 0px;
+    }
+    .encuesta-pregunta {
+        text-align: left;
+    }
+    .encuesta-etiqueta-inicio {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 745px){
+    #container {
+        padding: 0;
+        margin: 0;
+        padding-top: 35px;
+        text-align: center;
+        width: 100%;
+    }
+    #container_not{
+        display: none;
+    }
+    #not_img {
+        display: none;
+    }
+    #encuesta-container {
+        padding: 10px;
+        margin: 0px;
+    }
+    .encuesta-pregunta{
+        text-align: left;
+    }
+    .encuesta-etiqueta-inicio {
+        text-align: center;
+    }
+}
+

@@ -1,0 +1,1 @@
+﻿namespace DCL { public class Nomina_DesprendiblesCollection : GenericSortList<Nomina_Desprendibles> { } }

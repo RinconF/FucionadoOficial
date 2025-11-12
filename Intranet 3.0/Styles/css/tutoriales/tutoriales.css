@@ -1,0 +1,409 @@
+﻿/* Variables CSS idénticas a aplicativos */
+:root {
+    --etib-primary: #4a6fa5;
+    --etib-secondary: #166a8f;
+    --etib-dark: #2c5f7d;
+    --etib-card-bg: rgba(255, 255, 255, 0.95);
+    --etib-overlay-bg: rgba(44, 62, 80, 0.9);
+    --etib-text-primary: #2c3e50;
+    --etib-text-secondary: #7f8c8d;
+    --etib-accent: #3498db;
+    --etib-success: #27ae60;
+    --etib-warning: #f39c12;
+    --etib-danger: #e74c3c;
+    --border-radius: 20px;
+    --border-radius-sm: 12px;
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   ESTRUCTURA PRINCIPAL
+   ========================================== */
+
+/* Contenedor principal */
+.pnl_table {
+    background: var(--etib-card-bg);
+    box-shadow: 0 4px 16px rgb(53 103 193 / 94%), 0 2px 8px rgba(0, 0, 0, 0.06); 
+    border-radius: var(--border-radius);
+    margin: 7px 17px !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    max-width: 1400px;
+    position: relative;
+}
+
+/* Tag superior */
+.pnl_tag {
+    background: linear-gradient(90deg, rgba(255,112,82,1) 0%, rgba(251,135,111,1) 100%);
+    color: #fff;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+    position: absolute;
+    margin-top: -15px;
+    margin-left: 20px;
+    z-index: 2;
+}
+
+    .pnl_tag p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .pnl_tag i {
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+/* ==========================================
+   CONTENEDOR DE VIDEOS
+   ========================================== */
+
+/* anuncios-body */
+.anuncios-body {
+    padding: 40px 24px 24px;
+    background: transparent;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 16px rgb(53 103 193 / 29%), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* anuncios-content */
+.anuncios-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    align-items: start;
+    text-align: center;
+}
+
+/* ==========================================
+   VIDEO THUMBNAILS
+   ========================================== */
+
+/* video-tumb - diseño compacto como la imagen */
+.video-tumb {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    /* Efectos hover */
+    .video-tumb:hover {
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    /* Tag superior en la esquina */
+    .video-tumb::before {
+        content: attr(data-category);
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(255, 112, 82, 0.9);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        z-index: 3;
+    }
+
+/* Información del video en la parte inferior */
+.video-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    backdrop-filter: blur(20px);
+    padding: 16px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    z-index: 2;
+}
+
+.video-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--etib-text-primary);
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.video-duration {
+    font-size: 12px;
+    margin: 0 0 -6px 0;
+    color: var(--etib-text-secondary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+    .video-duration::before {
+        content: '⏱';
+        font-size: 10px;
+    }
+
+/* ==========================================
+   VIDEOS
+   ========================================== */
+
+.pnl_table .anuncios-body video,
+.anuncios-body video {
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px 20px 0 0;
+    height: 67%;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    background: #000;
+    transition: var(--transition);
+}
+
+.video-tumb:hover video {
+    transform: scale(1.02);
+}
+
+/* ==========================================
+   ANIMACIONES DE ENTRADA
+   ========================================== */
+
+.video-tumb {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media only screen and (max-width: 1400px) {
+    .pnl_table .anuncios-body video,
+    .anuncios-body video {
+        width: 100%;
+    }
+
+    .anuncios-content {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Tablets grandes */
+@media screen and (max-width: 1200px) {
+    .anuncios-content {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+    }
+
+    .pnl_table {
+        max-width: 95%;
+        margin: 20px auto;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 1024px) {
+    .anuncios-body {
+        padding: 32px 20px 20px;
+    }
+
+    .anuncios-content {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+    }
+
+    .video-tumb {
+        max-width: none;
+    }
+
+    .pnl_tag {
+        margin-top: -12px;
+        margin-left: 16px;
+        padding: 10px 20px;
+    }
+
+        .pnl_tag p {
+            font-size: 13px;
+        }
+}
+
+/* Tablets pequeñas */
+@media screen and (max-width: 768px) {
+    .anuncios-body {
+        padding: 28px 16px 16px;
+    }
+
+    .anuncios-content {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+    }
+
+    .video-tumb::before {
+        font-size: 11px;
+        padding: 10px 16px;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* Móviles */
+@media screen and (max-width: 600px) {
+    .anuncios-content {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .pnl_table {
+        margin: 16px auto;
+        border-radius: 16px;
+    }
+
+    .video-tumb {
+        border-radius: 16px;
+        max-width: 100%;
+    }
+
+    .anuncios-body video {
+        border-radius: 16px;
+    }
+
+    .pnl_tag {
+        margin-top: -10px;
+        margin-left: 12px;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+
+        .pnl_tag p {
+            font-size: 12px;
+        }
+}
+
+/* Móviles pequeños */
+@media screen and (max-width: 480px) {
+    .anuncios-body {
+        padding: 24px 12px 12px;
+    }
+
+    .anuncios-content {
+        gap: 12px;
+    }
+
+    .video-tumb {
+        border-radius: 14px;
+    }
+
+    .anuncios-body video {
+        border-radius: 14px;
+    }
+
+    .video-tumb::before {
+        font-size: 10px;
+        padding: 8px 12px;
+        letter-spacing: 0.3px;
+    }
+
+    .pnl_tag {
+        margin-top: -8px;
+        margin-left: 10px;
+        padding: 7px 14px;
+    }
+
+        .pnl_tag p {
+            font-size: 11px;
+        }
+
+        .pnl_tag i {
+            font-size: 10px;
+        }
+}
+
+/* ==========================================
+   COMPATIBILIDAD CON MASTER PAGE ASPX
+   ========================================== */
+
+/* Asegurar compatibilidad con MainContent */
+#MainContent .pnl_table:first-child {
+    margin-top: 0;
+}
+
+#MainContent .pnl_table:last-child {
+    margin-bottom: 0;
+}
+
+/* Soporte para br tags del ASPX */
+#MainContent br {
+    display: block;
+    height: 20px;
+}
+
+/* ==========================================
+   ACCESIBILIDAD Y MEJORAS
+   ========================================== */
+
+.video-tumb:focus-within {
+    outline: 2px solid var(--etib-accent);
+    outline-offset: 2px;
+}
+
+.video-tumb video:focus {
+    outline: 2px solid var(--etib-accent);
+    outline-offset: 2px;
+}
+
+/* Soporte para movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+    .video-tumb {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .video-tumb::before {
+        opacity: 1;
+    }
+
+    .video-tumb:hover {
+        transform: none;
+    }
+
+    .video-tumb:active {
+        transform: scale(0.98);
+    }
+}

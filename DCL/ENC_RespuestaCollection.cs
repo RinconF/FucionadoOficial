@@ -1,0 +1,1 @@
+namespace DCL { public class ENC_RespuestaCollection : GenericSortList<ENC_Respuesta> { }}

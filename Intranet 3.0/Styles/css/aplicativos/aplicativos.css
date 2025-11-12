@@ -1,0 +1,618 @@
+﻿:root {
+    --etib-primary: #4a6fa5;
+    --etib-secondary: #166a8f;
+    --etib-dark: #2c5f7d;
+    --etib-card-bg: rgba(255, 255, 255, 0.95);
+    --etib-overlay-bg: rgba(44, 62, 80, 0.9);
+    --etib-text-primary: #2c3e50;
+    --etib-text-secondary: #7f8c8d;
+    --etib-accent: #3498db;
+    --etib-success: #27ae60;
+    --etib-warning: #f39c12;
+    --etib-danger: #e74c3c;
+    --border-radius: 20px;
+    --border-radius-sm: 12px;
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset y configuración base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 40% 70%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+/* ==========================================
+   SECCIONES PRINCIPALES 
+   ========================================== */
+
+.pnl_table {
+    background: var(--etib-card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 16px rgb(53 103 193 / 60%), 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: 24px auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    max-width: 1200px;
+}
+
+.pnl_tag {
+    background: rgb(255,112,82);
+    color: white;
+    padding: 7px 24px;
+    position: relative;
+    width: 180px;
+    overflow: hidden;
+    border-radius: 25px;
+    margin: 20px;
+    margin-bottom: 0;
+    box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+}
+
+    .pnl_tag::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, rgba(255,112,82,1) 0%, rgba(251,135,111,1) 100%);
+        pointer-events: none;
+    }
+
+    .pnl_tag p {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .pnl_tag i {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+.pnl_body {
+    padding: 30px 20px;
+    background: transparent;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+/* ==========================================
+   CARDS ESTILO 
+   ========================================== */
+
+.card-body-app {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background: var(--etib-card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    transition: var(--transition);
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
+    cursor: pointer;
+}
+
+    /* Indicador de estado (punto verde de la esquina) */
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--etib-success);
+        box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.3);
+        animation: pulse 2s infinite;
+        z-index: 3;
+        transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+        opacity: 0;
+    }
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(39, 174, 96, 0.1);
+    }
+
+    100% {
+        box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.3);
+    }
+}
+
+/* Overlay con icono y texto */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--etib-overlay-bg);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+    .card:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+.card-body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    position: relative;
+    min-height: 140px;
+}
+
+.card-img-top {
+    width: 70%;
+    height: 160%;
+    object-fit: contain;
+    border-radius: var(--border-radius-sm);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    background: white;
+    padding: 8px;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-footer {
+    padding: 16px 20px 20px;
+    background: var(--etib-card-bg);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80px;
+    position: relative;
+    z-index: 2;
+}
+
+    .card-footer a,
+    .card-footer p {
+        text-decoration: none;
+        color: var(--etib-text-primary);
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        margin: 0;
+        line-height: 1.3;
+        transition: var(--transition);
+        cursor: pointer;
+        display: block;
+    }
+
+        .card-footer a:hover,
+        .card:hover .card-footer p {
+            color: var(--etib-accent);
+        }
+
+        /* Card clickeable */
+        .card-footer a:not(#LinkDesprediblesNomina) {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 20;
+            background: transparent;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 200px 20px 20px !important;
+            color: var(--etib-text-primary);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+        }
+
+            .card-footer a:not(#LinkDesprediblesNomina):hover {
+                color: var(--etib-accent);
+                text-decoration: none;
+            }
+
+            .card-footer a:not(#LinkDesprediblesNomina) p {
+                color: var(--etib-text-primary);
+                margin: 0;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 1.3;
+                transition: var(--transition);
+                position: relative;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            .card-footer a:not(#LinkDesprediblesNomina):hover p {
+                color: var(--etib-accent);
+            }
+
+/* ==========================================
+   LINKBUTTON ESPECIAL PARA DESPRENDIBLES 
+   ========================================== */
+
+#LinkDesprediblesNomina {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--etib-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: var(--transition);
+    width: 100%;
+    position: absolute;
+    top: -140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px 20px 20px;
+    border-radius: var(--border-radius);
+    outline: none;
+}
+
+    #LinkDesprediblesNomina:hover {
+        color: var(--etib-accent);
+    }
+
+    #LinkDesprediblesNomina p {
+        color: var(--etib-text-primary);
+        margin: 0;
+        padding: 0;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.3;
+        transition: var(--transition);
+        position: relative;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    #LinkDesprediblesNomina:hover p {
+        color: var(--etib-accent);
+    }
+
+    #LinkDesprediblesNomina.loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+.card:has(#LinkDesprediblesNomina.loading)::after {
+    content: 'CARGANDO...';
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.95), rgba(41, 128, 185, 0.9));
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==========================================
+   OVERLAYS CON ICONOS COMO EN EL LOGIN
+   ========================================== */
+
+/* Siesa Portal Nómina */
+.card:has(a[data-name="PORTAL"])::after {
+    content: 'PORTAL NOMINA';
+    white-space: pre;
+}
+
+/* IBM Maximo */
+.card:has(a[data-name="IBM"])::after {
+    content: 'IBM MAXIMO';
+    white-space: pre;
+}
+
+/* Siesa NOMINA */
+.card:has(a[data-name="SIESA"])::after {
+    content: 'SIESA NOMINA';
+    white-space: pre;
+}
+
+/* BIT Enterprise */
+.card:has(a[data-name="BIT"])::after {
+    content: 'BIT ENTERPRISE';
+    white-space: pre;
+}
+
+/* Moodle */
+.card:has(a[data-name="MOODLE"])::after {
+    content: 'MOODLE';
+    white-space: pre;
+}
+
+/* Desprendibles */
+.card:has(#LinkDesprediblesNomina)::after {
+    content: 'DESPRENDIBLES DE PAGO';
+    white-space: pre;
+}
+
+/* Alfresco */
+.card:has(a[data-name="ALFRESCO"])::after {
+    content: 'ALFRESCO';
+    white-space: pre;
+}
+
+/* Webmail */
+.card:has(a[data-name="WEBMAIL"])::after {
+    content: 'WEBMAIL';
+    white-space: pre;
+}
+
+/* ETIB Web */
+.card:has(a[data-name="ETIB WEB"])::after {
+    content: 'ETIB WEBL';
+    white-space: pre;
+}
+
+/* Helpdesk */
+.card:has(a[data-name="HELPDESK"])::after {
+    content: 'HELPDESK';
+    white-space: pre;
+}
+
+/* ==========================================
+   EFECTOS Y ANIMACIONES PARIDA CON LOGIN
+   ========================================== */
+
+/* Animación de entrada */
+.card-body-app {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+    .card-body-app:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .card-body-app:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .card-body-app:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .card-body-app:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .card-body-app:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .card-body-app:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+    .pnl_body {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+        padding: 20px 16px;
+    }
+
+    .pnl_tag {
+        margin: 16px;
+        padding: 14px 20px;
+    }
+
+    .card {
+        max-width: none;
+        height: 220px;
+    }
+
+    .card-body {
+        padding: 20px 16px;
+        min-height: 120px;
+    }
+
+    .card-img-top {
+        max-width: 100%;
+        max-height: 160%;
+    }
+
+    .card-footer {
+        padding: 14px 16px 16px;
+        min-height: 75px;
+    }
+
+        .card-footer a,
+        .card-footer p,
+        #LinkDesprediblesNomina p {
+            font-size: 13px;
+        }
+
+            .card-footer a:not(#LinkDesprediblesNomina),
+            #LinkDesprediblesNomina {
+                padding: 0 0 16px;
+                top: -140px !important;
+            }
+}
+
+@media (max-width: 480px) {
+    .pnl_body {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 16px 12px;
+    }
+
+    .pnl_tag {
+        margin: 12px;
+        padding: 12px 16px;
+    }
+
+        .pnl_tag p {
+            font-size: 14px;
+        }
+
+    .card {
+        height: 200px;
+    }
+
+    .card-body {
+        padding: 16px 12px;
+        min-height: 110px;
+    }
+
+    .card-img-top {
+        max-width: 100%;
+        max-height: 160%;
+    }
+
+    .card-footer {
+        padding: 12px 12px 14px;
+        min-height: 70px;
+    }
+
+        .card-footer a,
+        .card-footer p,
+        #LinkDesprediblesNomina p {
+            font-size: 12px;
+        }
+
+            .card-footer a:not(#LinkDesprediblesNomina),
+            #LinkDesprediblesNomina {
+                padding: 0 0 14px;
+                top: -125px;
+            }
+
+    .card::after {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+}
+
+#MainContent .pnl_table:first-child {
+    margin-top: 0;
+}
+
+#MainContent .pnl_table:last-child {
+    margin-bottom: 0;
+}
+
+#MainContent br {
+    display: block;
+    height: 20px;
+}
+
+.pnl_tag .fas,
+.pnl_tag .fa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.card:focus-within {
+    outline: 2px solid var(--etib-accent);
+    outline-offset: 2px;
+}
+
+.card-footer a:focus,
+#LinkDesprediblesNomina:focus {
+    outline: 2px solid var(--etib-accent);
+    outline-offset: 2px;
+    border-radius: var(--border-radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

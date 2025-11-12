@@ -1,0 +1,3144 @@
+/*--------- INDICE --------------------------------------
+	=1: Modificadores generales		
+---------------------------------------------------------
+	=2: Etiquetas basicas
+---------------------------------------------------------
+	=3: Estructura externa general
+		=ENCABEZADO
+		=CUERPO	
+		=PIE			
+---------------------------------------------------------
+	=4: Contenidos generales 
+		=BUSQUEDA
+		=LISTADO
+		=FICHA
+		=POPUPS
+		=TOOLTIP
+		=AJAX INDICATOR
+		=ACTUALIZACION OTRAS CSS
+---------------------------------------------------------
+	=5: Contenidos CORE
+		=HOME
+		=ASIGNACION PERMISOS
+		=ENTRADAS MENU
+---------------------------------------------------------
+	=6: Contenidos DOCUMENT
+		=HOME
+		=FICHA DOCUMENT
+		=FICHA WORKFLOW
+		=EXPLORADOR DOCUMENT
+		=EXPLORADOR EXPEDIENTES
+		=LISTADO JERARQUICO
+		=LISTADO ESTRUCTURA
+		=DICCIONARIO
+--------------------------------------------------------*/
+
+/* =1: Modificadores generales */
+
+
+* {
+	
+}
+
+html {
+	
+	
+	
+	
+}
+
+body {	
+	
+}
+
+html, body {
+	
+	color: #05289c;	
+	 
+}
+
+/* =2: Etiquetas basicas */
+
+b {
+	color: #05289c;	
+	
+}
+
+caption {
+	
+	color: #05289c;	
+	background:#b4bee1 url(images/caption_fondo.png) repeat-x scroll left top;
+	border: #b4bee1 1px solid ;
+	
+	
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+	color:#05289c;
+	
+}
+
+h4 {
+	
+}
+
+h5 {
+	
+}
+
+h6 {
+	
+}
+
+hr {
+	
+	border-top: 1px solid #1e3da5;
+	
+}
+
+
+img {
+	
+}
+
+input {	
+	
+	color: #3753af;
+	
+}
+
+input.iboton1, input[type="submit"], input[type="button"], button[type="button"], button[type="submit"] {	
+	
+	background: url("images/ui-bg_glass_85_dfeffc_1x400.png") repeat-x scroll 50% 50% #8293cd;
+	border: 1px solid #3753af;
+	color:#05289c;
+		
+}
+
+input.iboton1:hover, input[type="submit"]:hover, input[type="button"]:hover, button[type="button"]:hover, button[type="submit"]:hover {
+	border: 1px solid #3753af;
+	background: #05289c url(images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x;  
+	color: #05289c; 
+}
+
+input[type="text"], input[type="password"], input[type="file"] {
+		border: 1px solid #3753af;
+}
+
+input.iradio1 {
+	
+}
+
+input.icheckbox1 {
+	
+}
+
+li {
+	
+}
+
+ol {
+	
+}
+
+p {
+	color: #05289c;
+}
+
+pre {
+	background-color:#1e3da5;
+	border-color:#05289c;	
+}
+
+select {	
+	
+	color: #3753af;
+}
+
+strong {
+	color: #05289c;
+	
+}
+
+table {
+	
+}
+
+table.grid {
+	border-color: #8293cd;
+	width: 694px;
+}
+table.grid#tblcriterions {
+	
+border-color: #b4bee1;
+	 
+	
+}
+
+fieldset table.grid{
+}
+
+
+
+thead {
+}
+
+thead tr th {
+	background: #5068b9 url(images/thead_th_fondo.png) repeat-x scroll left bottom;
+	
+}
+
+thead tr th a:link {
+}
+thead tr th a:visited {
+	
+}
+thead tr th a:hover {		
+	
+}
+
+thead tr th img {
+	
+}
+
+tbody {
+	
+	}
+
+tr.gridrow {
+	background-color: #ffffff;	
+	
+}
+
+tr.gridrow_alternate {	
+background-color: #cdd4eb ;
+	
+}
+
+tr.gridrow_error {	
+	
+}
+
+tr.gridrow_updated {
+	
+}
+
+tr.gridrow_selected {
+	background-color: #9ba9d7; !important
+}
+
+tr.gridrow td {
+	
+	
+}
+
+tr.gridrow_alternate td {
+	
+	
+}
+
+tr.gridrow_error td {
+	
+}
+
+tbody tr th {
+	
+	
+}
+
+tbody tr th a:link, tbody tr th a:visited {	
+	
+}
+
+tbody tr th a:hover {	
+	
+}
+
+tbody tr td a:link, tbody tr td a:visited {	
+	
+}
+
+tbody tr td a:hover {	
+	
+}
+
+tbody tr td {
+	
+}
+
+.tcolumnapeq {
+	
+}
+
+.tcolumnamed {
+	
+}
+
+.tcolumnagran {
+	
+}
+
+td.tcolumna1 {
+	
+	
+	
+}
+
+td.tcolumna1 strong {
+	color: #05289c;	
+}
+
+td.tcolumna2 {
+	
+}
+
+td.tcolumna2 strong {
+	color: #05289c;	
+}
+
+span.tdempty {
+	
+}
+
+textarea {
+	border-color:#05289c;
+	color: #05289c;
+	
+}
+
+a:link {
+	color: #05289c;	
+	
+}
+
+a:visited {
+	color: #05289c;	
+	
+}
+
+a:hover {
+	color: #05289c;
+	
+}
+
+a:active {
+	color: #000;	
+	
+}
+
+
+/* =3: Estructura externa general:
+CONTIENE LOS 3 BLOQUES PRINCIPALES DE LA PAGINA: ENCABEZADO, CUERPO Y PIE   */
+#envoltorio {
+	
+}
+
+/* BLOQUE 1: ENCABEZADO */
+/* Todo lo que vaya en este bloque empieza por E */
+#encabezado {
+	
+		background: #05289c;
+
+	
+}
+
+/* zona corporativa con el nombre de aplicacion y logos */
+
+#Econtenido {	 
+	
+	}
+	
+#Elogo {
+	
+}
+
+#Elogo a {
+	
+}
+
+#Elogo a:hover {
+	
+}
+
+
+/* zona que contiene: menu principal del encabezado,iconos,busqueda y acceso*/
+#Emenu {		 
+	
+	
+	
+}
+
+
+/* menu principal del encabezado */
+
+#Eselector {
+	/*position: relative;*/
+	
+	
+	
+
+}
+
+#Eselector ul {	
+	
+	
+	
+}
+
+#Eselector ul li {
+	
+	
+}
+
+#Eselector ul li a {
+	
+	background: #05289c url(images/Eselector_ulli_fondo.png) left top repeat-x;
+	
+	
+}
+
+#Eselector ul li a:hover {
+	
+	
+} 
+
+#Eselector ul li.liactivo {
+	
+}
+
+#Eselector ul li.liactivo a {
+	color: #05289c;	
+	
+}
+
+#Eselector ul li.liactivo a:link, #Eselector ul li.liactivo a:visited, #Eselector ul li.liactivo a:hover {
+	color: #05289c;
+} 
+
+#Eselector ul li a span.Eselectorico {
+	
+}
+
+#Eselector ul li a span.Eselectorico, #Eselector ul li a:visited span.Eselectorico {
+	
+}
+
+#Eselector ul li a:hover span.Eselectorico {
+	
+}
+
+#Eselector ul li.liactivo a span.Eselectorico, #Eselector ul li.liactivo a:visited span.Eselectorico {
+	
+}
+
+#Eselector ul li.liactivo a:hover span.Eselectorico {
+	
+}
+
+
+#Epowered {
+	
+}
+
+#Epowered img {
+	
+}
+
+/* si hay: zona busqueda, con su input texto y link */
+#Ebusqueda {
+	
+	
+}
+
+#Ebusqueda select {
+	
+}
+
+#Ebusqueda input[type="submit"], #Ebusqueda input[type="button"], #Ebusqueda button[type="button"], #Ebusqueda button[type="submit"] {
+	
+}
+
+
+#Ebusqueda input[type="text"] {
+	
+}
+
+#vermasEbusqueda{			
+	
+}
+
+#vermasEbusqueda a.vermas, #vermasEbusqueda a.vermas:visited {
+	
+}
+
+#vermasEbusqueda a.vermas:hover, #vermasEbusqueda a.vermenos:hover { 
+	
+}
+
+/* fecha servidor */
+
+#Efecha {		 
+	
+}
+
+/* si lo hay: menu personal cuando el usuario ya se ha identificado */
+
+#Epersonal {	
+	
+}
+
+#Edatos {
+	
+	border-right:1px solid ##05289c;
+}
+
+#Edatos ul {	
+	
+}
+
+#Edatos ul li a:link, #Edatos ul li a:visited {	
+	
+	color: #05289c;			
+	
+}
+
+#Edatos ul li a:hover {
+	
+}
+
+#Epersonal ol {	
+	
+}
+	
+	
+#Epersonal ol li {		
+			
+}
+
+#Epersonal ol li a {	
+	
+}
+
+#Epersonal ol li a:hover {	
+	
+}
+
+
+
+/* BLOQUE 2: CUERPO */
+/* Las zonas principales de este bloque empiezan por C */
+#cuerpo {
+	
+}
+
+#cuerpo.login {
+	
+}
+
+
+/* menus del cuerpo */
+
+/* menu principal del cuerpo */
+#Cmenu {
+	
+	
+}
+
+
+/* selector principal del menu principal del cuerpo */
+#Cselector {
+	border-bottom: 1px solid #b4bee1;
+	
+	
+}
+
+#Cselector ul {
+	
+}
+
+#Cselector ul li {	
+background: #9ba9d7 url(images/Cselector_li_fondo.png) no-repeat left top;	
+	
+}
+
+#Cselector ul li a, #Cselector ul li a:visited {	
+	color: #05289c;
+	background: #8293cd url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+	
+}
+
+#Cselector ul li a:hover {
+background:  #8293cd url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+		
+	
+}
+
+
+/* si hay uno seleccionado */
+
+#Cselector ul li.liactivo {
+background: #8293cd url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+color:#05289c;
+	
+}
+
+#Cselector ul li.liactivo a, #Cselector ul li.liactivo a:visited {	
+background: #1e3da5 url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+color:#05289c;
+	
+	
+}
+
+#Cselector ul li.liactivo a:hover {
+	
+	background: #8293cd url(images/Cselector_liactivo_fondo.png) left top repeat-x;
+	color:#05289c;
+	
+		
+}
+
+#Cselector ul li a.despliega, #Cselector ul li a.despliega:visited {
+background: #8293cd url(images/Cselector_li_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cselector ul li a.despliega:hover {
+background: #8293cd url(images/Cselector_li_despliega_hover_fondo.png) right top no-repeat;
+	
+}
+
+#Cselector ul li.liactivo a.despliega, #Cselector ul li.liactivo a.despliega:visited,  #Cselector ul li.liactivo a.despliega:hover  {
+background: #8293cd url(images/Cselector_liactivo_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cselector ul li.liactivo a.despliega:hover  {
+background: #8293cd url(images/Cselector_liactivo_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cselector ul li a.nodespliega, #Cselector ul li a.nodespliega:visited,  #Cselector ul li a.nodespliega:hover, #Cselector ul li.liactivo a.nodespliega, #Cselector ul li.liactivo a.nodespliega:visited,  #Cselector ul li.liactivo a.nodespliega:hover  {
+	
+}
+
+/* 2� nivel de subopciones */
+#Cselector ul li.liactivo ul {
+			
+}
+
+#Cselector ul li.liactivo ul li {
+	
+}
+
+#Cselector ul li.liactivo ul li a, #Cselector ul li.liactivo ul li a:visited {
+	
+	color:#05289c;
+	background:#fff url(images/Cselector_li_li_fondo.png) repeat-y left top;
+	
+}
+
+#Cselector ul li.liactivo ul li a:hover {
+background: #05289c url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+/* si hay uno seleccionado del 2� nivel de subopciones */
+#Cselector ul li.liactivo ul li.liactivo {
+		
+}
+
+#Cselector ul li.liactivo ul li.liactivo a, #Cselector ul li.liactivo ul li.liactivo a:visited {
+	background:  url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;
+	background: #05289c url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;
+	
+}
+
+#Cselector ul li.liactivo ul li.liactivo a:hover {
+	background:  url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;	
+	background: #05289c url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+#Cselector ul li.liactivo ul li:last-child {
+	
+}
+
+/* 3er nivel de subopciones */
+#Cselector ul li.liactivo ul li ul, #Cselector ul li.liactivo ul li.liactivo ul {
+	
+}
+
+#Cselector ul li.liactivo ul li ul li, #Cselector ul li.liactivo ul li.liactivo ul li {
+	background:#05289c url(images/Cselector_li_li_li_fondo.png) repeat-y left top
+	color:#fff;
+	
+}
+
+#Cselector ul li.liactivo ul li ul li a, #Cselector ul li.liactivo ul li.liactivo ul li a, #Cselector ul li.liactivo ul li ul li a:visited, #Cselector ul li.liactivo ul li.liactivo ul li a:visited {
+
+	background:#fff url(images/Cselector_li_li_li_fondo.png) repeat-y left top;
+	color:#05289c;
+	
+}
+
+#Cselector ul li.liactivo ul li ul li a:hover, #Cselector ul li.liactivo ul li.liactivo ul li a:hover {
+	background: #05289c url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+/* si hay uno seleccionado del 3er nivel de subopciones */
+#Cselector ul li.liactivo ul li ul li.liactivo
+#Cselector ul li.liactivo ul li.liactivo ul li.liactivo {
+	
+}
+
+#Cselector ul li.liactivo ul li ul li.liactivo a, 
+#Cselector ul li.liactivo ul li.liactivo ul li.liactivo a, #Cselector ul li.liactivo ul li ul li.liactivo a:visited,  #Cselector ul li.liactivo ul li.liactivo ul li.liactivo a:visited {
+
+	background: #05289c url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+#Cselector ul li.liactivo ul li ul li.liactivo a:hover, #Cselector ul li.liactivo ul li.liactivo ul li.liactivo a:hover {
+	background: #05289c url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+/* menu personal cuando el usuario ya se ha identificado */
+
+#Cpersonal {
+	
+	border-bottom: 1px solid #05289c;
+}
+
+#Cpersonal ul {
+		
+}
+
+#Cpersonal ul li {	
+background:#8293cd url(images/Cpersonal_li_li_fondo.png) repeat-y left top;
+	
+}
+
+#Cpersonal ul li a, #Cpersonal ul li a:visited {	
+	color: #05289c;
+	background: #8293cd url(images/Cselector_li_fondo.png) left top repeat-y;	
+	
+}
+
+#Cpersonal ul li a:hover {
+	background: transparent url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+		
+}
+
+
+/* si hay uno seleccionado */
+
+#Cpersonal ul li.liactivo {
+	background: transparent url(images/Cselector_liactivo_fondo.png) left top repeat-x;	
+	
+}
+
+#Cpersonal ul li.liactivo a, #Cpersonal ul li.liactivo a:visited {	
+
+	
+	
+}
+
+#Cpersonal ul li.liactivo a:hover {
+	
+	background: #5068b9 url(images/Cselector_liactivo_hover_fondo.png) left top repeat-x;
+	
+		
+}
+
+#Cpersonal ul li a.despliega, #Cpersonal ul li a.despliega:visited {
+background: #5068b9 url(images/Cselector_li_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cpersonal ul li a.despliega:hover {
+background: #5068b9 url(images/Cselector_li_despliega_hover_fondo.png) right top no-repeat;
+	
+}
+
+#Cpersonal ul li.liactivo a.despliega, #Cpersonal ul li.liactivo a.despliega:visited,  #Cpersonal ul li.liactivo a.despliega:hover  {
+background:#5068b9 url(images/Cselector_liactivo_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cpersonal ul li.liactivo a.despliega:hover  {
+background: #1e3da5 url(images/Cselector_liactivo_despliega_fondo.png) right top no-repeat;
+	
+}
+
+#Cpersonal ul li a.nodespliega, #Cpersonal ul li a.nodespliega:visited,  #Cpersonal ul li a.nodespliega:hover, #Cpersonal ul li.liactivo a.nodespliega, #Cpersonal ul li.liactivo a.nodespliega:visited,  #Cpersonal ul li.liactivo a.nodespliega:hover  {
+	
+}
+
+/* 2� nivel de subopciones */
+#Cpersonal ul li.liactivo ul {
+		
+}
+
+#Cpersonal ul li.liactivo ul li {
+	
+}
+
+#Cpersonal ul li.liactivo ul li a, #Cpersonal ul li.liactivo ul li a:visited {
+	
+	color:#05289c;
+	background:#8293cd url(images/Cpersonal_li_li_fondo.png) repeat-y left top;
+	
+}
+
+#Cpersonal ul li.liactivo ul li a:hover {
+background: #5068b9 url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+/* si hay uno seleccionado del 2� nivel de subopciones */
+#Cpersonal ul li.liactivo ul li.liactivo {
+	
+}
+
+#Cpersonal ul li.liactivo ul li.liactivo a, #Cpersonal ul li.liactivo ul li.liactivo a:visited {
+	
+	background: #5068b9 url(images/Cselector_li_liactivo_fondo.pngf) no-repeat left top;
+	
+}
+
+#Cpersonal ul li.liactivo ul li.liactivo a:hover {
+	
+	background: #5068b9 url(images/Cselector_li_liactivo_fondo.png) no-repeat left top;		
+	
+}
+
+#Cpersonal ul li.liactivo ul li:last-child {
+	
+}
+
+/* 3er nivel de subopciones */
+#Cpersonal ul li.liactivo ul li ul, #Cpersonal ul li.liactivo ul li.liactivo ul {
+	
+}
+
+#Cpersonal ul li.liactivo ul li ul li, #Cpersonal ul li.liactivo ul li.liactivo ul li {
+	
+}
+
+#Cpersonal ul li.liactivo ul li ul li a, #Cpersonal ul li.liactivo ul li.liactivo ul li a, #Cpersonal ul li.liactivo ul li ul li a:visited, #Cpersonal ul li.liactivo ul li.liactivo ul li a:visited {
+	
+	color:#05289c;
+	background:transparent url(images/Cselector_li_li_liactivo_fondo.png) repeat-y left top;
+	
+}
+
+#Cpersonal ul li.liactivo ul li ul li a:hover, #Cpersonal ul li.liactivo ul li.liactivo ul li a:hover {
+background: transparent url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+/* si hay uno seleccionado del 3er nivel de subopciones */
+#Cpersonal ul li.liactivo ul li ul li.liactivo
+#Cpersonal ul li.liactivo ul li.liactivo ul li.liactivo {
+	
+}
+
+#Cpersonal ul li.liactivo ul li ul li.liactivo a, 
+#Cpersonal ul li.liactivo ul li.liactivo ul li.liactivo a, #Cpersonal ul li.liactivo ul li ul li.liactivo a:visited,  #Cpersonal ul li.liactivo ul li.liactivo ul li.liactivo a:visited {
+	background: transparent url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+#Cpersonal ul li.liactivo ul li ul li.liactivo a:hover, #Cpersonal ul li.liactivo ul li.liactivo ul li.liactivo a:hover {
+background: transparent url(images/Cselector_li_li_liactivo_fondo.png) no-repeat left top;	
+	
+}
+
+
+/* menu partner */
+
+#Cpartner {
+	
+	border-bottom: 1px solid #888888;	
+}
+
+#Cpartner ul {
+	
+}
+
+#Cpartner ul li {	
+
+	
+}
+
+#Cpartner ul li a, #Cpartner ul li a:visited {	
+	color: #05289c;
+	
+}
+
+#Cpartner ul li a:hover {
+		
+}
+
+
+/* si hay uno seleccionado */
+
+#Cpartner ul li.liactivo {
+	
+}
+
+#Cpartner ul li.liactivo a, #Cpartner ul li.liactivo a:visited {
+		
+	
+}
+
+#Cpartner ul li.liactivo a:hover {
+	
+	
+	
+		
+}
+
+#Cpartner ul li a.despliega, #Cpartner ul li a.despliega:visited {
+	
+}
+
+#Cpartner ul li a.despliega:hover {
+	
+}
+
+#Cpartner ul li.liactivo a.despliega, #Cpartner ul li.liactivo a.despliega:visited,  #Cpartner ul li.liactivo a.despliega:hover  {
+	
+}
+
+#Cpartner ul li.liactivo a.despliega:hover  {
+	
+}
+
+#Cpartner ul li a.nodespliega, #Cpartner ul li a.nodespliega:visited,  #Cpartner ul li a.nodespliega:hover, #Cpartner ul li.liactivo a.nodespliega, #Cpartner ul li.liactivo a.nodespliega:visited,  #Cpartner ul li.liactivo a.nodespliega:hover  {
+	
+}
+
+/* 2� nivel de subopciones */
+#Cpartner ul li.liactivo ul {
+		
+}
+
+#Cpartner ul li.liactivo ul li {
+	
+}
+
+#Cpartner ul li.liactivo ul li a, #Cpartner ul li.liactivo ul li a:visited {
+	
+	color:#3753af background: transparent url(images/Cpartner_li_li_li_fondo.png) left top repeat-x;
+	color: #05289c;
+	
+}
+
+#Cpartner ul li.liactivo ul li a:hover {
+	
+}
+
+/* si hay uno seleccionado del 2� nivel de subopciones */
+#Cpartner ul li.liactivo ul li.liactivo {
+		
+}
+
+#Cpartner ul li.liactivo ul li.liactivo a, #Cpartner ul li.liactivo ul li.liactivo a:visited {
+	
+}
+
+#Cpartner ul li.liactivo ul li.liactivo a:hover {
+	
+}
+
+#Cpartner ul li.liactivo ul li:last-child {
+	
+}
+
+/* 3er nivel de subopciones */
+#Cpartner ul li.liactivo ul li ul, #Cpartner ul li.liactivo ul li.liactivo ul {
+	
+}
+
+#Cpartner ul li.liactivo ul li ul li, #Cpartner ul li.liactivo ul li.liactivo ul li {
+	background-image:url(Images/Cselector_li_li_li_fondo.png)
+	
+}
+
+#Cpartner ul li.liactivo ul li ul li a, #Cpartner ul li.liactivo ul li.liactivo ul li a, #Cpartner ul li.liactivo ul li ul li a:visited, #Cpartner ul li.liactivo ul li.liactivo ul li a:visited {
+	
+	color:#05289c;
+	
+}
+
+#Cpartner ul li.liactivo ul li ul li a:hover, #Cpartner ul li.liactivo ul li.liactivo ul li a:hover {
+	
+}
+
+/* si hay uno seleccionado del 3er nivel de subopciones */
+#Cpartner ul li.liactivo ul li ul li.liactivo
+#Cpartner ul li.liactivo ul li.liactivo ul li.liactivo {
+	
+}
+
+#Cpartner ul li.liactivo ul li ul li.liactivo a, 
+#Cpartner ul li.liactivo ul li.liactivo ul li.liactivo a, #Cpartner ul li.liactivo ul li ul li.liactivo a:visited,  #Cpartner ul li.liactivo ul li.liactivo ul li.liactivo a:visited {
+	
+}
+
+#Cpartner ul li.liactivo ul li ul li.liactivo a:hover, #Cpartner ul li.liactivo ul li.liactivo ul li.liactivo a:hover {
+	
+}
+
+
+/* menu secundario del cuerpo */
+#Cmenu1 {			
+		
+}
+
+
+/* selector principal del menu secundario del cuerpo */
+.Cacciones {
+	
+	border-bottom: 1px solid #b4bee1;
+	background: #8293cd url(images/Cacciones_fondo.png) left top no-repeat;	
+}
+
+.Cacciones span {
+	
+	color: #05289c;
+}
+
+.Cacciones span.Caccionesico {
+	
+}
+
+.Cacciones a span.Caccionesico, .Cacciones a:visited span.Caccionesico {
+	
+}
+
+.Cacciones a:hover span.Caccionesico {
+	
+}
+
+.Cacciones ul {
+	
+}
+
+.Cacciones ul li {	
+	
+	
+}
+.Cacciones ul li#relatedAction-Publish  {
+}
+.Cacciones ul li#relatedAction-Publish a, .Cacciones ul li a:visited {
+
+	background: #697ec3 url(images/Cacciones_li_publicar_fondo.png) left top repeat-y;
+	
+}
+
+.Cacciones span#Cacciones-workflow a.workflow-arrow, #Cselector ul li a.workflow-arrow:visited {
+float:right;
+padding-right:4px;
+	
+}
+
+.Cacciones span#Cacciones-workflow a.workflow-arrow:hover {
+float:right;
+padding-right:4px;
+	
+}
+
+.Cacciones span#Cacciones-workflow a.workflow-arrow, #Cselector ul li.liactivo a.workflow-arrow:visited,  #Cselector ul li.liactivo a.workflow-arrow:hover  {
+float:right;
+padding-right:4px;
+	
+}
+
+.Cacciones span#Cacciones-workflow a.workflow-arrow:hover  {
+float:right;
+padding-right:4px;
+	
+}
+
+.Cacciones span #Cacciones-workflow ul li a.nodespliega, #Cselector ul li a.nodespliega:visited,  #Cselector ul li a.nodespliega:hover, #Cselector ul li.liactivo a.nodespliega, #Cselector ul li.liactivo a.nodespliega:visited,  #Cselector ul li.liactivo a.nodespliega:hover  {
+	
+}
+
+
+.Cacciones ul li a, .Cacciones ul li a:visited {	
+	background: #b4bee1 url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	color: #05289c!important;
+	
+}
+
+.Cacciones ul li a:hover {
+	color: #05289c;
+	background: transparent url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+
+.Cacciones ul li.deshabilitada {
+	
+}
+
+.Cacciones ul li.deshabilitada a, .Cacciones ul li.deshabilitada a:visited {	
+	color: #05289c;
+	background: transparent url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+
+.Cacciones ul li.deshabilitada a:hover {
+	color: #05289c;
+	background: transparent url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+/* contiene todo el contenido */
+#Ccontenido {	
+			
+}
+
+
+#Cencabezadocontenido {	
+	
+}
+
+#Cencabezadocontenido span.Cencabezadocontenidoico {
+	
+}
+
+#Cencabezadocontenido h1 {
+	color: #05289c;
+	
+}
+
+#Crastrodemigas {	
+	
+}
+
+#Crastrodemigas a:link, #Crastrodemigas a:visited {
+	
+}
+
+#Crastrodemigas a:hover {
+	
+}
+
+#Ccontenidocontenido2columnas {	
+	
+		
+}
+
+#Ccontenidocontenido3columnas {	
+	
+}
+
+#Ccontenidocontenido1columna {
+	
+}
+
+#Ctextocontenido {	
+	
+}
+
+#Ctextocontenido h2 {
+	
+	color:#05289c;
+	
+}
+
+#Ctextocontenido h2 img {
+	
+}
+
+#Ctextocontenido h2 span {
+	color: #05289c;
+	
+}
+
+#Ctextocontenido h2 a {
+	color: #05289c;	
+}
+
+#Ctextocontenido ul {
+	
+}
+
+#Ctextocontenido li {
+	
+}
+
+a.vermas, a.vermas:visited, a.vermenos, a.vermenos:visited {
+	
+	color: #05289c;
+	
+}
+
+a.vermas:hover, a.vermenos:hover { 
+	
+}
+
+a.vermas {
+	
+}
+
+a.vermenos {
+	
+}
+
+
+/* BLOQUE 3: PIE */
+
+/* Si hay alguna subzona en este bloque empieza por P */
+
+#pie {
+	border-top: 3px solid #05289c;
+	
+}
+
+#pie span {
+	
+	
+}
+
+#pie img {
+	
+}
+
+#pie a {
+	
+}
+
+#pie a:visited {
+	
+}
+
+#pie a:hover {
+	
+}
+
+#pie a:active {
+}
+
+
+
+/* 4= Contenidos generales
+	  =BUSQUEDA */
+
+/* Cajetin Busqueda */
+
+#Busqueda {
+	
+}
+
+#Ccontenidocontenido2columnas #Ctextocontenido #Busqueda {
+	
+}
+
+#Ccontenidocontenido2columnas #Ctextocontenido.explorador #Busqueda {
+	
+}
+
+
+#Busqueda label {
+	
+}
+
+#Busqueda select {
+	
+}
+
+
+#Busqueda input[type="submit"], #Busqueda input[type="button"], #Busqueda button[type="button"], #Busqueda button[type="submit"] {
+	color: #3753af;
+	
+}
+
+#Busqueda input[type="text"], #Busqueda input[type="password"] {
+		
+}
+
+#vermasbusqueda{
+	
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #vermasbusqueda{  
+	 }
+}
+
+#vermasbusqueda a.vermas, #vermasbusqueda a.vermas:visited {
+	
+	color: #05289c;
+	
+}
+
+#vermasbusqueda a.vermas:hover, #vermasbusqueda a.vermenos:hover { 
+	
+}
+
+/* Busqueda avanzada */
+
+#Busquedaavanzada {	
+	
+}
+
+#Busquedaavanzada p {	
+	
+	color: #05289c;
+}
+
+
+/* Resultados busqueda */
+
+#Criteriosbusqueda {
+	
+}
+
+#Criteriosbusqueda span {
+	
+	background: #1e3da5;
+	color: #05289c;
+	
+}
+
+#Encontradosbusqueda {
+	
+}
+
+#Resultadosbusqueda {
+	
+
+	
+}
+
+#Resultadosbusqueda span {
+	
+
+	color: #05289c;
+	
+}
+
+#Resultadosbusqueda ol li{	
+	
+	color: #05289c;
+	border: #b4bee1 1px solid  ;
+	
+}
+
+#Resultadosbusqueda ol li a, #Resultadosbusqueda ol li a:visited, #Resultadosbusqueda ol li a:hover {	
+	
+}
+
+#Resultadosbusqueda ol li p{
+	
+}	
+
+/* LISTADO */
+
+/* Filtros */
+#BusquedaAvanzadaFiltros {
+
+	
+	
+}
+
+#Filtros, .Filtros {
+	
+}
+
+#Filtros legend, .Filtros legend {	
+		
+	color: #05289c;
+	
+		
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+#Filtros legend, .Filtros legend { 
+	 }
+}
+
+#Filtros fieldset, .Filtros fieldset {
+
+	border: 1px solid #8293cd;
+	
+}
+#BusquedaAvanzadaFiltros fieldset {
+
+	border: 1px solid #b4bee1;
+	
+}
+
+
+#Filtros fieldset table.dosfields, .Filtros fieldset table.dosfields {
+	
+}
+
+#Filtros input[type="text"], #Filtros input[type="password"], .Filtros input[type="text"], .Filtros input[type="password"] {
+	
+}
+
+
+#Filtros input[type="submit"], #Filtros input[type="button"], #Filtros button, #Filtros button[type="submit"], .Filtros input[type="submit"], .Filtros input[type="button"], .Filtros button, .Filtros button[type="submit"] {	
+	
+}
+
+#Filtros .tcolumnafiltro, .Filtros .tcolumnafiltro {
+		
+}
+
+#Filtros .tcolumnafiltro select, .Filtros .tcolumnafiltro select {
+	
+	
+}
+
+/* Botones Acciones */
+
+.Caccioneslistado {	
+	
+}
+
+.Caccioneslistado input {
+	
+}
+
+.Caccioneslistado select {	
+	
+}
+
+
+.Caccionesmultiples {
+	background: #8293cd ;
+	
+	
+	
+}
+
+.Caccionesmultiples select {
+	
+}
+
+.Caccionesindependientes {	
+	
+}
+
+.Caccioneslistado input[type="submit"], input[type="button"], button[type="button"], button[type="submit"] {	
+	
+}
+
+
+/* Paginador */
+
+.pagination {	
+	
+}
+
+.pagination span {
+	
+}
+
+.pagination a {
+	
+}
+
+.pagination b {
+	}
+
+.pagination p {
+	
+}
+
+/* FICHA */
+
+/* Pesta�as */
+
+.tabs {
+	background:#1e3da5 none repeat scroll 0 0;
+	border-bottom: 1px solid #cdd4eb;
+		
+}
+
+.tabs ul {
+	
+}
+
+#Ccontenidocontenido2columnas .tabs ul {
+	
+}
+
+.tabs>ul {  } 
+
+.tabs ul li {
+	border-left: 1px solid  #b4bee1;
+	border-right: 1px solid  #b4bee1;
+	border-top: 1px solid  #b4bee1;
+	border-bottom: none;
+	
+	
+}
+
+.tabs ul li a{
+	
+
+	
+	background-color: #8293cd;
+	
+	
+}
+
+.tabs ul li a:hover {
+	background-color: #5068b9;
+	color:#333;
+}
+
+.tabs ul li a.selected {
+	
+	
+	
+}
+
+.tabs ul li a.selected:hover {
+	
+}
+
+.tabs ul li a.tabgrande:link, a.tabgrande:visited, a.tabgrande:hover {
+	
+	
+}
+
+/* Otro tipo de Pesta�as */
+
+.tabs1 {
+	background:#1e3da5 none repeat scroll 0 0;
+	
+}
+
+.tabs1 ul {
+
+}
+
+#Ccontenidocontenido2columnas .tabs1 ul {
+	
+}
+
+.tabs1>ul {  } 
+
+.tabs1 ul li {
+	
+}
+
+.tabs1 ul li a{
+	
+	
+	border-bottom: 1px solid #05289c;	
+	background-color: #1e3da5;
+	
+}
+
+.tabs1 ul li a:hover {
+	background-color: #1e3da5;
+	color: #05289c;
+}
+
+.tabs1 ul li a.tab1diferente {
+	background-color: #05289c;
+	border-bottom: 1px solid #05289c;
+	
+}
+
+.tabs1 ul li a.tab1diferente:hover {
+	background-color: #05289c;
+	
+}
+
+.tabs1 ul li a.selected {
+	
+	border: 1px solid #05289c;
+	color:#05289c;
+}
+.tabs1 ul li a.selected:hover {
+	
+	
+	color:#05289c;
+}
+	
+.tabs1 ul li a.tab1diferente_selected {
+	background-color: #05289c;
+	border-bottom: 1px solid #b4bee1;
+	
+}
+
+.tabs1 ul li a.tabgrande:link, a.tabgrande:visited, a.tabgrande:hover {	
+	
+}
+
+/* Contenido Pesta�as */
+
+.tab-content {
+	border-left: 1px solid #b4bee1;
+	border-right: 1px solid #b4bee1;
+	border-top: none;
+	border-bottom: 1px solid #b4bee1;
+	
+	
+}
+
+.tab-content .grid, .tab-content table {		
+	
+}
+
+.listadoentabs {
+	
+}
+
+.listadoentabs table.grid {
+	
+	border:#b4bee1;	
+	
+}
+
+#grid1 {
+	
+}
+
+#grid2 {
+	
+}
+
+.tab-content .grid caption {
+	
+	
+
+	border:1px solid  #8293cd ;
+}
+
+.tab-content .grid caption a.despliega, .tab-content .grid caption a.despliega:visited {
+background: #8293cd url(images/Cselector_liactivo_despliega_fondo.png) 1px top no-repeat;
+	
+}
+
+.tab-content .grid caption a.despliega:hover {
+background: #8293cd url(images/Cselector_li_despliega_fondo.png) 1px top no-repeat;
+	
+}
+
+.tab-content .grid caption a.desplegado, .tab-content .grid caption a.desplegado:visited, .tab-content .grid caption a.desplegado:hover {
+	background: #8293cd url(images//Cselector_li_despliega_fondo.png) 1px top no-repeat;
+	
+}
+
+ul#Menuanclas {
+	border-bottom: 1px solid #1e3da5;
+	
+}
+
+#Menuanclas li {
+	border-right: 1px solid #05289cE;
+	
+}
+
+#Menuanclas li a {
+	
+}
+
+#Menuanclas li a:hover {
+	
+}
+
+#Previsualizar {
+	
+}
+
+#Caccionesficha {
+	
+}
+
+#Caccionesficha input, #Caccionesficha input[type="button"], #Caccionesficha button, #Caccionesficha button[type="button"],  #Caccionesficha button[type="submit"] {
+	
+}
+
+#Caccionesficha select {
+	
+}
+
+#Caccionesficha a, #Caccionesficha a:visited, #Caccionesficha a:hover {
+	
+}
+
+.Ayuda {
+	
+}
+
+/* POPUPS */
+
+
+.row {
+	border-bottom:1px solid #1e3da5;
+	border-bottom:0px solid #1e3da5;
+	
+}
+
+.rowList {
+	
+} 
+
+.picker-target-list {
+	border:1px solid #cdd4eb;
+	
+}
+
+.picker-target-list .row {
+		
+	border-left: 3px solid #1e3da5;
+	border-bottom:1px solid #1e3da5;
+	
+}
+
+.picker-target-list .row:hover {
+	
+	background-color:#1e3da5;	
+	border-left: 3px solid #1e3da5;
+	border-bottom:1px solid #1e3da5;	
+}
+
+.popup {
+	
+	background-color: #1e3da5;
+}
+
+
+#Ccontenidocontenidopopup {
+	
+}
+
+#popupbrowser {
+	
+}
+
+#Ccontenidocontenidopopup #Busqueda {
+	
+}
+
+
+
+#Ccontenidocontenidopopup #Busqueda input[type="text"] {	
+	
+}
+
+#Ccontenidocontenidopopup #Ctextocontenido {
+	
+}
+
+#Ccontenidocontenidopopup #Ctextocontenido.explorador {
+	
+	
+}
+
+#Ccontenidocontenido1columna #Ctextocontenido {
+	
+}
+
+#Cvistaanexo {
+	
+}
+
+#Ccontenidocontenido1columna #Ctextocontenido .Cmessage {
+	
+}
+
+
+#Ccontenidocontenidopopup #Ctextocontenido .Cmessage {
+	
+}
+
+#Popuplistado {
+	
+}
+
+#Popupseleccionados {
+		
+	border: 1px solid #05289c;		
+	
+}
+
+#Ccontenidocontenidopopup input[type="submit"], #Ccontenidocontenidopopup input[type="button"], #Ccontenidocontenidopopup button[type="button"], #Ccontenidocontenidopopup button[type="submit"] {
+	
+}
+
+
+#Ccontenidocontenidopopup #Ctextocontenido.explorador input[type="submit"], #Ccontenidocontenidopopup #Ctextocontenido.explorador input[type="button"], #Ccontenidocontenidopopup #Ctextocontenido.explorador button[type="button"], #Ccontenidocontenidopopup #Ctextocontenido.explorador button[type="submit"] {
+	
+}
+
+#Ccontenidocontenidopopup #Busqueda input[type="submit"], #Ccontenidocontenidopopup #Busqueda input[type="button"], #Ccontenidocontenidopopup #Busqueda button[type="button"], #Ccontenidocontenidopopup #Busqueda button[type="submit"] {
+	
+}
+
+#direction {
+	
+}
+
+/* TOOLTIP     jquery.tooltip.css */
+ 
+#tooltip {
+	
+	background-color: #05289c;
+	border: 1px solid #1e3da5;
+	padding:4px 10px 6px 10px;
+	-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 6px #1e3da5;
+-webkit-box-shadow: 0px 0px 6px #1e3da5;
+box-shadow: 0px 0px 6px #1e3da5;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#b4bee1', endColorstr = '#5068b9');
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+-ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#05289c', endColorstr = '#5068b9')";
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+background-image: -moz-linear-gradient(top, #05289c, #5068b9);
+background-image: -ms-linear-gradient(top, #05289c, #5068b9);
+background-image: -o-linear-gradient(top, #05289c, #5068b9);
+background-image: -webkit-gradient(linear, center top, center bottom, from(#05289c), to(#5068b9));
+background-image: -webkit-linear-gradient(top, #05289c, #5068b9);
+background-image: linear-gradient(top, #05289c, #5068b9);
+-moz-background-clip: padding;
+-webkit-background-clip: padding-box;
+
+/*Use "background-clip: padding-box" when using rounded corners to avoid the gradient bleeding through the corners*/
+/*--IE9 WILL PLACE THE FILTER ON TOP OF THE ROUNDED CORNERS--*/
+
+	
+}
+
+/* AJAX INDICATOR */
+
+#ajax-indicator {
+	 /* fixed not supported by IE */
+	
+}
+
+html>body #ajax-indicator {  }
+
+#ajax-indicator span {
+	
+}
+
+
+/* ACTUALIZACION OTRAS CSS */
+ 
+input[type="text"].input-selected, input[type="password"].input-selected, input[type="file"].input-selected {
+	border: #05289c;
+	background-color: #1e3da5;
+}
+
+input[type="text"].input-validation-error, input[type="password"].input-validation-error, input[type="file"].input-validation-error,
+input[type="text"].validation-summary-error, input[type="password"].validation-summary-error, input[type="file"].validation-summary-error,
+input[type="text"].field-validation-error, input[type="password"].field-validation-error, input[type="file"].field-validation-error,
+input[type="text"].text required error, input[type="password"].text required error, input[type="file"].text required error {
+	
+}
+input#password {
+	BORDER-RIGHT: #05289c 1px solid;
+	BORDER-TOP: #05289c 1px solid;
+	BORDER-LEFT: #05289c 1px solid;
+	BORDER-BOTTOM: #05289c 1px solid;
+	
+}
+input#UserName {
+	BORDER-RIGHT: #05289c 1px solid;
+	BORDER-TOP: #05289c 1px solid;
+	BORDER-LEFT: #05289c 1px solid;
+	BORDER-BOTTOM: #05289c 1px solid;
+}
+.login{
+	
+}
+.login table  {
+	
+	border: 1px dotted #05289c;
+	
+}
+.login table th {
+}
+.login table td {
+
+}
+
+
+.Cmessage {
+	
+}
+ 
+.treeview .selected {
+	background-color:#cdd4eb;
+	padding:8px 8px 8px 8px;
+	
+}
+
+.ui-datepicker-trigger {
+	
+}
+
+.ui-dialog, .ui-datepicker {
+	
+	}
+
+/* 5= Contenidos CORE
+	  =HOME */
+	  
+#Cintroduccionhome {
+	
+	color:#8293cd;
+	background:#b4bee1 url(images/caption_fondo.png) repeat-x scroll left top;
+	
+}
+
+#Cintroduccionhome h2 {
+	color: #05289c;
+	
+}
+
+#Cintroduccionhome ul {
+	
+}
+
+#Cintroduccionhome ul li {
+	
+	
+}
+
+#Cintroduccionhome p {
+	
+	
+}
+
+#Cintroduccionhome p strong {
+	
+}
+
+#Cintroduccionhome p a, #Cintroduccionhome p a:visited, #Cintroduccionhome p a:hover {
+	color: #05289c;
+}
+
+.Cintroduccionseccion {
+	
+}
+
+.imagenseccion {
+	
+}
+
+.imagenseccion a, .imagenseccion a:visited {
+	
+}
+
+.imagenseccion a:hover {
+	
+}
+
+.imagenseccion a span {
+	
+}
+
+.datosseccion {
+	
+}
+
+#Ctextocontenidohome {
+	
+}
+
+#Ctextocontenidohome #Busqueda {
+	
+}
+
+#Ctextocontenidohome #Busqueda input[type="text"], #Ctextocontenidohome #Busqueda input[type="password"] {
+	
+}
+
+#Ctextocontenidohome #vermasbusqueda{
+	
+}
+
+
+#Ctextocontenidohome .vermasacciones {
+	
+}
+
+#Ctextocontenidohome tr.gridrow td {
+	
+
+}
+
+#Ctextocontenidohome tr.gridrow_alternate td {
+
+
+}
+
+#Ctextocontenidohome .tcolumnapeq {
+	
+}
+
+#Ctextocontenidohome .tcolumnagran {
+	
+}
+
+
+/* Estadisticas */
+
+#Cestadisticas .tabs {
+	background:#1e3da5 none repeat scroll 0 0;
+
+	
+}
+
+#Cestadisticas .tabs ul {
+	
+}
+
+#Cestadisticas .tabs>ul { } 
+
+#Cestadisticas .tabs ul li {
+	color:#05289c;
+	background-color: #8293cd;
+	
+}
+
+#Cestadisticas .tabs ul li a{
+	
+
+	
+	background-color: #8293cd;
+	color:#05289c;
+	
+}
+
+#Cestadisticas .tabs ul li a:hover {
+	background-color: #9ba9d7;
+	color:#05289c;
+	
+}
+
+#Cestadisticas .tabs ul li a.selected {
+	
+	color:#05289c;
+	background-color: #8293cd;
+	
+}
+
+#Cestadisticas .tabs ul li a.selected:hover {
+	
+}
+
+#Cestadisticas .tabs ul li a.tabgrande:link, #Cestadisticas .tabs ul li a.tabgrande:visited, #Cestadisticas .tabs ul li a.tabgrande:hover {
+	
+	
+}
+
+#Cestadisticas .tab-content {
+	border:#b4bee1;	
+	
+}
+
+#Cestadisticas .tab-content .grid, #Cestadisticas .tab-content table {		
+	
+}
+
+#Cestadisticas .listadoentabs {
+	
+}
+
+#Cestadisticas .listadoentabs table.grid {
+	
+
+	
+}
+
+
+#Cestadisticas .listadoentabs thead tr th, #Cestadisticas .listadoentabs thead tr td  {
+
+	
+}
+
+#Cestadisticas .listadoentabs tbody tr th {
+	background:#cdd4eb;
+	
+	
+	
+}
+
+#Cestadisticas .listadoentabs tr.gridrow td {
+	
+	border:#fff;
+}
+
+#Cestadisticas .listadoentabs tr.gridrow_alternate td {
+	
+	border:#fff;
+}
+
+#Cestadisticas .listadoentabs tfoot tr th {
+	background:#05289c url(images/tfoot_th_fondo.png) repeat-x scroll left top;
+	border-bottom: 0px solid #05289c;
+	border-top: 1px solid #05289c;
+	
+}
+
+#Cestadisticas .listadoentabs tfoot tr th a:link {
+	
+}
+#Cestadisticas .listadoentabs tfoot tr th a:visited {
+	
+}
+#Cestadisticas .listadoentabs tfoot tr th a:hover {		
+	
+}
+
+#Cestadisticas .listadoentabs	tfoot tr td {
+	
+	background:#05289c url(images/tfoot_th_fondo.png) repeat-x scroll left top;
+	border-bottom: 0px solid #05289c;
+	border-top: 1px solid #05289c;
+}
+
+/* Informacion Adapting */
+
+#Cnovedades {
+	color: #05289c;	
+	
+}
+
+#Cnovedades span {
+	color: #05289c;
+	
+}
+
+#Cnovedades .noticia{
+	
+	}
+
+#Cnovedades .titularnoticia{
+	
+	}	
+	
+#Ctextocontenidohome #Cnovedades {
+	
+	}
+	
+	
+#Cnovedades  .titularnoticia a {	
+	
+}	
+
+#Cnovedades  .titularnoticia a:visited { 	
+	
+	}
+#Cnovedades  .titularnoticia a:hover { 
+	
+	}
+#Cnovedades  .titularnoticia a:active { 
+	
+	}	
+
+#Cnovedades .subtitulonoticia {
+	
+	}
+#Cnovedades .fechanoticia{
+	
+	}	
+#vermasinfo {
+	
+}
+
+/* ASIGNACION PERMISOS */
+
+#Criteriospermisos {
+		
+	border: 1px solid #b4bee1;
+	
+}
+
+#Criteriospermisos span {
+	background-color: #9ba9d7;
+	
+}
+
+#Permisosseleccionados {
+	
+	
+	
+	}
+	
+#Cselectorpermisos {
+	
+}	
+	
+	
+.columnaselectorpermisos {
+	
+}
+
+#Cselectorpermisos a {
+	
+	color: #05289c;
+	
+}
+
+#Cselectorpermisos a:hover { 
+	
+}
+
+#Cselectorpermisos a {
+	
+}
+
+#Asignacionpermisos {
+	
+}
+
+#Asignacionpermisos table.grid {
+	
+}
+
+#Asignacionpermisos .tcolumnacheck { 
+	
+}
+
+/* ENTRADAS MENU */
+
+#Entradasmenu ul {
+	
+	}
+
+.dragdroplist{
+	
+	}
+
+.dragdroplist .item {
+    background-color:#cdd4eb;
+	width: 37em;
+   
+   
+}
+
+.dragdroplist .item .header {	
+	background:#05289c url(images/Cselector_liactivo_fondo.png) repeat-x scroll left top;
+	
+}
+
+.dragdroplist .item .content {
+	
+}
+
+.dragdroplist .item .content ul{
+	
+}	
+
+.ui-sortable {
+	
+}
+
+.content li {
+	
+} 
+
+.entryleveltitle {	
+}
+
+.entrylevelactions {
+	
+}
+
+/* 6= Contenidos DOCUMENT
+	  =HOME */
+	  
+#Ccolumnacontenidohome {
+	
+}
+
+#Ccolumnacontenidohome #Cexplorador {
+	
+}
+
+#Ccolumnacontenidohome #Cexplorador #browser {
+	
+}
+
+/* Cnuevodocumento */
+
+#Cnuevodocumento {
+	
+	
+	background:#fff url(images/caption_fondo.png) repeat-x scroll left top;			
+}
+
+#Cnuevodocumento h2 {
+	color: #05289c;
+	
+}
+
+#Cnuevodocumento table {
+	
+}
+
+#Cnuevodocumento span {
+	
+}	  
+
+#Ctextocontenido.Ctextocontenidohome {	
+	
+	
+}
+
+#Ctextocontenido.Ctextocontenidohome h2 {
+	
+	color:#05289c;
+}
+
+#Cfotohome {	
+	
+}
+
+#Cfotohome img {
+	border: 1px solid #05289c;
+	
+}
+
+.destacadodocument {
+	
+
+	background:#8293cd url(images/caption_fondo.png) repeat-x scroll left top;	
+	border: 1px solid  #b4bee1 ;			
+}
+
+.miespacio {
+	
+}
+
+.destacadodocument .grid caption {
+	
+}
+
+.destacadodocument .Cintroduccionlistado {	
+	
+}
+
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion {
+	
+}
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion  .imagenseccion {
+		
+}
+
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion  .imagenseccion img{
+	
+}	
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion  .imagenseccion a {		 
+	
+}	
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion  .imagenseccion a:hover {
+	
+}
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .datosseccion {	
+	
+}
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion {
+	
+}
+
+	
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion img{
+	
+}
+
+
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion a {	
+
+}	
+
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion a:visited { 	
+	
+}
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion a:hover {
+	
+}
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .nombreseccion a:active { 
+	
+}	
+
+
+.destacadodocument .Cintroduccionlistado .Cintroduccionseccion .contenidoseccion {
+	
+}
+
+#Ctextocontenido.Ctextocontenidohome .pagination p {
+	
+}
+
+#Ctextocontenido.Ctextocontenidohome .destacadodocument h3 {
+	
+	color:#05289c;
+}
+
+.destacadodocument .vermasacciones {
+	
+}
+
+
+/* FICHA DOCUMENT */
+
+/* Ubicacion */
+
+#Ubicacion {	
+	
+}
+
+#Ubicacion label {
+	
+}
+
+#Ubicacion ul {	
+
+
+border:none;
+	
+
+	
+}
+
+#Ubicacion ul li {
+	
+}
+
+#Ubicacion ul li a {
+	
+}
+
+#Ubicacion ul li a:visited {
+	
+}
+
+#Ubicacion ul li a:hover {
+	
+	background: #b4bee1;
+}
+
+#Ubicacion ul li.liactivo {
+	background: transparent url(images/Ubicacion_ulliactivo_fondo.png) no-repeat scroll right top;
+	
+}
+
+#Ubicacion ul li.liactivo a {
+	color: #05289c;
+	border-top: #b4bee1 1px solid  ;
+	border-bottom: #b4bee1 1px solid  ;
+	
+}
+
+#Ubicacion ul li.liactivo ul li a {
+	
+}
+
+#Ubicacion ul li.liactivo a:hover {
+	background: #9ba9d7;
+	
+}
+
+#Ubicacion ul li ul li a, #Ubicacion ul li ul li a:visited, #Ubicacion ul li ul li a:hover, #Ubicacion ul li.liactivo ul li a, #Ubicacion ul li.liactivo ul li a:visited {
+	
+	color: #05289c;
+}
+
+#Ubicacion ul li ul li.liactivo a, #Ubicacion ul li ul li.liactivo a:visited, #Ubicacion ul li ul li.liactivo a:hover, #Ubicacion ul li.liactivo ul li.liactivo a, #Ubicacion ul li.liactivo ul li.liactivo a:visited {
+	
+}
+
+#Ubicacion ul li.liactivo ul li a:hover, #Ubicacion ul li.liactivo ul li.liactivo a:hover {
+	color: #05289c;
+}
+
+#Ubicacion ul li a.despliega, #Ubicacion ul li a.despliega:visited {
+	background: transparent url(images/Ubicacion_li_despliega_fondo.png) right -1px no-repeat;
+	
+}
+
+#Ubicacion ul li a.despliega:hover {
+	background: transparent url(images/Ubicacion_li_despliega_hover_fondo.png) right -1px no-repeat;
+}
+
+#Ubicacion ul li.liactivo a.despliega, #Ubicacion ul li.liactivo a.despliega:visited,  #Ubicacion ul li.liactivo a.despliega:hover  {
+background: transparent url(images/bUbicacion_liactivo_despliega_fondo.png) right -1px no-repeat;
+	
+}
+
+#Ubicacion ul li.liactivo a.despliega:hover  {
+	background: transparent url(images/Ubicacion_liactivo_despliega_hover_fondo.png) right -1px no-repeat;
+	
+}
+
+#Ubicacion ul li ul {
+	
+}
+
+#Ubicacion ul li ul li, #Ctextocontenido #Ubicacion ul li ul li {
+
+}
+
+#Ubicacion ul li ul li a, #Ubicacion ul li ul li.liactivo a, #Ubicacion ul li.liactivo ul li a, #Ubicacion ul li.liactivo ul li.liactivo a, #Ubicacion ul li ul li a:visited, #Ubicacion ul li ul li.liactivo a:visited, #Ubicacion ul li.liactivo ul li a:visited, #Ubicacion ul li.liactivo ul li.liactivo a:visited {
+	border-left: 1px solid #1e3da5;
+	
+}
+
+#Ubicacion ul li ul li a:hover, #Ubicacion ul li ul li.liactivo a:hover, #Ubicacion ul li.liactivo ul li a:hover, #Ubicacion ul li.liactivo ul li.liactivo a:hover {	
+	border-left: 1px solid #1e3da5;
+	background: #1e3da5 none repeat scroll 0 0;
+	
+}
+
+#Ubicacion ul li.liatras, #Ctextocontenido #Ubicacion ul li.liatras {
+	
+}
+
+
+#Ubicacion ul li.liatras a {
+	
+	color: #05289c;
+}
+
+/*  */
+
+.menulist, .menulist * {
+
+}
+.menulist {
+	
+}
+.menulist ul {
+	
+}
+.menulist ul li,
+.menulist a {
+	
+}
+.menulist li {
+	
+}
+
+#Ubicacion .menulist li ul li {
+	
+}
+
+.menulist a {
+	
+}
+.menulist li:hover ul,
+ul.menulist li.sfHover ul {
+	
+}
+.menulist li:hover li ul,
+.menulist li.sfHover li ul {
+	
+}
+.menulist li li:hover ul,
+ul.menulist li li.sfHover ul {
+	
+}
+
+
+
+/* original skin */
+.menulist {
+	
+}
+.menulist li {
+	
+	
+}
+
+.menulist a {
+	color: #05289c;		
+	
+}
+
+.menulist a:focus, .menulist a:hover, .menulist a:active {
+	color:#05289c;
+	background:#9ba9d7 url(images/Ubicacion_ulliactivo_fondo.png) no-repeat scroll right top;
+	
+}
+
+.menulist li li.sfHover, .menulist li li a:focus, .menulist li li a:hover, .menulist li li a:active {	
+	
+}
+
+.menulist li li {
+	
+}
+
+
+
+/* Datos documento */	
+
+#Datosdocumento {
+	
+	border-bottom:0 solid #05289c;
+	background-image: -moz-linear-gradient(top, #Fff, #b4bee1);
+	background-image: -ms-linear-gradient(top, #Fff, #b4bee1);
+	background-image: -o-linear-gradient(top, #Fff, #b4bee1);
+	background-image: -webkit-linear-gradient(top, #Fff, #b4bee1);
+	background-image: linear-gradient(top, #Fff, #b4bee1);
+	background:#b4bee1 url(images/document_background.png) repeat-x scroll left top;
+	
+	
+	
+}
+
+#imagendocumento {
+	
+	}
+	
+#imagendocumento img {
+	
+	}
+	
+#datodocumento1 {	
+	color:#05289c;
+	
+	}
+	
+#datodocumento2 {
+	
+	color: #05289c;
+	
+	}	
+	
+#datodocumento2 span {
+	
+}	
+	
+#datodocumento2 span img {
+	
+}
+
+#datodocumento3 {
+	
+}
+
+#datodocumento3 ul {
+	
+}
+
+#datodocumento3 ul li {
+	
+	
+}
+
+
+
+
+
+/* menu secundario del cuerpo */
+#Cmenu1.Cmenu1fichadocument {			
+	
+}
+
+/* FICHA WORKFLOW */
+
+#Workflowestados {
+	
+}
+
+.columnaworkflowestados {
+	
+	background: #8293cd url(images/columnaworkflowestados_fondo.png) left top no-repeat;	
+	border-bottom: #b4bee1 1px solid  ;
+		
+	
+}
+
+.columnaworkflowestado1 {
+	
+}
+
+.columnaworkflowestado2 {
+	
+}
+
+.columnaworkflowestado3 {
+	
+}
+
+.columnaworkflowestado4 {
+	
+}
+
+#Workflowestados span {
+	
+}
+
+#Workflowestados span.workflowfecha {
+	
+}
+
+#Workflowestados span.workflowpaso {
+	
+}
+
+#Workflowestados ul {
+	
+	
+}
+
+#Workflowestados ul li {		
+	
+}
+
+
+#Workflowestados ul li a, #Workflowestados ul li a:visited {	
+	
+	background: #9ba9d7 url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	color: #05289c;
+	
+}
+
+#Workflowestados ul li a:hover {
+	
+	background: #9ba9d7 url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	color: #05289c;
+	
+}
+
+#Workflowestados span.Caccionesico {
+	
+}
+
+#Workflowestados a span.Caccionesico, #Workflowestados a:visited span.Caccionesico {
+	
+}
+
+#Workflowestados a:hover span.Caccionesico {
+	
+}
+
+#Workflowestados ul li.deshabilitada {
+	
+	background: #9ba9d7 url(images/Cacciones_li_fondo.png) left top repeat-y;
+	color: #05289c;	
+	
+}
+
+#Workflowestados ul li.deshabilitada a, #Workflowestados ul li.deshabilitada a:visited {	
+	color: #05289c;
+	background: #9ba9d7 url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+
+#Workflowestados ul li.deshabilitada a:hover {
+	color: #05289c;
+	background: #8293cd url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+
+#Workflowestados ul li.nolink {
+	color: #05289c;
+	background: #9ba9d7 url(images/Cacciones_li_fondo.png) left top repeat-y;	
+	
+}
+
+/* EXPLORADOR DOCUMENT */
+
+#Ctextocontenido.explorador {	
+	
+	background: #cdd4eb url(images/Ctextocontenido-explorador_fondo.png) repeat-x scroll 0 -7px;	
+}
+
+#Cexplorador {
+	color: #05289c;	
+	background:#b4bee1 url(images/caption_fondo.png) repeat-x scroll left top;
+	border: #cdd4eb  1px solid;
+
+	
+	
+	
+}
+#foldertreewrapper_browser{
+	
+	border: #cdd4eb   ;
+
+	}
+
+#Cexplorador h2 {
+	color: #05289c;
+	
+	
+	
+}
+
+#Cexplorador h2 span {
+	
+}
+
+
+#browser {
+background: #05289c url(images/browser_fondo.png) repeat-y scroll right top;
+	
+}
+
+#Ccontenidocontenido2columnas #Ubicacion {
+	
+}
+
+#Ctextocontenido.explorador #Ubicacion {
+	
+}
+
+#Ctextocontenido.explorador #Ubicacion ul {
+	border:1px solid #b4bee1,
+	
+}
+
+
+#Ctextocontenido.explorador h3 {
+	
+	color:#05289c;
+	
+}
+
+#Subcarpetas {	
+	
+}
+
+.Subcarpetasacciones {	
+	
+}
+
+.Subcarpetasacciones p{
+	
+}
+
+.Subcarpetasacciones input {
+	
+}
+
+.Subcarpetasacciones select {	
+	
+}
+
+.Subcarpetasaccionesmultiples {
+	border-left: 1px solid #b4bee1;
+	border-right: 1px solid #b4bee1;
+	border-top: 1px solid #b4bee1;
+	border-bottom: 1px solid #fff;
+	
+	
+	
+		
+}
+
+.Subcarpetasaccionesindependientes {	
+	
+}
+
+#Subcarpetaslistado {
+	
+	border: #b4bee1 1px solid  ;
+	
+	
+	
+}
+
+#Subcarpetas .subcarpeta {
+	
+}
+
+#Subcarpetas .checksubcarpeta {	
+	
+		
+}
+
+#Subcarpetas .imagensubcarpeta {	
+		
+}
+
+
+#Subcarpetas .imagensubcarpeta img{
+	
+}	
+
+#Subcarpetas .imagensubcarpeta a {		 
+	
+}	
+
+
+#Subcarpetas .imagensubcarpeta a:visited { 	
+	
+}
+
+#Subcarpetas .imagensubcarpeta a:hover {
+	
+}
+
+#Subcarpetas .datossubcarpeta {	
+	
+}
+
+#Subcarpetas .nombresubcarpeta {
+	
+}
+
+	
+
+#Subcarpetas .nombresubcarpeta img{
+	
+}
+
+
+
+#Subcarpetas .nombresubcarpeta a {	
+	
+}	
+
+
+#Subcarpetas .nombresubcarpeta a:visited { 	
+ 
+}
+
+#Subcarpetas .nombresubcarpeta a:hover {
+	
+}
+
+#Subcarpetas .nombresubcarpeta a:active { 
+	
+}	
+
+
+#Subcarpetas .contenidosubcarpeta {
+	
+	
+}
+
+#Subcarpetas .pagination {
+	
+}
+
+#Subcarpetas .pagination p {
+	
+}
+
+
+
+
+/* EXPLORADOR EXPEDIENTES */
+
+span.nombrehueco {
+	
+}
+
+tr.vacia {	
+	background-color: #cdd4eb;
+}
+
+tr.vacia th, tr.vacia td {
+	border-bottom: 1px dashed #05289c;
+	
+}
+
+tr.llena td img {
+	
+}
+
+/* LISTADO JER�RQUICO */
+
+#Ccontenidocontenido3columnas .Caccioneslistado {	
+	
+}
+
+/* LISTADO ESTRUCTURA */
+
+#Ccontenidocontenidotabs {
+	
+}
+
+#Ccontenidocontenidotabs #browser {
+	
+}
+
+#Ccontenidocontenidotabs #Ctextocontenido.explorador {
+	background:#1e3da5 url(images/Ctextocontenido-explorador_fondo.png) repeat-x scroll 0 0px;	
+	
+}
+
+/* DICCIONARIO */
+
+.diccionario tbody tr th {
+	border-left: 1px solid #05289c;	
+	background: #1e3da5;
+	border-bottom: 1px solid #1e3da5;
+}
+
+.filtrosdiccionario {
+	
+}
+/* AVISOS LEGALES */
+.clausula{
+	
+	}
+		/* CAPTURADORA */
+#Ecapture{
+	
+	
+	
+	}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: ; /*font-size: 1em;*/ }
+.ui-widget-content { border: 1px solid #8293cd;  color: #05289c; }
+
+.ui-widget-header { border: 1px solid #8293cd; background: #1e3da5 url(images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #8293cd; background: #cdd4eb url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #05289c; outline: none; }
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #05289c; background: #cdd4eb url(images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #05289c; outline: none; }
+.ui-state-hover a, .ui-state-hover a:hover { color: #05289c; text-decoration: none; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #05289c; background: #cdd4eb url(images/ui-bg_inset-hard_100_f5f8f9_1x100.png) 50% 50% repeat-x; font-weight: bold; color: #e17009; outline: none; }
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #05289c; outline: none; text-decoration: none; }
+.ui-widget :active { outline: none; }
+
+.pagination {
+    color: #05289c;
+   
+}
+.pagination span {
+    color: #05289c;
+   
+}
+.pagination a {
+    color:#05289c;
+   
+}
+.pagination b {
+    border: 1px solid #05289c;
+  
+    color:#05289c;
+   
+}
+.pagination p {
+  
+}
+.pagination span {
+   
+  
+}
+.pagination a {
+  
+ 
+}
+.pagination a:hover, .pagination .current a {
+ 
+}
+.warningtools {
+ 
+
+	 background: url("Images/tools.png") no-repeat scroll left #cdd4eb;
+	border: 1px solid #1e3da5;
+	-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 6px #5068b9;
+-webkit-box-shadow: 0px 0px 6px #5068b9;
+box-shadow: 0px 0px 6px #5068b9;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1');
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+-ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1')";
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+
+/*Use "background-clip: padding-box" when using rounded corners to avoid the gradient bleeding through the corners*/
+/*--IE9 WILL PLACE THE FILTER ON TOP OF THE ROUNDED CORNERS--*/
+	
+}
+.warningtools h1 {
+	
+	color:#05289c;
+	}
+	.warning404 {
+ 
+
+	 background: url("Images/Web_Folder.png") no-repeat scroll left #cdd4eb;
+	border: 1px solid #1e3da5;
+	-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 6px #5068b9;
+-webkit-box-shadow: 0px 0px 6px #5068b9;
+box-shadow: 0px 0px 6px #5068b9;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1');
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+-ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1')";
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+
+/*Use "background-clip: padding-box" when using rounded corners to avoid the gradient bleeding through the corners*/
+/*--IE9 WILL PLACE THE FILTER ON TOP OF THE ROUNDED CORNERS--*/
+	
+}
+.warning404 h1 {
+	
+	color:#05289c;
+	}
+#divMoreFolders{
+
+	 background:  #cdd4eb;
+	border: 1px solid #8293cd;
+	-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 6px #8293cd;
+-webkit-box-shadow: 0px 0px 6px #8293cd;
+box-shadow: 0px 0px 6px #8293cd;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+filter: progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1');
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+-ms-filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#b4bee1')";
+/*Element must have a height (not auto)*/
+/*All filters must be placed together*/
+	
+	}

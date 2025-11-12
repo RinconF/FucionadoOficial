@@ -1,0 +1,61 @@
+﻿table tr td, table tr th
+{
+    font-family: Arial;    
+    font-size:small;
+}
+.zebra, .detail
+{
+    border: 1px #4e667d solid !important;
+    color: #464647 !important;
+}
+.zebra tr th
+{
+    background-color: #464647 !important;
+    border: 1px #4e667d solid !important;
+    color: #dde4ec !important;
+    padding: 0 15px !important;
+}
+.detail tr th
+{
+    text-align: left;
+}
+.detail tr th span
+{
+    color: #dde4ec;
+}
+.detailTitulo
+{
+    background-color: #464647 !important;
+    color: #dde4ec !important;
+    padding: 0 15px !important;
+    text-align: center !important;
+    font-size: 6px;
+}
+.zebra input[type=text], .zebra input[type=password], .zebra select, .detail input[type=text], .detail input[type=password], .detail select
+{
+    width: 90%;
+}
+.zebra tr:nth-child(odd)
+{
+    background-color: #98A9B9;
+}
+.zebra tr:nth-child(even)
+{
+    background-color: #dde4ec;
+}
+.listaCheck
+{
+    padding: 10px;
+}
+.listaCheck tr td
+{
+    font-weight: bold;
+    padding: 0 20px 0 10px;
+}
+.zebra caption
+{
+    text-align: left;
+    font-weight: bold;
+    font-size: 8px;
+    padding: 2px;
+}

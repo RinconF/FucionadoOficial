@@ -1,0 +1,172 @@
+.warningtools {
+   
+ 	padding:10px 20px 10px 20px;
+	margin:20px
+	
+}
+.warningtools p {
+	margin-left:140px;
+	font-size:120%;
+	color:#333;
+	}
+.warningtools h1 {
+	margin-left:140px;
+	color:#333;
+	margin-bottom:15px;
+	}
+.warning404{
+   
+ 	padding:10px 20px 10px 20px;
+	margin:20px
+	
+}
+.warning404 p {
+	margin-left:140px;
+	font-size:120%;
+	color:#333;
+	}
+.warning404 li {
+	margin-left:140px;
+	font-size:120%;
+	color:#333;
+	}
+.warning404 h1 {
+	margin-left:140px;
+	color:#333;
+	margin-bottom:15px;
+	}
+	
+#divMoreFolders{
+	width:80%;
+	padding:10px;
+	color:#333;
+	margin-left:20px;
+	margin-bottom:10px;
+	
+	}
+#divMoreFolders a.vermas{
+	color:#333;
+}
+#divMoreFolders ul li{
+	list-style-type: none;	
+	
+	}
+.pagination {
+   
+    display: block;
+    float: right;
+    font-size: 100%;
+    left: 818px;
+    padding-right: 3px;
+    padding-top: 6px;
+    text-align: right;
+    top: 16px;
+    width: 50%;
+	margin-right:4%;
+}
+.pagination span {
+   
+    margin: 0 0 0 0.5em;
+    padding-bottom: 10px;
+}
+.pagination a {
+   
+    margin: 0 0.2em;
+	background-color:#fff;
+}
+.pagination b {
+  
+    border-radius: 2px 2px 2px 2px;
+   
+    float: left;
+    margin: 0 0 0 0.5em;
+    width: 20px;
+}
+.pagination p {
+    padding-top: 5px;
+    text-align: right;
+}
+.pagination span {
+    border-radius: 2px 2px 2px 2px;
+    color: #666666 !important;
+    display: block;
+    float: left;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+.pagination a {
+    border: 1px solid #CCCCCC;
+    border-radius: 2px 2px 2px 2px;
+    color: #666666 !important;
+    display: block;
+    float: left;
+    font-size: 10px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 5px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #FFFFFF;
+    width: 20px;
+}
+.pagination a:hover, .pagination .current a {
+    background-color: #333333;
+    color: #FFFFFF;
+}
+ .buttondocument{
+	
+	background-repeat: no-repeat;
+	background-position: 4px 2px; 
+	  float:left;
+	  height:25px;
+	  width:auto;  
+	  margin-left:20px;
+	
+	  border-radius: 10px;
+	  padding:1px 8px 1px 8px;-moz-box-shadow: 2px 2px 8px #ccc;
+-webkit-box-shadow: 2px 2px 8px #ccc;
+box-shadow: 2px 2px 8px #ccc;
+    }
+	.buttondocument{
+	
+	  float:left;	
+	  width:auto;  
+	
+
+    }
+	 .buttondocument a{
+		 color:#333;
+		     }
+#Ubicacion ul li {
+	float: left;	
+	margin: 0 4px 0px 4px;
+	*margin: 0 4px 0px 4px;
+	width:auto;
+	*width:auto;
+}
+.Caccioneslistado {
+  
+    width: 43%;
+}
+#ListCaseFolderContent table.grid {
+	
+	width:99%;
+	*width:98.7%;
+	_width:98.7%;
+	
+}
+#BusquedaAvanzadaFiltros {
+
+
+    width: 98%;
+	margin-top:4px;
+	
+}
+.td-login-button {
+text-align:center;
+}
