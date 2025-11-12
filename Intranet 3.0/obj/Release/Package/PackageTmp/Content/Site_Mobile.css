@@ -1,0 +1,271 @@
+﻿/*Nuevos diseños*/
+.nav__icon {
+    padding: 15px 35px;
+    color: #fff;
+    width: auto;
+    display: flex;
+}
+
+    .nav__icon:hover {
+        cursor: pointer;
+    }
+/*Clase para remover el translateX del aside*/
+.active {
+    transform: translateX(0);
+}
+
+@media only screen and (max-width: 1400px) {
+    .body-login #MainContent_ctl00 .row {
+        display: flex;
+        width: 90%;
+        margin: 3rem auto;
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 830px) {
+    .body-login {
+        background: none !important;
+    }
+
+        .body-login #MainContent_ctl00 .row .col .box-logo {
+            display: none;
+        }
+
+    .box-logo {
+        display: none;
+    }
+
+    .body-login .row .col:nth-child(1) .title-login {
+        padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    /*medidas param ocultar el icono defs label pagina*/
+    .nav__icon {
+        display: none
+    }
+
+    header aside {
+        transform: translateX(0);
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    #container {
+        padding-left: 25px;
+    }
+
+    #pnl_title {
+        display: none;
+    }
+
+    #pnl_navegacion {
+        display: none;
+    }
+
+    body {
+        margin: 95px 0 20px 0;
+    }
+
+    header nav .nav_ {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+        header nav .nav_ div:first-child {
+            margin-right: auto;
+            gap: 2rem;
+        }
+
+    .box_img {
+        display: none;
+    }
+
+    .pnl_title {
+        float: none;
+    }
+
+    .pnl_table .pnl_body .pnl_title {
+        border-radius: 0;
+    }
+
+    .pnl-navegacion {
+        width: max-content;
+    }
+
+    .box_menu_crear {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #MainContent_txt_search {
+        width: 100%
+    }
+    /*Diseño de los datos del perfil*/
+    #MainContent_txt_fecha_ing {
+        margin: 0;
+    }
+
+    .modal-i-gl-body-small {
+        width: 90%;
+    }
+
+    .body-noti {
+        width: 90%;
+    }
+
+    .body-noti-cerrar {
+        width: max-content;
+    }
+
+    .pnl_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /*Estilos del modal*/
+    .modal-i-gl-body {
+        width: 90%;
+        height: 100vh;
+    }
+
+    .box_content_crear_vista {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .box_content_crear_vista .row {
+            flex-direction: column;
+            padding: 0;
+        }
+
+            .box_content_crear_vista .row .pnl_input {
+                margin: 15px 0;
+            }
+
+    .pnl_body .pnl_title .col:nth-child(1) {
+        margin: auto;
+    }
+
+    .pnl_body .pnl_title .col:nth-child(2) .card_info p span {
+        background: none !important;
+        padding: 0 !important;
+    }
+
+    .pnl_body .pnl_content p span {
+        background: none !important;
+        padding: 0 !important;
+    }
+}
+/*ocultar nombre txt_name nav*/
+@media only screen and (max-width: 479px) {
+    .lbl_perfil {
+        display: none;
+    }
+}
+
+/*aplicativos*/
+@media only screen and (max-width: 750px) {
+    .pnl_table .pnl_body {
+        flex-wrap: wrap;
+    }
+
+        .pnl_table .pnl_body .card-body-app {
+            margin: auto;
+            padding: 10px;
+        }
+
+    .pnl_body .card-body-app a:before {
+        top: 7px;
+        bottom: 8px;
+        left: 10px;
+        right: -10px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .card-icon-app {
+        width: 7rem;
+        height: 7rem;
+    }
+}
+
+
+/*perfil*/
+@media screen and (max-width: 1366px) {
+    .modal-i-gl-body-small {
+        width: 90%;
+    }
+
+    .modal-i-gl-content {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .pnl_table .pnl_body {
+        flex-direction: column;
+    }
+
+    .pnl_body div:nth-child(2) {
+        margin: 16px 0 0 0;
+        width: 100%;
+    }
+
+    .pnl_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pnl_body .pnl_title .col:nth-child(2) .card_info p {
+        color: rgba(255, 112, 82, 1);
+    }
+
+    .pnl_body div:nth-child(2) {
+        margin: 16px 0 0 0;
+        width: 100%;
+    }
+
+    .pnl_body .pnl_title .col:nth-child(2) p {
+        font-size: 13px !important;
+    }
+
+    .pnl_body .pnl_content p {
+        color: rgba(255, 112, 82, 1);
+    }
+}
+
+/*modal address*/
+@media only screen and (max-width: 750px) {
+    .address-card-i-body {
+        width: 90%;
+    }
+
+        .address-card-i-body .row {
+            display: block;
+        }
+
+            .address-card-i-body .row .col {
+                max-width: none;
+                width: 100%;
+            }
+}
+
+/*modal address*/
+@media only screen and (max-width: 750px) {
+    .body-content .filter {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .fa, .fas {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,150 @@
+﻿.separador {
+    width: 100%;
+    margin-top: 5px;
+    border-bottom: 2px solid black;
+    display: block;
+}
+
+.pnl_boton {
+    margin-top: 50px;
+    text-align: right;
+    display: none !important;
+}
+
+.pdfs {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla_encabezado {
+    text-align: center;
+    padding: 2px 4px;
+    background-color: transparent;
+    width: 100%;
+}
+
+    table.tabla_encabezado td.titulo {
+        font-style: italic;
+        font-weight: bold;
+    }
+
+.tex_Encabezado {
+    font-style: italic;
+}
+
+.tabla_encabezado p{
+    margin-bottom:0rem;
+}
+
+.informacion-Colaborador {
+    border: 2px solid black; /* Borde de la tabla */
+    border-radius: 10px; /* Radio del borde */
+    border-collapse: separate; /* Separa las celdas para ocultar las líneas internas */
+    border-spacing: 0; /* Ajusta el espacio entre las celdas */
+    width: 100%; /* Ancho total de la tabla */
+    margin-top: 10px;
+}
+
+    .informacion-Colaborador td {
+        width: 10%;
+        border-style: none;
+        padding: 8px;
+    }
+
+        .informacion-Colaborador td:nth-child(odd) {
+            text-align: left;
+            font-weight: bold
+        }
+
+        .informacion-Colaborador td:nth-child(even) {
+            text-align: left;
+            font-weight: normal;
+        }
+
+.encabezado-tabla-conceptos {
+    border: 2px solid black; /* Borde de la tabla */
+    border-radius: 10px; /* Radio del borde */
+    border-collapse: separate; /* Separa las celdas para ocultar las líneas internas */
+    border-spacing: 0; /* Ajusta el espacio entre las celdas */
+    width: 100%; /* Ancho total de la tabla */
+    margin-top: 10px;
+}
+
+    /* Estilo para las celdas */
+    .encabezado-tabla-conceptos td {
+        text-align: center; /* Centra el contenido */
+        padding: 8px; /* Espaciado interno de las celdas */
+        font-weight: bold
+    }
+
+        /* Ajustar el ancho de columnas específicas */
+        .encabezado-tabla-conceptos td:nth-child(1) { width: 5%; } /* Concepto */
+        .encabezado-tabla-conceptos td:nth-child(2) { width: 30%; text-align: left; } /* Descripción */
+        .encabezado-tabla-conceptos td:nth-child(3) { width: 10%; text-align: right; } /* Unidades */
+        .encabezado-tabla-conceptos td:nth-child(4) { width: 10%; text-align: right; }
+        .encabezado-tabla-conceptos td:nth-child(5) { width: 10%; text-align: right; } /* Vlr deducción */
+        .encabezado-tabla-conceptos td:nth-child(6) { width: 10%; }
+        .encabezado-tabla-conceptos td:nth-child(7) { width: 15%; }
+        .encabezado-tabla-conceptos td:nth-child(8) { width: 10%; }
+
+.tabla-conceptos {
+    margin-top: 10px;
+    width: 100%;
+}
+
+    .tabla-conceptos td {
+        border-style: none;
+        font-weight: normal;
+    }
+
+        /*Ajustar el ancho de las columnas */
+        .tabla-conceptos td:nth-child(1) { width: 7%; text-align: center; } /*Columna 1*/
+        .tabla-conceptos td:nth-child(2) { width: 28%; text-align: left; } /*Columna 2*/
+        .tabla-conceptos td:nth-child(3) { width: 10%; text-align: right; } /*Columna 3*/
+        .tabla-conceptos td:nth-child(4) { width: 10%; text-align: right; } /*Columna 4*/
+        .tabla-conceptos td:nth-child(5) { width: 10%; text-align: right; } /*Columna 5*/
+        .tabla-conceptos td:nth-child(6) { width: 10%; } /*Columna 6*/
+        .tabla-conceptos td:nth-child(7) { width: 15%; } /*Columna 7*/
+        .tabla-conceptos td:nth-child(8) { width: 10%; } /*Columna 8*/
+
+.tabla-totalesConceptos {
+    margin-top: 10px;
+    width: 100%;
+}
+
+    .tabla-totalesConceptos td {
+        border-style: none;
+        font-weight: normal;
+    }
+
+        /*Ajustar el ancho de las columnas */
+        .tabla-totalesConceptos td:nth-child(1) { width: 35%; text-align: right; font-weight: bold; } /*Columna 1*/
+        .tabla-totalesConceptos td:nth-child(2) { width: 10%; text-align: right; } /*Columna 2*/
+        .tabla-totalesConceptos td:nth-child(3) { width: 10%; text-align: right; } /*Columna 3*/
+        .tabla-totalesConceptos td:nth-child(4) { width: 10%; text-align: right; } /*Columna 4*/
+
+.tabla-totalNeto {
+    margin-top: 10px;
+    width: 100%;
+}
+
+    .tabla-totalNeto td {
+        border-style: none;
+        font-weight: normal;
+    }
+
+        /*Ajustar el ancho de las columnas */
+        .tabla-totalNeto td:nth-child(1) { width: 35%; text-align: right; font-weight: bold; } /*Columna 1*/
+        .tabla-totalNeto td:nth-child(2) { width: 10%; text-align: right; } /*Columna 2*/
+
+.btn-spacing {
+    margin-right: 5px; /* Espacio entre los botones */
+    margin-top: 5px; /* Espacio superior opcional */
+}
+
+.scale-down {
+    transform: scale(0.55); /* Escala del 75% del tamaño original */
+    transform-origin: top left; /* Mantener el origen de la escala */
+    height: auto;
+    width: auto;
+}

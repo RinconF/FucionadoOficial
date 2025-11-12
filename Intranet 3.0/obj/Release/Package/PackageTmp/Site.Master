@@ -1,0 +1,534 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Intranet_3._0.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Intranet</title>
+    <link rel="stylesheet" type="text/css" href="/Scripts/jquery.dataTables.css">
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+        <%: Scripts.Render("~/Scripts/jquery-3.3.1.min.js") %>
+        <%: Scripts.Render("~/Scripts/js/Site.js") %>
+        <%: Scripts.Render("~/Scripts/bootstrap.min.js") %>
+        <%: Scripts.Render("~/Scripts/js/for-direccion/address-i.js") %>
+    </asp:PlaceHolder>
+
+    <link type="text/css" rel="stylesheet" href="/Content/Site.css" />
+    <link type="text/css" rel="stylesheet" href="/Content/Site_Mobile.css"/>
+    <link rel="stylesheet" href="/Content/bootstrap.css" type="text/css" runat="server" />
+    <link rel="icon" type="image/png" href="Content/img/logotipo_intranet.png" />
+    
+    <!--programacion-->
+    <link rel="Stylesheet" href="/Scripts/css/bootstrap.min.css?v=1.5" />
+    <%--<link rel="Stylesheet" href="~/Scripts/css/Site.css?v=1.5" />--%>
+    <link rel="Stylesheet" href="/Scripts/css/messagebox.css"/>
+    <script src=<%= Page.ResolveUrl("~/Scripts/js/jquery-3.2.1.min.js") %>  type="text/javascript"></script>
+    <script src=<%= Page.ResolveUrl("~/Scripts/js/popper.min.js") %> type="text/javascript"></script>
+    <script src=<%= Page.ResolveUrl("~/Scripts/js/bootstrap.min.js") %> type="text/javascript"></script>
+    <script src=<%= Page.ResolveUrl("~/Scripts/js/messagebox.min.js") %> type="text/javascript"></script>
+    <script src=<%= Page.ResolveUrl("~/Scripts/js/html2pdf.bundle.min.js") %> type="text/javascript"></script>
+
+    <!--Components-->
+    <asp:ContentPlaceHolder ID="scripts_css" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="scripts_js" runat="server"></asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+    
+
+    <link rel="stylesheet" href="/Content/svg_lineicons/font-css/LineIcons.css" />
+
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="/Content/svg_fontawesome/css/all.css" />
+
+    <!--Animated-->
+    <link rel="stylesheet" href="/Content/animated/animated.css" />
+
+    <!--Address-->
+    <link rel="stylesheet" href="/Scripts/js/for-direccion/address-i.css" />
+    <%--<script defer src="./Scripts/js/Async.js"></script>--%>
+</head>
+<body>
+    <div class="loader"></div>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <header id="header_">
+            <div class="box_img" style = "width: 70px ;padding-left: 53px"; display: flex>
+                <div style="display: inline-flex">
+                    <img src="../../Content/img/ETIB_NEGATIVO.png" style="width:40px">
+                </div>
+            </div>
+
+            <nav>
+                <div class="nav_">
+                    <div class="nav__icon">
+                        <div class="nav__icon-menu" id="nav__icon-menu">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                        <div class="nav__icon-home">
+                            <i class="fas fa-home menu-icon" id="home"></i>
+                        </div>
+                    </div>
+
+
+                    <button type="button" class="btn_cerrar btn_cerrar_">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                    <div runat="server" id="txt_puntaje_name" class="lbl_perfil" style="text-align: center; display: none;">
+                        <!--puntaje-->
+                        <i class="fas fa-trophy icon-punt"></i>0
+                    </div>
+                    <div runat="server" id="txt_perfil_name" class="lbl_perfil">
+                        <!--nombre-->
+                    </div>
+                    <button type="button" runat="server" id="foto_back_user" class="btn_perfil">
+                        <asp:Panel runat="server" ID="pnl_imagen" CssClass="img_user"></asp:Panel>
+                    </button>
+                    <div class="mdl-body-perfil modal-noti-hide" runat="server" id="mdl_body_perfil">
+                        <ul id="ul_mdl_perfil" runat="server"></ul>
+                    </div>
+                </div>
+            </nav>
+            <aside runat="server" id="aside" style="width: max-content;">
+                <ul id="ul_aside_menu" runat="server">
+                </ul>
+            </aside>
+        </header>
+
+        <%--AGR - Se adiciona  style="padding-left:100px" en conbtainer para mejor visualización en dispositivos móviles--%>
+        <div class=" body-content" id="container">
+            <!--Loading-->
+            <div class="card-loading-spinner modal-noti-show">
+                <div class="triple-spinner"></div>
+            </div>
+
+            <!--Title-->
+            <asp:Panel runat="server" ID="pnl_title" CssClass="pnl_title">
+            </asp:Panel>
+            <!--Title-->
+
+            <!--Navegación-->
+            <asp:Panel runat="server" ID="pnl_navegacion" CssClass="pnl-navegacion">
+            </asp:Panel>
+            <!--Navegación-->
+
+            <br />
+            <br />
+            <br />
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+
+            <footer>
+                <p><strong>DIRECCIÓN DE PROYECTOS Y TECNOLOGÍA &copy; <%: DateTime.Now.Year %> Mietib</strong></p>
+                <div runat="server" id="archivo" class="lbl_perfil">
+                    <!--nombre-->
+                </div>
+            </footer>
+        </div>
+
+
+        <!--Modales notificación cerrar-->
+        <div class="modal-noti-cerrar modal-noti-hide animated fadeIn">
+            <div class="body-noti body-noti-cerrar">
+                <asp:LinkButton runat="server" ID="lnk_si" CssClass="lnk_btn" OnClick="Cerrar_Sesion">
+                    <i class="fas fa-check"></i> Salir
+                </asp:LinkButton>
+                <button runat="server" id="btn_no" class="lnk_btn btn-modal-close" type="button">
+                    <i class="fas fa-times"></i>Cancelar
+                </button>
+            </div>
+        </div>
+
+
+        <!--MODAL CONTRASEÑA-->
+        <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_cambiar_pass_obli">
+            <div class="modal-i-gl-body modal-i-gl-body-small">
+                <div class="modal-i-gl-title">
+                    <h1 class="title">Cambio de contraseña obligatorio</h1>
+                    <div class="modal-i-gl-cerrar">
+                        <!--<button type="button" class="btn-modal-close"><i class="fas fa-times"></i></button>-->
+                    </div>
+                </div>
+                <div class="modal-i-gl-content">
+
+                    <!--Aquí el contenido-->
+                    <section class="box_content_crear_vista">
+                        <p class="modal-i-gl-content-text">
+                            Por seguridad se hace la solicitud de la manera más cordial, 
+                            pero de carácter obligatorio,
+                            el cambio de la contraseña por defecto.
+                        </p>
+                        <div class="content row" style="display: block;">
+                            <div class="pnl_input col">
+                                <label style="position: absolute; margin-top: -20px; margin-left: 10px; font-size: 12px; font-weight: bold;">CONTRASEÑA NUEVA:</label>
+                                <i class="fas fa-lock"></i>
+                                <asp:TextBox runat="server" ID="txt_nueva_pass" type="password" placeholder="CONTRASEÑA NUEVA"></asp:TextBox>
+                            </div>
+                            <div class="pnl_input col" style="margin-top: 30px;">
+                                <label style="position: absolute; margin-top: -20px; margin-left: 10px; font-size: 12px; font-weight: bold;">
+                                    CONFIRMAR CONTRASEÑA NUEVA:
+                                    <span id="icon_verf_pass" class="far fa-check-circle correct"></span>
+                                </label>
+                                <i class="fas fa-lock"></i>
+                                <asp:TextBox runat="server" ID="txt_conf_pass" type="password" placeholder="CONFIRMAR CONTRASEÑA"></asp:TextBox>
+                            </div>
+                        </div>
+                        <button type="button" id="lnk_cambiar" class="lnk_btn_modal btn-modal-cambiar">Cambiar</button>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--Modales notificación-->
+    <div class="modal-noti modal-noti-hide animated fadeIn">
+        <div class="body-noti">
+            <p class="title-noti"><span class="fas fa-check"></span>Validación existosa</p>
+            <hr />
+            <p class="content-noti">Content correcto.</p>
+        </div>
+    </div>
+
+
+
+    <style>
+        .card-loading-spinner {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(255,255,255,1);
+            padding-top: 200px;
+            z-index: 100000;
+        }
+
+        .triple-spinner {
+            margin: auto;
+            display: block;
+            position: relative;
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top: 4px solid #FF5722;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+            .triple-spinner::before,
+            .triple-spinner::after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                border: 4px solid transparent;
+            }
+
+            .triple-spinner::before {
+                top: 5px;
+                left: 5px;
+                right: 5px;
+                bottom: 5px;
+                border-top-color: #FF9800;
+                -webkit-animation: spin 3s linear infinite;
+                animation: spin 3.5s linear infinite;
+            }
+
+            .triple-spinner::after {
+                top: 15px;
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                border-top-color: #FFC107;
+                -webkit-animation: spin 1.5s linear infinite;
+                animation: spin 1.75s linear infinite;
+            }
+
+        @-webkit-keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <div class="modal-console modal-noti-hide">
+        <div class="modal-console-title" id="console_title"></div>
+        <div class="modal-console-code" id="console_code"></div>
+        <div class="modal-console-print">
+            <input type="text" id="line_code_console" placeholder="CODE_" />
+        </div>
+    </div>
+    <script type="text/javascript" src="/Scripts/jquery-3.3.1.slim.min.js?v"></script>
+    <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js?v"></script>
+    <script type="text/javascript" src="/Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js?v"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.bundle.min.js?v"></script>
+    <script type="text/javascript" src="/Scripts/popper.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+    <script defer>
+        $(document).ready(async function () {
+            //MODAL
+            //README class="btn-modal" y data-id="aquí id modal" en el botón para abrir modal
+            $('body').on('click', '.btn-modal', function () {
+                let data_id = '#' + $(this).attr('data-id');
+                let modal = $(data_id).attr('class');
+                if (!modal.includes('modal-i-gl-hide')) {
+                    $(data_id).addClass('modal-i-gl-hide');
+                    $(data_id).removeClass('modal-i-gl-show');
+                }
+                else {
+                    $(data_id).addClass('modal-i-gl-show');
+                    $(data_id).removeClass('modal-i-gl-hide');
+                }
+            });
+            $('body').on('click', '.btn-modal-close', function () {
+                $('.modal-i-gl').addClass('modal-i-gl-hide');
+                $('.modal-i-gl').removeClass('modal-i-gl-show');
+            });
+
+
+            //modal notificación cerrar
+            $('body').on('click', '.modal-noti', function () {
+                $(".modal-noti").addClass("modal-noti-hide");
+                $(".modal-noti").removeClass("modal-noti-show");
+            });
+
+
+            //modal notificación cerrar sesión
+            $('body').on('click', '.btn_cerrar_', function () {
+                let modal = $(".modal-noti-cerrar").attr('class');
+                if (!modal.includes("modal-noti-hide")) {
+                    $(".modal-noti-cerrar").addClass("modal-noti-hide");
+                    $(".modal-noti-cerrar").removeClass("modal-noti-show");
+                }
+                else {
+                    $(".modal-noti-cerrar").addClass("modal-noti-show");
+                    $(".modal-noti-cerrar").removeClass("modal-noti-hide");
+
+                    $('.body-noti-cerrar').addClass('error'); //tipo notificación
+                }
+            });
+            //modal notificación cerrar
+            $('body').on('click', '.lnk_btn', function () {
+                $(".modal-noti-cerrar").addClass("modal-noti-hide");
+                $(".modal-noti-cerrar").removeClass("modal-noti-show");
+            });
+
+
+            //modal notificación perfil
+            $('body').on('click', '.btn_perfil', function () {
+                let modal = $(".mdl-body-perfil").attr('class');
+                if (!modal.includes("modal-noti-hide")) {
+                    $(".mdl-body-perfil").addClass("modal-noti-hide");
+                    $(".mdl-body-perfil").removeClass("modal-noti-show");
+                }
+                else {
+                    $(".mdl-body-perfil").addClass("modal-noti-show");
+                    $(".mdl-body-perfil").removeClass("modal-noti-hide");
+                }
+            });
+
+            $(".txt-user-input").keypress(function (e) {
+                //Validar campos numericos
+                var key = window.Event ? e.which : e.keyCode;
+                return (key >= 48 && key <= 57);
+            });
+
+
+
+            //validación y actualización
+            $("body").on("click", ".btn-modal-cambiar", function () {
+                let params = new URLSearchParams(location.search);
+                let Id_Usuario = params.get('Id_Usuario');
+
+                $.ajax({
+                    type: "POST",
+                    url: "WebService_Default.asmx/Actualizar_Contraseña",
+                    data: '{"Id_Usuario": "' + Id_Usuario + '","txt_nueva_pass": "' + $('#txt_nueva_pass').val() + '","txt_conf_pass": "' + $('#txt_conf_pass').val() + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resultado) {
+                        if ($('#txt_nueva_pass').val().length <= 6 || $('#txt_conf_pass').val().length <= 6) {
+                            $('.modal-noti').addClass('modal-noti-show');//agregar
+                            $('.modal-noti').removeClass('modal-noti-hide');//quitar
+                            $('.body-noti').attr("class", 'body-noti advert'); //tipo notificación
+                            $('.title-noti').html('<span class="fas fa-check"></span> Validación advertencia');//título
+                            $('.content-noti').html('La longitud de la contraseña debe ser mínimo de 7 caracteres.');//mensaje
+                            setTimeout(function () {
+                                $(".modal-noti").addClass("modal-noti-hide");
+                                $(".modal-noti").removeClass("modal-noti-show");
+                            }, 4000);
+                            return;
+                        }
+
+                        let items = resultado.d;
+                        if (items == "vacio") {
+                            //notificación
+                            $('.modal-noti').addClass('modal-noti-show');//agregar
+                            $('.modal-noti').removeClass('modal-noti-hide');//quitar
+                            $('.body-noti').attr("class", 'body-noti advert'); //tipo notificación
+                            $('.title-noti').html('<span class="fas fa-check"></span> Validación advertencia');//título
+                            $('.content-noti').html('Campos vacios, verifique e intente de nuevo.');//mensaje
+                            setTimeout(function () {
+                                $(".modal-noti").addClass("modal-noti-hide");
+                                $(".modal-noti").removeClass("modal-noti-show");
+                            }, 4000);
+                        }
+                        else if (items == "error") {
+                            //notificación
+                            $('.modal-noti').addClass('modal-noti-show');//agregar
+                            $('.modal-noti').removeClass('modal-noti-hide');//quitar
+                            $('.body-noti').attr("class", 'body-noti error'); //tipo notificación
+                            $('.title-noti').html('<span class="fas fa-times-circle"></span> Validación error');//título
+                            $('.content-noti').html('Error desde el servidor.');//mensaje
+                            setTimeout(function () {
+                                $(".modal-noti").addClass("modal-noti-hide");
+                                $(".modal-noti").removeClass("modal-noti-show");
+                            }, 4000);
+                        }
+                        else if (items == "0") {
+                            //notificación
+                            $('.modal-noti').addClass('modal-noti-show');//agregar
+                            $('.modal-noti').removeClass('modal-noti-hide');//quitar
+                            $('.body-noti').attr("class", 'body-noti error'); //tipo notificación
+                            $('.title-noti').html('<span class="fas fa-times-circle"></span> Validación error');//título
+                            $('.content-noti').html('Contraseña nueva no puede ser igual a la anterior.');//mensaje
+                            setTimeout(function () {
+                                $(".modal-noti").addClass("modal-noti-hide");
+                                $(".modal-noti").removeClass("modal-noti-show");
+                            }, 4000);
+                        }
+                        else {
+                            //notificación
+                            $('.modal-noti').addClass('modal-noti-show');//agregar
+                            $('.modal-noti').removeClass('modal-noti-hide');//quitar
+                            $('.body-noti').attr("class", 'body-noti sucess'); //tipo notificación
+                            $('.title-noti').html('<span class="fas fa-check-circle"></span> Validación correcta');//título
+                            $('.content-noti').html('Contraseña actualizada correctamente.');//mensaje
+                            setTimeout(function () {
+                                $(".modal-noti").addClass("modal-noti-hide");
+                                $(".modal-noti").removeClass("modal-noti-show");
+                            }, 4000);
+
+                            $('#txt_nueva_pass').val("");
+                            $('#txt_conf_pass').val("");
+                            location = window.location;
+                        }
+                    }
+                });
+            });
+            $("#txt_nueva_pass").keyup(function () {
+                if ($('#txt_nueva_pass').val() == $('#txt_conf_pass').val()) {
+                    $('#icon_verf_pass').removeAttr("class");
+                    $('#icon_verf_pass').addClass("far fa-check-circle correct");
+                }
+                else {
+                    $('#icon_verf_pass').removeAttr("class");
+                    $('#icon_verf_pass').addClass("far fa-times-circle err");
+                }
+            });
+            $("#txt_conf_pass").keyup(function () {
+                if ($('#txt_nueva_pass').val() == $('#txt_conf_pass').val()) {
+                    $('#icon_verf_pass').removeAttr("class");
+                    $('#icon_verf_pass').addClass("far fa-check-circle correct");
+                    $('#lnk_cambiar').removeAttr("disabled");
+                }
+                else {
+                    $('#icon_verf_pass').removeAttr("class");
+                    $('#icon_verf_pass').addClass("far fa-times-circle err");
+                    $('#lnk_cambiar').attr("disabled", "disabled");
+                }
+            });
+            Validar_Password();
+            //validación end
+
+
+            //btn principales logotipo y inicio
+            $("body").on("click", ".box_img div img", function () {
+                let params = new URLSearchParams(location.search);
+                let Id_Usuario = params.get('Id_Usuario');
+                location = "../../Default.aspx?Id_Usuario=" + Id_Usuario;
+            });
+            $("body").on("click", ".li-home", function () {
+                let params = new URLSearchParams(location.search);
+                let Id_Usuario = params.get('Id_Usuario');
+                location = "../../Default.aspx?Id_Usuario=" + Id_Usuario;
+            });
+
+            //Activar ménu lateral
+            $("body").on("click", ".menu-icon", function () {
+                let params = new URLSearchParams(location.search);
+                let Id_Usuario = params.get('Id_Usuario');
+                location = "../../Default.aspx?Id_Usuario=" + Id_Usuario;
+            });
+        });
+
+        function Validar_Password() {
+            let params = new URLSearchParams(location.search);
+            let Id_Usuario = params.get('Id_Usuario');
+            $.ajax({
+                type: "POST",
+                url: "WebService_Default.asmx/Validar_Password",
+                data: '{"Id_Usuario": "' + Id_Usuario + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    let items = resultado.d;
+                    if (items == "1") {
+                        $("#modal_cambiar_pass_obli").addClass('modal-i-gl-show');
+                        $("#modal_cambiar_pass_obli").removeClass('modal-i-gl-hide');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DCL.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DCL.pdb
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\BouncyCastle.Crypto.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DocumentFormat.OpenXml.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DocumentFormat.OpenXml.Framework.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\itextsharp.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\SimpleImpersonation.dll
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DocumentFormat.OpenXml.xml
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\DocumentFormat.OpenXml.Framework.xml
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\itextsharp.xml
+C:\Repositorios\GIT\MIETIB\DCL\bin\Release\SimpleImpersonation.xml
+C:\Repositorios\GIT\MIETIB\DCL\obj\Release\DCL.csproj.AssemblyReference.cache
+C:\Repositorios\GIT\MIETIB\DCL\obj\Release\DCL.csproj.CoreCompileInputs.cache
+C:\Repositorios\GIT\MIETIB\DCL\obj\Release\DCL.csproj.Up2Date
+C:\Repositorios\GIT\MIETIB\DCL\obj\Release\DCL.dll
+C:\Repositorios\GIT\MIETIB\DCL\obj\Release\DCL.pdb

@@ -1,0 +1,11 @@
+.filetree span.container, .filetree span.file, .filetree span.tipomanual { padding: 1px 0 1px 20px; display: block; }
+.filetree span.container {
+	background-image: url(../../Content/images/caja_abierta.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+.filetree li.expandable span.container { 
+	background-image: url(../../Content/Images/caja_cerrada.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
