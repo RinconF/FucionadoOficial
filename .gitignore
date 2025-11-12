@@ -15,3 +15,8 @@
 # Carpeta de videos específica
 Intranet 3.0/Content/video/
 Intranet 3.0/Vistas/Img/Encuestas/*.pdf
+
+# Rutas específicas de videos pesados
+Intranet 3.0/Content/video/Id_Evaluacion_7.mp4
+Intranet 3.0/Content/video/5-Presentación Núcleo Familiar.mp4
+Intranet 3.0/Content/video/Id_Evaluacion_8.mp4
