@@ -92,6 +92,8 @@
     <Compile Include="Int_Noticias.cs" />
     <Compile Include="Int_NotificacionesCollection.cs" />
     <Compile Include="Int_NoticiasCollection.cs" />
+    <Compile Include="Int_Popup.cs" />
+    <Compile Include="Int_PopupCollection.cs" />
     <Compile Include="Int_Solicitud.cs" />
     <Compile Include="Int_SolicitudCollection.cs" />
     <Compile Include="Int_Usuarios.cs" />

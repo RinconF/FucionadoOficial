@@ -83,6 +83,7 @@
     <Compile Include="Int_Nucleo_Familiar_BRL.cs" />
     <Compile Include="Int_Notificaciones_BRL.cs" />
     <Compile Include="Int_Noticias_BRL.cs" />
+    <Compile Include="Int_Popup_BRL.cs" />
     <Compile Include="Int_Solicitud_BRL.cs" />
     <Compile Include="Int_Usuarios_BRL.cs" />
     <Compile Include="Nomina_Desprendibles_BRL.cs" />

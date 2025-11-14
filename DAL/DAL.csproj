@@ -83,6 +83,7 @@
     <Compile Include="Int_Nucleo_FamiliarFactory.cs" />
     <Compile Include="Int_NotificacionesFactory.cs" />
     <Compile Include="Int_NoticiasFactory.cs" />
+    <Compile Include="Int_PopupFactory.cs" />
     <Compile Include="Int_SolicitudFactory.cs" />
     <Compile Include="Int_UsuariosFactory.cs" />
     <Compile Include="FactoryBase.cs" />
