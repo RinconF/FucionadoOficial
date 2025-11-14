@@ -73,21 +73,38 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="scripts_js" runat="server">
     <script>
         $(document).ready(function () {
-            // Validación de archivos
+            const extensionesImagen = ["jpg", "jpeg", "gif", "png", "jfif"];
+            const extensionesVideo = ["mp4", "webm", "ogg"];
+            const limiteImagen = 3 * 1024 * 1024; // 3 MB
+            const limiteVideo = 50 * 1024 * 1024; // 50 MB
+
             $('body').on('change', 'input[type="file"]', function () {
-                var ext = $(this).val().split('.').pop().toLowerCase();
-                if ($(this).val() != '') {
-                    if (ext === "jpg" || ext === "jpeg" || ext === "gif" || ext === "png" || ext === "jfif") {
-                        if ($(this)[0].files[0].size > 3072000) {
-                            alert("El documento excede el tamaño máximo de 3MB");
-                            $(this).val('');
-                        }
-                    }
-                    else {
-                        $(this).val('');
-                        alert("Extensión no permitida: " + ext);
-                    }
+                const inputFile = $(this)[0];
+                if (!inputFile.files || inputFile.files.length === 0) {
+                    return;
                 }
+
+                const archivo = inputFile.files[0];
+                const ext = archivo.name.split('.').pop().toLowerCase();
+
+                if (extensionesImagen.includes(ext)) {
+                    if (archivo.size > limiteImagen) {
+                        alert("La imagen excede el tamaño máximo de 3MB");
+                        inputFile.value = '';
+                    }
+                    return;
+                }
+
+                if (extensionesVideo.includes(ext)) {
+                    if (archivo.size > limiteVideo) {
+                        alert("El video excede el tamaño máximo de 50MB");
+                        inputFile.value = '';
+                    }
+                    return;
+                }
+
+                alert("Extensión no permitida: " + ext + ". Solo se permiten imágenes (JPG, PNG, GIF, JFIF) o videos (MP4, WEBM, OGG).");
+                inputFile.value = '';
             });
         });
     </script>
@@ -240,11 +257,23 @@
                     <div class="content row">
                         <div class="pnl_input col">
                             <label><i class="fas fa-images"></i> Cargar imagen</label>
-                            <asp:FileUpload 
-                                runat="server" 
-                                ID="fud_Adjunto" 
+                            <asp:FileUpload
+                                runat="server"
+                                ID="fud_Adjunto"
                                 accept="image/png, image/gif, image/jpeg, image/jfif" />
-                            <small style="color: #7f8c8d;">Tamaño máximo: 3MB. Formatos: JPG, PNG, GIF</small>
+                            <small style="color: #7f8c8d;">Tamaño máximo imagen: 3MB. Formatos: JPG, PNG, GIF, JFIF</small>
+                        </div>
+                    </div>
+
+                    <!-- Cargar Video -->
+                    <div class="content row">
+                        <div class="pnl_input col">
+                            <label><i class="fas fa-video"></i> Cargar video (opcional)</label>
+                            <asp:FileUpload
+                                runat="server"
+                                ID="fud_Video"
+                                accept="video/mp4, video/webm, video/ogg" />
+                            <small style="color: #7f8c8d;">Tamaño máximo video: 50MB. Formatos: MP4, WEBM, OGG</small>
                         </div>
                     </div>
 
@@ -364,12 +393,26 @@
                     <div class="content row">
                         <div class="pnl_input col">
                             <label><i class="fas fa-images"></i> Cambiar imagen (opcional)</label>
-                            <asp:FileUpload 
-                                runat="server" 
-                                ID="fud_Adjunto_pub" 
+                            <asp:FileUpload
+                                runat="server"
+                                ID="fud_Adjunto_pub"
                                 accept="image/png, image/gif, image/jpeg, image/jfif" />
                             <small style="color: #7f8c8d;">
                                 Deja vacío si no quieres cambiar la imagen actual
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Cargar Video -->
+                    <div class="content row">
+                        <div class="pnl_input col">
+                            <label><i class="fas fa-video"></i> Cambiar video (opcional)</label>
+                            <asp:FileUpload
+                                runat="server"
+                                ID="fud_Video_pub"
+                                accept="video/mp4, video/webm, video/ogg" />
+                            <small style="color: #7f8c8d;">
+                                Deja vacío si deseas conservar el video actual
                             </small>
                         </div>
                     </div>

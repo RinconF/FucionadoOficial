@@ -88,6 +88,7 @@ namespace DAL
             AddCmdParameter("@Titulo", _obj.Titulo, ParameterDirection.Input);
             AddCmdParameter("@Descripcion", _obj.Descripcion, ParameterDirection.Input);
             AddCmdParameter("@Imagen", _obj.Imagen, ParameterDirection.Input);
+            AddCmdParameter("@Video", _obj.Video, ParameterDirection.Input);
             AddCmdParameter("@Url", _obj.Url, ParameterDirection.Input);
             AddCmdParameter("@Fecha_Creacion", _obj.Fecha_Creacion, ParameterDirection.Input);
             AddCmdParameter("@Estado", _obj.Estado, ParameterDirection.Input);
