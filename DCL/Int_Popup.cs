@@ -40,6 +40,13 @@ namespace DCL
             set { mvarImagen = value; }
         }
 
+        String mvarVideo = null;
+        public String Video
+        {
+            get { return mvarVideo; }
+            set { mvarVideo = value; }
+        }
+
         String mvarUrl = null;
         public String Url
         {
@@ -114,6 +121,7 @@ namespace DCL
             String varTitulo,
             String varDescripcion,
             String varImagen,
+            String varVideo,
             String varUrl,
             DateTime? varFecha_Creacion,
             Boolean? varEstado,
@@ -126,6 +134,7 @@ namespace DCL
             mvarTitulo = varTitulo;
             mvarDescripcion = varDescripcion;
             mvarImagen = varImagen;
+            mvarVideo = varVideo;
             mvarUrl = varUrl;
             mvarFecha_Creacion = varFecha_Creacion;
             mvarEstado = varEstado;
@@ -145,8 +154,17 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            mvarImagen = obj["Imagen"] != DBNull.Value ?
-                Convert.ToString(obj["Imagen"]) : null;
+            if (HasColumn(obj, "Imagen"))
+            {
+                mvarImagen = obj["Imagen"] != DBNull.Value ?
+                    Convert.ToString(obj["Imagen"]) : null;
+            }
+
+            if (HasColumn(obj, "Video"))
+            {
+                mvarVideo = obj["Video"] != DBNull.Value ?
+                    Convert.ToString(obj["Video"]) : null;
+            }
 
             mvarUrl = obj["Url"] != DBNull.Value ?
                 Convert.ToString(obj["Url"]) : null;
@@ -189,8 +207,17 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            mvarImagen = obj["Imagen"] != DBNull.Value ?
-                Convert.ToString(obj["Imagen"]) : null;
+            if (HasColumn(obj, "Imagen"))
+            {
+                mvarImagen = obj["Imagen"] != DBNull.Value ?
+                    Convert.ToString(obj["Imagen"]) : null;
+            }
+
+            if (HasColumn(obj, "Video"))
+            {
+                mvarVideo = obj["Video"] != DBNull.Value ?
+                    Convert.ToString(obj["Video"]) : null;
+            }
 
             mvarUrl = obj["Url"] != DBNull.Value ?
                 Convert.ToString(obj["Url"]) : null;
@@ -205,5 +232,22 @@ namespace DCL
                 Convert.ToInt32(obj["Tiempo_Visualizacion"]) : (Int32?)null;
         }
         #endregion
+        private static bool HasColumn(IDataRecord record, string columnName)
+        {
+            try
+            {
+                record.GetOrdinal(columnName);
+                return true;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+        }
+
+        private static bool HasColumn(DataRow row, string columnName)
+        {
+            return row.Table.Columns.Contains(columnName);
+        }
     }
 }
