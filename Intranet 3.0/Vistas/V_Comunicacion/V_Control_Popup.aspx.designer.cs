@@ -114,6 +114,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.FileUpload fud_Adjunto;
 
         /// <summary>
+        /// Control fud_Video.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fud_Video;
+
+        /// <summary>
         /// Control lnk_crear_.
         /// </summary>
         /// <remarks>
@@ -202,6 +211,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fud_Adjunto_pub;
+
+        /// <summary>
+        /// Control fud_Video_pub.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fud_Video_pub;
 
         /// <summary>
         /// Control LinkButton1.

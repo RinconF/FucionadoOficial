@@ -20,6 +20,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         const string CONST_ERRORPERMISOS = "al intentar acceder a archivos. ACCESO DENEGADO. ";
         const string CONST_ERROR = " - ERROR: ";
 
+        private static readonly HashSet<string> ExtensionesImagen = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".png",
+            ".jfif"
+        };
+
+        private static readonly HashSet<string> ExtensionesVideo = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".mp4",
+            ".webm",
+            ".ogg"
+        };
+
         // ========================================
         // PAGE INIT
         // ========================================
@@ -119,8 +135,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         // ========================================
         protected void Crear_nueva_publicacion(object sender, EventArgs e)
         {
-            string imagenPopupRemoto = "";
-            string imagenPopupLocal = "";
+            string imagenPopupRemoto = string.Empty;
             AG_Utils utilidades = new AG_Utils();
 
             try
@@ -131,79 +146,223 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
                 string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
                 string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                string rutaPopupsRemoto = $@"{pathRemote}publicaciones\Popup\";
-                string rutaPopupsLocal = pathServer + ambiente + $@"\intranet\publicaciones\Popup\";
+                string rutaPopupsRemoto = Path.Combine(pathRemote, "publicaciones", "Popup");
+                string rutaPopupsLocal = Path.Combine(pathServer, ambiente, "intranet", "publicaciones", "Popup");
+                string rutaVideosRemoto = Path.Combine(rutaPopupsRemoto, "Videos");
+                string rutaVideosLocal = Path.Combine(rutaPopupsLocal, "Videos");
                 string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
 
-                Int_Popup popup = new Int_Popup();
-                popup.Titulo = txt_titulo.Text;
-                popup.Descripcion = txt_descripcion.Text;
-                popup.Url = txt_url.Text;
-                popup.Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo.Text)
-                    ? 5
-                    : Convert.ToInt32(txt_tiempo.Text);
-                popup.Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio.Text);
-                popup.Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin.Text)
-                    ? (DateTime?)null
-                    : Convert.ToDateTime(txt_fecha_fin.Text);
-                popup.Estado = true;
-                popup.RolesIds = ObtenerRolesSeleccionados();
+                if (!fud_Adjunto.HasFile && !fud_Video.HasFile)
+                {
+                    ScriptManager.RegisterStartupScript(
+                        PanelUpdate,
+                        GetType(),
+                        "PopupArchivoRequerido",
+                        "alert('Debes adjuntar al menos una imagen o un video para crear el popup.');",
+                        true
+                    );
+                    return;
+                }
+
+                Int_Popup popup = new Int_Popup
+                {
+                    Titulo = txt_titulo.Text,
+                    Descripcion = txt_descripcion.Text,
+                    Url = txt_url.Text,
+                    Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo.Text)
+                        ? 5
+                        : Convert.ToInt32(txt_tiempo.Text),
+                    Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio.Text),
+                    Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin.Text)
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(txt_fecha_fin.Text),
+                    Estado = true,
+                    RolesIds = ObtenerRolesSeleccionados()
+                };
+
+                if (!conectaAdjuntos)
+                {
+                    utilidades.logError(
+                        $"{CONST_ERRORCONEXIONSERV} {ipServer}. \n" +
+                        $"Método: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \n" +
+                        $"Usuario: {Id_Usuario}",
+                        pathLog
+                    );
+                    return;
+                }
+
+                int consecutivo = ObtenerConsecutivoPopup();
+                string consecutivoTexto = consecutivo.ToString();
+
+                bool archivoProcesado = false;
 
                 if (fud_Adjunto.HasFile)
                 {
-                    if (conectaAdjuntos)
+                    string extensionArchivo = Path.GetExtension(fud_Adjunto.FileName);
+                    if (EsExtensionImagen(extensionArchivo))
                     {
-                        DataTable dataTable = Int_Popup_BRL.SelectTable(new Int_Popup(), 17);
-                        int consecutivo;
-
-                        string Resultado = dataTable.Rows[0][0].ToString();
-                        if (string.IsNullOrEmpty(Resultado))
-                        {
-                            consecutivo = 1;
-                        }
-                        else
-                        {
-                            consecutivo = (int)Convert.ToInt64(dataTable.Rows[0].ItemArray.GetValue(0));
-                            consecutivo++;
-                        }
-
-                        string nombreOriginalArchivo = txt_titulo.Text;
-                        string extensionArchivo = Path.GetExtension(fud_Adjunto.FileName);
-                        string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(
-                            nombreOriginalArchivo,
-                            consecutivo.ToString(),
-                            extensionArchivo
+                        string rutaRemotaImagen = GuardarArchivoPopup(
+                            string.IsNullOrWhiteSpace(txt_titulo.Text) ? Path.GetFileNameWithoutExtension(fud_Adjunto.FileName) : txt_titulo.Text,
+                            consecutivoTexto,
+                            rutaPopupsLocal,
+                            rutaPopupsRemoto,
+                            fud_Adjunto,
+                            Id_Usuario,
+                            utilidades
                         );
 
-                        var (guardaImagenLocal, guardaImagenRemota, rutaPopupRemoto) =
-                            utilidades.TratamientoNoticias(
-                                nombreFinalArchivo,
-                                consecutivo.ToString(),
+                        if (!string.IsNullOrEmpty(rutaRemotaImagen))
+                        {
+                            popup.Imagen = rutaRemotaImagen;
+                            imagenPopupRemoto = rutaRemotaImagen;
+                            archivoProcesado = true;
+                        }
+                    }
+                    else
+                    {
+                        utilidades.logError(
+                            $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de imagen no permitida: {extensionArchivo}",
+                            pathLog
+                        );
+                    }
+                }
+
+                if (fud_Video.HasFile)
+                {
+                    string extensionVideo = Path.GetExtension(fud_Video.FileName);
+                    if (EsExtensionVideo(extensionVideo))
+                    {
+                        string rutaRemotaVideo = GuardarArchivoPopup(
+                            string.IsNullOrWhiteSpace(txt_titulo.Text) ? Path.GetFileNameWithoutExtension(fud_Video.FileName) : txt_titulo.Text,
+                            consecutivoTexto,
+                            rutaVideosLocal,
+                            rutaVideosRemoto,
+                            fud_Video,
+                            Id_Usuario,
+                            utilidades
+                        );
+
+                        if (!string.IsNullOrEmpty(rutaRemotaVideo))
+                        {
+                            popup.Video = rutaRemotaVideo;
+                            videoPopupRemoto = rutaRemotaVideo;
+                            archivoProcesado = true;
+                        }
+                    }
+                    else
+                    {
+                        utilidades.logError(
+                            $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de video no permitida: {extensionVideo}",
+                            pathLog
+                        );
+                    }
+                }
+
+                if (archivoProcesado)
+                {
+                    Int_Popup_BRL.InsertOrUpdate(popup, 2);
+                }
+                else
+                {
+                    utilidades.logError(
+                        $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nRegistro POPUP no almacenado en BD. Los archivos no fueron almacenados.",
+                        pathLog
+                    );
+                    if (!string.IsNullOrEmpty(imagenPopupRemoto) && File.Exists(imagenPopupRemoto))
+                        File.Delete(imagenPopupRemoto);
+                    if (!string.IsNullOrEmpty(videoPopupRemoto) && File.Exists(videoPopupRemoto))
+                        File.Delete(videoPopupRemoto);
+                }
+
+                Page.Response.Redirect(Page.Request.Url.ToString(), false);
+            }
+            catch (Exception ex)
+            {
+                utilidades.logError(
+                    $"{CONST_ERROR} {System.Reflection.MethodBase.GetCurrentMethod().Name}\\n" +
+                    $"{ex.Message}\\nLos archivos POPUP no fueron almacenados.",
+                    pathLog
+                );
+                if (utilidades.impersonateValidUser())
+                {
+                    if (!string.IsNullOrEmpty(imagenPopupRemoto) && File.Exists(imagenPopupRemoto))
+                        File.Delete(imagenPopupRemoto);
+                    if (!string.IsNullOrEmpty(videoPopupRemoto) && File.Exists(videoPopupRemoto))
+                        File.Delete(videoPopupRemoto);
+                    utilidades.undoImpersonation();
+                }
+            }
+        }
+
+        // ========================================
+        // ACTUALIZAR POPUP
+        // ========================================
+        protected void Actualizar_datos_publicacion(object sender, EventArgs e)
+        {
+            string imagenPopupRemoto = string.Empty;
+            AG_Utils utilidades = new AG_Utils();
+
+            try
+            {
+                pathLog = Server.MapPath(@"~/logs");
+                ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
+                bool conectaAdjuntos = utilidades.Ping(ipServer);
+                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
+                string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
+                string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
+                string rutaPopupsRemoto = Path.Combine(pathRemote, "publicaciones", "Popup");
+                string rutaPopupsLocal = Path.Combine(pathServer, ambiente, "intranet", "publicaciones", "Popup");
+                string rutaVideosRemoto = Path.Combine(rutaPopupsRemoto, "Videos");
+                string rutaVideosLocal = Path.Combine(rutaPopupsLocal, "Videos");
+                string idPopupSeleccionado = Request.Form["rd_estado_vista"];
+                string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
+
+                Int_Popup popup = new Int_Popup
+                {
+                    Id_Popup = Convert.ToInt32(idPopupSeleccionado),
+                    Titulo = txt_titulo_pub.Text,
+                    Descripcion = txt_descripcion_pub.Text,
+                    Url = txt_url_pub.Text,
+                    Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo_pub.Text)
+                        ? 5
+                        : Convert.ToInt32(txt_tiempo_pub.Text),
+                    Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio_pub.Text),
+                    Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin_pub.Text)
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(txt_fecha_fin_pub.Text),
+                    Estado = ddl_estado_pub.SelectedValue == "1",
+                    RolesIds = ObtenerRolesSeleccionadosActualizar()
+                };
+
+                if (fud_Adjunto_pub.HasFile)
+                {
+                    if (conectaAdjuntos)
+                    {
+                        string extensionArchivo = Path.GetExtension(fud_Adjunto_pub.FileName);
+                        if (EsExtensionImagen(extensionArchivo))
+                        {
+                            string rutaRemotaImagen = GuardarArchivoPopup(
+                                string.IsNullOrWhiteSpace(txt_titulo_pub.Text) ? Path.GetFileNameWithoutExtension(fud_Adjunto_pub.FileName) : txt_titulo_pub.Text,
+                                idPopupSeleccionado,
                                 rutaPopupsLocal,
                                 rutaPopupsRemoto,
-                                fud_Adjunto,
+                                fud_Adjunto_pub,
                                 Id_Usuario,
-                                pathLog
+                                utilidades
                             );
 
-                        imagenPopupRemoto = rutaPopupRemoto;
-
-                        if (guardaImagenRemota && guardaImagenLocal && !string.IsNullOrEmpty(imagenPopupRemoto))
-                        {
-                            popup.Imagen = imagenPopupRemoto;
-                            Int_Popup_BRL.InsertOrUpdate(popup, 2);
+                            if (!string.IsNullOrEmpty(rutaRemotaImagen))
+                            {
+                                popup.Imagen = rutaRemotaImagen;
+                                imagenPopupRemoto = rutaRemotaImagen;
+                            }
                         }
                         else
                         {
                             utilidades.logError(
-                                $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n" +
-                                "Registro POPUP no almacenado en BD. Los archivos no fueron almacenados.",
+                                $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de imagen no permitida: {extensionArchivo}",
                                 pathLog
                             );
-                            if (File.Exists(imagenPopupRemoto))
-                                File.Delete(imagenPopupRemoto);
-                            if (File.Exists(imagenPopupLocal))
-                                File.Delete(imagenPopupLocal);
                         }
                     }
                     else
@@ -217,89 +376,44 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     }
                 }
 
-                Page.Response.Redirect(Page.Request.Url.ToString(), false);
-            }
-            catch (Exception ex)
-            {
-                utilidades.logError(
-                    $"{CONST_ERROR} {System.Reflection.MethodBase.GetCurrentMethod().Name}\n" +
-                    $"{ex.Message}\nLos archivos POPUP no fueron almacenados.",
-                    pathLog
-                );
-                if (utilidades.impersonateValidUser())
+                if (fud_Video_pub.HasFile)
                 {
-                    if (File.Exists(imagenPopupRemoto))
-                        File.Delete(imagenPopupRemoto);
-                    if (File.Exists(imagenPopupLocal))
-                        File.Delete(imagenPopupLocal);
-                    utilidades.undoImpersonation();
-                }
-            }
-        }
+                    if (conectaAdjuntos)
+                    {
+                        string extensionVideo = Path.GetExtension(fud_Video_pub.FileName);
+                        if (EsExtensionVideo(extensionVideo))
+                        {
+                            string rutaRemotaVideo = GuardarArchivoPopup(
+                                string.IsNullOrWhiteSpace(txt_titulo_pub.Text) ? Path.GetFileNameWithoutExtension(fud_Video_pub.FileName) : txt_titulo_pub.Text,
+                                idPopupSeleccionado,
+                                rutaVideosLocal,
+                                rutaVideosRemoto,
+                                fud_Video_pub,
+                                Id_Usuario,
+                                utilidades
+                            );
 
-        // ========================================
-        // ACTUALIZAR POPUP
-        // ========================================
-        protected void Actualizar_datos_publicacion(object sender, EventArgs e)
-        {
-            string imagenPopupRemoto = "";
-            string imagenPopupLocal = "";
-            AG_Utils utilidades = new AG_Utils();
-
-            try
-            {
-                pathLog = Server.MapPath(@"~/logs");
-                ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
-                bool conectaAdjuntos = utilidades.Ping(ipServer);
-                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
-                string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
-                string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                string rutaPopupsRemoto = $@"{pathRemote}publicaciones\Popup\";
-                string rutaPopupsLocal = pathServer + ambiente + $@"\intranet\publicaciones\Popup\";
-                string idPopupSeleccionado = Request.Form["rd_estado_vista"];
-                string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
-
-                Int_Popup popup = new Int_Popup();
-                popup.Id_Popup = Convert.ToInt32(idPopupSeleccionado);
-                popup.Titulo = txt_titulo_pub.Text;
-                popup.Descripcion = txt_descripcion_pub.Text;
-                popup.Url = txt_url_pub.Text;
-                popup.Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo_pub.Text)
-                    ? 5
-                    : Convert.ToInt32(txt_tiempo_pub.Text);
-                popup.Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio_pub.Text);
-                popup.Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin_pub.Text)
-                    ? (DateTime?)null
-                    : Convert.ToDateTime(txt_fecha_fin_pub.Text);
-                popup.Estado = ddl_estado_pub.SelectedValue == "1";
-                popup.RolesIds = ObtenerRolesSeleccionadosActualizar();
-
-                if (fud_Adjunto_pub.HasFile && conectaAdjuntos)
-                {
-                    string nombreOriginalArchivo = txt_titulo_pub.Text;
-                    string extensionArchivo = Path.GetExtension(fud_Adjunto_pub.FileName);
-                    string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(
-                        nombreOriginalArchivo,
-                        idPopupSeleccionado,
-                        extensionArchivo
-                    );
-
-                    var (guardaImagenLocal, guardaImagenRemota, rutaPopupRemoto) =
-                        utilidades.TratamientoNoticias(
-                            nombreFinalArchivo,
-                            idPopupSeleccionado,
-                            rutaPopupsLocal,
-                            rutaPopupsRemoto,
-                            fud_Adjunto_pub,
-                            Id_Usuario,
+                            if (!string.IsNullOrEmpty(rutaRemotaVideo))
+                            {
+                                popup.Video = rutaRemotaVideo;
+                            }
+                        }
+                        else
+                        {
+                            utilidades.logError(
+                                $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de video no permitida: {extensionVideo}",
+                                pathLog
+                            );
+                        }
+                    }
+                    else
+                    {
+                        utilidades.logError(
+                            $"{CONST_ERRORCONEXIONSERV} {ipServer}. \n" +
+                            $"Método: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \n" +
+                            $"Usuario: {Id_Usuario}",
                             pathLog
                         );
-
-                    imagenPopupRemoto = rutaPopupRemoto;
-
-                    if (guardaImagenRemota && guardaImagenLocal && !string.IsNullOrEmpty(imagenPopupRemoto))
-                    {
-                        popup.Imagen = imagenPopupRemoto;
                     }
                 }
 
@@ -417,27 +531,16 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (dt.Rows.Count > 0 && utilidades.impersonateValidUser())
                 {
-                    string archivoRemoto = dt.Rows[0]["Imagen"].ToString();
+                    string archivoImagen = dt.Columns.Contains("Imagen")
+                        ? dt.Rows[0]["Imagen"].ToString()
+                        : string.Empty;
 
-                    if (!string.IsNullOrEmpty(archivoRemoto))
-                    {
-                        var anexoFoto = archivoRemoto.Split('\\');
-                        List<string> arrayAnexoFoto = new List<string>(anexoFoto);
-                        int index = arrayAnexoFoto.FindIndex(x => x == ambiente);
+                    string archivoVideo = dt.Columns.Contains("Video")
+                        ? dt.Rows[0]["Video"].ToString()
+                        : string.Empty;
 
-                        if (index >= 0)
-                        {
-                            arrayAnexoFoto.RemoveRange(0, index);
-                        }
-
-                        string rutaCompleta = string.Join("\\", arrayAnexoFoto);
-                        string localTemp = $@"{pathServer}{rutaCompleta}";
-
-                        if (File.Exists(localTemp))
-                            File.Delete(localTemp);
-                        if (File.Exists(archivoRemoto))
-                            File.Delete(archivoRemoto);
-                    }
+                    EliminarArchivoFisico(archivoImagen, pathServer, ambiente);
+                    EliminarArchivoFisico(archivoVideo, pathServer, ambiente);
 
                     utilidades.undoImpersonation();
                 }
@@ -460,6 +563,102 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     pathLog
                 );
                 throw;
+            }
+        }
+
+        private static bool EsExtensionImagen(string extension)
+        {
+            return !string.IsNullOrWhiteSpace(extension) && ExtensionesImagen.Contains(extension);
+        }
+
+        private static bool EsExtensionVideo(string extension)
+        {
+            return !string.IsNullOrWhiteSpace(extension) && ExtensionesVideo.Contains(extension);
+        }
+
+        private int ObtenerConsecutivoPopup()
+        {
+            DataTable dataTable = Int_Popup_BRL.SelectTable(new Int_Popup(), 17);
+
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                string resultado = dataTable.Rows[0][0]?.ToString();
+                if (int.TryParse(resultado, out int consecutivo))
+                {
+                    return consecutivo + 1;
+                }
+            }
+
+            return 1;
+        }
+
+        private string GuardarArchivoPopup(
+            string nombreBase,
+            string consecutivo,
+            string rutaLocal,
+            string rutaRemota,
+            FileUpload archivo,
+            string idUsuario,
+            AG_Utils utilidades)
+        {
+            string nombreNormalizado = string.IsNullOrWhiteSpace(nombreBase)
+                ? Path.GetFileNameWithoutExtension(archivo.FileName)
+                : nombreBase;
+
+            string extensionArchivo = Path.GetExtension(archivo.FileName);
+            string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(
+                nombreNormalizado,
+                consecutivo,
+                extensionArchivo
+            );
+
+            var (guardaLocal, guardaRemoto, rutaRemotaArchivo) = utilidades.TratamientoNoticias(
+                nombreFinalArchivo,
+                consecutivo,
+                rutaLocal,
+                rutaRemota,
+                archivo,
+                idUsuario,
+                pathLog
+            );
+
+            if (guardaLocal && guardaRemoto && !string.IsNullOrEmpty(rutaRemotaArchivo))
+            {
+                return rutaRemotaArchivo;
+            }
+
+            return string.Empty;
+        }
+
+        private void EliminarArchivoFisico(string rutaRemota, string pathServer, string ambiente)
+        {
+            if (string.IsNullOrWhiteSpace(rutaRemota))
+            {
+                return;
+            }
+
+            string[] partes = rutaRemota.Split('\\');
+            List<string> segmentos = new List<string>(partes);
+            int index = segmentos.FindIndex(x => x.Equals(ambiente, StringComparison.OrdinalIgnoreCase));
+
+            if (index >= 0)
+            {
+                segmentos.RemoveRange(0, index);
+            }
+
+            segmentos.RemoveAll(string.IsNullOrWhiteSpace);
+            string rutaRelativa = string.Join("\\", segmentos);
+
+            string rutaLocal = Path.Combine(pathServer, rutaRelativa);
+
+            if (!string.IsNullOrWhiteSpace(rutaLocal) && File.Exists(rutaLocal))
+            {
+                File.Delete(rutaLocal);
+            }
+
+            if (File.Exists(rutaRemota))
+            {
+                File.Delete(rutaRemota);
             }
         }
 
