@@ -80,9 +80,10 @@
             </Scripts>
         </asp:ScriptManager>
 
-                <asp:HiddenField 
-            ID="hfIdUsuario" 
-            runat="server" 
+        <asp:HiddenField
+            ID="hfIdUsuario"
+            runat="server"
+            ClientIDMode="Static"
             Value='<%= Session["Id_Usuario"] %>' />
 
         <header id="header_">
@@ -593,32 +594,35 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
 
-                    fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
-                        method: "POST",
-                    headers: {"Content-Type": "application/json" },
-                    body: JSON.stringify({Id_Usuario: parseInt(userId) })
+            if (Number.isNaN(userId)) return;
+
+            fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ Id_Usuario: userId })
             })
-            .then(r => r.json())
-            .then(data => {
-                if (!data.d || data.d.length === 0) return;
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.d || data.d.length === 0) return;
 
                     mostrarPopupSecuencial(data.d, userId);
-            })
-            .catch(err => console.error("Error:", err));
+                })
+                .catch(err => console.error("Error:", err));
         });
 
-                    function mostrarPopupSecuencial(popups, userId) {
-                        let index = 0;
+        function mostrarPopupSecuencial(popups, userId) {
+            let index = 0;
 
-                    function mostrarSiguiente() {
+            function mostrarSiguiente() {
                 if (index >= popups.length) return;
 
-                    const p = popups[index];
+                const p = popups[index];
 
-                    const popup = {
-                        Id: p[0],
+                const popup = {
+                    Id: p[0],
                     Titulo: p[1],
                     Descripcion: p[2],
                     Imagen: p[3],
@@ -628,31 +632,31 @@
                 };
 
                 mostrarPopup(popup, () => {
-                        registrarVista(popup.Id, userId);
+                    registrarVista(popup.Id, userId);
                     index++;
                     mostrarSiguiente();
                 });
             }
 
-                    mostrarSiguiente();
+            mostrarSiguiente();
         }
 
-                    function mostrarPopup(popup, callback) {
+        function mostrarPopup(popup, callback) {
             const modal = document.createElement("div");
-                    modal.className = "modal-popup";
+            modal.className = "modal-popup";
 
-                    let media = "";
-                    if (popup.Imagen) {
-                        media = `<img src="${popup.Imagen}" class="popup-media" />`;
+            let media = "";
+            if (popup.Imagen) {
+                media = `<img src="${popup.Imagen}" class="popup-media" />`;
             }
-                    else if (popup.Video) {
-                        media = `
+            else if (popup.Video) {
+                media = `
                     <video autoplay controls class="popup-media">
                         <source src="${popup.Video}">
                     </video>`;
             }
 
-                    modal.innerHTML = `
+            modal.innerHTML = `
                     <div class="popup-container">
                         <h2>${popup.Titulo}</h2>
                         <p>${popup.Descripcion}</p>

@@ -7,12 +7,15 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", () => {
-            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
+
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+                body: JSON.stringify({ Id_Usuario: userId })
             })
                 .then(r => r.json())
                 .then(data => {
@@ -1937,12 +1940,15 @@
         window.addEventListener('load', quitarPadding);
 
         document.addEventListener("DOMContentLoaded", () => {
-            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
+
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+                body: JSON.stringify({ Id_Usuario: userId })
             })
                 .then(r => r.json())
                 .then(data => {
