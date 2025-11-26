@@ -305,55 +305,144 @@
         }
 
         .modal-popup {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 999999;
-    }
-    .popup-container {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        width: 450px;
-        max-width: 90%;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(0,0,0,.2);
-        font-family: Arial, sans-serif;
-    }
-    .popup-container h2 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        font-size: 20px;
-        color: #2c3e50;
-    }
-    .popup-container p {
-        font-size: 14px;
-        color: #34495e;
-    }
-    .popup-media {
-        max-width: 100%;
-        margin: 15px 0;
-        border-radius: 6px;
-    }
-    .popup-button {
-        background: #3498db;
-        padding: 10px 18px;
-        color: white;
-        border-radius: 5px;
-        display: inline-block;
-        margin-top: 8px;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-    }
-    .popup-cerrar {
-        margin-top: 10px;
-        background: #e74c3c;
-        color: white;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 31, 58, 0.55);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 999999;
+        }
+        .popup-card {
+            width: 520px;
+            max-width: min(90vw, 540px);
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 16px 45px rgba(12, 41, 72, 0.18);
+            padding: 22px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .popup-pill {
+            background: #e3f4ff;
+            color: #2b9ad6;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.2px;
+        }
+        .popup-progress {
+            color: #2a4257;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .popup-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+        .popup-illustration {
+            width: 180px;
+            height: 180px;
+            border-radius: 16px;
+            border: 1px solid #e6f1f8;
+            background: #f7fbff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .popup-media {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        .popup-media--empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5f7c92;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .popup-content h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #2a4257;
+            font-weight: 800;
+        }
+        .popup-content p {
+            margin: 8px 0 0;
+            color: #4b6274;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        .popup-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .popup-link {
+            border: 1px solid #2da4f2;
+            background: #e8f3ff;
+            color: #2da4f2;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 14px rgba(45, 164, 242, 0.15);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .popup-link:hover {
+            background: #d8ecff;
+            box-shadow: 0 10px 20px rgba(45, 164, 242, 0.2);
+        }
+        .popup-next {
+            background: linear-gradient(90deg, #2dbac1 0%, #2d9ff2 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(45, 164, 242, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .popup-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 28px rgba(45, 164, 242, 0.3);
+        }
+        @media (max-width: 520px) {
+            .popup-card {
+                width: 100%;
+                padding: 18px;
+            }
+            .popup-illustration {
+                width: 150px;
+                height: 150px;
+            }
+            .popup-actions {
+                justify-content: center;
+            }
+        }
         padding: 8px 14px;
         border-radius: 5px;
         border: none;
@@ -664,26 +753,36 @@
                         ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
                         <button class="popup-cerrar">Cerrar</button>
                     </div>
-            `;
+                `;
 
-            document.body.appendChild(modal);
+                document.body.appendChild(modal);
 
-            modal.querySelector(".popup-cerrar").onclick = () => {
-                modal.remove();
-                callback();
+                modal.querySelector(".popup-next").onclick = () => {
+                    modal.remove();
+                    callback();
+                };
+
+                modal.addEventListener("click", (event) => {
+                    if (event.target === modal) {
+                        modal.remove();
+                        callback();
+                    }
+                });
             };
         }
 
-        function registrarVista(idPopup, idUsuario) {
-            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    Id_Popup: parseInt(idPopup),
-                    Id_Usuario: parseInt(idUsuario),
-                    Interaccion: "vista"
-                })
-            });
+        if (typeof window.registrarVista !== "function") {
+            window.registrarVista = function (idPopup, idUsuario) {
+                fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        Id_Popup: parseInt(idPopup),
+                        Id_Usuario: parseInt(idUsuario),
+                        Interaccion: "vista",
+                    })
+                });
+            };
         }
     </script>
 </body>
