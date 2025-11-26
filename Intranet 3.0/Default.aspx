@@ -18,13 +18,10 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (window.popupSequenceInitialized) return;
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
 
-            const userId = window.obtenerIdUsuario();
-
-            if (!userId) return;
-
-            window.popupSequenceInitialized = true;
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
@@ -1973,14 +1970,10 @@
         window.addEventListener('load', quitarPadding);
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (window.popupSequenceInitialized) return;
-
             const userField = document.getElementById("hfIdUsuario");
             const userId = userField ? parseInt(userField.value, 10) : NaN;
 
             if (Number.isNaN(userId)) return;
-
-            window.popupSequenceInitialized = true;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",

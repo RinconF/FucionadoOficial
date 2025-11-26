@@ -694,13 +694,10 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (window.popupSequenceInitialized) return;
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
 
-            const userId = window.obtenerIdUsuario();
-
-            if (!userId) return;
-
-            window.popupSequenceInitialized = true;
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
@@ -716,65 +713,56 @@
                 .catch(err => console.error("Error:", err));
         });
 
-        if (typeof window.mostrarPopupSecuencial !== "function") {
-            window.mostrarPopupSecuencial = function (popups, userId) {
-                let index = 0;
-                const total = popups.length;
+        function mostrarPopupSecuencial(popups, userId) {
+            let index = 0;
 
-                const mostrarSiguiente = () => {
-                    if (index >= total) return;
+            function mostrarSiguiente() {
+                if (index >= popups.length) return;
 
-                    const p = popups[index];
+                const p = popups[index];
 
-                    const popup = {
-                        Id: p[0],
-                        Titulo: p[1],
-                        Descripcion: p[2],
-                        Imagen: p[3],
-                        Video: p[4],
-                        Url: p[5],
-                        Tiempo: p[6],
-                    };
-
-                    mostrarPopup(popup, index + 1, total, () => {
-                        registrarVista(popup.Id, userId);
-                        index++;
-                        mostrarSiguiente();
-                    });
+                const popup = {
+                    Id: p[0],
+                    Titulo: p[1],
+                    Descripcion: p[2],
+                    Imagen: p[3],
+                    Video: p[4],
+                    Url: p[5],
+                    Tiempo: p[6],
                 };
 
-                mostrarSiguiente();
-            };
+                mostrarPopup(popup, () => {
+                    registrarVista(popup.Id, userId);
+                    index++;
+                    mostrarSiguiente();
+                });
+            }
+
+            mostrarSiguiente();
         }
 
-        if (typeof window.mostrarPopup !== "function") {
-            window.mostrarPopup = function (popup, posicion, total, callback) {
-                const modal = document.createElement("div");
-                modal.className = "modal-popup";
+        function mostrarPopup(popup, callback) {
+            const modal = document.createElement("div");
+            modal.className = "modal-popup";
 
-                const media = popup.Imagen
-                    ? `<img src="${popup.Imagen}" class="popup-media" alt="${popup.Titulo}" />`
-                    : popup.Video
-                        ? `<video autoplay controls class="popup-media"><source src="${popup.Video}"></video>`
-                        : "<div class=\"popup-media popup-media--empty\">Sin imagen</div>";
+            let media = "";
+            if (popup.Imagen) {
+                media = `<img src="${popup.Imagen}" class="popup-media" />`;
+            }
+            else if (popup.Video) {
+                media = `
+                    <video autoplay controls class="popup-media">
+                        <source src="${popup.Video}">
+                    </video>`;
+            }
 
-                modal.innerHTML = `
-                    <div class="popup-card" role="dialog" aria-label="Popup informativo">
-                        <div class="popup-header">
-                            <span class="popup-pill">Total de popups</span>
-                            <span class="popup-progress"><span class="popup-progress__index">${posicion}</span><span class="popup-progress__total">/${total}</span></span>
-                        </div>
-                        <div class="popup-body">
-                            <div class="popup-illustration">${media}</div>
-                            <div class="popup-content">
-                                <h2>${popup.Titulo}</h2>
-                                <p>${popup.Descripcion}</p>
-                            </div>
-                        </div>
-                        <div class="popup-actions">
-                            ${popup.Url ? `<a href="${popup.Url}" target="_blank" rel="noopener noreferrer" class="popup-link">Más información</a>` : ""}
-                            <button type="button" class="popup-next">${posicion === total ? "Cerrar" : "Siguiente"}</button>
-                        </div>
+            modal.innerHTML = `
+                    <div class="popup-container">
+                        <h2>${popup.Titulo}</h2>
+                        <p>${popup.Descripcion}</p>
+                        ${media}
+                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
+                        <button class="popup-cerrar">Cerrar</button>
                     </div>
                 `;
 
