@@ -682,6 +682,17 @@
             });
         }
 
+        if (typeof window.obtenerIdUsuario !== "function") {
+            window.obtenerIdUsuario = function () {
+                const userField = document.getElementById("hfIdUsuario");
+                const fromHidden = userField && typeof userField.value === "string" ? userField.value.trim() : "";
+                const fromQuery = new URLSearchParams(window.location.search).get("Id_Usuario");
+                const userId = parseInt(fromHidden || fromQuery || "", 10);
+
+                return Number.isNaN(userId) ? null : userId;
+            };
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const userField = document.getElementById("hfIdUsuario");
             const userId = userField ? parseInt(userField.value, 10) : NaN;
