@@ -148,6 +148,9 @@ namespace Intranet_3._0
                 Cargar_Datos_Usuario();
             }
 
+            string queryUserId = Request.QueryString["Id_Usuario"];
+            string sessionUserId = Session["Id_Usuario"] != null ? Session["Id_Usuario"].ToString() : string.Empty;
+            hfIdUsuario.Value = !string.IsNullOrWhiteSpace(queryUserId) ? queryUserId : sessionUserId;
         }
 
         public void barra_navegacion()

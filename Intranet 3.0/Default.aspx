@@ -6,22 +6,22 @@
     <link rel="Stylesheet" href="/Styles/css/default/default.css" />
     <script>
 
-        function obtenerIdUsuario() {
-            const hidden = document.getElementById("hfIdUsuario");
-            const fromHidden = hidden && hidden.value ? hidden.value : "";
-            const fromQuery = new URLSearchParams(window.location.search).get("Id_Usuario");
-            const parsed = parseInt(fromHidden || fromQuery || "", 10);
+        if (typeof window.obtenerIdUsuario !== "function") {
+            window.obtenerIdUsuario = function () {
+                const userField = document.getElementById("hfIdUsuario");
+                const fromHidden = userField && typeof userField.value === "string" ? userField.value.trim() : "";
+                const fromQuery = new URLSearchParams(window.location.search).get("Id_Usuario");
+                const userId = parseInt(fromHidden || fromQuery || "", 10);
 
-            return Number.isNaN(parsed) ? null : parsed;
+                return Number.isNaN(userId) ? null : userId;
+            };
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            if (window.popupsInicializados) return;
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
 
-            const userId = obtenerIdUsuario();
-            if (!userId) return;
-
-            window.popupsInicializados = true;
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
@@ -37,77 +37,96 @@
                 .catch(err => console.error("Error:", err));
         });
 
-        function mostrarPopupSecuencial(popups, userId) {
-            let index = 0;
+        if (typeof window.mostrarPopupSecuencial !== "function") {
+            window.mostrarPopupSecuencial = function (popups, userId) {
+                let index = 0;
+                const total = popups.length;
 
-            function mostrarSiguiente() {
-                if (index >= popups.length) return;
+                const mostrarSiguiente = () => {
+                    if (index >= total) return;
 
-                const p = popups[index];
+                    const p = popups[index];
 
-                const popup = {
-                    Id: p[0],
-                    Titulo: p[1],
-                    Descripcion: p[2],
-                    Imagen: p[3],
-                    Video: p[4],
-                    Url: p[5],
-                    Tiempo: p[6],
+                    const popup = {
+                        Id: p[0],
+                        Titulo: p[1],
+                        Descripcion: p[2],
+                        Imagen: p[3],
+                        Video: p[4],
+                        Url: p[5],
+                        Tiempo: p[6],
+                    };
+
+                    mostrarPopup(popup, index + 1, total, () => {
+                        registrarVista(popup.Id, userId);
+                        index++;
+                        mostrarSiguiente();
+                    });
                 };
 
-                mostrarPopup(popup, () => {
-                    registrarVista(popup.Id, userId);
-                    index++;
-                    mostrarSiguiente();
-                });
-            }
-
-            mostrarSiguiente();
-        }
-
-        function mostrarPopup(popup, callback) {
-            const modal = document.createElement("div");
-            modal.className = "modal-popup";
-
-            let media = "";
-            if (popup.Imagen) {
-                media = `<img src="${popup.Imagen}" class="popup-media" />`;
-            }
-            else if (popup.Video) {
-                media = `
-                    <video autoplay controls class="popup-media">
-                        <source src="${popup.Video}">
-                    </video>`;
-            }
-
-            modal.innerHTML = `
-                    <div class="popup-container">
-                        <h2>${popup.Titulo}</h2>
-                        <p>${popup.Descripcion}</p>
-                        ${media}
-                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
-                        <button class="popup-cerrar">Cerrar</button>
-                    </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            modal.querySelector(".popup-cerrar").onclick = () => {
-                modal.remove();
-                callback();
+                mostrarSiguiente();
             };
         }
 
-        function registrarVista(idPopup, idUsuario) {
-            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    Id_Popup: parseInt(idPopup),
-                    Id_Usuario: parseInt(idUsuario),
-                    Interaccion: "vista"
-                })
-            });
+        if (typeof window.mostrarPopup !== "function") {
+            window.mostrarPopup = function (popup, posicion, total, callback) {
+                const modal = document.createElement("div");
+                modal.className = "modal-popup";
+
+                const media = popup.Imagen
+                    ? `<img src="${popup.Imagen}" class="popup-media" alt="${popup.Titulo}" />`
+                    : popup.Video
+                        ? `<video autoplay controls class="popup-media"><source src="${popup.Video}"></video>`
+                        : "<div class=\"popup-media popup-media--empty\">Sin imagen</div>";
+
+                modal.innerHTML = `
+                    <div class="popup-card" role="dialog" aria-label="Popup informativo">
+                        <div class="popup-header">
+                            <span class="popup-pill">Total de popups</span>
+                            <span class="popup-progress"><span class="popup-progress__index">${posicion}</span><span class="popup-progress__total">/${total}</span></span>
+                        </div>
+                        <div class="popup-body">
+                            <div class="popup-illustration">${media}</div>
+                            <div class="popup-content">
+                                <h2>${popup.Titulo}</h2>
+                                <p>${popup.Descripcion}</p>
+                            </div>
+                        </div>
+                        <div class="popup-actions">
+                            ${popup.Url ? `<a href="${popup.Url}" target="_blank" rel="noopener noreferrer" class="popup-link">Más información</a>` : ""}
+                            <button type="button" class="popup-next">${posicion === total ? "Cerrar" : "Siguiente"}</button>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                modal.querySelector(".popup-next").onclick = () => {
+                    modal.remove();
+                    callback();
+                };
+
+                modal.addEventListener("click", (event) => {
+                    if (event.target === modal) {
+                        modal.remove();
+                        callback();
+                    }
+                });
+            };
+        }
+
+        if (typeof window.registrarVista !== "function") {
+            window.registrarVista = function (idPopup, idUsuario) {
+                fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        Id_Popup: parseInt(idPopup),
+                        Id_Usuario: parseInt(idUsuario),
+                        Interaccion: "vista"
+                    })
+                });
+            };
         }
 
 
@@ -1951,12 +1970,15 @@
         window.addEventListener('load', quitarPadding);
 
         document.addEventListener("DOMContentLoaded", () => {
-            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+            const userField = document.getElementById("hfIdUsuario");
+            const userId = userField ? parseInt(userField.value, 10) : NaN;
+
+            if (Number.isNaN(userId)) return;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+                body: JSON.stringify({ Id_Usuario: userId })
             })
                 .then(r => r.json())
                 .then(data => {
@@ -1967,77 +1989,96 @@
                 .catch(err => console.error("Error:", err));
         });
 
-        function mostrarPopupSecuencial(popups, userId) {
-            let index = 0;
+        if (typeof window.mostrarPopupSecuencial !== "function") {
+            window.mostrarPopupSecuencial = function (popups, userId) {
+                let index = 0;
+                const total = popups.length;
 
-            function mostrarSiguiente() {
-                if (index >= popups.length) return;
+                const mostrarSiguiente = () => {
+                    if (index >= total) return;
 
-                const p = popups[index];
+                    const p = popups[index];
 
-                const popup = {
-                    Id: p[0],
-                    Titulo: p[1],
-                    Descripcion: p[2],
-                    Imagen: p[3],
-                    Video: p[4],
-                    Url: p[5],
-                    Tiempo: p[6],
+                    const popup = {
+                        Id: p[0],
+                        Titulo: p[1],
+                        Descripcion: p[2],
+                        Imagen: p[3],
+                        Video: p[4],
+                        Url: p[5],
+                        Tiempo: p[6],
+                    };
+
+                    mostrarPopup(popup, index + 1, total, () => {
+                        registrarVista(popup.Id, userId);
+                        index++;
+                        mostrarSiguiente();
+                    });
                 };
 
-                mostrarPopup(popup, () => {
-                    registrarVista(popup.Id, userId);
-                    index++;
-                    mostrarSiguiente();
-                });
-            }
-
-            mostrarSiguiente();
-        }
-
-        function mostrarPopup(popup, callback) {
-            const modal = document.createElement("div");
-            modal.className = "modal-popup";
-
-            let media = "";
-            if (popup.Imagen) {
-                media = `<img src="${popup.Imagen}" class="popup-media" />`;
-            }
-            else if (popup.Video) {
-                media = `
-                    <video autoplay controls class="popup-media">
-                        <source src="${popup.Video}">
-                    </video>`;
-            }
-
-            modal.innerHTML = `
-                    <div class="popup-container">
-                        <h2>${popup.Titulo}</h2>
-                        <p>${popup.Descripcion}</p>
-                        ${media}
-                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
-                        <button class="popup-cerrar">Cerrar</button>
-                    </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            modal.querySelector(".popup-cerrar").onclick = () => {
-                modal.remove();
-                callback();
+                mostrarSiguiente();
             };
         }
 
-        function registrarVista(idPopup, idUsuario) {
-            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    Id_Popup: parseInt(idPopup),
-                    Id_Usuario: parseInt(idUsuario),
-                    Interaccion: "vista"
-                })
-            });
+        if (typeof window.mostrarPopup !== "function") {
+            window.mostrarPopup = function (popup, posicion, total, callback) {
+                const modal = document.createElement("div");
+                modal.className = "modal-popup";
+
+                const media = popup.Imagen
+                    ? `<img src="${popup.Imagen}" class="popup-media" alt="${popup.Titulo}" />`
+                    : popup.Video
+                        ? `<video autoplay controls class="popup-media"><source src="${popup.Video}"></video>`
+                        : "<div class=\"popup-media popup-media--empty\">Sin imagen</div>";
+
+                modal.innerHTML = `
+                    <div class="popup-card" role="dialog" aria-label="Popup informativo">
+                        <div class="popup-header">
+                            <span class="popup-pill">Total de popups</span>
+                            <span class="popup-progress"><span class="popup-progress__index">${posicion}</span><span class="popup-progress__total">/${total}</span></span>
+                        </div>
+                        <div class="popup-body">
+                            <div class="popup-illustration">${media}</div>
+                            <div class="popup-content">
+                                <h2>${popup.Titulo}</h2>
+                                <p>${popup.Descripcion}</p>
+                            </div>
+                        </div>
+                        <div class="popup-actions">
+                            ${popup.Url ? `<a href="${popup.Url}" target="_blank" rel="noopener noreferrer" class="popup-link">Más información</a>` : ""}
+                            <button type="button" class="popup-next">${posicion === total ? "Cerrar" : "Siguiente"}</button>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                modal.querySelector(".popup-next").onclick = () => {
+                    modal.remove();
+                    callback();
+                };
+
+                modal.addEventListener("click", (event) => {
+                    if (event.target === modal) {
+                        modal.remove();
+                        callback();
+                    }
+                });
+            };
+        }
+
+        if (typeof window.registrarVista !== "function") {
+            window.registrarVista = function (idPopup, idUsuario) {
+                fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        Id_Popup: parseInt(idPopup),
+                        Id_Usuario: parseInt(idUsuario),
+                        Interaccion: "vista",
+                    })
+                });
+            };
         }
 
 
