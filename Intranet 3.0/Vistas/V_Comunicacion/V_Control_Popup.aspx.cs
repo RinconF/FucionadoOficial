@@ -1,720 +1,371 @@
-﻿using BRL;
-using DCL;
-using Intranet_3._0.Interna;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
 using System.Data;
 using System.IO;
+using System.Text;
+using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using BRL;
+using DCL;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
     public partial class V_Control_Popup : System.Web.UI.Page
     {
-        string pathLog = "";
-        string ipServer = "";
-        const string CONST_ERRORCONEXIONSERV = "al intentar conectarse al servidor: ";
-        const string CONST_ERRORPERMISOS = "al intentar acceder a archivos. ACCESO DENEGADO. ";
-        const string CONST_ERROR = " - ERROR: ";
+        #region Eventos de página
 
-        private static readonly HashSet<string> ExtensionesImagen = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ".jpg",
-            ".jpeg",
-            ".gif",
-            ".png",
-            ".jfif"
-        };
-
-        private static readonly HashSet<string> ExtensionesVideo = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ".mp4",
-            ".webm",
-            ".ogg"
-        };
-
-        // ========================================
-        // PAGE INIT
-        // ========================================
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            try
-            {
-                pathLog = Server.MapPath(@"~/logs");
-                ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach")?.ToString();
-            }
-            catch (Exception ex)
-            {
-                pathLog = Server.MapPath(@"~/logs");
-                System.Diagnostics.Debug.WriteLine($"Error en Page_Init: {ex.Message}");
-            }
-        }
-
-        // ========================================
-        // PAGE LOAD
-        // ========================================
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!IsPostBack)
             {
-                if (Request.QueryString["Id_Usuario"] != null)
-                {
-                    if (Response.Cookies.Count > 0 && Session["cerrar"] != null)
-                    {
-                        if (!IsPostBack)
-                        {
-                            CargarRolesDisponibles();
-                        }
-
-                        cargar_tabla_vista();
-
-                        ScriptManager.RegisterStartupScript(
-                            PanelUpdate,
-                            this.GetType(),
-                            "MyAction",
-                            "ejecutarDatos();",
-                            true);
-                    }
-                }
-                else
-                {
-                    Page.Response.Redirect("~/Login", true);
-                }
-            }
-            catch (Exception ex)
-            {
-                AG_Utils utilidades = new AG_Utils();
-                utilidades.logError(
-                    $"{CONST_ERROR}Page_Load\n{ex.Message}\n{ex.StackTrace}",
-                    pathLog
-                );
-                Page.Response.Redirect("~/Login", true);
+                CargarRoles(chkl_roles);
+                CargarRoles(chkl_roles_pub);
+                CargarTablaPopups();
             }
         }
 
-        // ========================================
-        // CARGAR ROLES DISPONIBLES
-        // ========================================
-        private void CargarRolesDisponibles()
+        #endregion
+
+        #region Eventos de botones
+
+        /// <summary>
+        /// Crear nuevo popup (Action 2)
+        /// </summary>
+        protected void lnk_crear_popup_Click(object sender, EventArgs e)
         {
-            AG_Utils utilidades = new AG_Utils();
             try
             {
-                DataTable dtRoles = Int_Popup_BRL.SelectTable(new Int_Popup(), 15);
-
-                if (dtRoles != null && dtRoles.Rows.Count > 0)
-                {
-                    chkl_roles.Items.Clear();
-                    chkl_roles.DataSource = dtRoles;
-                    chkl_roles.DataTextField = "Nombre_Rol";
-                    chkl_roles.DataValueField = "Id_Rol";
-                    chkl_roles.DataBind();
-
-                    chkl_roles_pub.Items.Clear();
-                    chkl_roles_pub.DataSource = dtRoles;
-                    chkl_roles_pub.DataTextField = "Nombre_Rol";
-                    chkl_roles_pub.DataValueField = "Id_Rol";
-                    chkl_roles_pub.DataBind();
-                }
-            }
-            catch (Exception ex)
-            {
-                utilidades.logError(
-                    $"{CONST_ERROR}CargarRolesDisponibles\n{ex.Message}",
-                    pathLog
-                );
-                throw;
-            }
-        }
-
-        // ========================================
-        // CREAR NUEVO POPUP
-        // ========================================
-        protected void Crear_nueva_publicacion(object sender, EventArgs e)
-        {
-            string imagenPopupRemoto = string.Empty;
-            AG_Utils utilidades = new AG_Utils();
-
-            try
-            {
-                pathLog = Server.MapPath(@"~/logs");
-                ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
-                bool conectaAdjuntos = utilidades.Ping(ipServer);
-                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
-                string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
-                string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                string rutaPopupsRemoto = Path.Combine(pathRemote, "publicaciones", "Popup");
-                string rutaPopupsLocal = Path.Combine(pathServer, ambiente, "intranet", "publicaciones", "Popup");
-                string rutaVideosRemoto = Path.Combine(rutaPopupsRemoto, "Videos");
-                string rutaVideosLocal = Path.Combine(rutaPopupsLocal, "Videos");
-                string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
-
-                if (!fud_Adjunto.HasFile && !fud_Video.HasFile)
-                {
-                    ScriptManager.RegisterStartupScript(
-                        PanelUpdate,
-                        GetType(),
-                        "PopupArchivoRequerido",
-                        "alert('Debes adjuntar al menos una imagen o un video para crear el popup.');",
-                        true
-                    );
-                    return;
-                }
-
                 Int_Popup popup = new Int_Popup
                 {
-                    Titulo = txt_titulo.Text,
-                    Descripcion = txt_descripcion.Text,
-                    Url = txt_url.Text,
-                    Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo.Text)
-                        ? 5
-                        : Convert.ToInt32(txt_tiempo.Text),
-                    Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio.Text),
-                    Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin.Text)
-                        ? (DateTime?)null
-                        : Convert.ToDateTime(txt_fecha_fin.Text),
+                    Titulo = txt_titulo.Text.Trim(),
+                    Descripcion = txt_descripcion.Text.Trim(),
+                    Url = string.IsNullOrWhiteSpace(txt_url.Text) ? null : txt_url.Text.Trim(),
+                    Tiempo_Visualizacion = string.IsNullOrWhiteSpace(txt_tiempo.Text)
+                        ? (int?)null
+                        : int.Parse(txt_tiempo.Text),
+                    Fecha_Inicio = ParseDate(txt_fecha_inicio.Text),
+                    Fecha_Fin = ParseDate(txt_fecha_fin.Text),
                     Estado = true,
-                    RolesIds = ObtenerRolesSeleccionados()
+                    Id_Usuario = ObtenerIdUsuarioActual(), // usuario creador
+                    RolesIds = ObtenerRolesSeleccionados(chkl_roles)
                 };
 
-                if (!conectaAdjuntos)
+                // Multimedia: imagen o video (nunca ambos)
+                string rutaImagen = GuardarArchivo(fud_Adjunto, "~/Uploads/Popups/Imagenes");
+                string rutaVideo = GuardarArchivo(fud_Video, "~/Uploads/Popups/Videos");
+
+                if (!string.IsNullOrEmpty(rutaImagen))
                 {
-                    utilidades.logError(
-                        $"{CONST_ERRORCONEXIONSERV} {ipServer}. \n" +
-                        $"Método: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \n" +
-                        $"Usuario: {Id_Usuario}",
-                        pathLog
-                    );
-                    return;
+                    popup.Imagen = rutaImagen;
+                    popup.Video = null;
                 }
-
-                int consecutivo = ObtenerConsecutivoPopup();
-                string consecutivoTexto = consecutivo.ToString();
-
-                bool archivoProcesado = false;
-
-                if (fud_Adjunto.HasFile)
+                else if (!string.IsNullOrEmpty(rutaVideo))
                 {
-                    string extensionArchivo = Path.GetExtension(fud_Adjunto.FileName);
-                    if (EsExtensionImagen(extensionArchivo))
-                    {
-                        string rutaRemotaImagen = GuardarArchivoPopup(
-                            string.IsNullOrWhiteSpace(txt_titulo.Text) ? Path.GetFileNameWithoutExtension(fud_Adjunto.FileName) : txt_titulo.Text,
-                            consecutivoTexto,
-                            rutaPopupsLocal,
-                            rutaPopupsRemoto,
-                            fud_Adjunto,
-                            Id_Usuario,
-                            utilidades
-                        );
-
-                        if (!string.IsNullOrEmpty(rutaRemotaImagen))
-                        {
-                            popup.Imagen = rutaRemotaImagen;
-                            imagenPopupRemoto = rutaRemotaImagen;
-                            archivoProcesado = true;
-                        }
-                    }
-                    else
-                    {
-                        utilidades.logError(
-                            $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de imagen no permitida: {extensionArchivo}",
-                            pathLog
-                        );
-                    }
-                }
-
-                if (fud_Video.HasFile)
-                {
-                    string extensionVideo = Path.GetExtension(fud_Video.FileName);
-                    if (EsExtensionVideo(extensionVideo))
-                    {
-                        string rutaRemotaVideo = GuardarArchivoPopup(
-                            string.IsNullOrWhiteSpace(txt_titulo.Text) ? Path.GetFileNameWithoutExtension(fud_Video.FileName) : txt_titulo.Text,
-                            consecutivoTexto,
-                            rutaVideosLocal,
-                            rutaVideosRemoto,
-                            fud_Video,
-                            Id_Usuario,
-                            utilidades
-                        );
-
-                        if (!string.IsNullOrEmpty(rutaRemotaVideo))
-                        {
-                            popup.Video = rutaRemotaVideo;
-                            videoPopupRemoto = rutaRemotaVideo;
-                            archivoProcesado = true;
-                        }
-                    }
-                    else
-                    {
-                        utilidades.logError(
-                            $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de video no permitida: {extensionVideo}",
-                            pathLog
-                        );
-                    }
-                }
-
-                if (archivoProcesado)
-                {
-                    Int_Popup_BRL.InsertOrUpdate(popup, 2);
+                    popup.Video = rutaVideo;
+                    popup.Imagen = null;
                 }
                 else
                 {
-                    utilidades.logError(
-                        $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nRegistro POPUP no almacenado en BD. Los archivos no fueron almacenados.",
-                        pathLog
-                    );
-                    if (!string.IsNullOrEmpty(imagenPopupRemoto) && File.Exists(imagenPopupRemoto))
-                        File.Delete(imagenPopupRemoto);
-                    if (!string.IsNullOrEmpty(videoPopupRemoto) && File.Exists(videoPopupRemoto))
-                        File.Delete(videoPopupRemoto);
+                    popup.Imagen = null;
+                    popup.Video = null;
                 }
 
-                Page.Response.Redirect(Page.Request.Url.ToString(), false);
+                int result = Int_Popup_BRL.InsertarPopupConRoles(popup);
+
+                if (result > 0)
+                {
+                    LimpiarFormularioCrear();
+                    CargarTablaPopups();
+                    MostrarMensaje("Popup creado correctamente.");
+                }
+                else
+                {
+                    MostrarMensaje("No se pudo crear el popup.");
+                }
             }
             catch (Exception ex)
             {
-                utilidades.logError(
-                    $"{CONST_ERROR} {System.Reflection.MethodBase.GetCurrentMethod().Name}\\n" +
-                    $"{ex.Message}\\nLos archivos POPUP no fueron almacenados.",
-                    pathLog
-                );
-                if (utilidades.impersonateValidUser())
-                {
-                    if (!string.IsNullOrEmpty(imagenPopupRemoto) && File.Exists(imagenPopupRemoto))
-                        File.Delete(imagenPopupRemoto);
-                    if (!string.IsNullOrEmpty(videoPopupRemoto) && File.Exists(videoPopupRemoto))
-                        File.Delete(videoPopupRemoto);
-                    utilidades.undoImpersonation();
-                }
+                MostrarMensaje("Error al crear el popup: " + ex.Message);
             }
         }
 
-        // ========================================
-        // ACTUALIZAR POPUP
-        // ========================================
-        protected void Actualizar_datos_publicacion(object sender, EventArgs e)
+        /// <summary>
+        /// Actualizar popup (Action 4)
+        /// </summary>
+        protected void lnk_actualizar_popup_Click(object sender, EventArgs e)
         {
-            string imagenPopupRemoto = string.Empty;
-            AG_Utils utilidades = new AG_Utils();
-
             try
             {
-                pathLog = Server.MapPath(@"~/logs");
-                ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
-                bool conectaAdjuntos = utilidades.Ping(ipServer);
-                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
-                string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
-                string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                string rutaPopupsRemoto = Path.Combine(pathRemote, "publicaciones", "Popup");
-                string rutaPopupsLocal = Path.Combine(pathServer, ambiente, "intranet", "publicaciones", "Popup");
-                string rutaVideosRemoto = Path.Combine(rutaPopupsRemoto, "Videos");
-                string rutaVideosLocal = Path.Combine(rutaPopupsLocal, "Videos");
-                string idPopupSeleccionado = Request.Form["rd_estado_vista"];
-                string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
+                if (string.IsNullOrWhiteSpace(hf_id_popup.Value))
+                {
+                    MostrarMensaje("No se encontró el ID del popup a actualizar.");
+                    return;
+                }
 
                 Int_Popup popup = new Int_Popup
                 {
-                    Id_Popup = Convert.ToInt32(idPopupSeleccionado),
-                    Titulo = txt_titulo_pub.Text,
-                    Descripcion = txt_descripcion_pub.Text,
-                    Url = txt_url_pub.Text,
-                    Tiempo_Visualizacion = string.IsNullOrEmpty(txt_tiempo_pub.Text)
-                        ? 5
-                        : Convert.ToInt32(txt_tiempo_pub.Text),
-                    Fecha_Inicio = Convert.ToDateTime(txt_fecha_inicio_pub.Text),
-                    Fecha_Fin = string.IsNullOrEmpty(txt_fecha_fin_pub.Text)
-                        ? (DateTime?)null
-                        : Convert.ToDateTime(txt_fecha_fin_pub.Text),
+                    Id_Popup = int.Parse(hf_id_popup.Value),
+                    Titulo = txt_titulo_pub.Text.Trim(),
+                    Descripcion = txt_descripcion_pub.Text.Trim(),
+                    Url = string.IsNullOrWhiteSpace(txt_url_pub.Text) ? null : txt_url_pub.Text.Trim(),
+                    Tiempo_Visualizacion = string.IsNullOrWhiteSpace(txt_tiempo_pub.Text)
+                        ? (int?)null
+                        : int.Parse(txt_tiempo_pub.Text),
+                    Fecha_Inicio = ParseDate(txt_fecha_inicio_pub.Text),
+                    Fecha_Fin = ParseDate(txt_fecha_fin_pub.Text),
                     Estado = ddl_estado_pub.SelectedValue == "1",
-                    RolesIds = ObtenerRolesSeleccionadosActualizar()
+                    Id_Usuario = ObtenerIdUsuarioActual(), // usuario que actualiza
+                    RolesIds = ObtenerRolesSeleccionados(chkl_roles_pub)
                 };
+
+                // Lógica multimedia según SP:
+                //  - NULL  -> no cambiar
+                //  - ""    -> eliminar
+                //  - valor -> actualizar
+                popup.Imagen = null;
+                popup.Video = null;
 
                 if (fud_Adjunto_pub.HasFile)
                 {
-                    if (conectaAdjuntos)
-                    {
-                        string extensionArchivo = Path.GetExtension(fud_Adjunto_pub.FileName);
-                        if (EsExtensionImagen(extensionArchivo))
-                        {
-                            string rutaRemotaImagen = GuardarArchivoPopup(
-                                string.IsNullOrWhiteSpace(txt_titulo_pub.Text) ? Path.GetFileNameWithoutExtension(fud_Adjunto_pub.FileName) : txt_titulo_pub.Text,
-                                idPopupSeleccionado,
-                                rutaPopupsLocal,
-                                rutaPopupsRemoto,
-                                fud_Adjunto_pub,
-                                Id_Usuario,
-                                utilidades
-                            );
-
-                            if (!string.IsNullOrEmpty(rutaRemotaImagen))
-                            {
-                                popup.Imagen = rutaRemotaImagen;
-                                imagenPopupRemoto = rutaRemotaImagen;
-                            }
-                        }
-                        else
-                        {
-                            utilidades.logError(
-                                $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de imagen no permitida: {extensionArchivo}",
-                                pathLog
-                            );
-                        }
-                    }
-                    else
-                    {
-                        utilidades.logError(
-                            $"{CONST_ERRORCONEXIONSERV} {ipServer}. \n" +
-                            $"Método: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \n" +
-                            $"Usuario: {Id_Usuario}",
-                            pathLog
-                        );
-                    }
+                    string rutaImagen = GuardarArchivo(fud_Adjunto_pub, "~/Uploads/Popups/Imagenes");
+                    popup.Imagen = rutaImagen;  // se actualiza
+                    popup.Video = "";           // se elimina el video si existía
                 }
-
-                if (fud_Video_pub.HasFile)
+                else if (fud_Video_pub.HasFile)
                 {
-                    if (conectaAdjuntos)
-                    {
-                        string extensionVideo = Path.GetExtension(fud_Video_pub.FileName);
-                        if (EsExtensionVideo(extensionVideo))
-                        {
-                            string rutaRemotaVideo = GuardarArchivoPopup(
-                                string.IsNullOrWhiteSpace(txt_titulo_pub.Text) ? Path.GetFileNameWithoutExtension(fud_Video_pub.FileName) : txt_titulo_pub.Text,
-                                idPopupSeleccionado,
-                                rutaVideosLocal,
-                                rutaVideosRemoto,
-                                fud_Video_pub,
-                                Id_Usuario,
-                                utilidades
-                            );
-
-                            if (!string.IsNullOrEmpty(rutaRemotaVideo))
-                            {
-                                popup.Video = rutaRemotaVideo;
-                            }
-                        }
-                        else
-                        {
-                            utilidades.logError(
-                                $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\\nExtensión de video no permitida: {extensionVideo}",
-                                pathLog
-                            );
-                        }
-                    }
-                    else
-                    {
-                        utilidades.logError(
-                            $"{CONST_ERRORCONEXIONSERV} {ipServer}. \n" +
-                            $"Método: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \n" +
-                            $"Usuario: {Id_Usuario}",
-                            pathLog
-                        );
-                    }
+                    string rutaVideo = GuardarArchivo(fud_Video_pub, "~/Uploads/Popups/Videos");
+                    popup.Video = rutaVideo;    // se actualiza
+                    popup.Imagen = "";          // se elimina la imagen si existía
                 }
+                // si no se sube nada: Imagen = null, Video = null → SP no cambia multimedia
 
-                Int_Popup_BRL.InsertOrUpdate(popup, 4);
+                int result = Int_Popup_BRL.ActualizarPopupConRoles(popup);
 
-                Page.Response.Redirect(Page.Request.Url.ToString(), false);
-            }
-            catch (Exception ex)
-            {
-                utilidades.logError(
-                    $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}",
-                    pathLog
-                );
-                throw;
-            }
-        }
-
-        // ========================================
-        // CARGAR TABLA DE POPUPS
-        // ========================================
-        protected void cargar_tabla_vista()
-        {
-            AG_Utils utilidades = new AG_Utils();
-            try
-            {
-                tbl_grupos.Rows.Clear();
-
-                HtmlTableRow th = new HtmlTableRow();
-                th.Attributes.Add("class", "th");
-
-                th.Cells.Add(new HtmlTableCell { InnerText = "#" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "ID" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "TITULO" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "DESCRIPCION" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "FECHA CREACIÓN" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "ESTADO" });
-                th.Cells.Add(new HtmlTableCell { InnerText = "ACCION" });
-
-                tbl_grupos.Rows.Add(th);
-
-                Int_Popup popup = new Int_Popup();
-                popup.Titulo = txt_filter_grupo.Text;
-
-                DataTable data;
-
-                if (!string.IsNullOrEmpty(txt_filter_grupo.Text))
+                if (result > 0)
                 {
-                    data = Int_Popup_BRL.SelectTable(popup, 9);
+                    CargarTablaPopups();
+                    MostrarMensaje("Popup actualizado correctamente.");
                 }
                 else
                 {
-                    data = Int_Popup_BRL.SelectTable(new Int_Popup(), 1);
-                }
-
-                if (data.Rows.Count > 0)
-                {
-                    int numPopup = 1;
-                    foreach (DataRow row in data.Rows)
-                    {
-                        HtmlTableRow tableRow = new HtmlTableRow();
-
-                        tableRow.Cells.Add(new HtmlTableCell { InnerText = numPopup.ToString() });
-                        tableRow.Cells.Add(new HtmlTableCell { InnerText = row["Id_Popup"].ToString() });
-                        tableRow.Cells.Add(new HtmlTableCell { InnerText = row["Titulo"].ToString() });
-                        tableRow.Cells.Add(new HtmlTableCell { InnerText = row["Descripcion"].ToString() });
-                        tableRow.Cells.Add(new HtmlTableCell { InnerText = row["Fecha_Creacion"].ToString() });
-
-                        HtmlTableCell cellEstado = new HtmlTableCell();
-                        bool estado = Convert.ToBoolean(row["Estado"]);
-                        cellEstado.InnerHtml = estado
-                            ? "<span class='badge badge-success'>● Activo</span>"
-                            : "<span class='badge badge-secondary'>○ Inactivo</span>";
-                        tableRow.Cells.Add(cellEstado);
-
-                        HtmlTableCell cellAccion = new HtmlTableCell();
-                        var rdEstado = new HtmlGenericControl("input");
-                        rdEstado.Attributes.Add("Type", "radio");
-                        rdEstado.Attributes.Add("name", "rd_estado_vista");
-                        rdEstado.Attributes.Add("value", row["Id_Popup"].ToString());
-                        cellAccion.Controls.Add(rdEstado);
-                        tableRow.Cells.Add(cellAccion);
-
-                        tbl_grupos.Rows.Add(tableRow);
-                        numPopup++;
-                    }
+                    MostrarMensaje("No se actualizó ningún registro.");
                 }
             }
             catch (Exception ex)
             {
-                utilidades.logError(
-                    $"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}.",
-                    pathLog
-                );
-                throw;
+                MostrarMensaje("Error al actualizar el popup: " + ex.Message);
             }
         }
 
-        // ========================================
-        // ELIMINAR POPUP
-        // ========================================
-        protected void Eliminar_Popup(object sender, EventArgs e)
+        /// <summary>
+        /// Eliminar (soft delete) popup (Action 6)
+        /// </summary>
+        protected void lnk_eliminar_popup_Click(object sender, EventArgs e)
         {
-            AG_Utils utilidades = new AG_Utils();
             try
             {
-                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
-                string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-
-                Int_Popup popup = new Int_Popup();
-                popup.Id_Popup = Convert.ToInt32(Request.Form["rd_estado_vista"].ToString());
-
-                DataTable dt = Int_Popup_BRL.SelectTable(popup, 3);
-
-                Int_Popup_BRL.InsertOrUpdate(popup, 6);
-
-                if (dt.Rows.Count > 0 && utilidades.impersonateValidUser())
+                if (string.IsNullOrWhiteSpace(hf_id_popup_eliminar.Value))
                 {
-                    string archivoImagen = dt.Columns.Contains("Imagen")
-                        ? dt.Rows[0]["Imagen"].ToString()
-                        : string.Empty;
+                    MostrarMensaje("No se encontró el ID del popup a eliminar.");
+                    return;
+                }
 
-                    string archivoVideo = dt.Columns.Contains("Video")
-                        ? dt.Rows[0]["Video"].ToString()
-                        : string.Empty;
+                Int_Popup popup = new Int_Popup
+                {
+                    Id_Popup = int.Parse(hf_id_popup_eliminar.Value),
+                    Estado = false,
+                    Id_Usuario = ObtenerIdUsuarioActual()
+                };
 
-                    EliminarArchivoFisico(archivoImagen, pathServer, ambiente);
-                    EliminarArchivoFisico(archivoVideo, pathServer, ambiente);
+                int result = Int_Popup_BRL.InsertOrUpdate(popup, 6);
 
-                    utilidades.undoImpersonation();
+                if (result > 0)
+                {
+                    CargarTablaPopups();
+                    MostrarMensaje("Popup eliminado correctamente.");
                 }
                 else
                 {
-                    utilidades.logError(
-                        $"{CONST_ERROR}{CONST_ERRORPERMISOS}" +
-                        $"{System.Reflection.MethodBase.GetCurrentMethod().Name}.",
-                        pathLog
-                    );
+                    MostrarMensaje("No se eliminó ningún registro.");
                 }
-
-                Page.Response.Redirect(Page.Request.Url.ToString(), false);
             }
             catch (Exception ex)
             {
-                utilidades.logError(
-                    $"{DateTime.Now}\nError en método: " +
-                    $"{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}.",
-                    pathLog
-                );
-                throw;
+                MostrarMensaje("Error al eliminar el popup: " + ex.Message);
             }
         }
 
-        private static bool EsExtensionImagen(string extension)
-        {
-            return !string.IsNullOrWhiteSpace(extension) && ExtensionesImagen.Contains(extension);
-        }
+        #endregion
 
-        private static bool EsExtensionVideo(string extension)
-        {
-            return !string.IsNullOrWhiteSpace(extension) && ExtensionesVideo.Contains(extension);
-        }
+        #region Métodos auxiliares
 
-        private int ObtenerConsecutivoPopup()
-        {
-            DataTable dataTable = Int_Popup_BRL.SelectTable(new Int_Popup(), 17);
-
-            if (dataTable != null && dataTable.Rows.Count > 0)
-            {
-                string resultado = dataTable.Rows[0][0]?.ToString();
-                if (int.TryParse(resultado, out int consecutivo))
-                {
-                    return consecutivo + 1;
-                }
-            }
-
-            return 1;
-        }
-
-        private string GuardarArchivoPopup(
-            string nombreBase,
-            string consecutivo,
-            string rutaLocal,
-            string rutaRemota,
-            FileUpload archivo,
-            string idUsuario,
-            AG_Utils utilidades)
-        {
-            string nombreNormalizado = string.IsNullOrWhiteSpace(nombreBase)
-                ? Path.GetFileNameWithoutExtension(archivo.FileName)
-                : nombreBase;
-
-            string extensionArchivo = Path.GetExtension(archivo.FileName);
-            string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(
-                nombreNormalizado,
-                consecutivo,
-                extensionArchivo
-            );
-
-            var (guardaLocal, guardaRemoto, rutaRemotaArchivo) = utilidades.TratamientoNoticias(
-                nombreFinalArchivo,
-                consecutivo,
-                rutaLocal,
-                rutaRemota,
-                archivo,
-                idUsuario,
-                pathLog
-            );
-
-            if (guardaLocal && guardaRemoto && !string.IsNullOrEmpty(rutaRemotaArchivo))
-            {
-                return rutaRemotaArchivo;
-            }
-
-            return string.Empty;
-        }
-
-        private void EliminarArchivoFisico(string rutaRemota, string pathServer, string ambiente)
-        {
-            if (string.IsNullOrWhiteSpace(rutaRemota))
-            {
-                return;
-            }
-
-            string[] partes = rutaRemota.Split('\\');
-            List<string> segmentos = new List<string>(partes);
-            int index = segmentos.FindIndex(x => x.Equals(ambiente, StringComparison.OrdinalIgnoreCase));
-
-            if (index >= 0)
-            {
-                segmentos.RemoveRange(0, index);
-            }
-
-            segmentos.RemoveAll(string.IsNullOrWhiteSpace);
-            string rutaRelativa = string.Join("\\", segmentos);
-
-            string rutaLocal = Path.Combine(pathServer, rutaRelativa);
-
-            if (!string.IsNullOrWhiteSpace(rutaLocal) && File.Exists(rutaLocal))
-            {
-                File.Delete(rutaLocal);
-            }
-
-            if (File.Exists(rutaRemota))
-            {
-                File.Delete(rutaRemota);
-            }
-        }
-
-        // ========================================
-        // BÚSQUEDA RÁPIDA
-        // ========================================
-        protected void txt_filter_grupo_TextChanged(object sender, EventArgs e)
+        private void CargarRoles(CheckBoxList cbl)
         {
             try
             {
-                cargar_tabla_vista();
+                Int_Popup obj = new Int_Popup();
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 15); // Action 15: lista de roles
+
+                cbl.DataSource = dt;
+                cbl.DataTextField = "Nombre_Rol";
+                cbl.DataValueField = "Id_Rol";
+                cbl.DataBind();
             }
             catch (Exception ex)
             {
-                throw;
+                MostrarMensaje("Error al cargar roles: " + ex.Message);
             }
         }
 
-        // ========================================
-        // OBTENER ROLES SELECCIONADOS (CREAR)
-        // ========================================
-        private string ObtenerRolesSeleccionados()
+
+        private void CargarTablaPopups()
         {
-            if (chkl_roles != null)
+            try
             {
-                var rolesSeleccionados = new List<string>();
-                foreach (ListItem item in chkl_roles.Items)
+                Int_Popup obj = new Int_Popup();
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 1); // Action 1: listar activos
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("<table class='tbl_vistas_general'>");
+
+                sb.Append("<thead>");
+                sb.Append("<tr>");
+                sb.Append("<th>#</th>");
+                sb.Append("<th>ID</th>");
+                sb.Append("<th>Título</th>");
+                sb.Append("<th>Descripción</th>");
+                sb.Append("<th>Fecha de creación</th>");
+                sb.Append("<th>Fecha Inicio</th>");
+                sb.Append("<th>Fecha Fin</th>");
+                sb.Append("<th>Estado</th>");
+                sb.Append("<th>Acción</th>");
+                sb.Append("</tr>");
+                sb.Append("</thead>");
+                sb.Append("<tbody>");
+
+                int contador = 1;
+                foreach (DataRow row in dt.Rows)
                 {
-                    if (item.Selected)
-                    {
-                        rolesSeleccionados.Add(item.Value);
-                    }
+                    string id = row["Id_Popup"].ToString();
+                    string titulo = Server.HtmlEncode(row["Titulo"].ToString());
+                    string descripcion = Server.HtmlEncode(row["Descripcion"].ToString());
+                    string fechaCreacion = row["Fecha_Creacion"].ToString();
+                    string fechaInicio = row["Fecha_Inicio"].ToString();
+                    string fechaFin = row["Fecha_Fin"].ToString();
+                    bool estado = row["Estado"] != DBNull.Value && Convert.ToBoolean(row["Estado"]);
+
+                    sb.Append("<tr>");
+                    sb.AppendFormat("<td>{0}</td>", contador);                    
+                    sb.AppendFormat("<td>{0}</td>", id);
+                    sb.AppendFormat("<td>{0}</td>", titulo);
+                    sb.AppendFormat("<td>{0}</td>", descripcion);
+                    sb.AppendFormat("<td>{0}</td>", fechaCreacion);
+                    sb.AppendFormat("<td>{0}</td>", fechaInicio);
+                    sb.AppendFormat("<td>{0}</td>", fechaFin);                    
+
+                    string badge = estado
+                        ? "<span class='badge badge-success'>Activo</span>"
+                        : "<span class='badge badge-secondary'>Inactivo</span>";
+                    sb.AppendFormat("<td>{0}</td>", badge);
+
+                    sb.AppendFormat("<td><input type='radio' name='rd_estado_vista' value='{0}' /></td>", id);
+                    sb.Append("</tr>");
+                    contador++;
                 }
-                return string.Join(",", rolesSeleccionados);
+
+                sb.Append("</tbody>");
+                sb.Append("</table>");
+
+                tbl_grupos.InnerHtml = sb.ToString();
             }
-            return string.Empty;
+            catch (Exception ex)
+            {
+                MostrarMensaje("Error al cargar la tabla de popups: " + ex.Message);
+            }
         }
 
-        // ========================================
-        // OBTENER ROLES SELECCIONADOS (ACTUALIZAR)
-        // ========================================
-        private string ObtenerRolesSeleccionadosActualizar()
+
+        private string ObtenerRolesSeleccionados(CheckBoxList cbl)
         {
-            if (chkl_roles_pub != null)
+            StringBuilder sb = new StringBuilder();
+            foreach (ListItem item in cbl.Items)
             {
-                var rolesSeleccionados = new List<string>();
-                foreach (ListItem item in chkl_roles_pub.Items)
+                if (item.Selected)
                 {
-                    if (item.Selected)
-                    {
-                        rolesSeleccionados.Add(item.Value);
-                    }
+                    if (sb.Length > 0) sb.Append(",");
+                    sb.Append(item.Value);
                 }
-                return string.Join(",", rolesSeleccionados);
             }
-            return string.Empty;
+            return sb.Length == 0 ? null : sb.ToString();
         }
+
+        private DateTime? ParseDate(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            if (DateTime.TryParse(value, out DateTime fecha)) return fecha;
+            return null;
+        }
+
+        private int ObtenerIdUsuarioActual()
+        {
+            // Ajusta esto según cómo manejes el usuario logueado en tu intranet
+            // Ejemplos comunes:
+            // return Convert.ToInt32(Session["Id_Usuario"]);
+            // o usar una clase de usuario autenticado.
+            return Convert.ToInt32(Session["Id_Usuario"]);
+        }
+
+        private string GuardarArchivo(FileUpload control, string carpetaVirtual)
+        {
+            if (control == null || !control.HasFile)
+                return null;
+
+            string rutaFisica = Server.MapPath(carpetaVirtual);
+            if (!Directory.Exists(rutaFisica))
+            {
+                Directory.CreateDirectory(rutaFisica);
+            }
+
+            string nombreArchivo = DateTime.Now.ToString("yyyyMMddHHmmss_") +
+                                   Path.GetFileName(control.FileName);
+
+            string pathCompleto = Path.Combine(rutaFisica, nombreArchivo);
+            control.SaveAs(pathCompleto);
+
+            // Devolver ruta relativa para guardar en BD
+            string rutaRelativa = VirtualPathUtility.ToAbsolute(
+                carpetaVirtual.TrimEnd('/') + "/" + nombreArchivo);
+
+            return rutaRelativa;
+        }
+
+        private void LimpiarFormularioCrear()
+        {
+            txt_titulo.Text = string.Empty;
+            txt_descripcion.Text = string.Empty;
+            txt_url.Text = string.Empty;
+            txt_tiempo.Text = "5";
+            txt_fecha_inicio.Text = string.Empty;
+            txt_fecha_fin.Text = string.Empty;
+
+            foreach (ListItem item in chkl_roles.Items)
+            {
+                item.Selected = false;
+            }
+        }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(
+                this,
+                GetType(),
+                "popupMsg",
+                $"alert('{mensaje.Replace("'", "\\'")}');",
+                true
+            );
+        }
+
+        #endregion
     }
 }

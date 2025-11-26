@@ -41,6 +41,19 @@
     }
 }
 
+/*Video de encuestas*/
+.modal-i-gl-content {
+    max-height: clamp(400px, 80vh, 900px);
+    overflow-y: auto;
+}
+
+    .modal-i-gl-content video {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+    }
+
 @media only screen and (min-width: 750px) {
     /*medidas param ocultar el icono defs label pagina*/
     .nav__icon {
@@ -200,11 +213,6 @@
 @media screen and (max-width: 1366px) {
     .modal-i-gl-body-small {
         width: 90%;
-    }
-
-    .modal-i-gl-content {
-        max-height: 500px;
-        overflow-y: auto;
     }
 }
 

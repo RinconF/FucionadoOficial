@@ -1,10 +1,5 @@
-﻿using iTextSharp.xmp.impl;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DCL
 {
@@ -40,6 +35,7 @@ namespace DCL
             set { mvarImagen = value; }
         }
 
+        // Soporte video
         String mvarVideo = null;
         public String Video
         {
@@ -94,6 +90,14 @@ namespace DCL
         {
             get { return mvarId_Usuario; }
             set { mvarId_Usuario = value; }
+        }
+
+        // Para actions 16/17 (asignar / quitar rol)
+        Int32? mvarId_Rol = null;
+        public Int32? Id_Rol
+        {
+            get { return mvarId_Rol; }
+            set { mvarId_Rol = value; }
         }
 
         String mvarInteraccion = null;
@@ -154,17 +158,11 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            if (HasColumn(obj, "Imagen"))
-            {
-                mvarImagen = obj["Imagen"] != DBNull.Value ?
-                    Convert.ToString(obj["Imagen"]) : null;
-            }
+            mvarImagen = obj["Imagen"] != DBNull.Value ?
+                Convert.ToString(obj["Imagen"]) : null;
 
-            if (HasColumn(obj, "Video"))
-            {
-                mvarVideo = obj["Video"] != DBNull.Value ?
-                    Convert.ToString(obj["Video"]) : null;
-            }
+            if (HasColumn(obj, "Video") && obj["Video"] != DBNull.Value)
+                mvarVideo = Convert.ToString(obj["Video"]);
 
             mvarUrl = obj["Url"] != DBNull.Value ?
                 Convert.ToString(obj["Url"]) : null;
@@ -180,22 +178,19 @@ namespace DCL
 
             if (obj["Fecha_Inicio"] != DBNull.Value)
             {
-                var fechaInicio = obj["Fecha_Inicio"];
-                if (fechaInicio is DateTime)
-                    mvarFecha_Inicio = (DateTime)fechaInicio;
-                else if (fechaInicio is String && DateTime.TryParse(fechaInicio.ToString(), out DateTime parsedDate))
-                    mvarFecha_Inicio = parsedDate;
+                var v = obj["Fecha_Inicio"];
+                if (v is DateTime dt) mvarFecha_Inicio = dt;
+                else if (DateTime.TryParse(v.ToString(), out var dt2)) mvarFecha_Inicio = dt2;
             }
 
             if (obj["Fecha_Fin"] != DBNull.Value)
             {
-                var fechaFin = obj["Fecha_Fin"];
-                if (fechaFin is DateTime)
-                    mvarFecha_Fin = (DateTime)fechaFin;
-                else if (fechaFin is String && DateTime.TryParse(fechaFin.ToString(), out DateTime parsedDate))
-                    mvarFecha_Fin = parsedDate;
+                var v = obj["Fecha_Fin"];
+                if (v is DateTime dt) mvarFecha_Fin = dt;
+                else if (DateTime.TryParse(v.ToString(), out var dt2)) mvarFecha_Fin = dt2;
             }
         }
+
         public Int_Popup(DataRow obj)
         {
             mvarId_Popup = obj["Id_Popup"] != DBNull.Value ?
@@ -207,17 +202,11 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            if (HasColumn(obj, "Imagen"))
-            {
-                mvarImagen = obj["Imagen"] != DBNull.Value ?
-                    Convert.ToString(obj["Imagen"]) : null;
-            }
+            mvarImagen = obj["Imagen"] != DBNull.Value ?
+                Convert.ToString(obj["Imagen"]) : null;
 
-            if (HasColumn(obj, "Video"))
-            {
-                mvarVideo = obj["Video"] != DBNull.Value ?
-                    Convert.ToString(obj["Video"]) : null;
-            }
+            if (obj.Table.Columns.Contains("Video") && obj["Video"] != DBNull.Value)
+                mvarVideo = Convert.ToString(obj["Video"]);
 
             mvarUrl = obj["Url"] != DBNull.Value ?
                 Convert.ToString(obj["Url"]) : null;
@@ -231,23 +220,13 @@ namespace DCL
             mvarTiempo_Visualizacion = obj["Tiempo_Visualizacion"] != DBNull.Value ?
                 Convert.ToInt32(obj["Tiempo_Visualizacion"]) : (Int32?)null;
         }
-        #endregion
-        private static bool HasColumn(IDataRecord record, string columnName)
+
+        private bool HasColumn(IDataRecord record, string columnName)
         {
-            try
-            {
-                record.GetOrdinal(columnName);
-                return true;
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return false;
-            }
+            try { return record.GetOrdinal(columnName) >= 0; }
+            catch { return false; }
         }
 
-        private static bool HasColumn(DataRow row, string columnName)
-        {
-            return row.Table.Columns.Contains(columnName);
-        }
+        #endregion
     }
 }

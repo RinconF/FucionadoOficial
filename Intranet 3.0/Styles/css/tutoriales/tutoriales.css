@@ -25,13 +25,12 @@
 /* Contenedor principal */
 .pnl_table {
     background: var(--etib-card-bg);
-    box-shadow: 0 4px 16px rgb(53 103 193 / 94%), 0 2px 8px rgba(0, 0, 0, 0.06); 
     border-radius: var(--border-radius);
-    margin: 7px 17px !important;
+    box-shadow: 0 4px 16px rgb(53 103 193 / 60%), 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: 24px auto;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
-    max-width: 1400px;
-    position: relative;
+    max-width: 1200px;
 }
 
 /* Tag superior */

@@ -80,6 +80,11 @@
             </Scripts>
         </asp:ScriptManager>
 
+                <asp:HiddenField 
+            ID="hfIdUsuario" 
+            runat="server" 
+            Value='<%= Session["Id_Usuario"] %>' />
+
         <header id="header_">
             <div class="box_img" style = "width: 70px ;padding-left: 53px"; display: flex>
                 <div style="display: inline-flex">
@@ -297,6 +302,63 @@
                 transform: rotate(360deg);
             }
         }
+
+        .modal-popup {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+    }
+    .popup-container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 450px;
+        max-width: 90%;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,.2);
+        font-family: Arial, sans-serif;
+    }
+    .popup-container h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 20px;
+        color: #2c3e50;
+    }
+    .popup-container p {
+        font-size: 14px;
+        color: #34495e;
+    }
+    .popup-media {
+        max-width: 100%;
+        margin: 15px 0;
+        border-radius: 6px;
+    }
+    .popup-button {
+        background: #3498db;
+        padding: 10px 18px;
+        color: white;
+        border-radius: 5px;
+        display: inline-block;
+        margin-top: 8px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .popup-cerrar {
+        margin-top: 10px;
+        background: #e74c3c;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+    }
     </style>
 
     <div class="modal-console modal-noti-hide">
@@ -527,6 +589,96 @@
                         $("#modal_cambiar_pass_obli").removeClass('modal-i-gl-hide');
                     }
                 }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+
+                    fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
+                        method: "POST",
+                    headers: {"Content-Type": "application/json" },
+                    body: JSON.stringify({Id_Usuario: parseInt(userId) })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (!data.d || data.d.length === 0) return;
+
+                    mostrarPopupSecuencial(data.d, userId);
+            })
+            .catch(err => console.error("Error:", err));
+        });
+
+                    function mostrarPopupSecuencial(popups, userId) {
+                        let index = 0;
+
+                    function mostrarSiguiente() {
+                if (index >= popups.length) return;
+
+                    const p = popups[index];
+
+                    const popup = {
+                        Id: p[0],
+                    Titulo: p[1],
+                    Descripcion: p[2],
+                    Imagen: p[3],
+                    Video: p[4],
+                    Url: p[5],
+                    Tiempo: p[6],
+                };
+
+                mostrarPopup(popup, () => {
+                        registrarVista(popup.Id, userId);
+                    index++;
+                    mostrarSiguiente();
+                });
+            }
+
+                    mostrarSiguiente();
+        }
+
+                    function mostrarPopup(popup, callback) {
+            const modal = document.createElement("div");
+                    modal.className = "modal-popup";
+
+                    let media = "";
+                    if (popup.Imagen) {
+                        media = `<img src="${popup.Imagen}" class="popup-media" />`;
+            }
+                    else if (popup.Video) {
+                        media = `
+                    <video autoplay controls class="popup-media">
+                        <source src="${popup.Video}">
+                    </video>`;
+            }
+
+                    modal.innerHTML = `
+                    <div class="popup-container">
+                        <h2>${popup.Titulo}</h2>
+                        <p>${popup.Descripcion}</p>
+                        ${media}
+                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
+                        <button class="popup-cerrar">Cerrar</button>
+                    </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.querySelector(".popup-cerrar").onclick = () => {
+                modal.remove();
+                callback();
+            };
+        }
+
+        function registrarVista(idPopup, idUsuario) {
+            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id_Popup: parseInt(idPopup),
+                    Id_Usuario: parseInt(idUsuario),
+                    Interaccion: "vista"
+                })
             });
         }
     </script>

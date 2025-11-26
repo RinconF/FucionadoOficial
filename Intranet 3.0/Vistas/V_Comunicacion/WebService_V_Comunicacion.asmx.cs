@@ -1,4 +1,5 @@
 ﻿using BRL;
+using DCL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -95,6 +96,139 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 string[] array = new string[1];
                 array[0] = ex.ToString();
                 list.Add(array);
+                return list;
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> cargar_datos_modal_actualizar_Popup(int Id_Popup)
+        {
+            var list = new List<string[]>();
+
+            try
+            {
+                var obj = new Int_Popup { Id_Popup = Id_Popup };
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 3); // Action 3
+
+                if (dt.Rows.Count == 0)
+                {
+                    list.Add(new[] { "0" });
+                    return list;
+                }
+
+                DataRow row = dt.Rows[0];
+                string[] array = new string[12];
+                for (int i = 0; i < 12; i++)
+                    array[i] = row[i].ToString();
+
+                list.Add(array);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                list.Clear();
+                list.Add(new[] { ex.Message });
+                return list;
+            }
+        }
+
+        // Estadísticas (Action 8)
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> Obtener_Estadisticas_Popup(int Id_Popup)
+        {
+            var list = new List<string[]>();
+
+            try
+            {
+                var obj = new Int_Popup { Id_Popup = Id_Popup };
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 8);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string[] arr = new string[3];
+                    arr[0] = row["Tipo_Interaccion"].ToString();
+                    arr[1] = row["Cantidad"].ToString();
+                    arr[2] = row["Porcentaje"].ToString();
+                    list.Add(arr);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                list.Clear();
+                list.Add(new[] { ex.Message });
+                return list;
+            }
+        }
+
+        // Lista para la tabla (Action 1)
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> Obtener_Popups_Para_Grid()
+        {
+            var list = new List<string[]>();
+
+            try
+            {
+                var obj = new Int_Popup();
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 1);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    // ajusta el tamaño si en el front ocupas más/menos columnas
+                    string[] arr = new string[dt.Columns.Count];
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                        arr[i] = row[i].ToString();
+
+                    list.Add(arr);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                list.Clear();
+                list.Add(new[] { ex.Message });
+                return list;
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void Registrar_Interaccion_Popup(int Id_Popup, int Id_Usuario, string Interaccion)
+        {
+            Int_Popup_BRL.RegistrarInteraccion(Id_Popup, Id_Usuario, Interaccion);
+        }
+
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> Obtener_Popups_Usuario(int Id_Usuario)
+        {
+            var list = new List<string[]>();
+            try
+            {
+                var obj = new Int_Popup { Id_Usuario = Id_Usuario };
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 0); // Action 0: popups para usuario
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string[] arr = new string[row.ItemArray.Length];
+                    for (int i = 0; i < row.ItemArray.Length; i++)
+                        arr[i] = row[i].ToString();
+
+                    list.Add(arr);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                list.Clear();
+                list.Add(new[] { ex.Message });
                 return list;
             }
         }

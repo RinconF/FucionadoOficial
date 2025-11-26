@@ -1905,6 +1905,7 @@
     <Content Include="Styles\css\default_encuestas\default_encuestas.css" />
     <Content Include="Styles\css\desprendibles_pago\desprendibles_pago.css" />
     <Content Include="Styles\css\nucleo_familiar\nucleo_familiar.css" />
+    <Content Include="Styles\css\programacion_plantilla\programacion_plantilla.css" />
     <Content Include="Styles\css\sweetalert2\sweetalert2.min.css" />
     <Content Include="Styles\css\tutoriales\tutoriales.css" />
     <Content Include="Vistas\Img\Comites\CCL\Default.png" />

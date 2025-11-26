@@ -24,22 +24,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.UpdatePanel PanelUpdate;
 
         /// <summary>
-        /// Control txt_filter_grupo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_filter_grupo;
-
-        /// <summary>
         /// Control tbl_grupos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable tbl_grupos;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbl_grupos;
 
         /// <summary>
         /// Control txt_titulo.
@@ -123,13 +114,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.FileUpload fud_Video;
 
         /// <summary>
-        /// Control lnk_crear_.
+        /// Control lnk_crear_popup.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_crear_;
+        protected global::System.Web.UI.WebControls.LinkButton lnk_crear_popup;
+
+        /// <summary>
+        /// Control hf_id_popup.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_popup;
 
         /// <summary>
         /// Control txt_titulo_pub.
@@ -222,21 +222,30 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.FileUpload fud_Video_pub;
 
         /// <summary>
-        /// Control LinkButton1.
+        /// Control lnk_actualizar_popup.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.LinkButton lnk_actualizar_popup;
 
         /// <summary>
-        /// Control btn_confirmar_eliminar.
+        /// Control hf_id_popup_eliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_confirmar_eliminar;
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_popup_eliminar;
+
+        /// <summary>
+        /// Control lnk_eliminar_popup.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnk_eliminar_popup;
     }
 }

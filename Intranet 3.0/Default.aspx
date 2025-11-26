@@ -5,6 +5,98 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="scripts_js" runat="server">
     <link rel="Stylesheet" href="/Styles/css/default/default.css" />
     <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+
+            fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.d || data.d.length === 0) return;
+
+                    mostrarPopupSecuencial(data.d, userId);
+                })
+                .catch(err => console.error("Error:", err));
+        });
+
+        function mostrarPopupSecuencial(popups, userId) {
+            let index = 0;
+
+            function mostrarSiguiente() {
+                if (index >= popups.length) return;
+
+                const p = popups[index];
+
+                const popup = {
+                    Id: p[0],
+                    Titulo: p[1],
+                    Descripcion: p[2],
+                    Imagen: p[3],
+                    Video: p[4],
+                    Url: p[5],
+                    Tiempo: p[6],
+                };
+
+                mostrarPopup(popup, () => {
+                    registrarVista(popup.Id, userId);
+                    index++;
+                    mostrarSiguiente();
+                });
+            }
+
+            mostrarSiguiente();
+        }
+
+        function mostrarPopup(popup, callback) {
+            const modal = document.createElement("div");
+            modal.className = "modal-popup";
+
+            let media = "";
+            if (popup.Imagen) {
+                media = `<img src="${popup.Imagen}" class="popup-media" />`;
+            }
+            else if (popup.Video) {
+                media = `
+                    <video autoplay controls class="popup-media">
+                        <source src="${popup.Video}">
+                    </video>`;
+            }
+
+            modal.innerHTML = `
+                    <div class="popup-container">
+                        <h2>${popup.Titulo}</h2>
+                        <p>${popup.Descripcion}</p>
+                        ${media}
+                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
+                        <button class="popup-cerrar">Cerrar</button>
+                    </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.querySelector(".popup-cerrar").onclick = () => {
+                modal.remove();
+                callback();
+            };
+        }
+
+        function registrarVista(idPopup, idUsuario) {
+            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id_Popup: parseInt(idPopup),
+                    Id_Usuario: parseInt(idUsuario),
+                    Interaccion: "vista"
+                })
+            });
+        }
+
+
         $(document).ready(function () {
 
             //eventos_encuesta_binaria();
@@ -1843,5 +1935,97 @@
         }
         document.addEventListener('load', quitarPadding);
         window.addEventListener('load', quitarPadding);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+
+            fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+            })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.d || data.d.length === 0) return;
+
+                    mostrarPopupSecuencial(data.d, userId);
+                })
+                .catch(err => console.error("Error:", err));
+        });
+
+        function mostrarPopupSecuencial(popups, userId) {
+            let index = 0;
+
+            function mostrarSiguiente() {
+                if (index >= popups.length) return;
+
+                const p = popups[index];
+
+                const popup = {
+                    Id: p[0],
+                    Titulo: p[1],
+                    Descripcion: p[2],
+                    Imagen: p[3],
+                    Video: p[4],
+                    Url: p[5],
+                    Tiempo: p[6],
+                };
+
+                mostrarPopup(popup, () => {
+                    registrarVista(popup.Id, userId);
+                    index++;
+                    mostrarSiguiente();
+                });
+            }
+
+            mostrarSiguiente();
+        }
+
+        function mostrarPopup(popup, callback) {
+            const modal = document.createElement("div");
+            modal.className = "modal-popup";
+
+            let media = "";
+            if (popup.Imagen) {
+                media = `<img src="${popup.Imagen}" class="popup-media" />`;
+            }
+            else if (popup.Video) {
+                media = `
+                    <video autoplay controls class="popup-media">
+                        <source src="${popup.Video}">
+                    </video>`;
+            }
+
+            modal.innerHTML = `
+                    <div class="popup-container">
+                        <h2>${popup.Titulo}</h2>
+                        <p>${popup.Descripcion}</p>
+                        ${media}
+                        ${popup.Url ? `<a href="${popup.Url}" target="_blank" class="popup-button">Ir al enlace</a>` : ""}
+                        <button class="popup-cerrar">Cerrar</button>
+                    </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.querySelector(".popup-cerrar").onclick = () => {
+                modal.remove();
+                callback();
+            };
+        }
+
+        function registrarVista(idPopup, idUsuario) {
+            fetch("WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id_Popup: parseInt(idPopup),
+                    Id_Usuario: parseInt(idUsuario),
+                    Interaccion: "vista"
+                })
+            });
+        }
+
+
     </script>
 </asp:Content>

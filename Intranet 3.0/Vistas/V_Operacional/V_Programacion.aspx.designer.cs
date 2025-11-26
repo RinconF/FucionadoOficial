@@ -15,49 +15,49 @@ namespace Intranet_3._0.Vistas.V_Operacional
     {
 
         /// <summary>
-        /// Control update1.
+        /// Control panel_actualizacion1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel update1;
+        protected global::System.Web.UI.UpdatePanel panel_actualizacion1;
 
         /// <summary>
-        /// Control txtCode.
+        /// Control campo_codigo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCode;
+        protected global::System.Web.UI.WebControls.TextBox campo_codigo;
 
         /// <summary>
-        /// Control txtCedula.
+        /// Control campo_cedula.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCedula;
+        protected global::System.Web.UI.WebControls.TextBox campo_cedula;
 
         /// <summary>
-        /// Control txtFecIni.
+        /// Control campo_fecha_inicial.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFecIni;
+        protected global::System.Web.UI.WebControls.TextBox campo_fecha_inicial;
 
         /// <summary>
-        /// Control Cal_1.
+        /// Control calendario_1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Cal_1;
+        protected global::System.Web.UI.WebControls.Panel calendario_1;
 
         /// <summary>
         /// Control Calendar1.
@@ -69,22 +69,22 @@ namespace Intranet_3._0.Vistas.V_Operacional
         protected global::System.Web.UI.WebControls.Calendar Calendar1;
 
         /// <summary>
-        /// Control txtFecFin.
+        /// Control campo_fecha_final.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFecFin;
+        protected global::System.Web.UI.WebControls.TextBox campo_fecha_final;
 
         /// <summary>
-        /// Control Cal_2.
+        /// Control calendario_2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Cal_2;
+        protected global::System.Web.UI.WebControls.Panel calendario_2;
 
         /// <summary>
         /// Control Calendar2.
@@ -96,84 +96,84 @@ namespace Intranet_3._0.Vistas.V_Operacional
         protected global::System.Web.UI.WebControls.Calendar Calendar2;
 
         /// <summary>
-        /// Control progress.
+        /// Control progreso.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress progress;
+        protected global::System.Web.UI.UpdateProgress progreso;
 
         /// <summary>
-        /// Control btnConsultar.
+        /// Control boton_consultar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConsultar;
+        protected global::System.Web.UI.WebControls.Button boton_consultar;
 
         /// <summary>
-        /// Control btnLimpiar.
+        /// Control boton_limpiar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+        protected global::System.Web.UI.WebControls.Button boton_limpiar;
 
         /// <summary>
-        /// Control UpdatePanel1.
+        /// Control panel_actualizacion2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel panel_actualizacion2;
 
         /// <summary>
-        /// Control pnl_Resultado.
+        /// Control panel_resultado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnl_Resultado;
+        protected global::System.Web.UI.WebControls.Panel panel_resultado;
 
         /// <summary>
-        /// Control lblTitle.
+        /// Control etiqueta_titulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.WebControls.Label etiqueta_titulo;
 
         /// <summary>
-        /// Control lblInfoConductor.
+        /// Control etiqueta_info_conductor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInfoConductor;
+        protected global::System.Web.UI.WebControls.Label etiqueta_info_conductor;
 
         /// <summary>
-        /// Control lblinfoCod.
+        /// Control etiqueta_info_codigo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblinfoCod;
+        protected global::System.Web.UI.WebControls.Label etiqueta_info_codigo;
 
         /// <summary>
-        /// Control Panel1.
+        /// Control panel_tablas_horarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.Panel panel_tablas_horarios;
     }
 }

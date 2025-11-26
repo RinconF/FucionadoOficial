@@ -45,6 +45,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
         string fechaInicio = "";
         string fechaFin = "";
         string tipoUsuario = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -54,7 +55,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 {
                     if (!string.IsNullOrEmpty(Session["Cargo"].ToString()))
                     {
-                        pnl_Resultado.Visible = false;
+                        panel_resultado.Visible = false;
                         tipoUsuario = Session["Cargo"].ToString();
                         if (!IsPostBack)
                         {
@@ -64,20 +65,20 @@ namespace Intranet_3._0.Vistas.V_Operacional
                             {
                                 codigoSAE = Session["codSAE"].ToString();
                                 numDocumento = Session["numDocumento"].ToString();
-                                txtCedula.Text = numDocumento;
-                                txtCode.Text = codigoSAE.Replace("ET0", "");
-                                if (txtCode.Text.StartsWith("9"))
+                                campo_cedula.Text = numDocumento;
+                                campo_codigo.Text = codigoSAE.Replace("ET0", "");
+                                if (campo_codigo.Text.StartsWith("9"))
                                 {
-                                    txtCode.Text = txtCode.Text.Remove(0, 1);
-                                    txtCode.Text = "7" + txtCode.Text;
+                                    campo_codigo.Text = campo_codigo.Text.Remove(0, 1);
+                                    campo_codigo.Text = "7" + campo_codigo.Text;
                                 }
-                                txtCedula.Enabled = false;
-                                txtCode.Enabled = false;
+                                campo_cedula.Enabled = false;
+                                campo_codigo.Enabled = false;
                             }
                             else
                             {
-                                txtCedula.Enabled = true;
-                                txtCode.Enabled = true;
+                                campo_cedula.Enabled = true;
+                                campo_codigo.Enabled = true;
                             }
                         }
                     }
@@ -95,7 +96,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
             {
                 Page.Response.Redirect("~/Login", true);
             }
-            
+
         }
 
         #region Eventos Controles
@@ -104,7 +105,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
         {
             try
             {
-                pnl_Resultado.Dispose();
+                panel_resultado.Dispose();
                 //AGR_12-10-2022:Consulta la información del colaborador según los parámetros dados
                 ConsultarInfo();
                 if (dtHorario != null)
@@ -115,33 +116,31 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         return;
                     }
 
-                //AGR_12-10-2022: Separa la información en tablas (horario)
+                    //AGR_12-10-2022: Separa la información en tablas (horario)
                     SepararTablas(dtHorario);
 
                     //AGR_12-10-2022: muestra el control pnl_resultado en caso de que los registros obtenidos en el método anterios, arroje resultados
                     if (dtHorario.Rows.Count > 0)
                     {
-                        if (!pnl_Resultado.Visible)
+                        if (!panel_resultado.Visible)
                         {
-                            pnl_Resultado.Visible = true;
+                            panel_resultado.Visible = true;
                         }
                     }
                 }
                 else
                 {
-                    pnl_Resultado.Visible = false;
+                    panel_resultado.Visible = false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
         }
 
-        
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-
             LimpiarCampos(tipoUsuario);
         }
 
@@ -153,14 +152,14 @@ namespace Intranet_3._0.Vistas.V_Operacional
         {
             dtHorario = null;
             Calendar1.SelectedDate = DateTime.Now;
-            Cal_1.Visible = false;
+            calendario_1.Visible = false;
             Calendar2.SelectedDate = DateTime.Now;
-            Cal_2.Visible = false;
-            txtFecIni.Text = "";
-            txtFecIni.Text.DefaultIfEmpty();
-            txtFecFin.Text = "";
-            txtFecFin.Text.DefaultIfEmpty();
-            pnl_Resultado.Visible = false;
+            calendario_2.Visible = false;
+            campo_fecha_inicial.Text = "";
+            campo_fecha_inicial.Text.DefaultIfEmpty();
+            campo_fecha_final.Text = "";
+            campo_fecha_final.Text.DefaultIfEmpty();
+            panel_resultado.Visible = false;
 
             //AGR_13-10-2022: se implementa switch pensando en perfiles a futuro
             if (tipoUsuario.Contains("OPERADOR"))
@@ -170,65 +169,42 @@ namespace Intranet_3._0.Vistas.V_Operacional
             switch (tipoUsuario)
             {
                 case ("OPERADOR"):
-                   
                     break;
 
                 default:
-                    txtCode.Text = "";
-                    txtCode.Text.DefaultIfEmpty();
-                    txtCedula.Text = "";
-                    txtCedula.Text.DefaultIfEmpty();
-                    lblinfoCod.Text = "";
-                    lblInfoConductor.Text = "";
+                    campo_codigo.Text = "";
+                    campo_codigo.Text.DefaultIfEmpty();
+                    campo_cedula.Text = "";
+                    campo_cedula.Text.DefaultIfEmpty();
+                    etiqueta_info_codigo.Text = "";
+                    etiqueta_info_conductor.Text = "";
                     break;
             }
         }
 
-        
         //calendarios
         protected void abrirFechaInicio(object sender, EventArgs e)
         {
-
             //AGR_12-10-2022:Validación de visualización de calendarios, oculta o muestra según se requiera.
-            if (Cal_1.Visible)
+            if (calendario_1.Visible)
             {
-                Cal_1.Visible = false;
+                calendario_1.Visible = true;
             }
             else
             {
                 Calendar1.SelectedDates.Clear();
-                Cal_1.Visible = true;
+                calendario_1.Visible = true;
             }
-            if (Cal_2.Visible)
+            if (calendario_2.Visible)
             {
-                Cal_2.Visible = false;
+                calendario_2.Visible = false;
             }
         }
-
-
-        //protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
-        //{
-
-        ////AGR_11-10-2022: Funcion para limitar el calendario a fecha de inicio un mes
-        ////No es muy amigable con el usuario. Deshabilitado pero se mantiene código en caso de llegar a requerirse.Habilitar desde los enventos del control front modo diseño
-        //DateTime control1 = DateTime.Today.AddMonths(-1);
-
-        //    if (e.Day.Date > control1)
-        //    {
-        //        e.Day.IsSelectable = true;
-        //    }
-        //    else
-        //    {
-        //        e.Day.IsSelectable = false;
-        //        ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey1", "alert('No es posible consultar programación en estas fechas. La fecha inicial es inferior a la permitida: un(1) mes.');", true);
-
-        //    }
-        //}
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
             DateTime limiteFechaInicio;
-            txtFecIni.Text = Calendar1.SelectedDate.ToShortDateString();
+            campo_fecha_inicial.Text = Calendar1.SelectedDate.ToShortDateString();
 
             //AGR_12-10-2022:Se realiza validación, en caso de ser operador, no se permitirá seleccionar una fecha inferior a un mes "DateTime.Today.AddMonths(-1)". cargo diferente, 3 meses
             if (tipoUsuario.Contains("OPERADOR"))
@@ -251,34 +227,36 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey2", "alert('No es posible consultar programación en estas fechas. La fecha inicial es inferior a la permitida: tres(3) meses.');", true);
                 }
-                txtFecIni.Text = "";
+                campo_fecha_inicial.Text = "";
             }
 
             //AGR_12-10-2022:inmediatamente se cambie la fecha, el control se ocultará
-            Cal_1.Visible = false;
+            calendario_1.Visible = false;
         }
+
         protected void abrirFechaFin(object sender, EventArgs e)
         {
             //AGR_12-10-2022:Validación de visualización de calendarios, oculta o muestra según se requiera.
-            if (Cal_2.Visible)
+            if (calendario_2.Visible)
             {
-                Cal_2.Visible = false;
+                calendario_2.Visible = true;
             }
             else
             {
                 Calendar2.SelectedDates.Clear();
-                Cal_2.Visible = true;
+                calendario_2.Visible = true;
             }
 
-            if (Cal_1.Visible)
+            if (calendario_1.Visible)
             {
-                Cal_1.Visible = false;
+                calendario_1.Visible = false;
             }
         }
+
         protected void Calendar2_SelectionChanged(object sender, EventArgs e)
         {
-            txtFecFin.Text = Calendar2.SelectedDate.ToShortDateString();
-            Cal_2.Visible = false;
+            campo_fecha_final.Text = Calendar2.SelectedDate.ToShortDateString();
+            calendario_2.Visible = false;
         }
 
         #endregion
@@ -288,23 +266,23 @@ namespace Intranet_3._0.Vistas.V_Operacional
         private void ConsultarInfo()
         {
             //AGR_12-10-2022: oculta calendarios y limpia datatable
-            Cal_1.Visible = false;
-            Cal_2.Visible = false;
+            calendario_1.Visible = false;
+            calendario_2.Visible = false;
             dtHorario = null;
             try
             {
                 DCL.ConsultaH ObjConsul = new DCL.ConsultaH();
 
-                if (string.IsNullOrEmpty(codigoSAE) && !string.IsNullOrEmpty(txtCode.Text))
+                if (string.IsNullOrEmpty(codigoSAE) && !string.IsNullOrEmpty(campo_codigo.Text))
                 {
                     //AGR_12-10-2022:reemplaza código SAE de textbox(Ej: 701234) por el código establecido en mensajes de programación y base de datos BIT_V2 (ET0901234)
-                    if (txtCode.Text.StartsWith("7"))
+                    if (campo_codigo.Text.StartsWith("7"))
                     {
-                        ObjConsul.Codigo = "ET09" + txtCode.Text.Remove(0, 1);
+                        ObjConsul.Codigo = "ET09" + campo_codigo.Text.Remove(0, 1);
                     }
                     else
                     {
-                        ObjConsul.Codigo = "ET0" + txtCode.Text;
+                        ObjConsul.Codigo = "ET0" + campo_codigo.Text;
                     }
 
                 }
@@ -313,25 +291,25 @@ namespace Intranet_3._0.Vistas.V_Operacional
                     ObjConsul.Codigo = codigoSAE;
                 }
 
-                ObjConsul.Cedula = txtCedula.Text.Trim();
+                ObjConsul.Cedula = campo_cedula.Text.Trim();
 
                 //AGR_12-10-2022:Valida que los campos fecha inicial y final se encuentren diligenciados
-                if (string.IsNullOrEmpty(txtFecIni.Text) || string.IsNullOrEmpty(txtFecFin.Text))
+                if (string.IsNullOrEmpty(campo_fecha_inicial.Text) || string.IsNullOrEmpty(campo_fecha_final.Text))
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey2", "alert('Debe seleccionar una fecha Inicial y una fecha Final.');", true);
                 }
                 else
                 {
                     //AGR_12-10-2022: valida que la fecha final sea superior a la fecha inicial
-                    if (Convert.ToDateTime(txtFecIni.Text) > Convert.ToDateTime(txtFecFin.Text))
+                    if (Convert.ToDateTime(campo_fecha_inicial.Text) > Convert.ToDateTime(campo_fecha_final.Text))
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey3", "alert('La fecha final debe ser superior a la fecha inicial.');", true);
                     }
                     else
                     {
-                        fechaInicio = txtFecIni.Text.Trim();
+                        fechaInicio = campo_fecha_inicial.Text.Trim();
                         ObjConsul.Fecha = fechaInicio;
-                        fechaFin = txtFecFin.Text.Trim();
+                        fechaFin = campo_fecha_final.Text.Trim();
                         ObjConsul.Hora = fechaFin;
 
                         //AGR_12-10-2022:Ejecuta action de base de datos según sea operador (action 0) o no (action 2)
@@ -361,7 +339,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                                     return;
                                 }
 
-
                                 if (!string.IsNullOrEmpty(freewayCode) && !string.IsNullOrEmpty(bitEnterpriseCode) && freewayCode != bitEnterpriseCode)
                                 {
                                     ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey5", "alert('Hubo un problema con tu código. No es posible consultar la programación. Por favor, dirígete al área adminsitrativa o área de programación para más detalles.');", true);
@@ -374,13 +351,12 @@ namespace Intranet_3._0.Vistas.V_Operacional
                                     if (dtHorario.Rows.Count == 0)
                                     {
                                         ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey5", "alert('La busqueda no arrojó resultados. Consulte nuevamente en unos minutos.');", true);
-                                        pnl_Resultado.Visible = false;
+                                        panel_resultado.Visible = false;
                                     }
                                     else
                                     {
-                                        pnl_Resultado.Visible = true;
+                                        panel_resultado.Visible = true;
                                     }
-
                                 }
                             }
                             else
@@ -391,7 +367,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                         else
                         {
-
                             DataTable dtOperadorInfo = ConsultaH_BRL.selectHorario(ObjConsul, 3);
 
                             if (dtOperadorInfo.Rows.Count > 0)
@@ -416,7 +391,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                                     return;
                                 }
 
-
                                 if (!string.IsNullOrEmpty(freewayCode) && string.IsNullOrEmpty(bitEnterpriseCode))
                                 {
                                     ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey3", "alert('El operador tiene código en Freeway pero no en Bit Enterprise.');", true);
@@ -440,16 +414,15 @@ namespace Intranet_3._0.Vistas.V_Operacional
                                     dtHorario = ConsultaH_BRL.selectHorario(ObjConsul, 2);
                                     if (dtHorario.Rows.Count == 0)
                                     {
-                                        lblinfoCod.Text = "";
-                                        lblInfoConductor.Text = "";
+                                        etiqueta_info_codigo.Text = "";
+                                        etiqueta_info_conductor.Text = "";
                                         ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey3", "alert('No existen registros asociados, por favor verifique e intente nuevamente.');", true);
                                         return;
                                     }
                                     else
                                     {
-                                        pnl_Resultado.Visible = true;
+                                        panel_resultado.Visible = true;
                                     }
-
                                 }
                             }
                             else
@@ -518,7 +491,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
 
                         cont = cont + 1;
-
                     }
 
                     if (IniPar1 == row["InicioParte"].ToString() && FinPart1 == row["FinParte"].ToString() && IniPar2 == null && FinPart2 == null)
@@ -553,16 +525,16 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey4", "alert('" + ex.Message + "');", true);
             }
         }
+
         private void AddHead()
         {
-            lblinfoCod.Text = codigo;
-            lblInfoConductor.Text = conductor;
+            etiqueta_info_codigo.Text = codigo;
+            etiqueta_info_conductor.Text = conductor;
         }
-
-
 
         //Se agrega contador para que sea posible mostrar progreso en consulta (evitar recarga).
         private int contador = 0;
+
         //AGR_12-10-2022:Agrega horario mediante un control de usuario "ascx"
         private void AddHorario()
         {
@@ -581,6 +553,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 FrmHorario.labelpar.Text = "Parte de Trabajo 1 (" + IniPar1 + " - " + FinPart1 + ")";
                 FrmHorario.gvHorOne.DataSource = dtPart1;
                 FrmHorario.gvHorOne.DataBind();
+
                 int colWidth = 250;
                 if (colWidth > 0)
                 {
@@ -592,14 +565,13 @@ namespace Intranet_3._0.Vistas.V_Operacional
 
                 // Determinar índice de Hora_Fin y ocultar su header
                 int horaFinIndexParte1 = ObtenerIndiceHoraFinYOcultarlo(FrmHorario.gvHorOne);
-                // Construir tabla + agregar fila final y combinar celdas (lo que añadimos antes)
+                // Procesar las filas para mostrar rango de horas en la última fila
                 ProcesarFilasYAgregarFinal(FrmHorario.gvHorOne, horaFinIndexParte1);
-                // Asegurar que la columna Hora_Fin esté oculta en todas las filas
-                OcultarHoraFinEnFilas(FrmHorario.gvHorOne, horaFinIndexParte1);
 
                 FrmHorario.labelpar2.Text = "Parte de Trabajo 2 (" + IniPar2 + " - " + FinPart2 + ")";
                 FrmHorario.gvHorTwo.DataSource = dtPart2;
                 FrmHorario.gvHorTwo.DataBind();
+
                 if (colWidth > 0)
                 {
                     for (int i = 0; i < FrmHorario.gvHorTwo.Columns.Count; i++)
@@ -607,23 +579,21 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         FrmHorario.gvHorTwo.Columns[i].ItemStyle.Width = colWidth;
                     }
                 }
+
                 // Determinar índice de Hora_Fin y ocultar su header
                 int horaFinIndexParte2 = ObtenerIndiceHoraFinYOcultarlo(FrmHorario.gvHorTwo);
-                // Construir tabla + agregar fila final y combinar celdas (lo que añadimos antes)
+                // Procesar las filas para mostrar rango de horas en la última fila
                 ProcesarFilasYAgregarFinal(FrmHorario.gvHorTwo, horaFinIndexParte2);
-                // Asegurar que la columna Hora_Fin esté oculta en todas las filas
-                OcultarHoraFinEnFilas(FrmHorario.gvHorTwo, horaFinIndexParte2);
-                Panel1.Controls.Add(FrmHorario);
+
+                panel_tablas_horarios.Controls.Add(FrmHorario);
                 ViewState["controlsadded"] = true;
                 contador++;
-                FrmHorario.gvHorOne.Dispose();
-                FrmHorario.gvHorTwo.Dispose();
             }
         }
 
         #region Métodos auxiliares para el metodo AddHorario - LGO-27082025
-        // ---------------------- Métodos auxiliares nuevos ----------------------
-        // Busca la columna "Hora_Fin" en el header, la oculta y devuelve su índice. Si no la encuentra devuelve el índice de la última columna.
+
+        // Busca la columna "Hora_Fin" en el header, la oculta y devuelve su índice
         private int ObtenerIndiceHoraFinYOcultarlo(GridView grid)
         {
             int horaFinIndex = -1;
@@ -654,86 +624,28 @@ namespace Intranet_3._0.Vistas.V_Operacional
             return horaFinIndex;
         }
 
-        // Procesa las filas: oculta Hora_Fin en filas previas, crea fila final completa y combina con la penúltima.
+        // MÉTODO CORREGIDO: Procesa las filas y modifica la última para mostrar el rango de horas
         private void ProcesarFilasYAgregarFinal(GridView grid, int horaFinIndex)
         {
-            int totalFilas = grid.Rows.Count;
-            for (int i = 0; i < totalFilas; i++)
+            for (int i = 0; i < grid.Rows.Count; i++)
             {
                 GridViewRow fila = grid.Rows[i];
 
-                // Para todas las filas excepto la última original: ocultar la columna Hora_Fin
-                if (i < totalFilas - 1)
+                if (i == grid.Rows.Count - 1) // Última fila
                 {
-                    fila.Cells[fila.Cells.Count - 1].Visible = false;
-                }
-                else
-                {
-                    // Última fila original: obtener horaFinal y crear fila final bien formada
-                    GridViewRow ultimaFila = grid.Rows[i];
-                    string horaFinal = ultimaFila.Cells[ultimaFila.Cells.Count - 1].Text; // Última columna = Hora fin
+                    // Obtener hora de inicio y hora final
+                    string horaInicio = fila.Cells[0].Text;
+                    string horaFinal = fila.Cells[fila.Cells.Count - 1].Text; // Última columna (Hora_Fin)
 
-                    GridViewRow nuevaFila = new GridViewRow(0, 0, DataControlRowType.DataRow, DataControlRowState.Normal);
-
-                    // Crear la fila completa con el mismo número de celdas que el header
-                    int columnas = (grid.HeaderRow != null) ? grid.HeaderRow.Cells.Count : ultimaFila.Cells.Count;
-                    for (int col = 0; col < columnas; col++)
-                    {
-                        TableCell celda = new TableCell();
-                        celda.Text = (col == 0) ? horaFinal : "";
-                        celda.CssClass = "grid-cell";
-                        nuevaFila.Cells.Add(celda);
-                    }
-
-                    // Agregar la fila al GridView (se añade a Controls[0].Controls)
-                    grid.Controls[0].Controls.Add(nuevaFila);
-
-                    // Combinar la penúltima (ultimaFila) con la nueva fila creada
-                    CombinarPenultimaConNueva(ultimaFila, nuevaFila, horaFinIndex);
-                }
-            }
-        }
-
-        // Combina (rowspan + mueve contenido) de la fila superior con la inferior (la inferior puede ser la nueva fila creada)
-        private void CombinarPenultimaConNueva(GridViewRow topRow, GridViewRow bottomRow, int horaFinIndex)
-        {
-            int maxCols = Math.Min(topRow.Cells.Count, bottomRow.Cells.Count);
-
-            for (int c = 1; c < maxCols; c++)
-            {
-                if (c == horaFinIndex) continue;
-
-                TableCell topCell = topRow.Cells[c];
-                TableCell bottomCell = bottomRow.Cells[c];
-                if (topCell == null || bottomCell == null) continue;
-
-                string contenidoSuperior = topCell.Text.Trim();
-                string contenidoInferior = bottomCell.Text.Trim();
-
-                if (!string.IsNullOrEmpty(contenidoInferior))
-                {
-                    topCell.Text = !string.IsNullOrEmpty(contenidoSuperior)
-                        ? contenidoSuperior + "<br/>" + contenidoInferior
-                        : contenidoInferior;
+                    // Mostrar rango en la celda de hora
+                    fila.Cells[0].Text = horaInicio + "<br/>" + horaFinal;
                 }
 
-                int currentRowSpan = topCell.RowSpan > 1 ? topCell.RowSpan : 1;
-                topCell.RowSpan = currentRowSpan + 1;
-
-                bottomCell.Visible = false;
-            }
-        }
-
-        // Oculta la columna Hora_Fin en todas las filas (seguridad adicional)
-        private void OcultarHoraFinEnFilas(GridView grid, int horaFinIndex)
-        {
-            if (horaFinIndex < 0) return;
-            int totalFilas = grid.Rows.Count;
-            for (int i = 0; i < totalFilas; i++)
-            {
-                GridViewRow fila = grid.Rows[i];
-                if (fila.Cells.Count > horaFinIndex)
+                // Ocultar la columna Hora_Fin en todas las filas
+                if (horaFinIndex >= 0 && horaFinIndex < fila.Cells.Count)
+                {
                     fila.Cells[horaFinIndex].Visible = false;
+                }
             }
         }
 
@@ -745,10 +657,10 @@ namespace Intranet_3._0.Vistas.V_Operacional
             FrmVacio.LabelFecha.Text = Convert.ToDateTime(fecha).ToString("dddd", new CultureInfo("es-ES")) + ", " + fecha.Substring(0, 10);
             FrmVacio.LabelInfoAsig.Text = asignacion;
             FrmVacio.LabelInfoProd.Text = produccion;
-            Panel1.Controls.Add(FrmVacio);
-
+            panel_tablas_horarios.Controls.Add(FrmVacio);
             ViewState["controlsadded"] = true;
         }
+
         private void DelColumns(DataTable dtpart)
         {
             dtpart.Columns.Remove("Codigo");
@@ -761,9 +673,10 @@ namespace Intranet_3._0.Vistas.V_Operacional
             dtpart.Columns.Remove("InicioParte");
             dtpart.Columns.Remove("FinParte");
         }
-        string mensaje = "";
+
         string mensaje1 = "";
         string mensaje2 = "";
+
         private void AddMessage()
         {
             if (CargarExcel())
@@ -772,7 +685,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 FrmMensaje.ID = "Mensaje";
                 FrmMensaje.LabelMensaje1.Text = mensaje1;
                 FrmMensaje.LabelMensaje2.Text = mensaje2;
-                Panel1.Controls.Add(FrmMensaje);
+                panel_tablas_horarios.Controls.Add(FrmMensaje);
                 ViewState["controlsadded"] = true;
             }
         }
@@ -786,7 +699,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 if (dtHorario.Rows.Count > 0)
                 {
                     string ruta_archivo = ConfigurationManager.AppSettings.Get("ArchivoMensajesProgramacion");
-                    //string conStr = String.Format(ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString, ruta_archivo, "Yes"); //Anterior lógica
                     AG_Utils permisoUsuario = new AG_Utils();
                     if (permisoUsuario.impersonateValidUser())
                     {
@@ -798,8 +710,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                             return false;
                         }
                     }
-                    //OleDbConnection connExcel = new OleDbConnection(conStr); //Anterior lógicaa
-                    //DataTable dtMensaje = Import_To_DataTableAntiguo(connExcel); //Anterior lógica
 
                     DataTable dtMensaje = Import_To_DataTableNuevo(ruta_archivo);
                     if (dtMensaje != null && dtMensaje.Rows.Count > 0)
@@ -818,7 +728,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                     return false;
                 }
             }
-            
+
             catch (Exception ex)
             {
                 EnviarCorreo("Error no controlado", "", ex);
@@ -845,14 +755,13 @@ namespace Intranet_3._0.Vistas.V_Operacional
                     WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(sheet.Id));
                     SheetData sheetData = wsPart.Worksheet.Elements<SheetData>().First();
 
-
                     bool mensajeEncontrado = false;
                     string codigo = string.Empty;
                     string condicionCodigoSAE = string.Empty;
                     string condicionDocumento = string.Empty;
 
                     // Validación inicial del código y cédula ingresados
-                    if (!string.IsNullOrEmpty(txtCode.Text))
+                    if (!string.IsNullOrEmpty(campo_codigo.Text))
                     {
                         // AGR_14-10-2022: Se retiran los primeros caracteres del código según el tipo de usuario
                         if (tipoUsuario.Contains("OPERADOR"))
@@ -861,12 +770,12 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                         else
                         {
-                            codigo = txtCode.Text.Remove(0, 1);
+                            codigo = campo_codigo.Text.Remove(0, 1);
                         }
 
                         condicionCodigoSAE = $"%{codigo}";
                     }
-                    else if (!string.IsNullOrEmpty(txtCedula.Text))
+                    else if (!string.IsNullOrEmpty(campo_cedula.Text))
                     {
                         if (tipoUsuario.Contains("OPERADOR"))
                         {
@@ -874,15 +783,14 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(txtCode.Text))
+                            if (!string.IsNullOrEmpty(campo_codigo.Text))
                             {
-                                codigo = txtCode.Text.Remove(0, 1);
+                                codigo = campo_codigo.Text.Remove(0, 1);
                             }
                         }
 
-                        condicionDocumento = txtCedula.Text;
+                        condicionDocumento = campo_cedula.Text;
                     }
-
 
                     // Se recorren todas las filas de la hoja
                     foreach (Row row in sheetData.Elements<Row>())
@@ -896,7 +804,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         string mensaje = ObtenerValorCelda(wbPart, celdas[4]);
 
                         // Validaciones para encontrar mensajes basados en los campos ingresados por el usuario
-                         
                         if (!string.IsNullOrEmpty(condicionCodigoSAE) && codigoExcel.EndsWith(codigo))
                         {
                             dt.Rows.Add(mensaje);
@@ -907,7 +814,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                             dt.Rows.Add(mensaje);
                             mensajeEncontrado = true;
                         }
-
                     }
 
                     // Si no se encontró ningún mensaje, se agrega un mensaje por defecto
@@ -971,7 +877,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                     string condicionCodigoSAE = "";
                     string condicionDocumento = "";
                     string codigo = "";
-                    if (!string.IsNullOrEmpty(txtCode.Text))
+                    if (!string.IsNullOrEmpty(campo_codigo.Text))
                     {
                         //AGR_14-10-2022: Se retiran los primeros caracteres del código para utilizar la funcion LIKE
                         if (tipoUsuario.Contains("OPERADOR"))
@@ -982,10 +888,9 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                         else
                         {
-                            codigo = txtCode.Text.Remove(0, 1);
+                            codigo = campo_codigo.Text.Remove(0, 1);
                         }
 
-                       
                         condicionCodigoSAE = $"codigo LIKE '%{codigo}'";
                         cmdExcel.CommandText = "SELECT Mensaje From [" + dtExcelSchema.Rows[0]["TABLE_NAME"].ToString() + "] WHERE " + condicionCodigoSAE;
                         oda.SelectCommand = cmdExcel;
@@ -993,9 +898,9 @@ namespace Intranet_3._0.Vistas.V_Operacional
 
                         if (dt.Rows.Count == 0)
                         {
-                            if (!string.IsNullOrEmpty(txtCedula.Text))
+                            if (!string.IsNullOrEmpty(campo_cedula.Text))
                             {
-                                condicionDocumento = "Identificacion = " + txtCedula.Text;
+                                condicionDocumento = "Identificacion = " + campo_cedula.Text;
                                 cmdExcel.CommandText = "SELECT Mensaje From [" + dtExcelSchema.Rows[0]["TABLE_NAME"].ToString() + "] WHERE " + condicionDocumento;
                                 oda.SelectCommand = cmdExcel;
                                 oda.Fill(dt);
@@ -1003,7 +908,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                     }
 
-                    else if (!string.IsNullOrEmpty(txtCedula.Text))
+                    else if (!string.IsNullOrEmpty(campo_cedula.Text))
                     {
                         if (tipoUsuario.Contains("OPERADOR"))
                         {
@@ -1011,13 +916,13 @@ namespace Intranet_3._0.Vistas.V_Operacional
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(txtCode.Text))
+                            if (!string.IsNullOrEmpty(campo_codigo.Text))
                             {
-                                codigo = txtCode.Text.Remove(0, 1);
+                                codigo = campo_codigo.Text.Remove(0, 1);
                             }
                             //codigo = "ET09" + codigo;
                         }
-                        condicionDocumento = "Identificacion = " + txtCedula.Text;
+                        condicionDocumento = "Identificacion = " + campo_cedula.Text;
                         cmdExcel.CommandText = "SELECT Mensaje From [" + dtExcelSchema.Rows[0]["TABLE_NAME"].ToString() + "] WHERE " + condicionDocumento;
                         oda.SelectCommand = cmdExcel;
                         oda.Fill(dt);
@@ -1033,7 +938,7 @@ namespace Intranet_3._0.Vistas.V_Operacional
                             }
                         }
                     }
-                    
+
                     //AGR_14-10-2022: en caso de no obtener datos, adiciona mensaje
                     if (dt.Rows.Count == 0)
                     {
@@ -1086,7 +991,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
                 //Direccion de correo electronico a la que queremos enviar el mensaje 
                 //con la propiedad CC se vera el destinatario en el correo
                 //con la propiedad Bcc sera oculto el destinatario en el correo
-
 
                 //Asunto
                 mmsg.Subject = "Error Consulta FreeWay (etib.com.co) - " + Asunto.Trim();
@@ -1144,7 +1048,6 @@ namespace Intranet_3._0.Vistas.V_Operacional
             ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey4", "DescargaPDF();", true);
             //lblStatus.Text = "Processing Completed";
         }
-        
 
         #endregion
     }

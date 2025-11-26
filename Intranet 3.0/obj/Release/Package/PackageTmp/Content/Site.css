@@ -1,8 +1,4 @@
-﻿/* ================================================
-   CONFIGURACIÓN BASE Y LAYOUT PRINCIPAL
-   ================================================ */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
+﻿/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     margin: 95px 40px 20px 160px;
     /*background-image: url('img/Mesa.png');
@@ -20,7 +16,7 @@ body {
     padding-left: 175px;
     margin-right: 0px;
 }
-
+font-family
 .body-content {
     padding-left: 0px;
     padding-right: 0px;
@@ -706,7 +702,7 @@ body-content .pnl_table {
 }
 
     .body-content .tbl_vistas_general .th {
-        background-color: rgba(40, 55, 71, 0.9);
+        background-color: rgb(40 55 71 / 50%);
         color: rgb(110, 130, 151);
         font-weight: bold;
     }
@@ -767,7 +763,7 @@ body-content .pnl_table {
     position: relative;
     width: 54%;
     margin: auto;
-    padding-top: 15%;
+    padding-top: 5%;
 }
 
 .modal-i-gl-title {
@@ -2287,10 +2283,9 @@ footer {
 }
 
 /* ================================================
-   MEDIA QUERIES - RESPONSIVE
+   RESPONSIVE
    ================================================ */
 
-/* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
         margin-top: 20px;
