@@ -6,13 +6,27 @@
     <link rel="Stylesheet" href="/Styles/css/default/default.css" />
     <script>
 
+        function obtenerIdUsuario() {
+            const hidden = document.getElementById("hfIdUsuario");
+            const fromHidden = hidden && hidden.value ? hidden.value : "";
+            const fromQuery = new URLSearchParams(window.location.search).get("Id_Usuario");
+            const parsed = parseInt(fromHidden || fromQuery || "", 10);
+
+            return Number.isNaN(parsed) ? null : parsed;
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
-            const userId = document.getElementById("txt_IdUsuario").value; // Ajusta según tu masterpage
+            if (window.popupsInicializados) return;
+
+            const userId = obtenerIdUsuario();
+            if (!userId) return;
+
+            window.popupsInicializados = true;
 
             fetch("WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Id_Usuario: parseInt(userId) })
+                body: JSON.stringify({ Id_Usuario: userId })
             })
                 .then(r => r.json())
                 .then(data => {
