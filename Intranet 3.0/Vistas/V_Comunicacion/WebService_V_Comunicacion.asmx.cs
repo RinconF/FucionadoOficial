@@ -207,7 +207,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string[]> Obtener_Popups_Usuario(int Id_Usuario)
+        public List<object> Obtener_Popups_Usuario(int Id_Usuario)
         {
             var respuesta = new List<object>();
             try
