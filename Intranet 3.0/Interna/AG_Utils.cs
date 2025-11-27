@@ -722,7 +722,33 @@ namespace Intranet_3._0.Interna
             return nombreFinalArchivo;
         }
 
+        /// <summary>
+        /// Obtiene las rutas local y remota para popups usando la configuración del ambiente.
+        /// </summary>
+        /// <param name="ambiente">Ambiente de la aplicación (por defecto DESA).</param>
+        /// <param name="carpetaPopups">Carpeta de destino (Imagenes o Videos).</param>
+        /// <returns>Tupla con las rutas local y remota calculadas; cadenas vacías si falta configuración.</returns>
+        public (string rutaPopupsLocal, string rutaPopupsRemoto) ObtenerRutasPopups(string ambiente, string carpetaPopups)
+        {
+            string pathServerConfig = ConfigurationManager.AppSettings.Get("pathServer");
+            string pathRemoteConfig = ConfigurationManager.AppSettings.Get("pathRemote");
 
-       
+            if (HttpContext.Current == null || string.IsNullOrWhiteSpace(pathServerConfig) || string.IsNullOrWhiteSpace(pathRemoteConfig))
+            {
+                return (string.Empty, string.Empty);
+            }
+
+            string pathServer = HttpContext.Current.Server.MapPath(pathServerConfig);
+            string pathRemote = pathRemoteConfig;
+            ambiente = string.IsNullOrWhiteSpace(ambiente) ? "DESA" : ambiente;
+
+            string rutaPopupsRemoto = Path.Combine(pathRemote, @"publicaciones\Popups", carpetaPopups) + @"\";
+            string rutaPopupsLocal = Path.Combine(pathServer + ambiente, @"intranet\publicaciones\Popups", carpetaPopups) + @"\";
+
+            return (rutaPopupsLocal, rutaPopupsRemoto);
+        }
+
+
+
     }
 }
