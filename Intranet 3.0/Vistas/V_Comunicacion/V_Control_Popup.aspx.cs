@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -7,11 +8,17 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BRL;
 using DCL;
+using Intranet_3._0.Interna;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
     public partial class V_Control_Popup : System.Web.UI.Page
     {
+        string pathLog = "";
+        string ipServer = "";
+        const string CONST_ERRORCONEXIONSERV = "al intentar conectarse al servidor: ";
+        const string CONST_ERROR = " - ERROR: ";
+
         #region Eventos de página
 
         protected void Page_Load(object sender, EventArgs e)
@@ -50,9 +57,14 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     RolesIds = ObtenerRolesSeleccionados(chkl_roles)
                 };
 
+                string consecutivo = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                string nombreBaseArchivo = string.IsNullOrWhiteSpace(popup.Titulo)
+                    ? "popup"
+                    : popup.Titulo;
+
                 // Multimedia: imagen o video (nunca ambos)
-                string rutaImagen = GuardarArchivo(fud_Adjunto, "~/Uploads/Popups/Imagenes");
-                string rutaVideo = GuardarArchivo(fud_Video, "~/Uploads/Popups/Videos");
+                string rutaImagen = GuardarArchivo(fud_Adjunto, "Imagenes", consecutivo, nombreBaseArchivo);
+                string rutaVideo = GuardarArchivo(fud_Video, "Videos", consecutivo, nombreBaseArchivo);
 
                 if (!string.IsNullOrEmpty(rutaImagen))
                 {
@@ -118,6 +130,11 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     RolesIds = ObtenerRolesSeleccionados(chkl_roles_pub)
                 };
 
+                string consecutivo = popup.Id_Popup?.ToString() ?? DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                string nombreBaseArchivo = string.IsNullOrWhiteSpace(popup.Titulo)
+                    ? "popup"
+                    : popup.Titulo;
+
                 // Lógica multimedia según SP:
                 //  - NULL  -> no cambiar
                 //  - ""    -> eliminar
@@ -127,13 +144,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (fud_Adjunto_pub.HasFile)
                 {
-                    string rutaImagen = GuardarArchivo(fud_Adjunto_pub, "~/Uploads/Popups/Imagenes");
+                    string rutaImagen = GuardarArchivo(fud_Adjunto_pub, "Imagenes", consecutivo, nombreBaseArchivo);
                     popup.Imagen = rutaImagen;  // se actualiza
                     popup.Video = "";           // se elimina el video si existía
                 }
                 else if (fud_Video_pub.HasFile)
                 {
-                    string rutaVideo = GuardarArchivo(fud_Video_pub, "~/Uploads/Popups/Videos");
+                    string rutaVideo = GuardarArchivo(fud_Video_pub, "Videos", consecutivo, nombreBaseArchivo);
                     popup.Video = rutaVideo;    // se actualiza
                     popup.Imagen = "";          // se elimina la imagen si existía
                 }
@@ -316,28 +333,59 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             return Convert.ToInt32(Session["Id_Usuario"]);
         }
 
-        private string GuardarArchivo(FileUpload control, string carpetaVirtual)
+        private string GuardarArchivo(FileUpload control, string carpetaPopups, string consecutivo, string nombreBaseArchivo)
         {
             if (control == null || !control.HasFile)
                 return null;
 
-            string rutaFisica = Server.MapPath(carpetaVirtual);
-            if (!Directory.Exists(rutaFisica))
+            AG_Utils utilidades = new AG_Utils();
+            pathLog = Server.MapPath(@"~/logs");
+            ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach");
+
+            bool conectaAdjuntos = utilidades.Ping(ipServer);
+            if (!conectaAdjuntos)
             {
-                Directory.CreateDirectory(rutaFisica);
+                utilidades.logError($"{CONST_ERROR}{CONST_ERRORCONEXIONSERV} {ipServer}. \nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {ObtenerIdUsuarioActual()}", pathLog);
+                return null;
             }
 
-            string nombreArchivo = DateTime.Now.ToString("yyyyMMddHHmmss_") +
-                                   Path.GetFileName(control.FileName);
+            string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
+            string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
+            string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
 
-            string pathCompleto = Path.Combine(rutaFisica, nombreArchivo);
-            control.SaveAs(pathCompleto);
+            if (string.IsNullOrWhiteSpace(pathServer) || string.IsNullOrWhiteSpace(pathRemote))
+            {
+                utilidades.logError($"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\nNo se encuentran configuradas las rutas de almacenamiento para popups.", pathLog);
+                return null;
+            }
 
-            // Devolver ruta relativa para guardar en BD
-            string rutaRelativa = VirtualPathUtility.ToAbsolute(
-                carpetaVirtual.TrimEnd('/') + "/" + nombreArchivo);
+            var (rutaPopupsLocal, rutaPopupsRemoto) = utilidades.ObtenerRutasPopups(ambiente, carpetaPopups);
 
-            return rutaRelativa;
+            if (string.IsNullOrWhiteSpace(rutaPopupsLocal) || string.IsNullOrWhiteSpace(rutaPopupsRemoto))
+            {
+                utilidades.logError($"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\nNo se pudieron calcular las rutas de popups con la configuración actual.", pathLog);
+                return null;
+            }
+
+            string extensionArchivo = Path.GetExtension(control.FileName);
+            string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(nombreBaseArchivo, consecutivo, extensionArchivo);
+
+            var (guardaImagenLocal, guardaImagenRemota, rutaPopupRemoto) = utilidades.TratamientoNoticias(
+                nombreFinalArchivo,
+                consecutivo,
+                rutaPopupsLocal,
+                rutaPopupsRemoto,
+                control,
+                ObtenerIdUsuarioActual().ToString(),
+                pathLog);
+
+            if (guardaImagenLocal && guardaImagenRemota && !string.IsNullOrEmpty(rutaPopupRemoto))
+            {
+                return rutaPopupRemoto;
+            }
+
+            utilidades.logError($"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\nLos archivos del popup no fueron almacenados.", pathLog);
+            return null;
         }
 
         private void LimpiarFormularioCrear()
