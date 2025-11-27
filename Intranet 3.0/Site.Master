@@ -618,28 +618,19 @@
                 location = "../../Default.aspx?Id_Usuario=" + Id_Usuario;
             });
 
-            const esPaginaInicio = () => {
-                const path = (window.location.pathname || "").toLowerCase();
-                return path === "/" || path.endsWith("/default.aspx") || path.endsWith("default.aspx");
-            };
+            await cargarPopupsUsuario();
 
-            if (esPaginaInicio()) {
-                await cargarPopupsUsuario();
+            $("#popup-usuario-cerrar").on("click", function () {
+                ocultarPopupUsuario(true);
+            });
 
-                $("#popup-usuario-cerrar").on("click", function () {
-                    ocultarPopupUsuario(true);
-                });
+            $("#popup-usuario-siguiente").on("click", function () {
+                avanzarPopupUsuario();
+            });
 
-                $("#popup-usuario-siguiente").on("click", function () {
-                    avanzarPopupUsuario();
-                });
-
-                $("#popup-usuario-link").on("click", function () {
-                    registrarInteraccionPopup("click");
-                });
-            } else {
-                $("#popup-usuario").remove();
-            }
+            $("#popup-usuario-link").on("click", function () {
+                registrarInteraccionPopup("click");
+            });
         });
 
         function Validar_Password() {
