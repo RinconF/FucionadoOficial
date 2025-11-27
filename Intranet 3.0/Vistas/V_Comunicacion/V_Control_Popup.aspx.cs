@@ -273,13 +273,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     bool estado = row["Estado"] != DBNull.Value && Convert.ToBoolean(row["Estado"]);
 
                     sb.Append("<tr>");
-                    sb.AppendFormat("<td>{0}</td>", contador);                    
+                    sb.AppendFormat("<td>{0}</td>", contador);
                     sb.AppendFormat("<td>{0}</td>", id);
                     sb.AppendFormat("<td>{0}</td>", titulo);
                     sb.AppendFormat("<td>{0}</td>", descripcion);
                     sb.AppendFormat("<td>{0}</td>", fechaCreacion);
                     sb.AppendFormat("<td>{0}</td>", fechaInicio);
-                    sb.AppendFormat("<td>{0}</td>", fechaFin);                    
+                    sb.AppendFormat("<td>{0}</td>", fechaFin);
 
                     string badge = estado
                         ? "<span class='badge badge-success'>Activo</span>"

@@ -1860,6 +1860,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="js\encuesta_organizacional.js" />
+    <Content Include="js\popup-manager.js" />
     <Content Include="js\sweetalert2.min.js" />
     <Content Include="roslyn\csc.exe" />
     <Content Include="roslyn\csi.exe" />
@@ -2297,6 +2298,7 @@
     </Compile>
     <Compile Include="Vistas\V_Comunicacion\V_Control_Popup.aspx.cs">
       <DependentUpon>V_Control_Popup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\V_Comunicacion\V_Control_Popup.aspx.designer.cs">
       <DependentUpon>V_Control_Popup.aspx</DependentUpon>

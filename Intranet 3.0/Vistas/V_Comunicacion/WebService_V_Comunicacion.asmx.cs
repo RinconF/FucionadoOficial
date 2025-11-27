@@ -3,7 +3,6 @@ using DCL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Services;
@@ -209,7 +208,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<string[]> Obtener_Popups_Usuario(int Id_Usuario)
         {
-            var respuesta = new List<object>();
+            var list = new List<string[]>();
             try
             {
                 var obj = new Int_Popup { Id_Usuario = Id_Usuario };
@@ -217,68 +216,21 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    string imagen = row.Table.Columns.Contains("Imagen") ? row["Imagen"].ToString() : null;
-                    string video = row.Table.Columns.Contains("Video") ? row["Video"].ToString() : null;
+                    string[] arr = new string[row.ItemArray.Length];
+                    for (int i = 0; i < row.ItemArray.Length; i++)
+                        arr[i] = row[i].ToString();
 
-                    string rutaPublica = !string.IsNullOrWhiteSpace(video)
-                        ? ResolverRutaPublicaPopup(video)
-                        : ResolverRutaPublicaPopup(imagen);
-
-                    respuesta.Add(new
-                    {
-                        Id_Popup = row["Id_Popup"],
-                        Titulo = row.Table.Columns.Contains("Titulo") ? row["Titulo"] : null,
-                        Descripcion = row.Table.Columns.Contains("Descripcion") ? row["Descripcion"] : null,
-                        Url = row.Table.Columns.Contains("Url") ? row["Url"] : null,
-                        Tiempo_Visualizacion = row.Table.Columns.Contains("Tiempo_Visualizacion") ? row["Tiempo_Visualizacion"] : null,
-                        Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
-                        Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
-                        Imagen = imagen,
-                        Video = video,
-                        RutaMultimedia = rutaPublica,
-                        Tipo = !string.IsNullOrWhiteSpace(video) ? "video" : "imagen",
-                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null
-                    });
+                    list.Add(arr);
                 }
 
-                return respuesta;
+                return list;
             }
             catch (Exception ex)
             {
-                respuesta.Clear();
-                respuesta.Add(new { Error = ex.Message });
-                return respuesta;
+                list.Clear();
+                list.Add(new[] { ex.Message });
+                return list;
             }
-        }
-
-        /// <summary>
-        /// Convierte la ruta UNC almacenada para un popup a una URL accesible desde la UI.
-        /// No modifica la ruta guardada, solo entrega una versión navegable basada en la carpeta local de imágenes.
-        /// </summary>
-        private string ResolverRutaPublicaPopup(string rutaRemota)
-        {
-            if (string.IsNullOrWhiteSpace(rutaRemota) || HttpContext.Current == null)
-                return null;
-
-            string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
-            string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
-
-            string segmentoDesdeAmbiente = null;
-            int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
-            if (idx >= 0)
-            {
-                segmentoDesdeAmbiente = rutaRemota.Substring(idx);
-            }
-            else if (!string.IsNullOrWhiteSpace(baseRemota) && rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
-            {
-                segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
-            }
-
-            if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
-                return null;
-
-            string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
-            return VirtualPathUtility.ToAbsolute(rutaRelativa);
         }
     }
 }
