@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Services;
@@ -262,15 +261,23 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 return null;
 
             string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
-            string nombreArchivo = Path.GetFileName(rutaRemota);
-            if (string.IsNullOrWhiteSpace(nombreArchivo))
+            string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
+
+            string segmentoDesdeAmbiente = null;
+            int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
+            if (idx >= 0)
+            {
+                segmentoDesdeAmbiente = rutaRemota.Substring(idx);
+            }
+            else if (!string.IsNullOrWhiteSpace(baseRemota) && rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
+            {
+                segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
+            }
+
+            if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
                 return null;
 
-            string carpetaTipo = rutaRemota.IndexOf("video", StringComparison.OrdinalIgnoreCase) >= 0
-                ? "Videos"
-                : "Imagenes";
-
-            string rutaRelativa = $"~/Imagenes/{ambiente}/intranet/publicaciones/Popups/{carpetaTipo}/{nombreArchivo}";
+            string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
             return VirtualPathUtility.ToAbsolute(rutaRelativa);
         }
     }

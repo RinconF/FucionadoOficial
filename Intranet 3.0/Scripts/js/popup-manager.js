@@ -6,47 +6,6 @@
     let temporizador = null;
     let idUsuario = null;
     let eventosEnlazados = false;
-    const baseAplicacion = (() => {
-        let base = window.APP_BASE || "/";
-
-        if (!base.startsWith("/")) {
-            base = `/${base}`;
-        }
-
-        if (!base.endsWith("/")) {
-            base = `${base}/`;
-        }
-
-        return base;
-    })();
-
-    const normalizarRutaContenido = (ruta) => {
-        if (!ruta) return null;
-
-        const limpia = ruta.trim().replace(/^~\//, "/");
-        if (/^(https?:)?\/\//i.test(limpia) || limpia.startsWith("data:")) {
-            return limpia;
-        }
-
-        if (limpia.startsWith(baseAplicacion)) {
-            return limpia;
-        }
-
-        if (limpia.startsWith("/")) {
-            if (baseAplicacion === "/") {
-                return limpia;
-            }
-
-            return `${baseAplicacion}${limpia.replace(/^\/+/, "")}`;
-        }
-
-        return `${baseAplicacion}${limpia}`;
-    };
-
-    const construirUrlServicio = (ruta) => {
-        const relativa = (ruta || "").replace(/^\/+/, "");
-        return `${baseAplicacion}${relativa}`;
-    };
 
     const esPaginaInicio = () => {
         const path = (window.location.pathname || "").toLowerCase();
@@ -68,7 +27,7 @@
 
         $.ajax({
             type: "POST",
-            url: construirUrlServicio("Vistas/V_Comunicacion/WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup"),
+            url: "/Vistas/V_Comunicacion/WebService_V_Comunicacion.asmx/Registrar_Interaccion_Popup",
             data: JSON.stringify({ Id_Popup: parseInt(popup.Id_Popup), Id_Usuario: parseInt(idUsuario), Interaccion: interaccion }),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -146,7 +105,7 @@
         try {
             const resultado = await $.ajax({
                 type: "POST",
-                url: construirUrlServicio("Vistas/V_Comunicacion/WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario"),
+                url: "/Vistas/V_Comunicacion/WebService_V_Comunicacion.asmx/Obtener_Popups_Usuario",
                 data: JSON.stringify({ Id_Usuario: parseInt(idUsuario) }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
@@ -157,18 +116,9 @@
 
             popups.forEach(p => {
                 const estadoActivo = typeof p.Estado === "undefined" || p.Estado === true || p.Estado === 1 || p.Estado === "True";
-                if (!estadoActivo) {
-                    return;
+                if (estadoActivo) {
+                    colaPopups.push(p);
                 }
-
-                const rutaContenido = normalizarRutaContenido(p.RutaMultimedia || p.Imagen || p.Video);
-                const enlace = normalizarRutaContenido(p.Url);
-
-                colaPopups.push({
-                    ...p,
-                    RutaMultimedia: rutaContenido,
-                    Url: enlace
-                });
             });
 
             indiceActual = 0;
