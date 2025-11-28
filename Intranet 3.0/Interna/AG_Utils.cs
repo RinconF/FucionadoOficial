@@ -139,8 +139,8 @@ namespace Intranet_3._0.Interna
                 }
             }
         }
-       
-       
+
+
 
         /// <summary>
         /// Validación de noticias (si existe una noticia con el ID a crear, elimina la imagen)
@@ -184,7 +184,7 @@ namespace Intranet_3._0.Interna
             }
             catch (Exception e)
             {
-                logError($" - ERROR: {e.Message}.",log);
+                logError($" - ERROR: {e.Message}.", log);
                 return false;
             }
         }
@@ -597,13 +597,13 @@ namespace Intranet_3._0.Interna
                             }
                         }
                     }
-                    
+
                     if (tamanioOrig.Length > 0)
                     {
                         Thread.Sleep(500);
                         archivoAguardar.SaveAs(imagenNoticiaLocal);
                         Thread.Sleep(500);
-                        var tamanioDestLocal= File.ReadAllBytes(imagenNoticiaLocal);
+                        var tamanioDestLocal = File.ReadAllBytes(imagenNoticiaLocal);
 
                         if (tamanioOrig.Length == tamanioDestLocal.Length)
                         {
@@ -662,7 +662,7 @@ namespace Intranet_3._0.Interna
 
                     }
 
-                  
+
 
                     utilidades.undoImpersonation();
                     return (bl_GuardaImagenLocal, bl_GuardaImagenRemota, imagenNoticiaRemoto);
@@ -710,7 +710,7 @@ namespace Intranet_3._0.Interna
 
 
 
-        
+
 
         public string AjusteNombreImagenNoticia(string nombreOriginalArchivo, string consecutivo, string extensionArchivo)
         {
