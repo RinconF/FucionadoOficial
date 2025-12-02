@@ -2038,6 +2038,7 @@
     <Content Include="Vistas\V_Comites\V_CSV.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Control_Popup.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Control_SlideShow.aspx" />
+    <Content Include="Vistas\V_Comunicacion\V_Control_Tutoriales.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Noticias.aspx" />
     <Content Include="Vistas\V_Comunicacion\WebService_V_Comunicacion.asmx" />
     <Content Include="Vistas\V_Encuestas\V_Info_Encuestas.aspx" />
@@ -2309,6 +2310,13 @@
     </Compile>
     <Compile Include="Vistas\V_Comunicacion\V_Control_SlideShow.aspx.designer.cs">
       <DependentUpon>V_Control_SlideShow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Tutoriales.aspx.cs">
+      <DependentUpon>V_Control_Tutoriales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Tutoriales.aspx.designer.cs">
+      <DependentUpon>V_Control_Tutoriales.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\V_Comunicacion\V_Noticias.aspx.cs">
       <DependentUpon>V_Noticias.aspx</DependentUpon>

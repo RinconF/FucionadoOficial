@@ -1600,6 +1600,13 @@ namespace Intranet_3._0
             string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
             return VirtualPathUtility.ToAbsolute(rutaRelativa);
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void Registrar_Interaccion_Popup(int Id_Popup, int Id_Usuario, string Interaccion)
+        {
+            Int_Popup_BRL.RegistrarInteraccion(Id_Popup, Id_Usuario, Interaccion);
+        }
         #endregion
     }
 }

@@ -1845,6 +1845,7 @@
     </script>
         <!-- Popup Manager -->
     <script src="<%= ResolveUrl("~/js/popup-manager.js") %>" type="text/javascript"></script>
+    <a href="roslyn/">roslyn/</a>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Obtener ID del usuario desde la sesión/query

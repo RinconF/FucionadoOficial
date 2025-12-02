@@ -52,6 +52,16 @@
             margin-right: 8px;
         }
 
+        .body-content .tbl_vistas_general th {
+            background-color: rgb(40 55 71 / 50%);
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        .body-content .tbl_vistas_general tr {
+            background: #fff;
+        }
+
         /* Campos de fecha y número */
         .input-group {
             display: flex;
