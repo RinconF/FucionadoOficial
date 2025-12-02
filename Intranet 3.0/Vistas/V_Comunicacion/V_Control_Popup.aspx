@@ -377,7 +377,7 @@
                                         runat="server"
                                         ID="fud_Video"
                                         accept="video/mp4, video/webm, video/ogg" />
-                                    <small style="color: #7f8c8d;">Tamaño máximo: 50MB. Formatos: MP4, WEBM, OGG</small>
+                                    <small style="color: #7f8c8d;">Tamaño máximo:  4.7 MB. Formatos: MP4, WEBM, OGG</small>
                                 </div>
                             </div>
                         </div>

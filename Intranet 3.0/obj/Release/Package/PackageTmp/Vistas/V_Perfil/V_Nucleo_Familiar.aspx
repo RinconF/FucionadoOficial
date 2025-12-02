@@ -36,14 +36,14 @@
         }
 
         .pnl_table {
-            border-radius: 5px;
+            border-radius: 30px;
             border: 1px solid #e1e1e1;
         }
 
             .pnl_table .pnl_content {
                 padding: 30px 60px 50px 60px;
                 background: linear-gradient(90deg, rgb(36, 58, 80) 0%, rgb(36, 58, 80) 100%);
-                border-radius: 5px;
+                border-radius: 30px;
                 color: rgba(110, 130, 151,.9);
             }
 
@@ -283,7 +283,7 @@
             padding: 15px 50px 15px 100px;
             margin-left: 40px;
             margin-top: 20px;
-            border-radius: 5px;
+            border-radius: 30px;
             outline: none;
             font-size: unset;
             position: relative;
@@ -303,7 +303,7 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                border-radius: 0px 0px 0px 5px;
+                border-radius: 30px 0px 0px 30px;
             }
 
         .select-mdl {
@@ -326,6 +326,7 @@
         @media only screen and (max-width: 1127px) {
             .pnl_table .pnl_content {
                 padding: 0;
+                margin: 23px 4px 0px 4px;
             }
 
                 .pnl_table .pnl_content .row {

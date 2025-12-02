@@ -101,6 +101,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
+        #region POPUP
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<string[]> cargar_datos_modal_actualizar_Popup(int Id_Popup)
@@ -165,120 +166,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        // Lista para la tabla (Action 1)
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string[]> Obtener_Popups_Para_Grid()
-        {
-            var list = new List<string[]>();
-
-            try
-            {
-                var obj = new Int_Popup();
-                DataTable dt = Int_Popup_BRL.SelectTable(obj, 1);
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    // ajusta el tamaño si en el front ocupas más/menos columnas
-                    string[] arr = new string[dt.Columns.Count];
-                    for (int i = 0; i < dt.Columns.Count; i++)
-                        arr[i] = row[i].ToString();
-
-                    list.Add(arr);
-                }
-
-                return list;
-            }
-            catch (Exception ex)
-            {
-                list.Clear();
-                list.Add(new[] { ex.Message });
-                return list;
-            }
-        }
-
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void Registrar_Interaccion_Popup(int Id_Popup, int Id_Usuario, string Interaccion)
         {
             Int_Popup_BRL.RegistrarInteraccion(Id_Popup, Id_Usuario, Interaccion);
         }
-
-
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<object> Obtener_Popups_Usuario(int Id_Usuario)
-        {
-            var respuesta = new List<object>();
-            try
-            {
-                var obj = new Int_Popup { Id_Usuario = Id_Usuario };
-                DataTable dt = Int_Popup_BRL.SelectTable(obj, 0); // Action 0: popups para usuario
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    string imagen = row.Table.Columns.Contains("Imagen") ? row["Imagen"].ToString() : null;
-                    string video = row.Table.Columns.Contains("Video") ? row["Video"].ToString() : null;
-
-                    string rutaPublica = !string.IsNullOrWhiteSpace(video)
-                        ? ResolverRutaPublicaPopup(video)
-                        : ResolverRutaPublicaPopup(imagen);
-
-                    respuesta.Add(new
-                    {
-                        Id_Popup = row["Id_Popup"],
-                        Titulo = row.Table.Columns.Contains("Titulo") ? row["Titulo"] : null,
-                        Descripcion = row.Table.Columns.Contains("Descripcion") ? row["Descripcion"] : null,
-                        Url = row.Table.Columns.Contains("Url") ? row["Url"] : null,
-                        Tiempo_Visualizacion = row.Table.Columns.Contains("Tiempo_Visualizacion") ? row["Tiempo_Visualizacion"] : null,
-                        Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
-                        Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
-                        Imagen = imagen,
-                        Video = video,
-                        RutaMultimedia = rutaPublica,
-                        Tipo = !string.IsNullOrWhiteSpace(video) ? "video" : "imagen",
-                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null
-                    });
-                }
-
-                return respuesta;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Clear();
-                respuesta.Add(new { Error = ex.Message });
-                return respuesta;
-            }
-        }
-
-        /// <summary>
-        /// Convierte la ruta UNC almacenada para un popup a una URL accesible desde la UI.
-        /// No modifica la ruta guardada, solo entrega una versión navegable basada en la carpeta local de imágenes.
-        /// </summary>
-        private string ResolverRutaPublicaPopup(string rutaRemota)
-        {
-            if (string.IsNullOrWhiteSpace(rutaRemota) || HttpContext.Current == null)
-                return null;
-
-            string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
-            string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
-
-            string segmentoDesdeAmbiente = null;
-            int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
-            if (idx >= 0)
-            {
-                segmentoDesdeAmbiente = rutaRemota.Substring(idx);
-            }
-            else if (!string.IsNullOrWhiteSpace(baseRemota) && rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
-            {
-                segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
-            }
-
-            if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
-                return null;
-
-            string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
-            return VirtualPathUtility.ToAbsolute(rutaRelativa);
-        }
+        #endregion
     }
 }

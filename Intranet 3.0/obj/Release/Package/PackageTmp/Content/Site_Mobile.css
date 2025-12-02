@@ -221,9 +221,10 @@
         flex-direction: column;
     }
 
-    .pnl_body div:nth-child(2) {
-        margin: 16px 0 0 0;
-        width: 100%;
+    .pnl_table .pnl_body .pnl_title {
+        margin: 23px 0 0 4px;
+        width: 98%;
+        border-radius: 30px;
     }
 
     .pnl_content {
@@ -236,8 +237,8 @@
     }
 
     .pnl_body div:nth-child(2) {
-        margin: 16px 0 0 0;
-        width: 100%;
+        margin: 16px 0 0 4px;
+        width: 98%;
     }
 
     .pnl_body .pnl_title .col:nth-child(2) p {

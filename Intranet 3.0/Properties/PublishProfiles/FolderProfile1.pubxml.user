@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\pasante.desarrollo1\Desktop\Publicacion MIETIB (volatil)</_PublishTargetUrl>
-    <History>True|2025-11-21T21:18:35.0770082Z||;True|2025-11-21T14:49:43.8858056-05:00||;</History>
+    <History>True|2025-12-02T12:53:21.9767491Z||;True|2025-11-21T16:18:35.0770082-05:00||;True|2025-11-21T14:49:43.8858056-05:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -23,22 +23,22 @@
       <publishTime>12/08/2020 13:05:32</publishTime>
     </File>
     <File Include="bin/BRL.dll">
-      <publishTime>11/21/2025 14:49:01</publishTime>
+      <publishTime>12/02/2025 07:53:03</publishTime>
     </File>
     <File Include="bin/BRL.pdb">
-      <publishTime>11/21/2025 14:49:01</publishTime>
+      <publishTime>12/02/2025 07:53:03</publishTime>
     </File>
     <File Include="bin/DAL.dll">
-      <publishTime>11/21/2025 14:49:00</publishTime>
+      <publishTime>12/02/2025 07:53:02</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>11/21/2025 14:49:00</publishTime>
+      <publishTime>12/02/2025 07:53:02</publishTime>
     </File>
     <File Include="bin/DCL.dll">
-      <publishTime>11/21/2025 14:49:00</publishTime>
+      <publishTime>12/02/2025 07:53:02</publishTime>
     </File>
     <File Include="bin/DCL.pdb">
-      <publishTime>11/21/2025 14:49:00</publishTime>
+      <publishTime>12/02/2025 07:53:02</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>11/22/2024 13:50:12</publishTime>
@@ -53,10 +53,10 @@
       <publishTime>02/11/2014 10:28:40</publishTime>
     </File>
     <File Include="bin/Intranet 3.0.dll">
-      <publishTime>11/21/2025 14:49:02</publishTime>
+      <publishTime>12/02/2025 07:53:04</publishTime>
     </File>
     <File Include="bin/Intranet 3.0.pdb">
-      <publishTime>11/21/2025 14:49:02</publishTime>
+      <publishTime>12/02/2025 07:53:04</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>02/24/2022 08:50:06</publishTime>
@@ -350,10 +350,10 @@
       <publishTime>11/11/2025 15:27:02</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/21/2025 14:22:32</publishTime>
+      <publishTime>11/24/2025 14:59:30</publishTime>
     </File>
     <File Include="Content/Site_Mobile.css">
-      <publishTime>11/12/2025 09:37:58</publishTime>
+      <publishTime>11/24/2025 14:10:40</publishTime>
     </File>
     <File Include="Content/svg_fontawesome/css/all.css">
       <publishTime>11/11/2025 15:27:03</publishTime>
@@ -5330,7 +5330,7 @@
       <publishTime>11/11/2025 15:27:50</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>11/13/2025 16:30:35</publishTime>
+      <publishTime>12/01/2025 17:01:27</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>11/11/2025 15:26:58</publishTime>
@@ -5373,6 +5373,9 @@
     </File>
     <File Include="js/popper.min.js">
       <publishTime>11/11/2025 15:27:54</publishTime>
+    </File>
+    <File Include="js/popup-manager.js">
+      <publishTime>11/28/2025 12:13:04</publishTime>
     </File>
     <File Include="js/sweetalert2.min.js">
       <publishTime>11/11/2025 15:27:54</publishTime>
@@ -5930,7 +5933,7 @@
       <publishTime>11/11/2025 15:28:57</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>11/11/2025 15:26:58</publishTime>
+      <publishTime>11/28/2025 12:09:24</publishTime>
     </File>
     <File Include="Styles/adapting.ui.timepicker.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
@@ -5957,7 +5960,7 @@
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
     <File Include="Styles/css/default/default.css">
-      <publishTime>11/11/2025 15:28:58</publishTime>
+      <publishTime>11/26/2025 14:24:13</publishTime>
     </File>
     <File Include="Styles/css/default_encuestas/default_encuestas.css">
       <publishTime>11/21/2025 15:25:12</publishTime>
@@ -5972,7 +5975,7 @@
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
     <File Include="Styles/css/programacion_plantilla/programacion_plantilla.css">
-      <publishTime>11/21/2025 08:43:09</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Styles/css/sweetalert2/sweetalert2.min.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
@@ -6170,7 +6173,7 @@
       <publishTime>11/11/2025 15:29:03</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Control_Popup.aspx">
-      <publishTime>11/19/2025 13:44:33</publishTime>
+      <publishTime>12/01/2025 15:47:41</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Control_SlideShow.aspx">
       <publishTime>11/11/2025 15:29:03</publishTime>
@@ -6242,10 +6245,10 @@
       <publishTime>11/11/2025 15:29:04</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/V_Datos_Perfil.aspx">
-      <publishTime>11/11/2025 15:29:04</publishTime>
+      <publishTime>11/24/2025 13:55:25</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/V_Nucleo_Familiar.aspx">
-      <publishTime>11/11/2025 15:29:04</publishTime>
+      <publishTime>11/24/2025 14:23:40</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/WebService_V_Perfil.asmx">
       <publishTime>11/11/2025 15:29:04</publishTime>

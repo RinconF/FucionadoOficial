@@ -67,6 +67,57 @@
             margin-bottom: 5px;
             color: #555;
         }
+
+        /* NUEVO: Selector de tipo de multimedia */
+        .media-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .media-type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 600;
+        }
+        .media-type-btn:hover {
+            border-color: #3498db;
+            background: #ecf0f1;
+        }
+        .media-type-btn.active-ninguno {
+            border-color: #3498db;
+            background: #e3f2fd;
+            color: #2980b9;
+        }
+        .media-type-btn.active-imagen {
+            border-color: #27ae60;
+            background: #e8f8f5;
+            color: #27ae60;
+        }
+        .media-type-btn.active-video {
+            border-color: #9b59b6;
+            background: #f4ecf7;
+            color: #9b59b6;
+        }
+        .media-upload-area {
+            display: none;
+            margin-top: 15px;
+        }
+        .media-upload-area.show {
+            display: block;
+        }
+
+        /* Textarea con ancho completo */
+        .pnl_input textarea {
+            width: 100% !important;
+            box-sizing: border-box;
+            resize: vertical;
+        }
     </style>
 </asp:Content>
 
@@ -106,6 +157,48 @@
                 alert("Extensión no permitida: " + ext + ". Solo se permiten imágenes (JPG, PNG, GIF, JFIF) o videos (MP4, WEBM, OGG).");
                 inputFile.value = '';
             });
+
+            // ========================================
+            // SELECTOR DE TIPO DE MULTIMEDIA - CREAR
+            // ========================================
+            window.setupMediaSelector = function (prefix) {
+                const btnNinguno = document.getElementById('btn_media_ninguno_' + prefix);
+                const btnImagen = document.getElementById('btn_media_imagen_' + prefix);
+                const btnVideo = document.getElementById('btn_media_video_' + prefix);
+                const areaImagen = document.getElementById('area_imagen_' + prefix);
+                const areaVideo = document.getElementById('area_video_' + prefix);
+
+                function setActiveMedia(type) {
+                    // Remover todas las clases activas
+                    btnNinguno.classList.remove('active-ninguno');
+                    btnImagen.classList.remove('active-imagen');
+                    btnVideo.classList.remove('active-video');
+                    areaImagen.classList.remove('show');
+                    areaVideo.classList.remove('show');
+
+                    // Activar el seleccionado
+                    if (type === 'ninguno') {
+                        btnNinguno.classList.add('active-ninguno');
+                    } else if (type === 'imagen') {
+                        btnImagen.classList.add('active-imagen');
+                        areaImagen.classList.add('show');
+                    } else if (type === 'video') {
+                        btnVideo.classList.add('active-video');
+                        areaVideo.classList.add('show');
+                    }
+                }
+
+                btnNinguno.addEventListener('click', () => setActiveMedia('ninguno'));
+                btnImagen.addEventListener('click', () => setActiveMedia('imagen'));
+                btnVideo.addEventListener('click', () => setActiveMedia('video'));
+
+                // Por defecto: ninguno
+                setActiveMedia('ninguno');
+            };
+
+            // Inicializar selectores al cargar la página
+            setupMediaSelector('crear');
+            setupMediaSelector('actualizar');
         });
     </script>
 </asp:Content>
@@ -149,10 +242,9 @@
                     </div>
                     <div class="box_search">
                         <i class="fas fa-search"></i>
-
                     </div>
                 </div>
-                <table runat="server" id="tbl_grupos" class="tbl_vistas_general"></table>
+                <div runat="server" id="tbl_grupos"></div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -193,9 +285,7 @@
                                 ID="txt_descripcion"
                                 TextMode="MultiLine"
                                 Rows="4"
-                                placeholder="Descripción del popup"
-                                Style="width:94%">
-                            </asp:TextBox>                                
+                                placeholder="Descripción del popup"></asp:TextBox>
                         </div>
                     </div>
 
@@ -245,34 +335,67 @@
                             <i class="fas fa-users"></i> Roles que pueden visualizar:
                         </label>
                         <asp:CheckBoxList ID="chkl_roles" runat="server"></asp:CheckBoxList>
+                        <small style="color: #7f8c8d;">Si no seleccionas ningún rol, será visible para todos</small>
                     </div>
 
-                    <!-- Cargar Imagen -->
+                    <!-- NUEVO: Selector de Tipo de Multimedia -->
                     <div class="content row">
-                        <div class="pnl_input col">
-                            <label><i class="fas fa-images"></i> Cargar imagen</label>
-                            <asp:FileUpload
-                                runat="server"
-                                ID="fud_Adjunto"
-                                accept="image/png, image/gif, image/jpeg, image/jfif" />
-                            <small style="color: #7f8c8d;">Tamaño máximo imagen: 3MB. Formatos: JPG, PNG, GIF, JFIF</small>
-                        </div>
-                    </div>
+                        <div class="col">
+                            <label style="font-weight: bold; display: block; margin-bottom: 10px;">
+                                <i class="fas fa-photo-video"></i> Contenido Multimedia (Opcional)
+                            </label>
+                            
+                            <div class="media-type-selector">
+                                <button type="button" id="btn_media_ninguno_crear" class="media-type-btn">
+                                    <i class="fas fa-times"></i><br>Sin multimedia
+                                </button>
+                                <button type="button" id="btn_media_imagen_crear" class="media-type-btn">
+                                    <i class="fas fa-image"></i><br>Imagen
+                                </button>
+                                <button type="button" id="btn_media_video_crear" class="media-type-btn">
+                                    <i class="fas fa-video"></i><br>Video
+                                </button>
+                            </div>
 
-                    <!-- Cargar Video -->
-                    <div class="content row">
-                        <div class="pnl_input col">
-                            <label><i class="fas fa-video"></i> Cargar video (opcional)</label>
-                            <asp:FileUpload
-                                runat="server"
-                                ID="fud_Video"
-                                accept="video/mp4, video/webm, video/ogg" />
-                            <small style="color: #7f8c8d;">Tamaño máximo video: 50MB. Formatos: MP4, WEBM, OGG</small>
+                            <!-- Área de carga de Imagen -->
+                            <div id="area_imagen_crear" class="media-upload-area">
+                                <div class="pnl_input">
+                                    <label><i class="fas fa-images"></i> Cargar imagen</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_Adjunto"
+                                        accept="image/png, image/gif, image/jpeg, image/jfif" />
+                                    <small style="color: #7f8c8d;">Tamaño máximo: 3MB. Formatos: JPG, PNG, GIF, JFIF</small>
+                                </div>
+                            </div>
+
+                            <!-- Área de carga de Video -->
+                            <div id="area_video_crear" class="media-upload-area">
+                                <div class="pnl_input">
+                                    <label><i class="fas fa-video"></i> Cargar video</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_Video"
+                                        accept="video/mp4, video/webm, video/ogg" />
+                                    <small style="color: #7f8c8d;">Tamaño máximo:  4.7 MB. Formatos: MP4, WEBM, OGG</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Botón Crear -->
-
+                    <div class="content row" style="margin-top: 20px;">
+                        <div class="col" style="text-align: right;">
+                            <asp:LinkButton
+                                runat="server"
+                                ID="lnk_crear_popup"
+                                CssClass="button"
+                                OnClick="lnk_crear_popup_Click"
+                                Style="background-color: #27ae60; color: white; padding: 12px 40px;">
+                                <i class="fas fa-save"></i> Crear Popup
+                            </asp:LinkButton>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -293,6 +416,9 @@
             </div>
             <div class="modal-i-gl-content">
                 <section class="box_content_crear_vista">
+                    <!-- ID oculto del popup a actualizar -->
+                    <asp:HiddenField ID="hf_id_popup" runat="server" />
+
                     <!-- Título -->
                     <div class="content row">
                         <div class="pnl_input col">
@@ -369,7 +495,7 @@
                         </div>
                     </div>
 
-                    <!-- Selector de Roles (CheckBoxList) -->
+                    <!-- Selector de Roles -->
                     <div class="roles-selector">
                         <label style="font-weight: bold; display: block; margin-bottom: 10px;">
                             <i class="fas fa-users"></i> Roles que pueden visualizar:
@@ -377,36 +503,64 @@
                         <asp:CheckBoxList ID="chkl_roles_pub" runat="server"></asp:CheckBoxList>
                     </div>
 
-                    <!-- Cargar Imagen -->
+                    <!-- NUEVO: Selector de Tipo de Multimedia para Actualizar -->
                     <div class="content row">
-                        <div class="pnl_input col">
-                            <label><i class="fas fa-images"></i> Cambiar imagen (opcional)</label>
-                            <asp:FileUpload
-                                runat="server"
-                                ID="fud_Adjunto_pub"
-                                accept="image/png, image/gif, image/jpeg, image/jfif" />
-                            <small style="color: #7f8c8d;">
-                                Deja vacío si no quieres cambiar la imagen actual
-                            </small>
-                        </div>
-                    </div>
+                        <div class="col">
+                            <label style="font-weight: bold; display: block; margin-bottom: 10px;">
+                                <i class="fas fa-photo-video"></i> Cambiar Multimedia (Opcional)
+                            </label>
+                            
+                            <div class="media-type-selector">
+                                <button type="button" id="btn_media_ninguno_actualizar" class="media-type-btn">
+                                    <i class="fas fa-times"></i><br>Sin cambios
+                                </button>
+                                <button type="button" id="btn_media_imagen_actualizar" class="media-type-btn">
+                                    <i class="fas fa-image"></i><br>Cambiar Imagen
+                                </button>
+                                <button type="button" id="btn_media_video_actualizar" class="media-type-btn">
+                                    <i class="fas fa-video"></i><br>Cambiar Video
+                                </button>
+                            </div>
 
-                    <!-- Cargar Video -->
-                    <div class="content row">
-                        <div class="pnl_input col">
-                            <label><i class="fas fa-video"></i> Cambiar video (opcional)</label>
-                            <asp:FileUpload
-                                runat="server"
-                                ID="fud_Video_pub"
-                                accept="video/mp4, video/webm, video/ogg" />
-                            <small style="color: #7f8c8d;">
-                                Deja vacío si deseas conservar el video actual
-                            </small>
+                            <!-- Área de carga de Imagen -->
+                            <div id="area_imagen_actualizar" class="media-upload-area">
+                                <div class="pnl_input">
+                                    <label><i class="fas fa-images"></i> Nueva imagen</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_Adjunto_pub"
+                                        accept="image/png, image/gif, image/jpeg, image/jfif" />
+                                    <small style="color: #7f8c8d;">Deja vacío para mantener la imagen actual</small>
+                                </div>
+                            </div>
+
+                            <!-- Área de carga de Video -->
+                            <div id="area_video_actualizar" class="media-upload-area">
+                                <div class="pnl_input">
+                                    <label><i class="fas fa-video"></i> Nuevo video</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_Video_pub"
+                                        accept="video/mp4, video/webm, video/ogg" />
+                                    <small style="color: #7f8c8d;">Deja vacío para conservar el video actual</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Botón Actualizar -->
-
+                    <div class="content row" style="margin-top: 20px;">
+                        <div class="col" style="text-align: right;">
+                            <asp:LinkButton
+                                runat="server"
+                                ID="lnk_actualizar_popup"
+                                CssClass="button"
+                                OnClick="lnk_actualizar_popup_Click"
+                                Style="background-color: #3498db; color: white; padding: 12px 40px;">
+                                <i class="fas fa-sync-alt"></i> Actualizar Popup
+                            </asp:LinkButton>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -429,6 +583,7 @@
             </div>
             <div class="modal-i-gl-content">
                 <section style="text-align: center; padding: 20px;">
+                    <asp:HiddenField ID="hf_id_popup_eliminar" runat="server" />
                     <p style="font-size: 16px; margin-bottom: 10px;">
                         ¿Está seguro que deseas eliminar este Popup?
                     </p>
@@ -436,7 +591,14 @@
                         <!-- Se llenará por JavaScript -->
                     </p>
                     <div style="display: flex; gap: 10px; justify-content: center;">
- 
+                        <asp:LinkButton
+                            runat="server"
+                            ID="lnk_eliminar_popup"
+                            CssClass="button"
+                            OnClick="lnk_eliminar_popup_Click"
+                            Style="background-color: #e74c3c; color: white; padding: 12px 30px; border-radius: 25px;">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </asp:LinkButton>
                         <button 
                             type="button" 
                             class="btn btn-modal-close"
@@ -453,24 +615,24 @@
          JAVASCRIPT: Manejo de Modales y AJAX
          ======================================== -->
     <script defer>
-        const txt_filter_grupo = document.querySelector('#MainContent_txt_filter_grupo');
-        const lnk_crear_ = document.querySelector('#MainContent_lnk_crear_');
-        const a = [...document.querySelectorAll('a')];
-
-        // Función auxiliar para formatear fechas a yyyy-MM-dd
+        // Helper: formato fecha yyyy-MM-dd
         function formatearFecha(fecha) {
             if (!fecha) return '';
             const d = new Date(fecha);
+            if (isNaN(d)) return '';
             const year = d.getFullYear();
             const month = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
         }
 
-        // ========================================
-        // Función principal: ejecutarDatos()
-        // ========================================
-        const ejecutarDatos = () => {
+        // Devuelve el radio actualmente seleccionado
+        function getPopupSeleccionado() {
+            return document.querySelector('input[name="rd_estado_vista"]:checked');
+        }
+
+        // Función principal para enganchar eventos
+        function ejecutarDatos() {
             // Botones principales
             const btnActualizarPopup = document.querySelector('#btn_actualizar_popup');
             const btnEliminarPopup = document.querySelector('#btn_eliminar_popup');
@@ -480,10 +642,7 @@
             const modalActualizarPopup = document.querySelector('#modal_actualizar_popup');
             const modalEliminarPopup = document.querySelector('#modal_eliminar_popup');
 
-            // Radio buttons de la tabla
-            let tablas = [...document.querySelectorAll('input[name="rd_estado_vista"]')];
-
-            // Campos del modal actualizar
+            // Controles del modal Actualizar
             const tituloPublicacion = document.querySelector('#MainContent_txt_titulo_pub');
             const descripcionPublicacion = document.querySelector('#MainContent_txt_descripcion_pub');
             const urlPublicacion = document.querySelector('#MainContent_txt_url_pub');
@@ -492,55 +651,49 @@
             const fechaFinPublicacion = document.querySelector('#MainContent_txt_fecha_fin_pub');
             const estadoPublicacion = document.querySelector('#MainContent_ddl_estado_pub');
             const rolesPublicacion = document.querySelector('#MainContent_chkl_roles_pub');
+            const hfIdPopup = document.querySelector('#MainContent_hf_id_popup');
 
-            // ========================================
+            // ================================
             // BOTÓN: ACTUALIZAR POPUP
-            // ========================================
-            if (btnActualizarPopup) {
-                btnActualizarPopup.addEventListener('click', async (e) => {
+            // ================================
+            if (btnActualizarPopup && modalActualizarPopup && hfIdPopup) {
+                btnActualizarPopup.onclick = async function (e) {
                     e.preventDefault();
 
-                    const popupSeleccionado = tablas.find(t => t.checked);
-
+                    const popupSeleccionado = getPopupSeleccionado();
                     if (!popupSeleccionado) {
                         alert('Por favor, selecciona un popup de la tabla');
                         return;
                     }
+
+                    hfIdPopup.value = popupSeleccionado.value;
 
                     // Mostrar modal
                     modalActualizarPopup.classList.add('modal-i-gl-show');
                     modalActualizarPopup.classList.remove('modal-i-gl-hide');
 
                     try {
-                        // Cargar datos del popup (Action 3)
-                        const response = await fetch(
-                            `WebService_V_Comunicacion.asmx/cargar_datos_modal_actualizar_Popup`,
-                            {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    Id_Popup: parseInt(popupSeleccionado.value)
-                                }),
-                            }
-                        );
+                        const response = await fetch('WebService_V_Comunicacion.asmx/cargar_datos_modal_actualizar_Popup', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                            body: JSON.stringify({ Id_Popup: parseInt(popupSeleccionado.value) })
+                        });
 
                         const datos = await response.json();
-                        const item = datos.d[0]; // Primer elemento del array
+                        const item = datos.d && datos.d[0];
 
-                        // Rellenar campos
                         if (item) {
+                            // Estos índices dependen de lo que devuelva tu WebService
+                            // Ajusta solo si tu WS devuelve otra estructura
                             tituloPublicacion.value = item[1] || '';
                             descripcionPublicacion.value = item[2] || '';
                             urlPublicacion.value = item[5] || '';
                             tiempoPublicacion.value = item[6] || 5;
                             fechaInicioPublicacion.value = formatearFecha(item[7]);
                             fechaFinPublicacion.value = formatearFecha(item[8]);
-                            estadoPublicacion.value = item[4] ? '1' : '0';
+                            estadoPublicacion.value = item[9] ? '1' : '0';
 
-                            // Marcar roles seleccionados
-                            const rolesIds = item[9] ? item[9].split(',') : [];
+                            const rolesIds = item[10] ? item[10].split(',') : [];
                             const checkboxes = rolesPublicacion.querySelectorAll('input[type="checkbox"]');
                             checkboxes.forEach(cb => {
                                 cb.checked = rolesIds.includes(cb.value);
@@ -550,88 +703,104 @@
                         console.error('Error al cargar popup:', error);
                         alert('Error al cargar los datos del popup');
                     }
-                });
+                };
             }
 
-            // ========================================
+            // ================================
             // BOTÓN: ELIMINAR POPUP
-            // ========================================
-            if (btnEliminarPopup) {
-                btnEliminarPopup.addEventListener('click', (e) => {
+            // ================================
+            if (btnEliminarPopup && modalEliminarPopup) {
+                btnEliminarPopup.onclick = function (e) {
                     e.preventDefault();
 
-                    const popupSeleccionado = tablas.find(t => t.checked);
-
+                    const popupSeleccionado = getPopupSeleccionado();
                     if (!popupSeleccionado) {
                         alert('Por favor, selecciona un popup de la tabla');
                         return;
                     }
 
-                    // Obtener título del popup desde la tabla
+                    // Guardar ID en HiddenField
+                    const hfEliminar = document.querySelector('#MainContent_hf_id_popup_eliminar');
+                    if (hfEliminar) {
+                        hfEliminar.value = popupSeleccionado.value;
+                    }
+
+                    // Obtener título del popup desde la fila
                     const fila = popupSeleccionado.closest('tr');
-                    const titulo = fila.cells[2].innerText; // Columna TITULO
+                    const titulo = fila && fila.cells[2] ? fila.cells[2].innerText : '';
 
                     // Mostrar en modal de confirmación
-                    document.getElementById('popup_titulo_eliminar').innerText = titulo;
+                    const lblTituloEliminar = document.getElementById('popup_titulo_eliminar');
+                    if (lblTituloEliminar) {
+                        lblTituloEliminar.innerText = titulo;
+                    }
 
                     // Mostrar modal
                     modalEliminarPopup.classList.add('modal-i-gl-show');
                     modalEliminarPopup.classList.remove('modal-i-gl-hide');
-                });
+                };
             }
 
-            // ========================================
-            // BOTÓN: ESTADÍSTICAS (Opcional - Futuro)
-            // ========================================
+            // ================================
+            // BOTÓN: ESTADÍSTICAS
+            // ================================
             if (btnEstadisticas) {
-                btnEstadisticas.addEventListener('click', async (e) => {
+                btnEstadisticas.onclick = async function (e) {
                     e.preventDefault();
 
-                    const popupSeleccionado = tablas.find(t => t.checked);
-
+                    const popupSeleccionado = getPopupSeleccionado();
                     if (!popupSeleccionado) {
                         alert('Por favor, selecciona un popup de la tabla');
                         return;
                     }
 
-                    // Llamar Action 8 para obtener estadísticas
                     try {
-                        const response = await fetch(
-                            `WebService_V_Comunicacion.asmx/Obtener_Estadisticas_Popup`,
-                            {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    Id_Popup: parseInt(popupSeleccionado.value)
-                                }),
-                            }
-                        );
+                        const response = await fetch('WebService_V_Comunicacion.asmx/Obtener_Estadisticas_Popup', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                            body: JSON.stringify({ Id_Popup: parseInt(popupSeleccionado.value) })
+                        });
 
                         const datos = await response.json();
-                        console.log('Estadísticas:', datos.d);
+                        const stats = datos.d || [];
 
-                        // Aquí puedes mostrar un modal con gráficos o tabla
-                        alert('Estadísticas cargadas en consola');
-                    } catch (error) {
-                        console.error('Error:', error);
+                        const texto = stats
+                            .map(s => `${s[0]}: ${s[1]} (${s[2]}%)`)
+                            .join('\n');
+
+                        alert('Estadísticas:\n\n' + texto);
                     }
-                });
+                    catch (error) {
+                        console.error('Error estadísticas:', error);
+                        alert('Error al cargar estadísticas');
+                    }
+                };
             }
         }
 
-        // Prevenir doble submit
-        if (lnk_crear_) {
-            lnk_crear_.addEventListener('click', () => {
-                lnk_crear_.style.display = 'none';
+        // Prevenir doble submit SOLO en el botón de crear
+        window.addEventListener('load', function () {
+            const lnk_crear_ = document.querySelector('#MainContent_lnk_crear_popup');
+            if (lnk_crear_) {
+                lnk_crear_.addEventListener('click', () => {
+                    lnk_crear_.disabled = true;
+                    setTimeout(() => { lnk_crear_.disabled = false; }, 2000);
+                });
+            }
+
+            ejecutarDatos();
+        });
+
+        // Reenganchar eventos después de cada postback del UpdatePanel
+        if (typeof (Sys) !== "undefined" &&
+            Sys.WebForms &&
+            Sys.WebForms.PageRequestManager) {
+
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            prm.add_endRequest(function () {
+                ejecutarDatos();
             });
         }
-
-        a.forEach(button => {
-            button.addEventListener('click', () => {
-                button.style.display = 'none';
-            });
-        });
     </script>
+
 </asp:Content>

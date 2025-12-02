@@ -190,7 +190,6 @@ namespace Intranet_3._0.Interna
         }
 
 
-
         /// <summary>
         /// Eliminación de archivos temporales
         /// </summary>
@@ -424,24 +423,7 @@ namespace Intranet_3._0.Interna
                     utilidades.undoImpersonation();
                 }
 
-
-
-
-
-
-
-
-
-
                 //string archivoLocal = $@"{pathServer}{rutaCompleta}";
-
-
-
-
-
-
-
-
                 //if (File.Exists(imagenNoticiaLocal) && !File.Exists(imagenNoticiaRemoto))
                 //{
                 //    File.Copy(imagenNoticiaLocal, imagenNoticiaRemoto, true);
@@ -545,17 +527,8 @@ namespace Intranet_3._0.Interna
             }
         }
 
-
-
-
-
-
-
-
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="nombreFinalArchivo"></param>
         /// <param name="consecutivo"></param>
@@ -661,9 +634,6 @@ namespace Intranet_3._0.Interna
 
 
                     }
-
-
-
                     utilidades.undoImpersonation();
                     return (bl_GuardaImagenLocal, bl_GuardaImagenRemota, imagenNoticiaRemoto);
                 }
@@ -688,30 +658,6 @@ namespace Intranet_3._0.Interna
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public string AjusteNombreImagenNoticia(string nombreOriginalArchivo, string consecutivo, string extensionArchivo)
         {
             //ajusteNombreNoticia();
@@ -725,7 +671,7 @@ namespace Intranet_3._0.Interna
         /// <summary>
         /// Obtiene las rutas local y remota para popups usando la configuración del ambiente.
         /// </summary>
-        /// <param name="ambiente">Ambiente de la aplicación (por defecto DESA).</param>
+        /// <param name="ambiente">Ambiente de la aplicación.</param>
         /// <param name="carpetaPopups">Carpeta de destino (Imagenes o Videos).</param>
         /// <returns>Tupla con las rutas local y remota calculadas; cadenas vacías si falta configuración.</returns>
         public (string rutaPopupsLocal, string rutaPopupsRemoto) ObtenerRutasPopups(string ambiente, string carpetaPopups)
@@ -747,8 +693,5 @@ namespace Intranet_3._0.Interna
 
             return (rutaPopupsLocal, rutaPopupsRemoto);
         }
-
-
-
     }
 }

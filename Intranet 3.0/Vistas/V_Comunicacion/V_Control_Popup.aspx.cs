@@ -134,11 +134,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 string nombreBaseArchivo = string.IsNullOrWhiteSpace(popup.Titulo)
                     ? "popup"
                     : popup.Titulo;
-
-                // Lógica multimedia según SP:
-                //  - NULL  -> no cambiar
-                //  - ""    -> eliminar
-                //  - valor -> actualizar
                 popup.Imagen = null;
                 popup.Video = null;
 
@@ -252,7 +247,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 sb.Append("<th>ID</th>");
                 sb.Append("<th>Título</th>");
                 sb.Append("<th>Descripción</th>");
-                sb.Append("<th>Fecha de creación</th>");
                 sb.Append("<th>Fecha Inicio</th>");
                 sb.Append("<th>Fecha Fin</th>");
                 sb.Append("<th>Estado</th>");
@@ -277,7 +271,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     sb.AppendFormat("<td>{0}</td>", id);
                     sb.AppendFormat("<td>{0}</td>", titulo);
                     sb.AppendFormat("<td>{0}</td>", descripcion);
-                    sb.AppendFormat("<td>{0}</td>", fechaCreacion);
                     sb.AppendFormat("<td>{0}</td>", fechaInicio);
                     sb.AppendFormat("<td>{0}</td>", fechaFin);
 
@@ -326,10 +319,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
         private int ObtenerIdUsuarioActual()
         {
-            // Ajusta esto según cómo manejes el usuario logueado en tu intranet
-            // Ejemplos comunes:
-            // return Convert.ToInt32(Session["Id_Usuario"]);
-            // o usar una clase de usuario autenticado.
             return Convert.ToInt32(Session["Id_Usuario"]);
         }
 

@@ -1836,12 +1836,25 @@
             }
         }
 
-
         function quitarPadding() {
             let doc = document.getElementById('container');
             doc.removeAttribute('style');
         }
         document.addEventListener('load', quitarPadding);
         window.addEventListener('load', quitarPadding);
+    </script>
+        <!-- Popup Manager -->
+    <script src="<%= ResolveUrl("~/js/popup-manager.js") %>" type="text/javascript"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener ID del usuario desde la sesión/query
+            var userId = <%= Request.QueryString["Id_Usuario"] ?? "0" %>;
+
+            if (userId > 0) {
+                setTimeout(function () {
+                    popupManager.init(userId);
+                }, 2000);
+            }
+        });
     </script>
 </asp:Content>

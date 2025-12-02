@@ -18,6 +18,7 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace Intranet_3._0
@@ -587,10 +588,10 @@ namespace Intranet_3._0
                         consulta_evaluacion_iniciada.Id_Info_Empleado = Convert.ToInt32(dt_consulta_info_empleado.Rows[0]["Id_IE"]);
                         consulta_evaluacion_iniciada.Id_Evaluacion = Convert.ToInt32(dt_eva_habilitadas.Rows[0]["c01_id_Evaluacion"]);
                         DataTable dt_consulta_evaluacion_iniciada = Int_06_EVA_Ingreso_Evaluacion_BRL.SelectTable(consulta_evaluacion_iniciada, 1);
-                        
-                        
+
+
                         DataRow intento_actual = null; //variable que almacena datos de el intento del colaborador
-                        
+
                         //EN CASO DE NO SER SU PRIMER INTENTO
                         if (dt_consulta_evaluacion_iniciada.Rows.Count > 0)
                         {
@@ -614,7 +615,7 @@ namespace Intranet_3._0
                                     intento_actual = row;//TOMA EL INTENTO NO FINALIZADO
                                     break;
                                 }
-                            }                           
+                            }
                             // VALIDA SI EL USUARIO PUEDE HACER UN NUEVO INTENTO
                             if (intento_actual == null)
                             {
@@ -865,7 +866,7 @@ namespace Intranet_3._0
                     {
                         respuesta = (!String.IsNullOrEmpty(cantidad_checked[i].ToString().Substring(es_texto + 14)) ? cantidad_checked[i].ToString().Substring(es_texto + 14) : null);
                         id_pregunta = Convert.ToInt32(cantidad_checked[i].ToString().Substring(0, es_texto).Trim());
-                    } 
+                    }
                     //SI ES RADIO BUTTON, CAPTURO ID DE LA RESPUESTA Y RESPUESTA
                     else if (es_radio >= 0)
                     {
@@ -1004,7 +1005,7 @@ namespace Intranet_3._0
                         DCL.Int_01_EVA_Evaluaciones consulta_intentos_usuario = new DCL.Int_01_EVA_Evaluaciones();
                         consulta_intentos_usuario.Id_Info_Empleado = info_empleado;
                         consulta_intentos_usuario.Id_Evaluacion = Convert.ToInt32(evaluacion);
-                        DataTable dt_numero_intento_usuario = Int_06_EVA_Ingreso_Evaluacion_BRL.SelectTable(consulta_intentos_usuario, 6);  
+                        DataTable dt_numero_intento_usuario = Int_06_EVA_Ingreso_Evaluacion_BRL.SelectTable(consulta_intentos_usuario, 6);
 
                         int intentos_user = Convert.ToInt32(dt_numero_intento_usuario.Rows[0][0]);
 
@@ -1128,7 +1129,7 @@ namespace Intranet_3._0
 
                 Int32 ingreso_encuesta = id_ingreso_encuesta;
 
-                PreguntasNoCargadas:
+            PreguntasNoCargadas:
 
                 //CARGA LAS PREGUNTAS ASOCIADAS A LA ENCUESTA
                 DCL.Int_01_ENC_Encuestas cargar_preguntas = new DCL.Int_01_ENC_Encuestas();
@@ -1215,7 +1216,7 @@ namespace Intranet_3._0
 
                     Int32 ingreso_encuesta = Convert.ToInt32(dt_insertar_nueva.Rows[0][0]);
 
-                    PreguntasNoCargadas:
+                PreguntasNoCargadas:
 
                     //CARGA LAS PREGUNTAS ASOCIADAS A LA ENCUESTA
                     DCL.Int_01_ENC_Encuestas cargar_preguntas = new DCL.Int_01_ENC_Encuestas();
@@ -1489,5 +1490,116 @@ namespace Intranet_3._0
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
         }
+
+        #region POPUP
+
+        // Lista para la tabla (Action 1)
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> Obtener_Popups_Para_Grid()
+        {
+            var list = new List<string[]>();
+
+            try
+            {
+                var obj = new Int_Popup();
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 1);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    // ajusta el tamaño si en el front ocupas más/menos columnas
+                    string[] arr = new string[dt.Columns.Count];
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                        arr[i] = row[i].ToString();
+
+                    list.Add(arr);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                list.Clear();
+                list.Add(new[] { ex.Message });
+                return list;
+            }
+        }   
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<object> Obtener_Popups_Usuario(int Id_Usuario)
+        {
+            var respuesta = new List<object>();
+            try
+            {
+                var obj = new Int_Popup { Id_Usuario = Id_Usuario };
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 0); // Action 0: popups para usuario
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string imagen = row.Table.Columns.Contains("Imagen") ? row["Imagen"].ToString() : null;
+                    string video = row.Table.Columns.Contains("Video") ? row["Video"].ToString() : null;
+
+                    string rutaPublica = !string.IsNullOrWhiteSpace(video)
+                        ? ResolverRutaPublicaPopup(video)
+                        : ResolverRutaPublicaPopup(imagen);
+
+                    respuesta.Add(new
+                    {
+                        Id_Popup = row["Id_Popup"],
+                        Titulo = row.Table.Columns.Contains("Titulo") ? row["Titulo"] : null,
+                        Descripcion = row.Table.Columns.Contains("Descripcion") ? row["Descripcion"] : null,
+                        Url = row.Table.Columns.Contains("Url") ? row["Url"] : null,
+                        Tiempo_Visualizacion = row.Table.Columns.Contains("Tiempo_Visualizacion") ? row["Tiempo_Visualizacion"] : null,
+                        Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
+                        Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
+                        Imagen = imagen,
+                        Video = video,
+                        RutaMultimedia = rutaPublica,
+                        Tipo = !string.IsNullOrWhiteSpace(video) ? "video" : "imagen",
+                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null
+                    });
+                }
+
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                respuesta.Clear();
+                respuesta.Add(new { Error = ex.Message });
+                return respuesta;
+            }
+        }
+
+        /// <summary>
+        /// Convierte la ruta UNC almacenada para un popup a una URL accesible desde la UI.
+        /// No modifica la ruta guardada, solo entrega una versión navegable basada en la carpeta local de imágenes.
+        /// </summary>
+        private string ResolverRutaPublicaPopup(string rutaRemota)
+        {
+            if (string.IsNullOrWhiteSpace(rutaRemota) || HttpContext.Current == null)
+                return null;
+
+            string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
+            string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
+
+            string segmentoDesdeAmbiente = null;
+            int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
+            if (idx >= 0)
+            {
+                segmentoDesdeAmbiente = rutaRemota.Substring(idx);
+            }
+            else if (!string.IsNullOrWhiteSpace(baseRemota) && rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
+            {
+                segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
+            }
+
+            if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
+                return null;
+
+            string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
+            return VirtualPathUtility.ToAbsolute(rutaRelativa);
+        }
+        #endregion
     }
 }

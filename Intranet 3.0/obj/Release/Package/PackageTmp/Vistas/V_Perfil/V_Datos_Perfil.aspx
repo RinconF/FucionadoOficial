@@ -32,7 +32,7 @@
                 background: rgb(31,43,55);
                 background: linear-gradient(90deg, rgba(31,43,55,1) 0%, rgba(36,58,80,1) 100%);
                 width: 100%;
-                border-radius: 5px;
+                border-radius: 30px;
                 padding: 20px;
                 box-shadow: 2px 2px 5px rgba(0,0,0,.3);
                 position: relative;
@@ -188,7 +188,7 @@
             color: #fff;
             background: rgb(31,43,55);
             background: linear-gradient(270deg, rgba(31,43,55,1) 0%, rgba(36,58,80,1) 100%);
-            border-radius: 5px;
+            border-radius: 30px;
             margin-left: 20px;
             box-shadow: 2px 2px 5px rgba(0,0,0,.3);
             text-transform: uppercase;
@@ -203,6 +203,7 @@
 
         .pnl_body .pnl_content h3 {
             padding: 20px;
+            border-radius: 30px 30px 0 0;
             text-align: center;
             font-weight: bold;
             font-size: 15px;
