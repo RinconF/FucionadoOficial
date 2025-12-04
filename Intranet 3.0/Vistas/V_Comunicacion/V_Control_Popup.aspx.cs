@@ -247,6 +247,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 sb.Append("<th>ID</th>");
                 sb.Append("<th>Título</th>");
                 sb.Append("<th>Descripción</th>");
+                sb.Append("<th>Fecha Creación</th>");
                 sb.Append("<th>Fecha Inicio</th>");
                 sb.Append("<th>Fecha Fin</th>");
                 sb.Append("<th>Estado</th>");
@@ -271,6 +272,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     sb.AppendFormat("<td>{0}</td>", id);
                     sb.AppendFormat("<td>{0}</td>", titulo);
                     sb.AppendFormat("<td>{0}</td>", descripcion);
+                    sb.AppendFormat("<td>{0}</td>", fechaCreacion);
                     sb.AppendFormat("<td>{0}</td>", fechaInicio);
                     sb.AppendFormat("<td>{0}</td>", fechaFin);
 

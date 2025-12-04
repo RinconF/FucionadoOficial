@@ -197,6 +197,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\0001%281%29.jpeg" />
     <Content Include="Content\img\0001.jpg" />
     <Content Include="Content\img\alfresco.png" />
     <Content Include="Content\img\b065f363-60c6-4af6-8cb0-d14eea48499f.jpg" />
@@ -1905,6 +1906,7 @@
     <Content Include="Styles\css\default\default.css" />
     <Content Include="Styles\css\default_encuestas\default_encuestas.css" />
     <Content Include="Styles\css\desprendibles_pago\desprendibles_pago.css" />
+    <Content Include="Styles\css\login\login.css" />
     <Content Include="Styles\css\nucleo_familiar\nucleo_familiar.css" />
     <Content Include="Styles\css\sweetalert2\sweetalert2.min.css" />
     <Content Include="Styles\css\tutoriales\tutoriales.css" />

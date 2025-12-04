@@ -48,7 +48,7 @@ class PopupManager {
         }
 
         const popup = this.popupsQueue[this.currentIndex];
-        const tiempoVisualizacion = popup.Tiempo_Visualizacion || 5;
+        const tiempoVisualizacion = Number(popup.Tiempo_Visualizacion) || 5;
 
         // Construir HTML del popup
         this.renderizarPopup(popup);
@@ -125,10 +125,25 @@ class PopupManager {
                         ✕
                     </button>
 
-                    <!-- Imagen -->
-                    ${popup.Imagen ? `
-                        <img 
-                            src="${popup.Imagen}" 
+                     <!-- Imagen / Video -->
+                    ${popup.Tipo === 'video' && popup.RutaMultimedia ? `
+                        <video
+                            src="${popup.RutaMultimedia}"
+                            controls
+                            autoplay
+                            playsinline
+                            style="
+                                width: 100%;
+                                max-height: 300px;
+                                object-fit: cover;
+                                border-radius: 10px;
+                                margin-bottom: 20px;
+                                background: #000;
+                            "
+                        ></video>
+                    ` : popup.RutaMultimedia ? `
+                        <img
+                            src="${popup.RutaMultimedia}"
                             alt="${popup.Titulo}"
                             style="
                                 width: 100%;

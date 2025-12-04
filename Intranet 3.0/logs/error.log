@@ -25640,3 +25640,944 @@ Error en método: cargar_card_slideshow
 System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
    en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
 
+3/12/2025 8:26:55 a. m. 3/12/2025 8:26:55 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:26:56 a. m. 3/12/2025 8:26:56 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:26:56 a. m. 3/12/2025 8:26:56 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:26:57 a. m. 3/12/2025 8:26:56 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:27:08 a. m. 3/12/2025 8:27:08 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:27:12 a. m. 3/12/2025 8:27:12 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:27:12 a. m. 3/12/2025 8:27:12 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:27:13 a. m. 3/12/2025 8:27:12 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:27:36 a. m. 3/12/2025 8:27:36 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:27:56 a. m. 3/12/2025 8:27:56 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:27:56 a. m. 3/12/2025 8:27:56 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:27:56 a. m. 3/12/2025 8:27:56 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:30:41 a. m. 3/12/2025 8:30:41 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:30:41 a. m. 3/12/2025 8:30:41 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:30:42 a. m. 3/12/2025 8:30:42 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:31:11 a. m. 3/12/2025 8:31:11 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:31:15 a. m. 3/12/2025 8:31:15 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:31:15 a. m. 3/12/2025 8:31:15 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:31:16 a. m. 3/12/2025 8:31:15 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:31:26 a. m. 3/12/2025 8:31:26 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:31:34 a. m. 3/12/2025 8:31:33 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:31:34 a. m. 3/12/2025 8:31:34 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:31:41 a. m. 3/12/2025 8:31:41 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:31:42 a. m. 3/12/2025 8:31:41 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:31:42 a. m. 3/12/2025 8:31:42 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:32:51 a. m. 3/12/2025 8:32:50 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:32:51 a. m. 3/12/2025 8:32:51 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:32:51 a. m. 3/12/2025 8:32:51 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:32:55 a. m. 3/12/2025 8:32:55 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:32:55 a. m. 3/12/2025 8:32:55 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:32:56 a. m. 3/12/2025 8:32:56 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:32:58 a. m. 3/12/2025 8:32:58 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:33:26 a. m. 3/12/2025 8:33:26 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:33:49 a. m. 3/12/2025 8:33:49 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:33:55 a. m. 3/12/2025 8:33:55 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:33:56 a. m. 3/12/2025 8:33:56 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:33:56 a. m. 3/12/2025 8:33:56 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:33:56 a. m. 3/12/2025 8:33:56 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:34:18 a. m. 3/12/2025 8:34:17 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:34:19 a. m. 3/12/2025 8:34:19 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:34:20 a. m. 3/12/2025 8:34:20 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:34:20 a. m. 3/12/2025 8:34:20 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:34:20 a. m. 3/12/2025 8:34:20 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:34:27 a. m. 3/12/2025 8:34:26 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:34:36 a. m. 3/12/2025 8:34:35 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:34:36 a. m. 3/12/2025 8:34:35 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:34:36 a. m. 3/12/2025 8:34:36 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:50:57 a. m. 3/12/2025 8:50:57 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:50:58 a. m. 3/12/2025 8:50:58 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:52:43 a. m. 3/12/2025 8:52:43 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:52:45 a. m. 3/12/2025 8:52:45 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:52:45 a. m. 3/12/2025 8:52:45 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:52:46 a. m. 3/12/2025 8:52:46 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:58:11 a. m. 3/12/2025 8:58:11 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:58:15 a. m. 3/12/2025 8:58:14 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:58:15 a. m. 3/12/2025 8:58:15 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:58:15 a. m. 3/12/2025 8:58:15 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 8:59:42 a. m. 3/12/2025 8:59:42 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 8:59:45 a. m. 3/12/2025 8:59:45 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 8:59:45 a. m. 3/12/2025 8:59:45 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 8:59:45 a. m. 3/12/2025 8:59:45 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:01:32 a. m. 3/12/2025 9:01:31 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:01:35 a. m. 3/12/2025 9:01:35 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:01:35 a. m. 3/12/2025 9:01:35 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:01:36 a. m. 3/12/2025 9:01:35 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:02:11 a. m. 3/12/2025 9:02:11 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:02:15 a. m. 3/12/2025 9:02:15 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:02:15 a. m. 3/12/2025 9:02:15 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:02:16 a. m. 3/12/2025 9:02:16 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:02:32 a. m. 3/12/2025 9:02:32 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:02:36 a. m. 3/12/2025 9:02:36 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:02:36 a. m. 3/12/2025 9:02:36 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:02:36 a. m. 3/12/2025 9:02:36 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:04:25 a. m. 3/12/2025 9:04:25 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:04:29 a. m. 3/12/2025 9:04:29 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:04:29 a. m. 3/12/2025 9:04:29 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:04:29 a. m. 3/12/2025 9:04:29 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:05:25 a. m. 3/12/2025 9:05:25 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:05:30 a. m. 3/12/2025 9:05:29 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:12:09 a. m. 3/12/2025 9:12:09 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:12:09 a. m. 3/12/2025 9:12:09 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:12:10 a. m. 3/12/2025 9:12:09 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:12:10 a. m. 3/12/2025 9:12:10 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:14:20 a. m. 3/12/2025 9:14:19 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:14:24 a. m. 3/12/2025 9:14:24 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:14:24 a. m. 3/12/2025 9:14:24 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:14:24 a. m. 3/12/2025 9:14:24 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:22:18 a. m. 3/12/2025 9:22:17 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:23:29 a. m. 3/12/2025 9:23:29 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:27:18 a. m. 3/12/2025 9:27:17 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:27:18 a. m. 3/12/2025 9:27:18 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:27:18 a. m. 3/12/2025 9:27:18 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:27:18 a. m. 3/12/2025 9:27:18 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:27:37 a. m. 3/12/2025 9:27:37 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:27:41 a. m. 3/12/2025 9:27:40 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:27:41 a. m. 3/12/2025 9:27:40 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:27:41 a. m. 3/12/2025 9:27:41 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:28:18 a. m. 3/12/2025 9:28:18 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:28:44 a. m. 3/12/2025 9:28:43 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:28:44 a. m. 3/12/2025 9:28:43 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:28:44 a. m. 3/12/2025 9:28:44 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 9:38:03 a. m. 3/12/2025 9:38:03 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 9:38:07 a. m. 3/12/2025 9:38:07 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 9:38:07 a. m. 3/12/2025 9:38:07 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 9:38:08 a. m. 3/12/2025 9:38:08 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 11:42:20 a. m. 3/12/2025 11:42:20 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:42:24 a. m. 3/12/2025 11:42:23 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 11:42:24 a. m. 3/12/2025 11:42:23 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 11:42:24 a. m. 3/12/2025 11:42:24 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 11:42:35 a. m. 3/12/2025 11:42:35 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:42:41 a. m. 3/12/2025 11:42:41 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:42:45 a. m. 3/12/2025 11:42:44 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:43:34 a. m. 3/12/2025 11:43:33 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:43:49 a. m. 3/12/2025 11:43:49 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:43:53 a. m. 3/12/2025 11:43:53 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 11:43:54 a. m. 3/12/2025 11:43:53 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 11:43:54 a. m. 3/12/2025 11:43:53 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 11:51:23 a. m. 3/12/2025 11:51:23 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 11:53:56 a. m. 3/12/2025 11:53:56 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:108
+
+3/12/2025 11:54:00 a. m. 3/12/2025 11:54:00 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 11:54:00 a. m. 3/12/2025 11:54:00 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 11:54:00 a. m. 3/12/2025 11:54:00 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 11:54:56 a. m. 3/12/2025 11:54:56 a. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:108
+
+3/12/2025 11:56:20 a. m. 3/12/2025 11:56:19 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 11:56:20 a. m. 3/12/2025 11:56:20 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 11:56:20 a. m. 3/12/2025 11:56:20 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 11:57:31 a. m. 3/12/2025 11:57:31 a. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 11:57:31 a. m. 3/12/2025 11:57:31 a. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 11:57:31 a. m. 3/12/2025 11:57:31 a. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 12:12:18 p. m. 3/12/2025 12:12:18 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 12:12:18 p. m. 3/12/2025 12:12:18 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 12:12:18 p. m. 3/12/2025 12:12:18 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 12:12:19 p. m. 3/12/2025 12:12:18 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 12:12:25 p. m. 3/12/2025 12:12:25 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:00 p. m. 3/12/2025 1:50:00 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:00 p. m. 3/12/2025 1:50:00 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 1:50:00 p. m. 3/12/2025 1:50:00 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 1:50:01 p. m. 3/12/2025 1:50:00 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 1:50:04 p. m. 3/12/2025 1:50:04 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:10 p. m. 3/12/2025 1:50:10 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:17 p. m. 3/12/2025 1:50:17 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:29 p. m. 3/12/2025 1:50:28 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:35 p. m. 3/12/2025 1:50:35 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:50:42 p. m. 3/12/2025 1:50:42 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:51:41 p. m. 3/12/2025 1:51:41 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:51:50 p. m. 3/12/2025 1:51:50 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:51:54 p. m. 3/12/2025 1:51:54 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:51:54 p. m. 3/12/2025 1:51:54 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 1:51:54 p. m. 3/12/2025 1:51:54 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 1:51:55 p. m. 3/12/2025 1:51:54 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 1:53:49 p. m. 3/12/2025 1:53:49 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:53:59 p. m. 3/12/2025 1:53:59 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:54:02 p. m. 3/12/2025 1:54:02 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:54:03 p. m. 3/12/2025 1:54:03 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 1:54:03 p. m. 3/12/2025 1:54:03 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 1:54:03 p. m. 3/12/2025 1:54:03 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 1:55:16 p. m. 3/12/2025 1:55:16 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:55:57 p. m. 3/12/2025 1:55:57 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:203
+
+3/12/2025 1:55:58 p. m. 3/12/2025 1:55:57 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 1:55:58 p. m. 3/12/2025 1:55:57 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 1:55:58 p. m. 3/12/2025 1:55:58 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 1:56:38 p. m. 3/12/2025 1:56:38 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:203
+
+3/12/2025 1:56:47 p. m. 3/12/2025 1:56:46 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 1:56:47 p. m. 3/12/2025 1:56:47 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 1:56:47 p. m. 3/12/2025 1:56:47 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 1:56:47 p. m. 3/12/2025 1:56:47 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 2:18:14 p. m. 3/12/2025 2:18:14 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 2:18:14 p. m. 3/12/2025 2:18:14 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 2:18:14 p. m. 3/12/2025 2:18:14 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 2:18:15 p. m. 3/12/2025 2:18:14 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 2:18:22 p. m. 3/12/2025 2:18:21 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 2:19:56 p. m. 3/12/2025 2:19:56 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 2:20:14 p. m. 3/12/2025 2:20:14 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 2:20:18 p. m. 3/12/2025 2:20:18 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 2:20:18 p. m. 3/12/2025 2:20:18 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 2:20:18 p. m. 3/12/2025 2:20:18 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 2:27:36 p. m. 3/12/2025 2:27:36 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 2:27:40 p. m. 3/12/2025 2:27:40 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 2:27:41 p. m. 3/12/2025 2:27:40 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 2:27:41 p. m. 3/12/2025 2:27:40 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 3:14:11 p. m. 3/12/2025 3:14:11 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:14:12 p. m. 3/12/2025 3:14:11 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 3:14:12 p. m. 3/12/2025 3:14:11 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 3:14:12 p. m. 3/12/2025 3:14:12 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 3:17:03 p. m. 3/12/2025 3:17:03 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:30:36 p. m. 3/12/2025 3:30:35 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:30:41 p. m. 3/12/2025 3:30:41 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 3:30:41 p. m. 3/12/2025 3:30:41 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 3:30:42 p. m. 3/12/2025 3:30:41 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 3:30:53 p. m. 3/12/2025 3:30:53 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:33:27 p. m. 3/12/2025 3:33:27 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:34:50 p. m. 3/12/2025 3:34:50 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:38:31 p. m. 3/12/2025 3:38:31 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:40:31 p. m. 3/12/2025 3:40:31 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:40:53 p. m. 3/12/2025 3:40:53 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:40:55 p. m. 3/12/2025 3:40:55 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:41:31 p. m. 3/12/2025 3:41:31 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:44:50 p. m. 3/12/2025 3:44:50 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:57:46 p. m. 3/12/2025 3:57:46 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:57:56 p. m. 3/12/2025 3:57:56 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+
+3/12/2025 3:58:02 p. m. 3/12/2025 3:58:02 p. m.
+Error en método: cargar_card_noticia_recientes
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia_recientes() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 165
+
+3/12/2025 3:58:02 p. m. 3/12/2025 3:58:02 p. m.
+Error en método: cargar_card_noticia
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_noticia() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 64
+
+3/12/2025 3:58:02 p. m. 3/12/2025 3:58:02 p. m.
+Error en método: cargar_card_slideshow
+System.OverflowException: Las dimensiones de la matriz superaron el intervalo admitido.
+   en Intranet_3._0.WebService_Default.cargar_card_slideshow() en C:\Repositorios\GIT\MIETIB\Intranet 3.0\WebService_Default.asmx.cs:línea 268
+
+3/12/2025 4:00:55 p. m. 3/12/2025 4:00:55 p. m. - ERROR: Cargar_Datos_Usuario
+Las dimensiones de la matriz superaron el intervalo admitido.
+Usuario:3945
+

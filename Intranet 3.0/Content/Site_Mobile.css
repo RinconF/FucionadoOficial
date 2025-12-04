@@ -24,9 +24,9 @@
 }
 
 @media only screen and (max-width: 830px) {
-    .body-login {
+/*    .body-login {
         background: none !important;
-    }
+    }*/
 
         .body-login #MainContent_ctl00 .row .col .box-logo {
             display: none;
