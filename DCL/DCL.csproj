@@ -86,6 +86,8 @@
     <Compile Include="Int_01_EVA_Evaluaciones.cs" />
     <Compile Include="Int_Control_Acceso.cs" />
     <Compile Include="Int_Control_AccesoCollection.cs" />
+    <Compile Include="Int_Aplicativo.cs" />
+    <Compile Include="Int_AplicativoCollection.cs" />
     <Compile Include="Int_Nucleo_FamiliarCollection.cs" />
     <Compile Include="Int_Nucleo_Familiar.cs" />
     <Compile Include="Int_Notificaciones.cs" />
