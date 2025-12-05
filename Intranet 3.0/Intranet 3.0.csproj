@@ -2187,6 +2187,7 @@
     <Content Include="Vistas\V_Gestion_Humana\WebService_V_Gestion_Humana.asmx" />
     <Content Include="Vistas\V_Operacional\V_Programacion.aspx" />
     <Content Include="Vistas\V_Perfil\V_Aplicativos.aspx" />
+    <Content Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx" />
     <Content Include="Vistas\V_Perfil\V_Datos_Perfil.aspx" />
     <Content Include="Vistas\V_Perfil\V_Nucleo_Familiar.aspx" />
     <Content Include="Vistas\V_Perfil\WebService_V_Perfil.asmx">
@@ -2464,6 +2465,13 @@
     </Compile>
     <Compile Include="Vistas\V_Perfil\V_Aplicativos.aspx.designer.cs">
       <DependentUpon>V_Aplicativos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.cs">
+      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.designer.cs">
+      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\V_Perfil\V_Datos_Perfil.aspx.cs">
       <DependentUpon>V_Datos_Perfil.aspx</DependentUpon>
