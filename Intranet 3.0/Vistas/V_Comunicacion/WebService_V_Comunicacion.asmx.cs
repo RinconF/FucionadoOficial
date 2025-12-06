@@ -3,9 +3,6 @@ using DCL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 
@@ -104,9 +101,9 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         #region POPUP
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string[]> cargar_datos_modal_actualizar_Popup(int Id_Popup)
+        public List<object> cargar_datos_modal_actualizar_Popup(int Id_Popup)
         {
-            var list = new List<string[]>();
+            var lista = new List<object>();
 
             try
             {
@@ -115,23 +112,36 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (dt.Rows.Count == 0)
                 {
-                    list.Add(new[] { "0" });
-                    return list;
+                    lista.Add(new { Id_Popup = 0 });
+                    return lista;
                 }
 
                 DataRow row = dt.Rows[0];
-                string[] array = new string[12];
-                for (int i = 0; i < 12; i++)
-                    array[i] = row[i].ToString();
 
-                list.Add(array);
-                return list;
+                // Construir respuesta con nombres de columna para evitar depender del orden
+                var popupDto = new
+                {
+                    Id_Popup = row.Table.Columns.Contains("Id_Popup") ? row["Id_Popup"] : null,
+                    Titulo = row.Table.Columns.Contains("Titulo") ? row["Titulo"] : null,
+                    Descripcion = row.Table.Columns.Contains("Descripcion") ? row["Descripcion"] : null,
+                    Imagen = row.Table.Columns.Contains("Imagen") ? row["Imagen"] : null,
+                    Video = row.Table.Columns.Contains("Video") ? row["Video"] : null,
+                    Url = row.Table.Columns.Contains("Url") ? row["Url"] : null,
+                    Tiempo_Visualizacion = row.Table.Columns.Contains("Tiempo_Visualizacion") ? row["Tiempo_Visualizacion"] : null,
+                    Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
+                    Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
+                    Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null,
+                    RolesIds = row.Table.Columns.Contains("RolesIds") ? row["RolesIds"] : null
+                };
+
+                lista.Add(popupDto);
+                return lista;
             }
             catch (Exception ex)
             {
-                list.Clear();
-                list.Add(new[] { ex.Message });
-                return list;
+                lista.Clear();
+                lista.Add(new { Error = ex.Message });
+                return lista;
             }
         }
 

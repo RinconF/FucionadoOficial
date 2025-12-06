@@ -1,19 +1,15 @@
-﻿using System;
+﻿using BRL;
+using Intranet_3._0.Interna;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data;
-using BRL;
 using System.Web.UI.HtmlControls;
-using System.IO;
-using System.Configuration;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
-using Intranet_3._0.Interna;
-using System.Net.NetworkInformation;
-using System.Threading;
+using System.Web.UI.WebControls;
 
 namespace Intranet_3._0
 {
@@ -26,7 +22,7 @@ namespace Intranet_3._0
         {
             try
             {
-                if (Request.QueryString["Id_Usuario"] != null && Session["cerrar"] !=null)
+                if (Request.QueryString["Id_Usuario"] != null && Session["cerrar"] != null)
                 {
                     pathLog = Server.MapPath(@"~/logs");
                     int tiempoSesion = Convert.ToInt32(ConfigurationManager.AppSettings.Get("tiempoSesion"));
@@ -41,8 +37,8 @@ namespace Intranet_3._0
                         string[] Separado = url.Split('/');
                         string Final = Separado[Separado.Length - 1];
 
-                            string url_ = Final.Replace(Final, @"~/Login");
-                            Page.Response.Redirect(url_, false);
+                        string url_ = Final.Replace(Final, @"~/Login");
+                        Page.Response.Redirect(url_, false);
                     }
                     else
                     {
@@ -80,13 +76,13 @@ namespace Intranet_3._0
                                 string[] Separado = url.Split('/');
                                 string Final = Separado[Separado.Length - 1];
 
-                                    string url_ = Final.Replace(Final, @"~/Login");
-                                    Page.Response.Redirect(url_, false);
+                                string url_ = Final.Replace(Final, @"~/Login");
+                                Page.Response.Redirect(url_, false);
 
                             }
                         }
                     }
-                    
+
                 }
 
             }
@@ -188,7 +184,7 @@ namespace Intranet_3._0
                                 var lnk_vista = new HtmlGenericControl("a");
                                 lnk_vista.ID = "lnk_vista" + row["Id_Vista"].ToString();
                                 lnk_vista.InnerHtml = row["Nombre_Vista"].ToString();
-                                    lnk_vista.Attributes.Add("href", "../../" + row["Ruta"].ToString() + "?Id_Usuario=" + id_user + "&Id_Grupo=" + row["Id_Grupo_Vista"].ToString() + "&Id_Vista=" + row["Id_Vista"].ToString());
+                                lnk_vista.Attributes.Add("href", "../../" + row["Ruta"].ToString() + "?Id_Usuario=" + id_user + "&Id_Grupo=" + row["Id_Grupo_Vista"].ToString() + "&Id_Vista=" + row["Id_Vista"].ToString());
                                 pnl_navegacion.Controls.Add(lnk_vista);
 
                                 //cargar title
@@ -290,8 +286,8 @@ namespace Intranet_3._0
                                         lnk_vista.Attributes.Add("href", "../../" + row_a["Ruta"].ToString() + "?Id_Usuario=" + id_user + "&Id_Grupo=" + row["Id_Grupo_Vista"].ToString() + "&Id_Vista=" + row_a["Id_Vista"].ToString());
                                         lnk_vista.Attributes.Add("onclick", "loading_init();");
                                     }
-                                    
-                                   
+
+
                                     //}
                                     ul_menu.Controls.Add(lnk_vista);
 
@@ -324,7 +320,7 @@ namespace Intranet_3._0
         }
 
         protected void Cargar_Datos_Usuario()
-      {
+        {
             string id_user = "";
             string ipServer = "";
 
@@ -350,7 +346,7 @@ namespace Intranet_3._0
                     obj.Id_Usuario = Convert.ToInt32(id_user);
                     dt = Int_Usuarios_BRL.SelectTable(obj, 29);
                     string rutaCompleta = "";
-                   
+
                     if (dt.Rows.Count > 0)
                     {
                         txt_perfil_name.InnerHtml = dt.Rows[0]["Nombre"].ToString();
@@ -390,7 +386,7 @@ namespace Intranet_3._0
                             int[] indexArray = new int[index];
                             var removerLista = new List<int>(indexArray);
                             numDocumento = arrayAnexoFoto[7].ToString();
-                            
+
                             for (int i = 0; i < removerLista.Count; i++)
                             {
                                 arrayAnexoFoto.RemoveAt(0);
@@ -472,21 +468,21 @@ namespace Intranet_3._0
                                     string rutaUsuario = $"{pathServer}{arrayAnexoFoto[0]}\\{arrayAnexoFoto[1]}\\{arrayAnexoFoto[2]}\\{numDocumento}\\";
 
                                     string[] files = null;
-                                    files = System.IO.Directory.GetFiles(rutaUsuario,"*.*",SearchOption.AllDirectories);
-                                    
+                                    files = System.IO.Directory.GetFiles(rutaUsuario, "*.*", SearchOption.AllDirectories);
+
                                     string carpetaOmitir = "Perfil";
 
                                     //AGR 12-May-2021: INICIO MANEJO DE ARCHIVOS
                                     //Si la ruta local contiene más de un archivo, procede a verificar imagenes y/o documentos y eliminarlos exceptuando imagen de perfil si (existe). Si en el servidor remoto NO existe el archivo, se envía.
-                                    if (files.Length >1)
+                                    if (files.Length > 1)
                                     {
                                         utilidades.limpiezaCarpetas(rutaUsuario, ubicacionRemota, carpetaOmitir, numDocumento, pathLog);
                                     }
-                                   
+
                                 }
                                 else
                                 {
-                                    utilidades.logError($"{DateTime.Now}{CONST_ERROR}{anexoFoto[2]} no responde.\nRuta: {rutaPerfilRemoto.Replace(@"\\",@"\")}\n{CONST_USOIMAGENDEFAULT}\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {numDocumento}", pathLog);
+                                    utilidades.logError($"{DateTime.Now}{CONST_ERROR}{anexoFoto[2]} no responde.\nRuta: {rutaPerfilRemoto.Replace(@"\\", @"\")}\n{CONST_USOIMAGENDEFAULT}\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {numDocumento}", pathLog);
                                 }
 
 
@@ -511,7 +507,7 @@ namespace Intranet_3._0
                                 image3.ImageUrl = imagenPerfilLocal;
                                 Session["imagenPerfil"] = imagenPerfilLocal;
                             }
-                            
+
                             image1.AlternateText = "Imagen de Usuario";
                             image3.AlternateText = "Imagen de Usuario";
                             image1.Attributes["class"] = "img_user";
@@ -519,7 +515,7 @@ namespace Intranet_3._0
                             divHtml1.Controls.Add(image1);
                             divHtml2.Controls.Add(image3);
                             pnl_imagen.Controls.Add(divHtml2);
-                            
+
                         }
                         DataTable db;
                         DCL.Int_Usuarios obje = new DCL.Int_Usuarios();
@@ -527,7 +523,7 @@ namespace Intranet_3._0
                         foreach (DataRow row in db.Rows)
                         {
                             LinkButton lnk_vista_perfil = new LinkButton();
-                                lnk_vista_perfil.Attributes.Add("href", "../../" + row["Ruta"].ToString() + "?Id_Usuario=" + id_user + "&Id_Grupo=" + row["Id_Grupo_Vista"].ToString() + "&Id_Vista=" + row["Id_Vista"].ToString());
+                            lnk_vista_perfil.Attributes.Add("href", "../../" + row["Ruta"].ToString() + "?Id_Usuario=" + id_user + "&Id_Grupo=" + row["Id_Grupo_Vista"].ToString() + "&Id_Vista=" + row["Id_Vista"].ToString());
                             lnk_vista_perfil.Attributes.Add("onclick", "loading_init();");
                             ul_mdl_perfil.Controls.Add(lnk_vista_perfil);
                             var li_sub_pefil = new HtmlGenericControl("li");
@@ -548,7 +544,7 @@ namespace Intranet_3._0
             }
             catch (Exception ex)
             {
-                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{ id_user}", pathLog);
+                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{id_user}", pathLog);
 
                 HtmlGenericControl divHtml1 = new HtmlGenericControl();
                 Image image1 = new Image();
@@ -580,7 +576,7 @@ namespace Intranet_3._0
             }
         }
 
-        
+
         protected void Cerrar_Sesion(object sender, EventArgs e)
         {
             AG_Utils utilidades = new AG_Utils();
@@ -645,7 +641,7 @@ namespace Intranet_3._0
             }
             catch (Exception ex)
             {
-                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{ id_user}", pathLog);
+                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{id_user}", pathLog);
                 //string url_ = Final.Replace(Final, $@"~/Login");
                 Page.Response.Redirect($@"~/Login", false);
                 Console.WriteLine(ex);

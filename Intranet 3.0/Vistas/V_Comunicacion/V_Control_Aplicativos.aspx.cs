@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -21,7 +21,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
         protected void txt_buscar_TextChanged(object sender, EventArgs e)
         {
-            CargarTablaAplicativos(txt_buscar.Text.Trim());
+            //CargarTablaAplicativos(txt_buscar.Text.Trim());
         }
 
         protected void btn_modal_crear_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 };
 
                 Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 3);
-                CargarTablaAplicativos(txt_buscar.Text.Trim());
+                //CargarTablaAplicativos(txt_buscar.Text.Trim());
                 MostrarMensaje("Aplicativo creado correctamente.", true);
             }
             catch (Exception ex)
@@ -132,7 +132,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 };
 
                 Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 4);
-                CargarTablaAplicativos(txt_buscar.Text.Trim());
+                //CargarTablaAplicativos(txt_buscar.Text.Trim());
                 MostrarMensaje("Aplicativo actualizado correctamente.", true);
             }
             catch (Exception ex)
@@ -159,7 +159,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 };
 
                 Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 5);
-                CargarTablaAplicativos(txt_buscar.Text.Trim());
+                //CargarTablaAplicativos(txt_buscar.Text.Trim());
                 MostrarMensaje("Aplicativo eliminado correctamente.", true);
             }
             catch (Exception ex)
@@ -270,7 +270,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         private void MostrarMensaje(string mensaje, bool exitoso)
         {
             string clase = exitoso ? "text-success" : "text-danger";
-            ltr_mensaje.Text = $"<p class='{clase}'>{mensaje}</p>";
+            //ltr_mensaje.Text = $"<p class='{clase}'>{mensaje}</p>";
         }
     }
 }

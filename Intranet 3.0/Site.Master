@@ -392,20 +392,6 @@
         }*/
     </style>
 
-    <div class="popup-usuario-overlay modal-noti-hide" id="popup-usuario">
-        <div class="popup-usuario">
-            <button type="button" class="popup-usuario__cerrar" id="popup-usuario-cerrar" aria-label="Cerrar popup">×</button>
-            <div class="popup-usuario__encabezado">
-                <h2 id="popup-usuario-titulo">Aviso</h2>
-                <p id="popup-usuario-descripcion"></p>
-            </div>
-            <div class="popup-usuario__media" id="popup-usuario-media"></div>
-            <div class="popup-usuario__acciones">
-                <a href="#" id="popup-usuario-link" target="_blank" rel="noopener">Ver más</a>
-                <button type="button" id="popup-usuario-siguiente">Cerrar</button>
-            </div>
-        </div>
-    </div>
 
     <div class="modal-console modal-noti-hide">
         <div class="modal-console-title" id="console_title"></div>
@@ -618,7 +604,6 @@
                 let Id_Usuario = params.get('Id_Usuario');
                 location = "../../Default.aspx?Id_Usuario=" + Id_Usuario;
             });
-
         });
 
         function Validar_Password() {
@@ -639,22 +624,6 @@
                 }
             });
         }
-
-    </script>
-    <!-- Popup Manager -->
-    <script src="<%= ResolveUrl("~/js/popup-manager.js") %>" type="text/javascript"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Obtener ID del usuario desde la sesión/query
-            var userId = <%= Request.QueryString["Id_Usuario"] ?? "0" %>;
-
-            if (userId > 0) {
-                // Esperar 2 segundos después de cargar la página
-                setTimeout(function () {
-                    popupManager.init(userId);
-                }, 2000);
-            }
-        });
     </script>
     </body>
 </html>

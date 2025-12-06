@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DCL;
+using System;
 using System.Data;
-using DCL;
 
 namespace DAL
 {

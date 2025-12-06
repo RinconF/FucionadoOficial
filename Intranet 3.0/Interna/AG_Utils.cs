@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net.NetworkInformation;
-using System.Threading;
-using System.Web;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
-using System.Web.UI;
+using System.Threading;
+using System.Web;
 
 namespace Intranet_3._0.Interna
 {

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using BRL;
+using System;
 using System.Data;
-using BRL;
-using Intranet_3._0.Interna;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Nomina
 {
@@ -304,7 +300,7 @@ namespace Intranet_3._0.Vistas.V_Nomina
         private void CargarAños()
         {
             try
-            { 
+            {
                 int añoActual = DateTime.Now.Year;
                 int añosAMostrar = 24; // Número de años hacia atrás que quieres mostrar
 
@@ -313,7 +309,7 @@ namespace Intranet_3._0.Vistas.V_Nomina
                     DropDownListYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }
             }
-            catch {}
+            catch { }
         }
     }
-}   
+}

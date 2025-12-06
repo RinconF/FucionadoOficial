@@ -1,4 +1,4 @@
-<%@ Page Title="Aplicativos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Aplicativos.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Perfil.V_Aplicativos" %>
+﻿<%@ Page Title="Aplicativos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Aplicativos.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Perfil.V_Aplicativos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts_css" runat="server">
 </asp:Content>
@@ -95,5 +95,4 @@
             </asp:Repeater>
         </div>
     </section>
-
 </asp:Content>

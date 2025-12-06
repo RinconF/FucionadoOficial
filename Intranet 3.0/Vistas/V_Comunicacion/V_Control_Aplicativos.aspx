@@ -1,4 +1,7 @@
-<%@ Page ValidateRequest="false" Title="Control de Aplicativos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Control_Aplicativos.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Comunicacion.V_Control_Aplicativos" %>
+﻿<%@ Page ValidateRequest="false" Title="Control de Aplicativos" Language="C#"
+    MasterPageFile="~/Site.Master" AutoEventWireup="true"
+    CodeBehind="V_Control_Aplicativos.aspx.cs"
+    Inherits="Intranet_3._0.Vistas.V_Comunicacion.V_Control_Aplicativos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts_css" runat="server">
     <style>
@@ -58,22 +61,33 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <asp:UpdatePanel ID="pnlAplicativos" runat="server">
         <ContentTemplate>
-            <asp:Literal ID="ltr_mensaje" runat="server"></asp:Literal>
             <section class="pnl_table">
                 <div class="pnl_tag">
                     <p><i class="fas fa-tag"></i>Tabla de publicaciones</p>
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">
-                        <asp:LinkButton ID="btn_modal_crear" runat="server" CssClass="btn-modal" OnClick="btn_modal_crear_Click">
-                            <i class="fas fa-plus"></i>Nuevo aplicativo
-                        </asp:LinkButton>
-                        <asp:LinkButton ID="btn_modal_actualizar" runat="server" CssClass="btn-actu-grupo" OnClick="btn_modal_actualizar_Click">
-                            <i class="fas fa-cog"></i>Actualizar aplicativo
-                        </asp:LinkButton>
-                        <asp:LinkButton ID="btn_modal_eliminar" runat="server" CssClass="button" OnClick="btn_modal_eliminar_Click">
-                            <i class="fas fa-trash"></i>Eliminar aplicativo
-                        </asp:LinkButton>
+                        <button
+                            type="button"
+                            id="btn_modal_crear"
+                            class="btn-modal"
+                            data-id="modal_crear_aplicativo">
+                            <i class="fas fa-plus"></i>Nuevo Aplicativo
+                        </button>
+                        <button
+                            type="button"
+                            id="btn_modal_actualizar"
+                            class="btn-actu-grupo"
+                            data-id="modal_actualizar_aplicativo">
+                            <i class="fas fa-cog"></i>Actualizar Aplicativo
+                        </button>
+                        <button
+                            type="button"
+                            id="btn_modal_eliminar"
+                            class="button"
+                            style="background-color: #e74c3c; color: white;">
+                            <i class="fas fa-trash"></i>Eliminar Aplicativo
+                        </button>
                     </div>
                     <div class="box_search">
                         <i class="fas fa-search"></i>

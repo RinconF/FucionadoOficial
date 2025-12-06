@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using DAL;
 using DCL;
-using DAL;
+using System.Data;
 
 
 namespace BRL
 {
     public class Info_Empleado_BRL
     {
-        public static Info_Empleado Load(Info_Empleado objIEm,int Action)
+        public static Info_Empleado Load(Info_Empleado objIEm, int Action)
         {
             Info_EmpleadoFactory objIEmf = new Info_EmpleadoFactory();
             return objIEmf.Load(objIEm);

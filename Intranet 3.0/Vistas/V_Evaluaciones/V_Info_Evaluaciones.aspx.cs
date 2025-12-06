@@ -1,12 +1,8 @@
 ﻿using BRL;
 using DCL;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Evaluaciones
 {
@@ -21,53 +17,53 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
         {
             //if (!IsPostBack)
             //{
-                // Obtener el mensaje de disponibilidad de evaluaciones
-                Info_Evaluaciones Obj = new DCL.Info_Evaluaciones();
+            // Obtener el mensaje de disponibilidad de evaluaciones
+            Info_Evaluaciones Obj = new DCL.Info_Evaluaciones();
 
-                DataTable dtEvaluacionEstado = Info_Evaluaciones_BRL.SelectTable(Obj, 7);
+            DataTable dtEvaluacionEstado = Info_Evaluaciones_BRL.SelectTable(Obj, 7);
 
-                if (dtEvaluacionEstado.Rows.Count > 0)
+            if (dtEvaluacionEstado.Rows.Count > 0)
+            {
+                string sidEvaluacion = dtEvaluacionEstado.Rows[0]["c01_id_evaluacion"].ToString();
+                IdEvaluacion = Convert.ToInt32(sidEvaluacion);
+                Obj.IdEvaluacion = IdEvaluacion;
+
+                // Mostrar todo si hay evaluaciones disponibles
+                encuestaPanel.Visible = true;
+                lblMensaje.Visible = false; // Asegurarse de ocultar el mensaje si hay Evaluaciones
+
+                // Obtener el nombre de la Evaluacion
+                var dtNombreEvaluacion = Info_Evaluaciones_BRL.SelectTable(Obj, 6);
+
+                if (dtNombreEvaluacion.Rows.Count > 0)
                 {
-                    string sidEvaluacion = dtEvaluacionEstado.Rows[0]["c01_id_evaluacion"].ToString();
-                    IdEvaluacion = Convert.ToInt32(sidEvaluacion);
-                    Obj.IdEvaluacion = IdEvaluacion;
-
-                    // Mostrar todo si hay evaluaciones disponibles
-                    encuestaPanel.Visible = true;
-                    lblMensaje.Visible = false; // Asegurarse de ocultar el mensaje si hay Evaluaciones
-
-                    // Obtener el nombre de la Evaluacion
-                    var dtNombreEvaluacion = Info_Evaluaciones_BRL.SelectTable(Obj, 6);
-
-                    if (dtNombreEvaluacion.Rows.Count > 0)
-                    {
-                        NombreEvaluacion = dtNombreEvaluacion.Rows[0]["c01_nombre"].ToString();
-                    }
-
-                    // Obteniendo el total de Evaluaciones finalizadas
-                    var dtFinalizadas = Info_Evaluaciones_BRL.SelectTable(Obj, 0);
-
-                    if (dtFinalizadas.Rows.Count > 0)
-                    {
-                        TotalFinalizadas = Convert.ToInt32(dtFinalizadas.Rows[0]["TOTAL FINALIZADAS"]);
-                    }
-
-                    // Obteniendo el total de Evaluaciones pendientes
-                    var dtPendientes = Info_Evaluaciones_BRL.SelectTable(Obj, 1);
-                    if (dtPendientes.Rows.Count > 0)
-                    {
-                        TotalPendientes = Convert.ToInt32(dtPendientes.Rows[0]["TOTAL PENDIENTES"]);
-                    }
-
+                    NombreEvaluacion = dtNombreEvaluacion.Rows[0]["c01_nombre"].ToString();
                 }
-                else
+
+                // Obteniendo el total de Evaluaciones finalizadas
+                var dtFinalizadas = Info_Evaluaciones_BRL.SelectTable(Obj, 0);
+
+                if (dtFinalizadas.Rows.Count > 0)
                 {
-                    // Mostrar mensaje en lugar de ocultar el panel
-                    lblMensaje.Text = "No hay evaluaciones activas";
-                    lblMensaje.Visible = true; // Mostrar el mensaje
-                    encuestaPanel.Visible = false; // Ocultar panel de encuesta
+                    TotalFinalizadas = Convert.ToInt32(dtFinalizadas.Rows[0]["TOTAL FINALIZADAS"]);
                 }
-            
+
+                // Obteniendo el total de Evaluaciones pendientes
+                var dtPendientes = Info_Evaluaciones_BRL.SelectTable(Obj, 1);
+                if (dtPendientes.Rows.Count > 0)
+                {
+                    TotalPendientes = Convert.ToInt32(dtPendientes.Rows[0]["TOTAL PENDIENTES"]);
+                }
+
+            }
+            else
+            {
+                // Mostrar mensaje en lugar de ocultar el panel
+                lblMensaje.Text = "No hay evaluaciones activas";
+                lblMensaje.Visible = true; // Mostrar el mensaje
+                encuestaPanel.Visible = false; // Ocultar panel de encuesta
+            }
+
         }
 
 
@@ -120,7 +116,7 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
 
             string excelContent = GenerarExcel(dataSet);
 
-            
+
             Response.Write(excelContent);
             Response.End();
 
@@ -129,24 +125,24 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
 
         //Trae la informacion de los action de la tabla SP_Info_Evaluacion
         private DataSet dataSetEvaluacionGeneral()
-        {   
+        {
             Info_Evaluaciones Obj = new DCL.Info_Evaluaciones();
             Obj.IdEvaluacion = IdEvaluacion;
             var dataSet = new DataSet();
-            
+
             // Obtener las tablas de Evaluaciones finalizadas y pendientes
             var finalizadas = Info_Evaluaciones_BRL.SelectTable(Obj, 0).Copy();
             var pendientes = Info_Evaluaciones_BRL.SelectTable(Obj, 1).Copy();
 
             // Crear una nueva tabla combinada con un solo nombre
             var totalTable = new DataTable("Indice de Evaluacion");
-              
+
             // Añadir columnas de la tabla de Evaluaciones finalizadas
             foreach (DataColumn col in finalizadas.Columns)
             {
                 totalTable.Columns.Add("TOTAL EVALUACIONES FINALIZADAS", col.DataType);
             }
-            
+
             // Añadir columnas de la tabla de Evaluaciones pendientes
             foreach (DataColumn col in pendientes.Columns)
             {
@@ -204,7 +200,7 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
             dataSet.Tables.Add(Info_Evaluaciones_BRL.SelectTable(Obj, 9).Copy());
             dataSet.Tables[6].TableName = "Evaluaciones Reprobadas";
 
-            
+
 
             return dataSet;
         }
@@ -254,10 +250,10 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
         {
             Info_Evaluaciones Obj = new DCL.Info_Evaluaciones();
             Obj.IdEvaluacion = IdEvaluacion;
-            var dataSet = new DataSet();      
+            var dataSet = new DataSet();
             var pendientes = Info_Evaluaciones_BRL.SelectTable(Obj, 13).Copy();
             var totalTable = new DataTable("Indice de Evaluacion");
-                     
+
             foreach (DataColumn col in pendientes.Columns)
             {
                 totalTable.Columns.Add(col.ColumnName, col.DataType);
@@ -272,7 +268,7 @@ namespace Intranet_3._0.Vistas.V_Evaluaciones
                 }
                 totalTable.Rows.Add(newRow);
             }
-                      
+
             dataSet.Tables.Add(totalTable);
 
             dataSet.Tables.Add(Info_Evaluaciones_BRL.SelectTable(Obj, 2).Copy());

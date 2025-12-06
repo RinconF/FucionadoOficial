@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using BRL;
+using System;
+using System.Configuration;
 using System.Data;
-using BRL;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.UI.HtmlControls;
-using System.Configuration;
+using System.Web;
+using System.Web.UI;
 
 namespace Intranet_3._0
 {

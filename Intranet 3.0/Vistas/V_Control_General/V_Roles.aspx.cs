@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BRL;
+using System;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using BRL;
 
 namespace Intranet_3._0.Vistas.V_Control_General
 {
@@ -180,7 +177,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
                 {
                     obj.Usuario = txt_filter_grupo.Text;
                 }
-                
+
                 dt = Int_Usuarios_BRL.SelectTable(obj, 6);
                 if (dt.Rows.Count > 0)
                 {

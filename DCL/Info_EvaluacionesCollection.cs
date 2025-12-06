@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DCL
 {
-    internal class Info_EvaluacionesCollection :List<Info_Evaluaciones>
+    internal class Info_EvaluacionesCollection : List<Info_Evaluaciones>
     {
     }
 }

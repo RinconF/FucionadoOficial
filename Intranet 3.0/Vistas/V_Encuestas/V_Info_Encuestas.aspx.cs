@@ -1,16 +1,8 @@
-﻿using System;
-using System.Data;
-using BRL;
-using Intranet_3._0.Interna;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.IO;
+﻿using BRL;
 using DCL;
-using System.Web.Services.Description;
+using System;
+using System.Data;
+using System.Web;
 
 namespace Intranet_3._0.Vistas.V_Encuestas
 {

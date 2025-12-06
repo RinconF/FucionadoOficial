@@ -1,14 +1,13 @@
-﻿using System;
+﻿using BRL;
+using DCL;
+using Intranet_3._0.Interna;
+using System;
 using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BRL;
-using DCL;
-using Intranet_3._0.Interna;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {

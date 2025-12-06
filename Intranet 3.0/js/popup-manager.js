@@ -31,10 +31,11 @@ class PopupManager {
             });
 
             const data = await response.json();
-            this.popupsQueue = data.d || [];
 
-            if (this.popupsQueue.length > 0) {
-                this.mostrarSiguientePopup();
+            if (data.d && data.d.success && data.d.popups) {
+                this.popupsQueue = data.d.popups;
+            } else {
+                this.popupsQueue = [];
             }
         } catch (error) {
             console.error('Error al cargar popups:', error);

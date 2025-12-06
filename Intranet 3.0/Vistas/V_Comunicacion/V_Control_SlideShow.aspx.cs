@@ -4,18 +4,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
@@ -36,14 +28,14 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     if (Response.Cookies.Count > 0 && Session["cerrar"] != null)
                     {
 
-                    // if (!IsPostBack)
-                    // {
-                    //}
-                       
-                            cargar_tabla_vista();
-                            
+                        // if (!IsPostBack)
+                        // {
+                        //}
 
-                       
+                        cargar_tabla_vista();
+
+
+
                         //}
 
                     }
@@ -63,7 +55,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-    protected void lnk_crear__Click(object sender, EventArgs e)
+        protected void lnk_crear__Click(object sender, EventArgs e)
         {
             string imagenNoticiaRemoto = "";
             string imagenNoticiaLocal = "";
@@ -80,7 +72,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 string rutaNoticiasLocal = pathServer + ambiente + "\\intranet\\publicaciones\\Slideshow\\";
                 string Id_Usuario = Request.QueryString["Id_Usuario"].ToString();
                 int consecutivo;
-                
+
                 if (fud_Adjunto.HasFile)
                 {
                     var archivoAguardar = fud_Adjunto;
@@ -200,21 +192,21 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (utilidades.impersonateValidUser())
                 {
-                string archivoRemoto = dt.Rows[0][2].ToString(); 
-                var anexoFoto = archivoRemoto.Split('\\');
-                List<String> arrayAnexoFoto = new List<string>(anexoFoto);
-                int index = arrayAnexoFoto.FindIndex(x => x == ambiente);
-                int[] indexArray = new int[index];
-                var removerLista = new List<int>(indexArray);
-                string nombreArchivo = arrayAnexoFoto[8].ToString();
-                for (int i = 0; i < removerLista.Count; i++)
-                {
-                    arrayAnexoFoto.RemoveAt(0);
-                }
-                string rutaCompleta = String.Join("\\", arrayAnexoFoto);
+                    string archivoRemoto = dt.Rows[0][2].ToString();
+                    var anexoFoto = archivoRemoto.Split('\\');
+                    List<String> arrayAnexoFoto = new List<string>(anexoFoto);
+                    int index = arrayAnexoFoto.FindIndex(x => x == ambiente);
+                    int[] indexArray = new int[index];
+                    var removerLista = new List<int>(indexArray);
+                    string nombreArchivo = arrayAnexoFoto[8].ToString();
+                    for (int i = 0; i < removerLista.Count; i++)
+                    {
+                        arrayAnexoFoto.RemoveAt(0);
+                    }
+                    string rutaCompleta = String.Join("\\", arrayAnexoFoto);
 
-                string localTemp = $@"{pathServer}{rutaCompleta}";
-                
+                    string localTemp = $@"{pathServer}{rutaCompleta}";
+
                     if (File.Exists(localTemp))
                         File.Delete(localTemp);
                     if (File.Exists(archivoRemoto))
@@ -259,7 +251,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (fud_Adjunto_pub.HasFile)
                 {
-                    
+
                     //noticias.Titulo = txt_descripcion_pub.Text;
 
 
@@ -268,7 +260,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                         string nombreOriginalArchivo = txt_descripcion_pub.Text;
                         string extensionArchivo = Path.GetExtension(fud_Adjunto_pub.FileName);
                         string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(nombreOriginalArchivo, consecutivo.ToString(), extensionArchivo);
-                       
+
                         var (guardaImagenLocal, guardaImagenRemota, rutaNoticiaRemoto) = utilidades.TratamientoNoticias(nombreFinalArchivo, consecutivo.ToString(), rutaNoticiasLocal, rutaNoticiasRemoto, fud_Adjunto_pub, Id_Usuario, pathLog);
                         imagenNoticiaRemoto = rutaNoticiaRemoto;
                         if (guardaImagenRemota && guardaImagenLocal && !string.IsNullOrEmpty(imagenNoticiaRemoto))
@@ -293,7 +285,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     {
                         utilidades.logError($"{CONST_ERROR}{CONST_ERRORCONEXIONSERV} {ipServer}. \nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {Id_Usuario}", pathLog);
                     }
-                    
+
                 }
                 Page.Response.Redirect(Page.Request.Url.ToString(), false);
                 //if (!string.IsNullOrEmpty(datos_img.Text) && !fud_Adjunto_pub.HasFile)
@@ -454,11 +446,11 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 {
 
                 }
-                if (txt_filter_grupo.Text !="")
+                if (txt_filter_grupo.Text != "")
                 {
                     cargar_tabla_vista();
                 }
-                
+
                 //txt_filter_grupo.Text = "";
             }
             catch (Exception ex)

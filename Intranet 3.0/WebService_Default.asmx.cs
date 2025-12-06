@@ -1,21 +1,15 @@
 ﻿using BRL;
 using DCL;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Intranet_3._0.Interna;
-using iTextSharp.text;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
 using System.Web;
 using System.Web.Script.Services;
@@ -1523,7 +1517,7 @@ namespace Intranet_3._0
                 list.Add(new[] { ex.Message });
                 return list;
             }
-        }   
+        }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1544,6 +1538,9 @@ namespace Intranet_3._0
                         ? ResolverRutaPublicaPopup(video)
                         : ResolverRutaPublicaPopup(imagen);
 
+                    string rolesIds = row.Table.Columns.Contains("RolesIds") ? row["RolesIds"].ToString() : null;
+                    var rolesSeparados = rolesIds?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
                     respuesta.Add(new
                     {
                         Id_Popup = row["Id_Popup"],
@@ -1557,7 +1554,9 @@ namespace Intranet_3._0
                         Video = video,
                         RutaMultimedia = rutaPublica,
                         Tipo = !string.IsNullOrWhiteSpace(video) ? "video" : "imagen",
-                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null
+                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null,
+                        RolesIds = rolesIds,
+                        Roles = rolesSeparados
                     });
                 }
 

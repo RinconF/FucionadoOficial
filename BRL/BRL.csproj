@@ -79,11 +79,11 @@
     <Compile Include="Int_06_ENC_Ingreso_Encuesta_BRL.cs" />
     <Compile Include="Int_06_EVA_Ingreso_Evaluacion_BRL.cs" />
     <Compile Include="Int_11_EVA_Resultados_BRL.cs" />
+    <Compile Include="Int_Aplicativos_BRL.cs" />
     <Compile Include="Int_Control_Acceso_BRL.cs" />
     <Compile Include="Int_Nucleo_Familiar_BRL.cs" />
     <Compile Include="Int_Notificaciones_BRL.cs" />
     <Compile Include="Int_Noticias_BRL.cs" />
-    <Compile Include="Int_Aplicativos_BRL.cs" />
     <Compile Include="Int_Popup_BRL.cs" />
     <Compile Include="Int_Solicitud_BRL.cs" />
     <Compile Include="Int_Usuarios_BRL.cs" />

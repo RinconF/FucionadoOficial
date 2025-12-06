@@ -79,11 +79,11 @@
     <Compile Include="Int_06_ENC_Ingreso_EncuestaFactory.cs" />
     <Compile Include="Int_06_EVA_Ingreso_EvaluacionFactory.cs" />
     <Compile Include="Int_11_EVA_ResultadosFactory.cs" />
+    <Compile Include="Int_AplicativoFactory.cs" />
     <Compile Include="Int_Control_AccesoFactory.cs" />
     <Compile Include="Int_Nucleo_FamiliarFactory.cs" />
     <Compile Include="Int_NotificacionesFactory.cs" />
     <Compile Include="Int_NoticiasFactory.cs" />
-    <Compile Include="Int_AplicativoFactory.cs" />
     <Compile Include="Int_PopupFactory.cs" />
     <Compile Include="Int_SolicitudFactory.cs" />
     <Compile Include="Int_UsuariosFactory.cs" />

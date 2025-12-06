@@ -1,21 +1,11 @@
-﻿using System;
+﻿using Intranet_3._0.Interna;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using Intranet_3._0.Interna;
-using Newtonsoft.Json;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
@@ -37,7 +27,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     {
                         //if (!IsPostBack)
                         //{
-                            cargar_tabla_vista();
+                        cargar_tabla_vista();
                         //}
 
                         ScriptManager.RegisterStartupScript(
@@ -84,12 +74,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 if (fud_Adjunto.HasFile)
                 {
                     var archivoAguardar = fud_Adjunto;
-                    
+
 
                     if (conectaAdjuntos)
                     {
                         DataTable dataTable = BRL.Int_Noticias_BRL.SelectTable(noticias, 17);
-                        
+
                         string Resultado = dataTable.Rows[0][0].ToString();
                         if (System.String.IsNullOrEmpty(Resultado))
                         {
@@ -191,7 +181,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 }
                 Page.Response.Redirect(Page.Request.Url.ToString(), false);
             }
-            
+
             catch (Exception ex)
             {
                 utilidades.logError($"{CONST_ERROR} {System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nLos archivos NOTICIA no fueron almacenados.", pathLog);
@@ -203,13 +193,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                         File.Delete(imagenNoticiaLocal);
                     utilidades.undoImpersonation();
                 }
-                
-                
+
+
             }
         }
 
         protected void Actualizar_datos_publicacion(object sender, EventArgs e)
-        {  
+        {
             string imagenNoticiaRemoto = "";
             string imagenNoticiaLocal = "";
             AG_Utils utilidades = new AG_Utils();
@@ -245,7 +235,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                         //int actionSelectSP = 8;
                         //int selectArchivoRemoto = 3;
                         string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(nombreOriginalArchivo, consecutivo.ToString(), extensionArchivo);
-                       
+
                         var (guardaImagenLocal, guardaImagenRemota, rutaNoticiaRemoto) = utilidades.TratamientoNoticias(nombreFinalArchivo, consecutivo.ToString(), rutaNoticiasLocal, rutaNoticiasRemoto, fud_Adjunto_pub, Id_Usuario, pathLog);
                         imagenNoticiaRemoto = rutaNoticiaRemoto;
                         if (guardaImagenRemota && guardaImagenLocal && !string.IsNullOrEmpty(imagenNoticiaRemoto))
@@ -286,7 +276,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                         utilidades.logError($"{CONST_ERROR}{CONST_ERRORCONEXIONSERV} {ipServer}. \nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {Id_Usuario}", pathLog);
                     }
 
-                    
+
                 }
 
                 //if(Session["imagen"] != null && !fud_Adjunto_pub.HasFile)
@@ -506,8 +496,8 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        
-        
+
+
         //static bool IsValidImage(string filePath) 
         //{ 
         //    return File.Exists(filePath) && IsValidImage(new FileStream(filePath, FileMode.Open, FileAccess.Read)); 

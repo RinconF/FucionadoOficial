@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BRL;
+using System;
+using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Data;
-using BRL;
 
 namespace Intranet_3._0.Vistas.V_Control_General
 {
@@ -18,8 +16,8 @@ namespace Intranet_3._0.Vistas.V_Control_General
             {
                 //if (!IsPostBack)
                 //{
-                    cargar_tabla_sesiones();
-               
+                cargar_tabla_sesiones();
+
                 //}
 
             }
@@ -61,7 +59,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
 
 
                 DataTable dt;
-                
+
                 DCL.Int_Usuarios obj = new DCL.Int_Usuarios();
                 if (!txt_filter_grupo.Text.All(char.IsDigit))
                 {

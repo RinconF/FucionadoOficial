@@ -1,32 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using BRL;
-using DCL;
-using System.Data;
-using System.IO;
-using System.Text;
-using System.Web.UI.HtmlControls;
-using System.Globalization;
-using System.Drawing;
-using System.Configuration;
-using System.Data.OleDb;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.text.html;
-using iTextSharp.text.html.simpleparser;
-using System.Web.Services.Description;
-using iTextSharp.text.pdf.parser;
-using static System.Net.Mime.MediaTypeNames;
-using Microsoft.Ajax.Utilities;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Intranet_3._0.Interna;
+﻿using BRL;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Intranet_3._0.Interna;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.OleDb;
+using System.Globalization;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Operacional
 {

@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data;
-using BRL;
-using System.Security.Cryptography;
-using System.Text;
-using System.IO;
-using System.Net;
-using SimpleImpersonation;
-using System.Net.Http;
-using System.Configuration;
-using System.Net.Http.Headers;
-using System.Web.Hosting;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
-using System.Web.UI.HtmlControls;
+﻿using BRL;
 using Intranet_3._0.Interna;
+using System;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Web.UI;
 
 namespace Intranet_3._0.Vistas.V_Perfil
 {
@@ -57,7 +43,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
             {
                 Page.Response.Redirect("~/Login", true);
             }
-            
+
         }
 
         protected void Cargar_Datos_Colaborador()
@@ -271,7 +257,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
             {
                 string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote") + @"archivos_usuarios\";
                 string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer")+ ambiente + @"\Intranet\archivos_usuarios\");
+                string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer") + ambiente + @"\Intranet\archivos_usuarios\");
                 string imagenLocal = "";
                 string imagenRemota = "";
                 string numDocumento = Session["identifacion"].ToString();
@@ -285,7 +271,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                 if (file_foto.HasFile)
                 {
                     var size = file_foto.FileBytes.Length;
-                   
+
                     if (utilidades.impersonateValidUser())
                     {
                         if (!Directory.Exists(rutaPerfilRemoto))
@@ -314,21 +300,21 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                 File.Delete(item);
                             }
                         }
-                       // }
-                       
+                        // }
+
 
                         //string extension = Path.GetExtension(file_foto.FileName);
                         //imagenRemota = Path.Combine(rutaPerfilRemoto, $@"{numDocumento.ToString().Replace(" ", String.Empty)}{extension}");
                         file_foto.SaveAs(imagenLocal);
-                        
-                        
+
+
                         obj.Anexo_Foto = imagenRemota;
                         obj.Id_Usuario = Convert.ToInt32(Request.QueryString["Id_Usuario"].ToString());
                         Int_Usuarios_BRL.InsertOrUpdate(obj, 45);
                         utilidades.undoImpersonation();
                     }
 
-                    
+
                     Page.Response.Redirect(Page.Request.Url.ToString(), false);
                 }
             }

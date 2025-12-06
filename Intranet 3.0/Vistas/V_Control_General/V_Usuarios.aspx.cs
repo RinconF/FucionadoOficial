@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using BRL;
+using System;
 using System.Data;
-using BRL;
-using System.Web.UI.HtmlControls;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Control_General
 {
@@ -319,7 +315,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
             try
             {
                 cargar_tabla_roles();
-              
+
             }
             catch (Exception ex)
             {

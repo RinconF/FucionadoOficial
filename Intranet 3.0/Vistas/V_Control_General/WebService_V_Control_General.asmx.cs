@@ -1,10 +1,8 @@
-﻿using System;
+﻿using BRL;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
 using System.Data;
-using BRL;
+using System.Web.Services;
 
 namespace Intranet_3._0.Vistas.V_Control_General
 {
@@ -29,7 +27,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
                 DCL.Int_Usuarios obj = new DCL.Int_Usuarios();
                 obj.Id_Usuario = Convert.ToInt32(Id_Grupo);
                 dt = Int_Usuarios_BRL.SelectTable(obj, 9);
-                if(dt.Rows.Count > 0)
+                if (dt.Rows.Count > 0)
                 {
                     string[] array = new string[5];
                     array[0] = dt.Rows[0]["Id_Grupo_Vista"].ToString();
@@ -149,7 +147,8 @@ namespace Intranet_3._0.Vistas.V_Control_General
         }
 
         [WebMethod]
-        public string asignar_roles(string Id_Grupo, string Id_Rol) {
+        public string asignar_roles(string Id_Grupo, string Id_Rol)
+        {
             try
             {
                 string retonar = "";

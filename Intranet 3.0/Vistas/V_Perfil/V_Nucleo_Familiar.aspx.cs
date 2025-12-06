@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BRL;
+using Intranet_3._0.Interna;
+using System;
+using System.Configuration;
+using System.Data;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using BRL;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Configuration;
-using System.Text;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
-using Intranet_3._0.Interna;
 
 namespace Intranet_3._0.Vistas.V_Perfil
 {
@@ -46,12 +38,12 @@ namespace Intranet_3._0.Vistas.V_Perfil
             {
                 throw ex;
             }
-            
-            
+
+
         }
 
 
-       
+
 
 
         protected void Cargar_Drop()
@@ -250,7 +242,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                             txt_file_registro.SaveAs(archivo);
                                             archivo_registro = archivo;
                                         }
-                                        
+
                                     }
 
                                     if (txt_file_certificacion.HasFile)
@@ -299,7 +291,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
             }
             catch (Exception ex)
             {
-               
+
                 utilidades.logError($"{DateTime.Now}\nError en método: {System.Reflection.MethodBase.GetCurrentMethod().Name.ToString()}\n{ex.ToString()}", pathLog);
                 throw ex;
             }
@@ -335,13 +327,13 @@ namespace Intranet_3._0.Vistas.V_Perfil
                         drop_ocupacion_modal.SelectedValue != string.Empty
                         )
                     {
-                        
-                        
+
+
 
                         string Id_Familia = number_familia.Text.Trim().Replace("#", "");
                         string discapacidad_familiar;
 
-                        
+
                         if (txt_cual_modal.Text.Trim() != string.Empty)
                         {
                             discapacidad_familiar = txt_cual_modal.Text.Trim();
@@ -418,7 +410,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                         //    conectaAdjuntos = utilidades.Ping(anexoFotoAnexo_Dos[2]);
                         //}
 
-                        
+
 
 
 
@@ -458,21 +450,21 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                 //}
                                 //else
                                 //{
-                                    if (file_a_modal.HasFile)
+                                if (file_a_modal.HasFile)
+                                {
+                                    if (!Directory.Exists(ubicacion))
                                     {
-                                        if (!Directory.Exists(ubicacion))
-                                        {
-                                            Directory.CreateDirectory(ubicacion);
-                                        }
-                                        string archivo_a = Path.Combine(ubicacion, $@"RC_{txt_id_modal.Text.Trim()}.pdf");
-                                        file_a_modal.SaveAs(archivo_a);
-                                        archivo_registro = archivo_a;
-                                        obj_.Anexo_Reg_Civil = archivo_registro;
+                                        Directory.CreateDirectory(ubicacion);
                                     }
-                                    else
-                                    {
-                                        obj_.Anexo_Reg_Civil = archivo_registro;
-                                    }
+                                    string archivo_a = Path.Combine(ubicacion, $@"RC_{txt_id_modal.Text.Trim()}.pdf");
+                                    file_a_modal.SaveAs(archivo_a);
+                                    archivo_registro = archivo_a;
+                                    obj_.Anexo_Reg_Civil = archivo_registro;
+                                }
+                                else
+                                {
+                                    obj_.Anexo_Reg_Civil = archivo_registro;
+                                }
                                 //}
 
                                 //if (txt_file_certificacion.FileName =="" && archivo_certificacion != "Ninguno" && File.Exists(archivo_certificacion))
@@ -481,22 +473,22 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                 //}
                                 //else
                                 //{
-                                    if (file_b_modal.HasFile)
+                                if (file_b_modal.HasFile)
+                                {
+                                    if (!Directory.Exists(ubicacion))
                                     {
-                                        if (!Directory.Exists(ubicacion))
-                                        {
-                                            Directory.CreateDirectory(ubicacion);
-                                        }
-                                        string archivo_b = Path.Combine(ubicacion, $@"CE_{txt_id_modal.Text.Trim()}.pdf");
-                                        file_b_modal.SaveAs(archivo_b);
-                                        archivo_certificacion = archivo_b;
-                                        obj_.Anexo_Dos = archivo_certificacion;
+                                        Directory.CreateDirectory(ubicacion);
                                     }
+                                    string archivo_b = Path.Combine(ubicacion, $@"CE_{txt_id_modal.Text.Trim()}.pdf");
+                                    file_b_modal.SaveAs(archivo_b);
+                                    archivo_certificacion = archivo_b;
+                                    obj_.Anexo_Dos = archivo_certificacion;
+                                }
 
-                                    else
-                                    {
-                                        obj_.Anexo_Dos = archivo_certificacion;
-                                    }
+                                else
+                                {
+                                    obj_.Anexo_Dos = archivo_certificacion;
+                                }
                                 //}
 
                                 utilidades.undoImpersonation();
@@ -504,7 +496,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                         }
                         else
                         {
-                            if (File.Exists(archivo_registro)) 
+                            if (File.Exists(archivo_registro))
                             {
                                 File.Delete(archivo_registro);
                             }
@@ -523,7 +515,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                             obj_.Anexo_Reg_Civil = "Ninguno";
                             obj_.Anexo_Dos = "Ninguno";
                         }
- 
+
                         Int_Nucleo_Familiar_BRL.InsertOrUpdate(obj_, 8);
                         Page.Response.Redirect(Page.Request.Url.ToString(), false);
                     }

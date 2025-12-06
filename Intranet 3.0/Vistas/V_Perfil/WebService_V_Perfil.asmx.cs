@@ -1,20 +1,14 @@
-﻿using System;
+﻿using BRL;
+using Intranet_3._0.Interna;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
+using System.Configuration;
 using System.Data;
-using BRL;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using SimpleImpersonation;
-using System.IO;
-using System.Web.Script.Services;
-using RestSharp;
-using System.Configuration;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
-using Intranet_3._0.Interna;
+using System.Web.Services;
 
 namespace Intranet_3._0.Vistas.V_Perfil
 {
@@ -63,7 +57,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
             }
             catch (Exception ex)
             {
-               
+
                 utilidades.logError($"{DateTime.Now}\nError en método: {System.Reflection.MethodBase.GetCurrentMethod().Name.ToString()}\n{ex.ToString()}", pathLog);
                 List<string[]> list = new List<string[]>();
                 string[] array = new string[1];
@@ -114,7 +108,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                 {
                     obj.Id_LocalidadResidencia = Convert.ToInt32(Drop_Localidad);
                 }
-                if (Drop_Barrio !="" && !Drop_Barrio.Equals("null"))
+                if (Drop_Barrio != "" && !Drop_Barrio.Equals("null"))
                 {
                     obj.Id_BarrioResidencia = Convert.ToInt32(Drop_Barrio);
                 }
@@ -216,7 +210,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
             string txt_conf_pass,
             string Id_Usuario
         )
-            
+
         {
             AG_Utils utilidades = new AG_Utils();
             try
@@ -277,10 +271,10 @@ namespace Intranet_3._0.Vistas.V_Perfil
             try
             {
                 ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
-                
+
                 string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
                 string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
-                
+
                 pathLog = Server.MapPath(@"~/logs");
 
                 List<string[]> list = new List<string[]>();
@@ -354,7 +348,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                         //double hashArchivoLocal = TamanioArchivoRemoto.GetHashCode();
                                         //if (tamanioArchivoRemoto != tamanioArchivoLocal || hashArchivoRemoto != hashArchivoLocal)
                                         //{
-                                            File.Copy(archivoRemotoAnexo_Reg_Civil, $@"{localTempAnexo_RC}", true);
+                                        File.Copy(archivoRemotoAnexo_Reg_Civil, $@"{localTempAnexo_RC}", true);
                                         //}
                                     }
                                     else if (!bl_ExisteRC_Local && !bl_ExisteRC_Remoto)
@@ -429,7 +423,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
                                         //string nombreArchivo = InfoArchivoRemoto.Name;
                                         //if (tamanioArchivoRemoto != tamanioArchivoLocal || hashArchivoRemoto != hashArchivoLocal)
                                         //{
-                                            File.Copy(archivoRemotoAnexo_Dos, $@"{localTempAnexo_CE}", true);
+                                        File.Copy(archivoRemotoAnexo_Dos, $@"{localTempAnexo_CE}", true);
                                         //}
                                     }
                                     else if (!bl_ExisteCE_Local && !bl_ExisteCE_Remoto)

@@ -1,10 +1,7 @@
 ﻿using BRL;
 using DCL;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -253,7 +250,7 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
 
         protected void LnkAceptar_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 Int_Solicitud solicitud = new Int_Solicitud();
@@ -272,11 +269,11 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "YourUniqueScriptKey3", "alert('ERROR: Por favor seleccione una fecha.');", true);
                 }
-                
+
 
                 Page.Response.Redirect(Page.Request.Url.ToString(), false);
 
-                
+
             }
             catch (Exception ex)
             {

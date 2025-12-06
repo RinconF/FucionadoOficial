@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using BRL;
 using DCL;
-using BRL;
+using System;
+using System.Data;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace OfertaEmpleo
 {
     public partial class Questions_uno : Page
     {
 
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -36,7 +33,7 @@ namespace OfertaEmpleo
                 throw ex;
             }
         }
-        
+
 
         protected void mostrar_preguntas()
         {
@@ -52,7 +49,7 @@ namespace OfertaEmpleo
                 DCL.ENC_Respuesta obj2 = new ENC_Respuesta();
                 obj2.Respuesta = Nombre[contador].ToString();
                 dta = ENC_Respuesta_BRL.SelectTable(obj2, 10);
-               string dato = dta.Rows[0]["Id_Competencia"].ToString();
+                string dato = dta.Rows[0]["Id_Competencia"].ToString();
                 //if (dta.Rows.Count > 0) { } else { }
 
                 Panel pnl_preguntas = new Panel();
@@ -68,14 +65,14 @@ namespace OfertaEmpleo
                 DCL.ENC_Respuesta obj = new DCL.ENC_Respuesta();
                 obj.Id_Usuario_Responde = Convert.ToInt32(Session["Id_Ingreso"]);
                 obj.Calificacion = Convert.ToInt32(dato);
-                dt = BRL.ENC_Respuesta_BRL.SelectTable(obj,7);
+                dt = BRL.ENC_Respuesta_BRL.SelectTable(obj, 7);
                 Session["fin"] = dt.Rows.Count;
 
                 if (dt.Rows.Count > 0)
                 {
                     foreach (DataRow row in dt.Rows)
                     {
-                        
+
                         Panel pnl_li = new Panel();
                         pnl_li.ID = "pnl_li" + row["Id_Respuesta"].ToString();
                         pnl_li.Attributes.Add("class", "encuesta-pregunta");
@@ -175,9 +172,9 @@ namespace OfertaEmpleo
             string texto = ((RadioButton)sender).Text;
 
             DCL.ENC_Respuesta obj = new DCL.ENC_Respuesta();
-            obj.Id_Respuesta = Convert.ToInt32(id.Substring(1,id.Length-1));
+            obj.Id_Respuesta = Convert.ToInt32(id.Substring(1, id.Length - 1));
             obj.Respuesta = id.Substring(0, 1);
-            ENC_Respuesta_BRL.InsertOrUpdate(obj,8);
+            ENC_Respuesta_BRL.InsertOrUpdate(obj, 8);
         }
 
         protected void btn_siguientes_datos(object sender, EventArgs e)
@@ -190,7 +187,7 @@ namespace OfertaEmpleo
                 int validacion = Convert.ToInt32(Session["validacion"]);
                 int campos_completos = validacion + fin;
                 int Sesion_Ingreso = Convert.ToInt32(Session["Id_Ingreso"]);
-                DataTable dt_ = ENC_Respuesta_BRL.SelectTable(new ENC_Respuesta() { Id_Usuario_Responde = Sesion_Ingreso, Inicio = ini, Fin = campos_completos  }, 9);
+                DataTable dt_ = ENC_Respuesta_BRL.SelectTable(new ENC_Respuesta() { Id_Usuario_Responde = Sesion_Ingreso, Inicio = ini, Fin = campos_completos }, 9);
                 if (dt_.Rows.Count > 0)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "validacion_msg();", true);
@@ -218,9 +215,9 @@ namespace OfertaEmpleo
                         Session["validacion"] = campos_completos;
                         Response.Redirect("/Vistas/V_Encuesta_Organizacional/Questions_uno.aspx?Id_Usuario=" + Request.QueryString["Id_Usuario"] + "&Id_Grupo=" + Request.QueryString["Id_Grupo"] + (String.IsNullOrEmpty(Request.QueryString["Id_Vista"]) ? "" : "Id_Vista=" + Request.QueryString["Id_Vista"]), false);
                     }
-                }  
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

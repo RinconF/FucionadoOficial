@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BRL;
+using System;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using BRL;
 
 namespace Intranet_3._0.Vistas.V_Gestion_Humana
 {
@@ -32,7 +29,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
             {
                 drop_une.Items.Clear();
 
-                   DataTable dt;
+                DataTable dt;
                 DCL.Int_Usuarios obj = new DCL.Int_Usuarios();
                 dt = Int_Usuarios_BRL.SelectTable(obj, 37);
 
@@ -51,13 +48,13 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
             }
         }
 
-        protected void cargar_card_colaborador(object sender,  EventArgs e)
+        protected void cargar_card_colaborador(object sender, EventArgs e)
         {
             try
             {
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }

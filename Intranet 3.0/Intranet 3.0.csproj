@@ -2038,6 +2038,7 @@
     <Content Include="Vistas\V_Comites\V_CCL.aspx" />
     <Content Include="Vistas\V_Comites\V_Copasst.aspx" />
     <Content Include="Vistas\V_Comites\V_CSV.aspx" />
+    <Content Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Control_Popup.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Control_SlideShow.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Control_Tutoriales.aspx" />
@@ -2187,7 +2188,6 @@
     <Content Include="Vistas\V_Gestion_Humana\WebService_V_Gestion_Humana.asmx" />
     <Content Include="Vistas\V_Operacional\V_Programacion.aspx" />
     <Content Include="Vistas\V_Perfil\V_Aplicativos.aspx" />
-    <Content Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx" />
     <Content Include="Vistas\V_Perfil\V_Datos_Perfil.aspx" />
     <Content Include="Vistas\V_Perfil\V_Nucleo_Familiar.aspx" />
     <Content Include="Vistas\V_Perfil\WebService_V_Perfil.asmx">
@@ -2292,6 +2292,13 @@
     </Compile>
     <Compile Include="Vistas\V_Comites\V_CSV.aspx.designer.cs">
       <DependentUpon>V_CSV.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.cs">
+      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.designer.cs">
+      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\V_Comunicacion\V_Control_Noticia.aspx.cs">
       <DependentUpon>V_Control_Noticia.aspx</DependentUpon>
@@ -2465,13 +2472,6 @@
     </Compile>
     <Compile Include="Vistas\V_Perfil\V_Aplicativos.aspx.designer.cs">
       <DependentUpon>V_Aplicativos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.cs">
-      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vistas\V_Comunicacion\V_Control_Aplicativos.aspx.designer.cs">
-      <DependentUpon>V_Control_Aplicativos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\V_Perfil\V_Datos_Perfil.aspx.cs">
       <DependentUpon>V_Datos_Perfil.aspx</DependentUpon>

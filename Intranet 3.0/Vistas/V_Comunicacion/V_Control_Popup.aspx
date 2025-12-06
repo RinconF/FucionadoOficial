@@ -44,7 +44,7 @@
             overflow-y: auto;
         }
         .roles-selector label {
-            display: block;
+            display: contents;
             margin-bottom: 8px;
             cursor: pointer;
         }
@@ -692,9 +692,8 @@
                         const datos = await response.json();
                         const item = datos.d && datos.d[0];
 
-                        if (item) {
-                            // Estos índices dependen de lo que devuelva tu WebService
-                            // Ajusta solo si tu WS devuelve otra estructura
+                        if (Array.isArray(item)) {
+                            // Compatibilidad con la antigua respuesta tipo arreglo
                             tituloPublicacion.value = item[1] || '';
                             descripcionPublicacion.value = item[2] || '';
                             urlPublicacion.value = item[5] || '';
@@ -703,7 +702,23 @@
                             fechaFinPublicacion.value = formatearFecha(item[8]);
                             estadoPublicacion.value = item[9] ? '1' : '0';
 
-                            const rolesIds = item[10] ? item[10].split(',') : [];
+                            // El índice 11 corresponde a RolesIds en el SP (luego de Tiempo_Visualizacion)
+                            const rolesIds = item[11] ? item[11].split(',') : [];
+                            const checkboxes = rolesPublicacion.querySelectorAll('input[type="checkbox"]');
+                            checkboxes.forEach(cb => {
+                                cb.checked = rolesIds.includes(cb.value);
+                            });
+                        } else if (item) {
+                            // Nueva respuesta con propiedades nombradas
+                            tituloPublicacion.value = item.Titulo || '';
+                            descripcionPublicacion.value = item.Descripcion || '';
+                            urlPublicacion.value = item.Url || '';
+                            tiempoPublicacion.value = item.Tiempo_Visualizacion || 5;
+                            fechaInicioPublicacion.value = formatearFecha(item.Fecha_Inicio);
+                            fechaFinPublicacion.value = formatearFecha(item.Fecha_Fin);
+                            estadoPublicacion.value = item.Estado ? '1' : '0';
+
+                            const rolesIds = item.RolesIds ? item.RolesIds.toString().split(',') : [];
                             const checkboxes = rolesPublicacion.querySelectorAll('input[type="checkbox"]');
                             checkboxes.forEach(cb => {
                                 cb.checked = rolesIds.includes(cb.value);
