@@ -63,31 +63,32 @@
         <ContentTemplate>
             <section class="pnl_table">
                 <div class="pnl_tag">
-                    <p><i class="fas fa-tag"></i>Tabla de tutoriale</p>
+                    <p><i class="fas fa-tag"></i>Tabla de tutoriales</p>
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">
-                        <button
-                            type="button"
-                            id="btn_modal_crear"
-                            class="btn-modal"
-                            data-id="modal_crear_Tutorial">
-                            <i class="fas fa-plus"></i>Nuevo Tutorial
-                        </button>
-                        <button
-                            type="button"
-                            id="btn_modal_actualizar"
-                            class="btn-actu-grupo"
-                            data-id="modal_actualizar_tutorial">
-                            <i class="fas fa-cog"></i>Actualizar Tutorial
-                        </button>
-                        <button
-                            type="button"
-                            id="btn_modal_eliminar"
-                            class="button"
-                            style="background-color: #e74c3c; color: white;">
-                            <i class="fas fa-trash"></i>Eliminar Tutorial
-                        </button>
+                        <asp:LinkButton
+                            ID="btn_modal_crear"
+                            runat="server"
+                            CssClass="btn-modal"
+                            OnClick="btn_modal_crear_Click">
+                            <i class="fas fa-plus"></i>Nuevo tutorial
+                        </asp:LinkButton>
+                        <asp:LinkButton
+                            ID="btn_modal_actualizar"
+                            runat="server"
+                            CssClass="btn-actu-grupo"
+                            OnClick="btn_modal_actualizar_Click">
+                            <i class="fas fa-cog"></i>Actualizar tutorial
+                        </asp:LinkButton>
+                        <asp:LinkButton
+                            ID="btn_modal_eliminar"
+                            runat="server"
+                            CssClass="button"
+                            Style="background-color: #e74c3c; color: white;"
+                            OnClick="btn_modal_eliminar_Click">
+                            <i class="fas fa-trash"></i>Eliminar tutorial
+                        </asp:LinkButton>
                     </div>
                     <div class="box_search">
                         <i class="fas fa-search"></i>
@@ -229,6 +230,9 @@
                     <div class="modal-i-gl-content">
                         <section class="box_content_crear_vista">
                             <p class="modal-i-gl-content-text">¿Estás seguro que deseas eliminar este Tutorial?</p>
+                            <p class="modal-i-gl-content-text">
+                                <asp:Literal ID="lit_tutorial_eliminar" runat="server"></asp:Literal>
+                            </p>
                             <div class="content row">
                                 <asp:LinkButton runat="server" ID="lnk_eliminar_Tutorial" OnClick="lnk_eliminar_Tutorial_Click" CssClass="lnk_btn_modal btn_guardar">Si, eliminar</asp:LinkButton>
                                 <button type="button" class="lnk_btn_modal btn-modal-close">Cancelar</button>
