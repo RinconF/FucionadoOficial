@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
-    public partial class V_Control_Tutoriales : System.Web.UI.Page, IPostBackEventHandler
+    public partial class V_Control_Tutoriales : System.Web.UI.Page
     {
         private readonly AG_Utils utilidades = new AG_Utils();
 
@@ -21,30 +21,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             if (!IsPostBack)
             {
                 CargarTablaTutoriales();
-
-                // Asociar postback a los botones HTML
-                Page.ClientScript.RegisterStartupScript(
-                    GetType(),
-                    "BindButtonsTutoriales",
-                    @"
-                        document.getElementById('btn_modal_crear').onclick = function() { mostrarModalCrear(); };
-                        document.getElementById('btn_modal_actualizar').onclick = function() { " + Page.ClientScript.GetPostBackEventReference(this, "actualizar") + @"; };
-                        document.getElementById('btn_modal_eliminar').onclick = function() { " + Page.ClientScript.GetPostBackEventReference(this, "eliminar") + @"; };
-                    ",
-                    true
-                );
-            }
-        }
-
-        public void RaisePostBackEvent(string eventArgument)
-        {
-            if (eventArgument == "actualizar")
-            {
-                btn_modal_actualizar_Click(null, null);
-            }
-            else if (eventArgument == "eliminar")
-            {
-                btn_modal_eliminar_Click(null, null);
             }
         }
 
@@ -70,19 +46,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 return;
             }
 
-            Int_Tutoriales tutorial = new Int_Tutoriales
-            {
-                Id_Tutorial = Convert.ToInt32(seleccionado)
-            };
-
-            DataTable dt = Int_Tutoriales_BRL.SelectTable(tutorial, 2);
-            if (dt.Rows.Count == 0)
+            DataRow row = ObtenerTutorialPorId(Convert.ToInt32(seleccionado));
+            if (row == null)
             {
                 MostrarMensaje("No se encontraron datos del tutorial.", false);
                 return;
             }
 
-            DataRow row = dt.Rows[0];
             hf_id_Tutorial.Value = seleccionado;
             txt_titulo_edit.Text = row["Titulo"].ToString();
             txt_descripcion_edit.Text = row["Descripcion"].ToString();
@@ -105,7 +75,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 return;
             }
 
+            DataRow row = ObtenerTutorialPorId(Convert.ToInt32(seleccionado));
+            if (row == null)
+            {
+                MostrarMensaje("No se encontraron datos del tutorial seleccionado.", false);
+                return;
+            }
+
             hf_id_Tutorial.Value = seleccionado;
+            lit_tutorial_eliminar.Text = Server.HtmlEncode(row["Titulo"].ToString());
             ScriptManager.RegisterStartupScript(this, GetType(), "modal_eliminar", "mostrarModalEliminar();", true);
         }
 
@@ -262,7 +240,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     string seccion = Server.HtmlEncode(row["Seccion"].ToString());
                     string orden = row["Orden"] != DBNull.Value ? row["Orden"].ToString() : "-";
                     string fecha = row["Fecha_Creacion"] != DBNull.Value ?
-                        Convert.ToDateTime(row["Fecha_Creacion"]).ToString("dd/MM/yyyy") : "-";
+                        Convert.ToDateTime(row["Fecha_Creacion"]).ToString("dd/MM/yyyy HH:mm:ss") : "-";
                     bool estado = row["Estado"] != DBNull.Value && Convert.ToBoolean(row["Estado"]);
 
                     sb.Append("<tr>");
@@ -292,6 +270,17 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             {
                 MostrarMensaje("Error al cargar la tabla de tutoriales: " + ex.Message, false);
             }
+        }
+
+        private DataRow ObtenerTutorialPorId(int idTutorial)
+        {
+            Int_Tutoriales tutorial = new Int_Tutoriales
+            {
+                Id_Tutorial = idTutorial
+            };
+
+            DataTable dt = Int_Tutoriales_BRL.SelectTable(tutorial, 2);
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
 
         private string GuardarImagenTutorial(FileUpload control, string idTutorial, string imagenActual)

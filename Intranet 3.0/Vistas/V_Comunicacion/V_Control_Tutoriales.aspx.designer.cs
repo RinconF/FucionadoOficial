@@ -23,6 +23,21 @@ namespace Intranet_3._0.Vistas.V_Comunicacion {
         protected global::System.Web.UI.WebControls.TextBox txt_buscar;
 
         /// <summary>
+        /// Control btn_modal_crear.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.LinkButton btn_modal_crear;
+
+        /// <summary>
+        /// Control btn_modal_actualizar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.LinkButton btn_modal_actualizar;
+
+        /// <summary>
+        /// Control btn_modal_eliminar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.LinkButton btn_modal_eliminar;
+
+        /// <summary>
         /// Control tbl_Tutoriales.
         /// </summary>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbl_Tutoriales;
@@ -116,5 +131,10 @@ namespace Intranet_3._0.Vistas.V_Comunicacion {
         /// Control lnk_eliminar_Tutorial.
         /// </summary>
         protected global::System.Web.UI.WebControls.LinkButton lnk_eliminar_Tutorial;
+
+        /// <summary>
+        /// Control lit_tutorial_eliminar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Literal lit_tutorial_eliminar;
     }
 }
