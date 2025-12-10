@@ -1,5 +1,5 @@
 ﻿namespace DCL 
 { 
-    public class Int_AplicativoCollection : GenericSortList<Int_Aplicativo> 
+    public class Int_AplicativoCollection : GenericSortList<Int_Aplicativos> 
     { } 
 }

@@ -1,4 +1,10 @@
-﻿namespace DCL
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DCL
 {
     public class Int_SolicitudCollection : GenericSortList<Int_Solicitud>
     {

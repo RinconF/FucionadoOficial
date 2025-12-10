@@ -63,7 +63,7 @@
         <ContentTemplate>
             <section class="pnl_table">
                 <div class="pnl_tag">
-                    <p><i class="fas fa-tag"></i>Tabla de publicaciones</p>
+                    <p><i class="fas fa-tag"></i>Tabla de aplicativos</p>
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">
@@ -100,6 +100,7 @@
             <asp:HiddenField ID="hf_id_aplicativo" runat="server" />
             <asp:HiddenField ID="hf_imagen_actual" runat="server" />
 
+            <!-- MODAL CREAR -->
             <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_crear_aplicativo">
                 <div class="modal-i-gl-body">
                     <div class="modal-i-gl-title">
@@ -115,17 +116,17 @@
                             <div class="content row">
                                 <div class="pnl_input col">
                                     <i class="far fa-keyboard"></i>
-                                    <asp:TextBox runat="server" ID="txt_titulo" MaxLength="80" placeholder="TÍTULO"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_titulo" MaxLength="150" placeholder="TÍTULO"></asp:TextBox>
                                 </div>
                                 <div class="pnl_input col">
                                     <i class="fas fa-align-right"></i>
-                                    <asp:TextBox runat="server" ID="txt_descripcion" placeholder="DESCRIPCIÓN"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_descripcion" MaxLength="300" placeholder="DESCRIPCIÓN"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="content row">
                                 <div class="pnl_input col">
                                     <i class="fas fa-link"></i>
-                                    <asp:TextBox runat="server" ID="txt_url" placeholder="URL del aplicativo"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_url" MaxLength="500" placeholder="URL del aplicativo"></asp:TextBox>
                                 </div>
                                 <div class="pnl_input col">
                                     <i class="fas fa-images"></i>
@@ -141,6 +142,10 @@
                                         <asp:ListItem Text="Aplicativos soporte" Value="SOPORTE" />
                                     </asp:DropDownList>
                                 </div>
+                                <div class="pnl_input col">
+                                    <i class="fas fa-sort-numeric-down"></i>
+                                    <asp:TextBox runat="server" ID="txt_orden" TextMode="Number" placeholder="ORDEN (Opcional)"></asp:TextBox>
+                                </div>
                             </div>
                             <asp:LinkButton runat="server" ID="lnk_crear_aplicativo" OnClick="lnk_crear_aplicativo_Click">CREAR</asp:LinkButton>
                         </section>
@@ -148,6 +153,7 @@
                 </div>
             </div>
 
+            <!-- MODAL ACTUALIZAR -->
             <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_actualizar_aplicativo">
                 <div class="modal-i-gl-body">
                     <div class="modal-i-gl-title">
@@ -163,17 +169,17 @@
                             <div class="content row">
                                 <div class="pnl_input col">
                                     <i class="far fa-keyboard"></i>
-                                    <asp:TextBox runat="server" ID="txt_titulo_edit" MaxLength="80" placeholder="TÍTULO"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_titulo_edit" MaxLength="150" placeholder="TÍTULO"></asp:TextBox>
                                 </div>
                                 <div class="pnl_input col">
                                     <i class="fas fa-align-right"></i>
-                                    <asp:TextBox runat="server" ID="txt_descripcion_edit" placeholder="DESCRIPCIÓN"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_descripcion_edit" MaxLength="300" placeholder="DESCRIPCIÓN"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="content row">
                                 <div class="pnl_input col">
                                     <i class="fas fa-link"></i>
-                                    <asp:TextBox runat="server" ID="txt_url_edit" placeholder="URL del aplicativo"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txt_url_edit" MaxLength="500" placeholder="URL del aplicativo"></asp:TextBox>
                                 </div>
                                 <div class="pnl_input col">
                                     <i class="fas fa-images"></i>
@@ -190,6 +196,12 @@
                                     </asp:DropDownList>
                                 </div>
                                 <div class="pnl_input col">
+                                    <i class="fas fa-sort-numeric-down"></i>
+                                    <asp:TextBox runat="server" ID="txt_orden_edit" TextMode="Number" placeholder="ORDEN (Opcional)"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="content row">
+                                <div class="pnl_input col">
                                     <i class="fas fa-toggle-on"></i>
                                     <asp:DropDownList ID="ddl_estado" runat="server">
                                         <asp:ListItem Text="Activo" Value="1" />
@@ -197,12 +209,13 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>
-                            <asp:LinkButton runat="server" ID="lnk_actualizar_aplicativo" OnClick="lnk_actualizar_aplicativo_Click">Actualizar</asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="lnk_actualizar_aplicativo" OnClick="lnk_actualizar_aplicativo_Click">ACTUALIZAR</asp:LinkButton>
                         </section>
                     </div>
                 </div>
             </div>
 
+            <!-- MODAL ELIMINAR -->
             <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_eliminar_aplicativo">
                 <div class="modal-i-gl-body modal-i-gl-body-small">
                     <div class="modal-i-gl-title">

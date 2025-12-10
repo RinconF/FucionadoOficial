@@ -29,7 +29,7 @@ namespace DCL
             get { return mvarId_Usuario_Responde; }
             set { mvarId_Usuario_Responde = value; }
         }
-
+        
         String mvarRespuesta = null;
         public String Respuesta
         {

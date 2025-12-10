@@ -8,7 +8,7 @@ namespace DAL
     {
         public Int_AplicativoFactory() { }
 
-        public Int_Aplicativo Load(Int_Aplicativo _obj)
+        public Int_Aplicativos Load(Int_Aplicativos _obj)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace DAL
                 ExecuteReader();
                 while (Read())
                 {
-                    _obj = new Int_Aplicativo(GetDataReader());
+                    _obj = new Int_Aplicativos(GetDataReader());
                 }
                 return _obj;
             }
@@ -27,7 +27,7 @@ namespace DAL
             }
         }
 
-        public Int_AplicativoCollection SelectByParams(Int_Aplicativo _obj, int Action)
+        public Int_AplicativoCollection SelectByParams(Int_Aplicativos _obj, int Action)
         {
             Int_AplicativoCollection Collection = new Int_AplicativoCollection();
             try
@@ -37,7 +37,7 @@ namespace DAL
                 ExecuteReader();
                 while (Read())
                 {
-                    Collection.Add(new Int_Aplicativo(GetDataReader()));
+                    Collection.Add(new Int_Aplicativos(GetDataReader()));
                 }
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace DAL
             return Collection;
         }
 
-        public DataTable SelectTable(Int_Aplicativo _obj, int Action)
+        public DataTable SelectTable(Int_Aplicativos _obj, int Action)
         {
             DataTable dt = new DataTable();
             try
@@ -63,7 +63,7 @@ namespace DAL
             return dt;
         }
 
-        public int InsertOrUpdate(Int_Aplicativo _obj, int Action)
+        public int InsertOrUpdate(Int_Aplicativos _obj, int Action)
         {
             int i;
             try
@@ -81,7 +81,7 @@ namespace DAL
             return i;
         }
 
-        private void AddParameters(Int_Aplicativo _obj)
+        private void AddParameters(Int_Aplicativos _obj)
         {
             CreateCommand("SP_Int_Aplicativos", true);
             AddCmdParameter("@Id_Aplicativo", _obj.Id_Aplicativo, ParameterDirection.Input);
@@ -90,9 +90,10 @@ namespace DAL
             AddCmdParameter("@Imagen", _obj.Imagen, ParameterDirection.Input);
             AddCmdParameter("@Url", _obj.Url, ParameterDirection.Input);
             AddCmdParameter("@Seccion", _obj.Seccion, ParameterDirection.Input);
-            AddCmdParameter("@Fecha_Creacion", _obj.Fecha_Creacion, ParameterDirection.Input);
-            AddCmdParameter("@Fecha_Actualizacion", _obj.Fecha_Actualizacion, ParameterDirection.Input);
+            AddCmdParameter("@Orden", _obj.Orden, ParameterDirection.Input);
             AddCmdParameter("@Estado", _obj.Estado, ParameterDirection.Input);
+            AddCmdParameter("@Usuario_Creacion", _obj.Usuario_Creacion, ParameterDirection.Input);
+            AddCmdParameter("@Usuario_Actualizacion", _obj.Usuario_Actualizacion, ParameterDirection.Input);
         }
     }
 }

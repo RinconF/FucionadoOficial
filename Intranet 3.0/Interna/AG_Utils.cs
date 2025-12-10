@@ -8,6 +8,8 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Web;
+using System.Web.UI;
+using System.Linq;
 
 namespace Intranet_3._0.Interna
 {
@@ -574,7 +576,7 @@ namespace Intranet_3._0.Interna
                         Thread.Sleep(500);
                         archivoAguardar.SaveAs(imagenNoticiaLocal);
                         Thread.Sleep(500);
-                        var tamanioDestLocal = File.ReadAllBytes(imagenNoticiaLocal);
+                        var tamanioDestLocal= File.ReadAllBytes(imagenNoticiaLocal);
 
                         if (tamanioOrig.Length == tamanioDestLocal.Length)
                         {

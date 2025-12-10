@@ -1,1 +1,1 @@
-namespace DCL { public class ENC_PreguntaCollection : GenericSortList<ENC_Pregunta> { } }
+namespace DCL { public class ENC_PreguntaCollection : GenericSortList<ENC_Pregunta> { }}

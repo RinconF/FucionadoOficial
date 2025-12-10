@@ -1,1 +1,1 @@
-namespace DCL { public class EV_Resultado_DesempeñoCollection : GenericSortList<EV_Resultado_Desempeño> { } }
+namespace DCL { public class EV_Resultado_DesempeñoCollection : GenericSortList<EV_Resultado_Desempeño> { }}

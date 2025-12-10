@@ -48,14 +48,14 @@ namespace DCL
             set { mvarFilaFinal = value; }
         }
 
-        Int32? mvarNumero_Lote = null;
+        Int32? mvarNumero_Lote= null;
         public Int32? Numero_Lote
         {
             get { return mvarNumero_Lote; }
             set { mvarNumero_Lote = value; }
         }
 
-        String mvarRuta_Archivo = null;
+        String mvarRuta_Archivo= null;
         public String Ruta_Archivo
         {
             get { return mvarRuta_Archivo; }
@@ -89,10 +89,10 @@ namespace DCL
             mvarMes = varMes;
             mvarYear = varYear;
             mvarPeriodo = varPeriodo;
-            mvarFilaInical = varFilaInical;
+            mvarFilaInical= varFilaInical;
             mvarFilaFinal = varFilaFinal;
-            mvarNumero_Lote = varNumero_Lote;
-            mvarRuta_Archivo = varRuta_Archivo;
+            mvarNumero_Lote= varNumero_Lote;
+            mvarRuta_Archivo= varRuta_Archivo;
             mvarCorreo = varCorreo;
         }
         public Nomina_Desprendibles(IDataRecord obj)
@@ -104,7 +104,7 @@ namespace DCL
             mvarFilaInical = Convert.ToInt32(obj["FilaInicial"]);
             mvarFilaFinal = Convert.ToInt32(obj["FilaFinal"]);
             mvarNumero_Lote = Convert.ToInt32(obj["Numero_Lote"]);
-            mvarRuta_Archivo = Convert.ToString(obj["Ruta_Archivo"]);
+            mvarRuta_Archivo= Convert.ToString(obj["Ruta_Archivo"]);
             mvarCorreo = Convert.ToString(obj["Correo"]);
         }
         public Nomina_Desprendibles(DataRow obj)

@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DCL
 {
@@ -47,7 +51,7 @@ namespace DCL
                 mvarDescripcion = value;
             }
         }
-
+     
         public int Id_UsuarioCreacion
         {
             get
@@ -149,7 +153,7 @@ namespace DCL
             mvarFechaCreacion = Convert.ToDateTime(obj["FechaCreacion"]);
             mvarFechaActualizacion = Convert.ToDateTime(obj["FechaActualizacion"]);
             mvarEstado = Convert.ToBoolean(obj["Estado"]);
-        }
+        }                
     }
 }
 

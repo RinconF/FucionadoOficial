@@ -1,6 +1,6 @@
-﻿using DAL;
+﻿using System.Data;
 using DCL;
-using System.Data;
+using DAL;
 
 namespace BRL
 {

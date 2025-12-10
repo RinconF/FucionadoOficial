@@ -1,13 +1,17 @@
-﻿using DCL;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Data;
+using DCL;
 
 namespace DAL
 {
-    public class Info_EmpleadoFactory : FactoryBase
+    public class Info_EmpleadoFactory:FactoryBase
     {
         public Info_EmpleadoFactory() { }
-
+		
         public Info_Empleado Load(Info_Empleado objIEm)
         {
             try
@@ -15,7 +19,7 @@ namespace DAL
                 AddParameters(objIEm);
                 AddCmdParameter("@Action", 0, ParameterDirection.Input);
                 ExecuteReader();
-                while (Read())
+                while(Read())
                 {
                     objIEm = new Info_Empleado(GetDataReader());
                 }
@@ -47,9 +51,9 @@ namespace DAL
             }
             return Collection;
         }
-        public DataTable SelectTable(Info_Empleado objIEm, int Action)
+        public DataTable SelectTable(Info_Empleado objIEm,int Action)
         {
-            DataTable dt = new DataTable();
+            DataTable dt= new DataTable();
             try
             {
                 AddParameters(objIEm);
@@ -69,7 +73,7 @@ namespace DAL
             try
             {
                 AddParameters(objIEm);
-                AddCmdParameter("@Action", Action, ParameterDirection.Input);
+                AddCmdParameter("@Action",Action,ParameterDirection.Input);
                 ExecuteNonQuery();
                 i = 1;
             }

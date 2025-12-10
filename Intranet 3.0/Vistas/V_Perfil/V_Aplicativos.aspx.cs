@@ -15,7 +15,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            //if (!IsPostBack)
             {
                 CargarAplicativos();
             }
@@ -23,7 +23,7 @@ namespace Intranet_3._0.Vistas.V_Perfil
 
         private void CargarAplicativos()
         {
-            DataTable dt = Int_Aplicativos_BRL.SelectTable(new Int_Aplicativo { Estado = true }, 1);
+            DataTable dt = Int_Aplicativos_BRL.SelectTable(new Int_Aplicativos { Estado = true }, 1);
             if (dt == null)
             {
                 dt = new DataTable();

@@ -3,7 +3,7 @@ using System.Data;
 
 namespace DCL
 {
-    public class Int_Aplicativo
+    public class Int_Aplicativos
     {
         #region Propiedades
 
@@ -49,6 +49,13 @@ namespace DCL
             set { mvarSeccion = value; }
         }
 
+        Int32? mvarOrden = null;
+        public Int32? Orden
+        {
+            get { return mvarOrden; }
+            set { mvarOrden = value; }
+        }
+
         DateTime? mvarFecha_Creacion = null;
         public DateTime? Fecha_Creacion
         {
@@ -63,6 +70,20 @@ namespace DCL
             set { mvarFecha_Actualizacion = value; }
         }
 
+        Int32? mvarUsuario_Creacion = null;
+        public Int32? Usuario_Creacion
+        {
+            get { return mvarUsuario_Creacion; }
+            set { mvarUsuario_Creacion = value; }
+        }
+
+        Int32? mvarUsuario_Actualizacion = null;
+        public Int32? Usuario_Actualizacion
+        {
+            get { return mvarUsuario_Actualizacion; }
+            set { mvarUsuario_Actualizacion = value; }
+        }
+
         Boolean? mvarEstado = null;
         public Boolean? Estado
         {
@@ -74,17 +95,20 @@ namespace DCL
 
         #region Constructores
 
-        public Int_Aplicativo() { }
+        public Int_Aplicativos() { }
 
-        public Int_Aplicativo(
+        public Int_Aplicativos(
             Int32? varId_Aplicativo,
             String varTitulo,
             String varDescripcion,
             String varImagen,
             String varUrl,
             String varSeccion,
+            Int32? varOrden,
             DateTime? varFecha_Creacion,
             DateTime? varFecha_Actualizacion,
+            Int32? varUsuario_Creacion,
+            Int32? varUsuario_Actualizacion,
             Boolean? varEstado
         )
         {
@@ -94,12 +118,15 @@ namespace DCL
             mvarImagen = varImagen;
             mvarUrl = varUrl;
             mvarSeccion = varSeccion;
+            mvarOrden = varOrden;
             mvarFecha_Creacion = varFecha_Creacion;
             mvarFecha_Actualizacion = varFecha_Actualizacion;
+            mvarUsuario_Creacion = varUsuario_Creacion;
+            mvarUsuario_Actualizacion = varUsuario_Actualizacion;
             mvarEstado = varEstado;
         }
 
-        public Int_Aplicativo(IDataRecord obj)
+        public Int_Aplicativos(IDataRecord obj)
         {
             mvarId_Aplicativo = obj["Id_Aplicativo"] != DBNull.Value ?
                 Convert.ToInt32(obj["Id_Aplicativo"]) : (Int32?)null;
@@ -119,17 +146,26 @@ namespace DCL
             mvarSeccion = obj["Seccion"] != DBNull.Value ?
                 Convert.ToString(obj["Seccion"]) : null;
 
+            mvarOrden = obj["Orden"] != DBNull.Value ?
+                Convert.ToInt32(obj["Orden"]) : (Int32?)null;
+
             mvarFecha_Creacion = obj["Fecha_Creacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Creacion"]) : (DateTime?)null;
 
             mvarFecha_Actualizacion = obj["Fecha_Actualizacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Actualizacion"]) : (DateTime?)null;
+
+            mvarUsuario_Creacion = obj["Usuario_Creacion"] != DBNull.Value ?
+                Convert.ToInt32(obj["Usuario_Creacion"]) : (Int32?)null;
+
+            mvarUsuario_Actualizacion = obj["Usuario_Actualizacion"] != DBNull.Value ?
+                Convert.ToInt32(obj["Usuario_Actualizacion"]) : (Int32?)null;
 
             mvarEstado = obj["Estado"] != DBNull.Value ?
                 Convert.ToBoolean(obj["Estado"]) : (Boolean?)null;
         }
 
-        public Int_Aplicativo(DataRow obj)
+        public Int_Aplicativos(DataRow obj)
         {
             mvarId_Aplicativo = obj["Id_Aplicativo"] != DBNull.Value ?
                 Convert.ToInt32(obj["Id_Aplicativo"]) : (Int32?)null;
@@ -149,11 +185,20 @@ namespace DCL
             mvarSeccion = obj["Seccion"] != DBNull.Value ?
                 Convert.ToString(obj["Seccion"]) : null;
 
+            mvarOrden = obj["Orden"] != DBNull.Value ?
+                Convert.ToInt32(obj["Orden"]) : (Int32?)null;
+
             mvarFecha_Creacion = obj["Fecha_Creacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Creacion"]) : (DateTime?)null;
 
             mvarFecha_Actualizacion = obj["Fecha_Actualizacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Actualizacion"]) : (DateTime?)null;
+
+            mvarUsuario_Creacion = obj["Usuario_Creacion"] != DBNull.Value ?
+                Convert.ToInt32(obj["Usuario_Creacion"]) : (Int32?)null;
+
+            mvarUsuario_Actualizacion = obj["Usuario_Actualizacion"] != DBNull.Value ?
+                Convert.ToInt32(obj["Usuario_Actualizacion"]) : (Int32?)null;
 
             mvarEstado = obj["Estado"] != DBNull.Value ?
                 Convert.ToBoolean(obj["Estado"]) : (Boolean?)null;
