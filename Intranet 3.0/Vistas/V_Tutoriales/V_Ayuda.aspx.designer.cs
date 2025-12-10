@@ -8,8 +8,18 @@
 //------------------------------------------------------------------------------
 
 namespace Intranet_3._0.Vistas.V_Tutoriales {
-    
-    
+
+
     public partial class V_Ayuda {
+
+        /// <summary>
+        /// Control pnlSinTutoriales.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlSinTutoriales;
+
+        /// <summary>
+        /// Control rptTutoriales.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Repeater rptTutoriales;
     }
 }

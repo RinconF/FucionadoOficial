@@ -63,7 +63,7 @@
         <ContentTemplate>
             <section class="pnl_table">
                 <div class="pnl_tag">
-                    <p><i class="fas fa-tag"></i>Tabla de tutoriale</p>
+                    <p><i class="fas fa-tag"></i>Tabla de tutoriales</p>
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">

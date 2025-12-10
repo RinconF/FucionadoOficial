@@ -693,5 +693,30 @@ namespace Intranet_3._0.Interna
 
             return (rutaPopupsLocal, rutaPopupsRemoto);
         }
+
+        /// <summary>
+        /// Obtiene las rutas local y remota para el módulo de Tutoriales.
+        /// </summary>
+        /// <param name="ambiente">Ambiente configurado (DESA, TEST, PROD).</param>
+        /// <returns>Tupla con las rutas completas para almacenar imágenes de tutoriales.</returns>
+        public (string rutaLocal, string rutaRemota) ObtenerRutasTutoriales(string ambiente)
+        {
+            string pathServerConfig = ConfigurationManager.AppSettings.Get("pathServer");
+            string pathRemoteConfig = ConfigurationManager.AppSettings.Get("pathRemote");
+
+            if (HttpContext.Current == null || string.IsNullOrWhiteSpace(pathServerConfig) || string.IsNullOrWhiteSpace(pathRemoteConfig))
+            {
+                return (string.Empty, string.Empty);
+            }
+
+            string pathServer = HttpContext.Current.Server.MapPath(pathServerConfig);
+            string pathRemote = pathRemoteConfig;
+            ambiente = string.IsNullOrWhiteSpace(ambiente) ? "DESA" : ambiente;
+
+            string rutaRemota = Path.Combine(pathRemote, @"publicaciones\Tutoriales\Imagenes") + @"\";
+            string rutaLocal = Path.Combine(pathServer + ambiente, @"intranet\publicaciones\Tutoriales\Imagenes") + @"\";
+
+            return (rutaLocal, rutaRemota);
+        }
     }
 }

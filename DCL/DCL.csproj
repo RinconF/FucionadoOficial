@@ -98,6 +98,8 @@
     <Compile Include="Int_PopupCollection.cs" />
     <Compile Include="Int_Solicitud.cs" />
     <Compile Include="Int_SolicitudCollection.cs" />
+    <Compile Include="Int_Tutoriales.cs" />
+    <Compile Include="Int_TutorialesCollection.cs" />
     <Compile Include="Int_Usuarios.cs" />
     <Compile Include="Int_UsuariosCollection.cs" />
     <Compile Include="GenericSortList.cs" />

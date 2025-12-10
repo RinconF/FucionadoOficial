@@ -87,6 +87,7 @@
     <Compile Include="Int_PopupFactory.cs" />
     <Compile Include="Int_SolicitudFactory.cs" />
     <Compile Include="Int_UsuariosFactory.cs" />
+    <Compile Include="Int_TutorialFactory.cs" />
     <Compile Include="FactoryBase.cs" />
     <Compile Include="Nomina_DesprendiblesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
