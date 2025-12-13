@@ -638,15 +638,27 @@
             return document.querySelector('input[name="rd_estado_vista"]:checked');
         }
 
+        function toggleModal(modal, mostrar = true) {
+            if (!modal) return;
+            if (mostrar) {
+                modal.classList.add('modal-i-gl-show');
+                modal.classList.remove('modal-i-gl-hide');
+            } else {
+                modal.classList.add('modal-i-gl-hide');
+                modal.classList.remove('modal-i-gl-show');
+            }
+        }
+
         // Función principal para enganchar eventos
         function ejecutarDatos() {
             // Botones principales
-            const txt_filter_grupo = document.querySelector('#MainContent_txt_filter_grupo')
-            const btnActualizarPopup = document.querySelector('#btn_actualizar_popup');
-            const btnEliminarPopup = document.querySelector('#btn_eliminar_popup');
+            const btnCrearPopup = document.querySelector('#btn_modal_crear');
+            const btnActualizarPopup = document.querySelector('#btn_modal_actualizar');
+            const btnEliminarPopup = document.querySelector('#btn_nodal_popup');
             const btnEstadisticas = document.querySelector('#btn_estadisticas_popup');
 
             // Modales
+            const modalCrearPopup = document.querySelector('#modal_crear_popup');
             const modalActualizarPopup = document.querySelector('#modal_actualizar_popup');
             const modalEliminarPopup = document.querySelector('#modal_eliminar_popup');
 
@@ -660,6 +672,16 @@
             const estadoPublicacion = document.querySelector('#MainContent_ddl_estado_pub');
             const rolesPublicacion = document.querySelector('#MainContent_chkl_roles_pub');
             const hfIdPopup = document.querySelector('#MainContent_hf_id_popup');
+
+            // ================================
+            // BOTÓN: CREAR POPUP
+            // ================================
+            if (btnCrearPopup && modalCrearPopup) {
+                btnCrearPopup.onclick = function (e) {
+                    e.preventDefault();
+                    toggleModal(modalCrearPopup, true);
+                };
+            }
 
             // ================================
             // BOTÓN: ACTUALIZAR POPUP
@@ -677,8 +699,7 @@
                     hfIdPopup.value = popupSeleccionado.value;
 
                     // Mostrar modal
-                    modalActualizarPopup.classList.add('modal-i-gl-show');
-                    modalActualizarPopup.classList.remove('modal-i-gl-hide');
+                    toggleModal(modalActualizarPopup, true);
 
                     try {
                         const response = await fetch('WebService_V_Comunicacion.asmx/cargar_datos_modal_actualizar_Popup', {
@@ -759,8 +780,7 @@
                     }
 
                     // Mostrar modal
-                    modalEliminarPopup.classList.add('modal-i-gl-show');
-                    modalEliminarPopup.classList.remove('modal-i-gl-hide');
+                    toggleModal(modalEliminarPopup, true);
                 };
             }
 
@@ -799,6 +819,14 @@
                     }
                 };
             }
+
+            document.querySelectorAll('.btn-modal-close').forEach(btn => {
+                btn.onclick = function (ev) {
+                    ev.preventDefault();
+                    const modal = this.closest('.modal-i-gl');
+                    toggleModal(modal, false);
+                }
+            });
         }
 
         // Prevenir doble submit SOLO en el botón de crear
