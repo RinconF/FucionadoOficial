@@ -224,21 +224,21 @@
                     <div class="box_menu_crear">
                         <button 
                             type="button" 
-                            id="btn_crear_publicacion" 
+                            id="btn_modal_crear" 
                             class="btn-modal" 
                             data-id="modal_crear_popup">
                             <i class="fas fa-plus"></i>Nuevo Popup
                         </button>
                         <button 
                             type="button" 
-                            id="btn_actualizar_popup" 
+                            ID="btn_modal_actualizar" 
                             class="btn-actu-grupo" 
-                            data-id="modal_actualizar_popup">
+                            data-id="modal_actualizar_Click">
                             <i class="fas fa-cog"></i>Actualizar Popup
                         </button>
                         <button 
                             type="button" 
-                            id="btn_eliminar_popup" 
+                            id="btn_nodal_popup" 
                             class="btn-modal"
                             style="background-color: #e74c3c; color: white;">
                             <i class="fas fa-trash"></i>Eliminar Popup
@@ -249,9 +249,6 @@
                             class="btn-modal">
                             <i class="fas fa-chart-bar"></i>Estadísticas
                         </button>
-                    </div>
-                    <div class="box_search">
-                        <i class="fas fa-search"></i>
                     </div>
                 </div>
                 <div runat="server" id="tbl_grupos"></div>
@@ -644,6 +641,7 @@
         // Función principal para enganchar eventos
         function ejecutarDatos() {
             // Botones principales
+            const txt_filter_grupo = document.querySelector('#MainContent_txt_filter_grupo')
             const btnActualizarPopup = document.querySelector('#btn_actualizar_popup');
             const btnEliminarPopup = document.querySelector('#btn_eliminar_popup');
             const btnEstadisticas = document.querySelector('#btn_estadisticas_popup');

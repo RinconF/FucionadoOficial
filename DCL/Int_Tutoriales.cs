@@ -28,18 +28,11 @@ namespace DCL
             set { mvarDescripcion = value; }
         }
 
-        String mvarUrl = null;
-        public String Url
+        String mvarVideo = null;
+        public String Video
         {
-            get { return mvarUrl; }
-            set { mvarUrl = value; }
-        }
-
-        String mvarImagen = null;
-        public String Imagen
-        {
-            get { return mvarImagen; }
-            set { mvarImagen = value; }
+            get { return mvarVideo; }
+            set { mvarVideo = value; }
         }
 
         String mvarSeccion = null;
@@ -47,13 +40,6 @@ namespace DCL
         {
             get { return mvarSeccion; }
             set { mvarSeccion = value; }
-        }
-
-        Int32? mvarOrden = null;
-        public Int32? Orden
-        {
-            get { return mvarOrden; }
-            set { mvarOrden = value; }
         }
 
         DateTime? mvarFecha_Creacion = null;
@@ -101,10 +87,8 @@ namespace DCL
             Int32? varId_Tutorial,
             String varTitulo,
             String varDescripcion,
-            String varUrl,
-            String varImagen,
+            String varVideo,
             String varSeccion,
-            Int32? varOrden,
             DateTime? varFecha_Creacion,
             DateTime? varFecha_Actualizacion,
             Int32? varUsuario_Creacion,
@@ -115,10 +99,8 @@ namespace DCL
             mvarId_Tutorial = varId_Tutorial;
             mvarTitulo = varTitulo;
             mvarDescripcion = varDescripcion;
-            mvarUrl = varUrl;
-            mvarImagen = varImagen;
+            mvarVideo = varVideo;
             mvarSeccion = varSeccion;
-            mvarOrden = varOrden;
             mvarFecha_Creacion = varFecha_Creacion;
             mvarFecha_Actualizacion = varFecha_Actualizacion;
             mvarUsuario_Creacion = varUsuario_Creacion;
@@ -137,17 +119,11 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            mvarUrl = obj["Url"] != DBNull.Value ?
-                Convert.ToString(obj["Url"]) : null;
-
-            mvarImagen = obj["Imagen"] != DBNull.Value ?
-                Convert.ToString(obj["Imagen"]) : null;
+            mvarVideo = obj["Video"] != DBNull.Value ?
+                Convert.ToString(obj["Video"]) : null;
 
             mvarSeccion = obj["Seccion"] != DBNull.Value ?
                 Convert.ToString(obj["Seccion"]) : null;
-
-            mvarOrden = obj["Orden"] != DBNull.Value ?
-                Convert.ToInt32(obj["Orden"]) : (Int32?)null;
 
             mvarFecha_Creacion = obj["Fecha_Creacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Creacion"]) : (DateTime?)null;
@@ -176,17 +152,11 @@ namespace DCL
             mvarDescripcion = obj["Descripcion"] != DBNull.Value ?
                 Convert.ToString(obj["Descripcion"]) : null;
 
-            mvarUrl = obj["Url"] != DBNull.Value ?
-                Convert.ToString(obj["Url"]) : null;
-
-            mvarImagen = obj["Imagen"] != DBNull.Value ?
-                Convert.ToString(obj["Imagen"]) : null;
+            mvarVideo = obj["Video"] != DBNull.Value ?
+                Convert.ToString(obj["Video"]) : null;
 
             mvarSeccion = obj["Seccion"] != DBNull.Value ?
                 Convert.ToString(obj["Seccion"]) : null;
-
-            mvarOrden = obj["Orden"] != DBNull.Value ?
-                Convert.ToInt32(obj["Orden"]) : (Int32?)null;
 
             mvarFecha_Creacion = obj["Fecha_Creacion"] != DBNull.Value ?
                 Convert.ToDateTime(obj["Fecha_Creacion"]) : (DateTime?)null;

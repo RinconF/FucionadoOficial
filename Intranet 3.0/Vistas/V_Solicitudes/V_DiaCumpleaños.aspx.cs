@@ -1,7 +1,14 @@
 ﻿using BRL;
 using DCL;
+using Intranet_3._0.Interna;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -268,7 +275,7 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
             try
             {
                 Int_Solicitud solicitud = new Int_Solicitud();
-                solicitud.Id_EstadoSolicitud = 5;
+               solicitud.Id_EstadoSolicitud = 5;
                 solicitud.Id_Solicitud = Convert.ToInt32(Convert.ToInt32(Request.Form["rd_estado_vista"].ToString()));
                 Int_Solicitud_BRL.InsertarOrUpdate(solicitud, 9);
                 Page.Response.Redirect(Page.Request.Url.ToString(), false);
@@ -281,6 +288,6 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
             }
         }
 
-
+       
     }
 }

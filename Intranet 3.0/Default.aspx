@@ -1844,18 +1844,19 @@
         window.addEventListener('load', quitarPadding);
     </script>
         <!-- Popup Manager -->
-    <script src="<%= ResolveUrl("~/js/popup-manager.js") %>" type="text/javascript"></script>
-    <a href="roslyn/">roslyn/</a>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Obtener ID del usuario desde la sesión/query
-            var userId = <%= Request.QueryString["Id_Usuario"] ?? "0" %>;
+    <script src="<%= ResolveUrl("/js/popup-manager.js") %>" type="text/javascript"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var userId = <%= Request.QueryString["Id_Usuario"] ?? "0" %>;
 
-            if (userId > 0) {
+        if (userId > 0) {
+            setTimeout(function () {
+                popupManager.init(userId);
                 setTimeout(function () {
-                    popupManager.init(userId);
-                }, 2000);
-            }
-        });
-    </script>
+                    popupManager.mostrarSiguientePopup();
+
+            }, 2000);
+        }
+    });
+</script>
 </asp:Content>

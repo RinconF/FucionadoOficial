@@ -81,13 +81,14 @@
     <Compile Include="Int_11_EVA_ResultadosFactory.cs" />
     <Compile Include="Int_AplicativoFactory.cs" />
     <Compile Include="Int_Control_AccesoFactory.cs" />
+    <Compile Include="Int_DocumentosFactory.cs" />
     <Compile Include="Int_Nucleo_FamiliarFactory.cs" />
     <Compile Include="Int_NotificacionesFactory.cs" />
     <Compile Include="Int_NoticiasFactory.cs" />
     <Compile Include="Int_PopupFactory.cs" />
     <Compile Include="Int_SolicitudFactory.cs" />
+    <Compile Include="Int_TutortialFactory.cs" />
     <Compile Include="Int_UsuariosFactory.cs" />
-    <Compile Include="Int_TutorialFactory.cs" />
     <Compile Include="FactoryBase.cs" />
     <Compile Include="Nomina_DesprendiblesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

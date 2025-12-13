@@ -1,9 +1,13 @@
-﻿using BRL;
-using System;
-using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Data;
+using BRL;
+using System.Web.UI.HtmlControls;
+using System.Threading;
 
 namespace Intranet_3._0.Vistas.V_Control_General
 {
@@ -12,19 +16,19 @@ namespace Intranet_3._0.Vistas.V_Control_General
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-
+            
             {
 
                 if (Request.QueryString["Id_Usuario"] != null)
                 {
                     if (Response.Cookies.Count > 0 && Session["cerrar"] != null)
                     {
-                        if (!IsPostBack)
+                       if (!IsPostBack)
                         {
                             cargar_tabla_vista();
                             cargar_tabla_grupo();
                             cargar_drop();
-
+                            
                         }
                         else
                         {
@@ -163,7 +167,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
 
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -490,11 +494,11 @@ namespace Intranet_3._0.Vistas.V_Control_General
         {
             try
             {
-                if (txt_filter_grupo.Text != "")
+                if (txt_filter_grupo.Text !="")
                 {
                     cargar_tabla_grupo();
                 }
-
+                
                 //txt_filter_grupo.Text = "";
             }
             catch (Exception ex)
@@ -507,7 +511,7 @@ namespace Intranet_3._0.Vistas.V_Control_General
         {
             try
             {
-                if (txt_filter_vista.Text != "")
+                if (txt_filter_vista.Text !="")
                 {
                     cargar_tabla_vista();
                 }

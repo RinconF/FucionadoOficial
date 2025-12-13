@@ -7,29 +7,29 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Intranet_3._0.Vistas.V_Tutoriales
+namespace Intranet_3._0.Vistas.V_Documentos
 {
 
 
-    public partial class V_Ayuda
+    public partial class V_Documentos
     {
 
         /// <summary>
-        /// Control phTutorialesVacio.
+        /// Control phDocumentosVacio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phTutorialesVacio;
+        protected global::System.Web.UI.WebControls.PlaceHolder phDocumentosVacio;
 
         /// <summary>
-        /// Control rptTutoriales.
+        /// Control rptDocumentos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTutoriales;
+        protected global::System.Web.UI.WebControls.Repeater rptDocumentos;
     }
 }

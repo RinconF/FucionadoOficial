@@ -3,7 +3,10 @@ using DCL;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Web;
 using System.Web.Services;
+using System.Web.UI;
 
 namespace Intranet_3._0.Vistas.V_Solicitudes
 {
@@ -42,7 +45,7 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
                     array[9] = dt.Rows[0]["Cargo"].ToString();
                     array[10] = dt.Rows[0]["Codigo_sae"].ToString();
                     array[11] = dt.Rows[0]["FechaCreacion"].ToString();
-
+                    
 
 
 
@@ -76,7 +79,7 @@ namespace Intranet_3._0.Vistas.V_Solicitudes
             {
                 List<string[]> list = new List<string[]>();
                 Int_Solicitud solicitud = new Int_Solicitud();
-                if (idSolicitud != "")
+                if (idSolicitud !="")
                 {
                     solicitud.Id_Solicitud = Convert.ToInt32(idSolicitud);
                     DataTable dt = Int_Solicitud_BRL.SelectTable(solicitud, 8);

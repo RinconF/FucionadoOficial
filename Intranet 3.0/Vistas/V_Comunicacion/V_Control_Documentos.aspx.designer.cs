@@ -11,17 +11,17 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 {
 
 
-    public partial class V_Control_Tutoriales
+    public partial class V_Control_Documentos
     {
 
         /// <summary>
-        /// Control lit_tabla_tutoriales.
+        /// Control lit_tabla_documentos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lit_tabla_tutoriales;
+        protected global::System.Web.UI.WebControls.Literal lit_tabla_documentos;
 
         /// <summary>
         /// Control txt_titulo.
@@ -42,22 +42,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_descripcion;
 
         /// <summary>
-        /// Control fud_video.
+        /// Control fud_archivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_video;
+        protected global::System.Web.UI.WebControls.FileUpload fud_archivo;
 
         /// <summary>
-        /// Control ddl_seccion.
+        /// Control txt_url.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_seccion;
+        protected global::System.Web.UI.WebControls.TextBox txt_url;
 
         /// <summary>
         /// Control btn_guardar.
@@ -78,22 +78,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.Label lbl_mensaje;
 
         /// <summary>
-        /// Control hf_id_tutorial.
+        /// Control hf_id_documento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_id_tutorial;
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_documento;
 
         /// <summary>
-        /// Control hf_video_actual.
+        /// Control hf_archivo_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_video_actual;
+        protected global::System.Web.UI.WebControls.HiddenField hf_archivo_actual;
 
         /// <summary>
         /// Control txt_titulo_edit.
@@ -114,31 +114,31 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_descripcion_edit;
 
         /// <summary>
-        /// Control lbl_video_actual.
+        /// Control lbl_archivo_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_video_actual;
+        protected global::System.Web.UI.WebControls.Label lbl_archivo_actual;
 
         /// <summary>
-        /// Control fud_video_edit.
+        /// Control fud_archivo_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_video_edit;
+        protected global::System.Web.UI.WebControls.FileUpload fud_archivo_edit;
 
         /// <summary>
-        /// Control ddl_seccion_edit.
+        /// Control txt_url_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_seccion_edit;
+        protected global::System.Web.UI.WebControls.TextBox txt_url_edit;
 
         /// <summary>
         /// Control ddl_estado_edit.

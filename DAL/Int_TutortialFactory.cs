@@ -1,11 +1,12 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using DCL;
 
 namespace DAL
 {
-    public class Int_TutorialFactory : FactoryBase
+    public class Int_TutorialesFactory : FactoryBase
     {
-        public Int_TutorialFactory() { }
+        public Int_TutorialesFactory() { }
 
         public Int_Tutoriales Load(Int_Tutoriales _obj)
         {
@@ -20,9 +21,9 @@ namespace DAL
                 }
                 return _obj;
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -39,9 +40,9 @@ namespace DAL
                     Collection.Add(new Int_Tutoriales(GetDataReader()));
                 }
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             return Collection;
         }
@@ -55,9 +56,9 @@ namespace DAL
                 AddCmdParameter("@Action", Action, ParameterDirection.Input);
                 dt = GetDataSet().Tables[0];
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
             return dt;
         }
@@ -69,13 +70,29 @@ namespace DAL
             {
                 AddParameters(_obj);
                 AddCmdParameter("@Action", Action, ParameterDirection.Input);
-                ExecuteNonQuery();
-                i = 1;
+
+                if (Action == 3) // Insert - retorna el ID
+                {
+                    object result = ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        i = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        i = 1;
+                    }
+                }
+                else // Update/Delete
+                {
+                    ExecuteNonQuery();
+                    i = 1;
+                }
             }
-            catch
+            catch (Exception e)
             {
                 i = -1;
-                throw;
+                throw e;
             }
             return i;
         }
@@ -86,13 +103,11 @@ namespace DAL
             AddCmdParameter("@Id_Tutorial", _obj.Id_Tutorial, ParameterDirection.Input);
             AddCmdParameter("@Titulo", _obj.Titulo, ParameterDirection.Input);
             AddCmdParameter("@Descripcion", _obj.Descripcion, ParameterDirection.Input);
-            AddCmdParameter("@Url", _obj.Url, ParameterDirection.Input);
-            AddCmdParameter("@Imagen", _obj.Imagen, ParameterDirection.Input);
+            AddCmdParameter("@Video", _obj.Video, ParameterDirection.Input);
             AddCmdParameter("@Seccion", _obj.Seccion, ParameterDirection.Input);
-            AddCmdParameter("@Orden", _obj.Orden, ParameterDirection.Input);
-            AddCmdParameter("@Estado", _obj.Estado, ParameterDirection.Input);
             AddCmdParameter("@Usuario_Creacion", _obj.Usuario_Creacion, ParameterDirection.Input);
             AddCmdParameter("@Usuario_Actualizacion", _obj.Usuario_Actualizacion, ParameterDirection.Input);
+            AddCmdParameter("@Estado", _obj.Estado, ParameterDirection.Input);
         }
     }
 }

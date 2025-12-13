@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net.NetworkInformation;
+using System.Threading;
+using System.Web;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
-using System.Threading;
-using System.Web;
 using System.Web.UI;
-using System.Linq;
 
 namespace Intranet_3._0.Interna
 {
@@ -576,7 +576,7 @@ namespace Intranet_3._0.Interna
                         Thread.Sleep(500);
                         archivoAguardar.SaveAs(imagenNoticiaLocal);
                         Thread.Sleep(500);
-                        var tamanioDestLocal= File.ReadAllBytes(imagenNoticiaLocal);
+                        var tamanioDestLocal = File.ReadAllBytes(imagenNoticiaLocal);
 
                         if (tamanioOrig.Length == tamanioDestLocal.Length)
                         {
@@ -695,28 +695,59 @@ namespace Intranet_3._0.Interna
         }
 
         /// <summary>
-        /// Obtiene las rutas local y remota para el módulo de Tutoriales.
+        /// Obtiene las rutas locales y remotas para videos de tutoriales
         /// </summary>
-        /// <param name="ambiente">Ambiente configurado (DESA, TEST, PROD).</param>
-        /// <returns>Tupla con las rutas completas para almacenar imágenes de tutoriales.</returns>
-        public (string rutaLocal, string rutaRemota) ObtenerRutasTutoriales(string ambiente)
+        /// <returns>Array con [0] = ruta local, [1] = ruta remota</returns>
+        public static string[] ObtenerRutasVideos()
         {
-            string pathServerConfig = ConfigurationManager.AppSettings.Get("pathServer");
-            string pathRemoteConfig = ConfigurationManager.AppSettings.Get("pathRemote");
+            string[] rutas = new string[2];
 
-            if (HttpContext.Current == null || string.IsNullOrWhiteSpace(pathServerConfig) || string.IsNullOrWhiteSpace(pathRemoteConfig))
+            // Ruta local
+            rutas[0] = "/Content/videos/tutoriales/";
+
+            // Ruta remota (ajustar según la configuración del servidor)
+            try
             {
-                return (string.Empty, string.Empty);
+                rutas[1] = ConfigurationManager.AppSettings["RutaRemotaVideos"];
+                if (string.IsNullOrEmpty(rutas[1]))
+                {
+                    rutas[1] = "/Content/videos/tutoriales/";
+                }
+            }
+            catch
+            {
+                rutas[1] = "/Content/videos/tutoriales/";
             }
 
-            string pathServer = HttpContext.Current.Server.MapPath(pathServerConfig);
-            string pathRemote = pathRemoteConfig;
-            ambiente = string.IsNullOrWhiteSpace(ambiente) ? "DESA" : ambiente;
+            return rutas;
+        }
 
-            string rutaRemota = Path.Combine(pathRemote, @"publicaciones\Tutoriales\Imagenes") + @"\";
-            string rutaLocal = Path.Combine(pathServer + ambiente, @"intranet\publicaciones\Tutoriales\Imagenes") + @"\";
+        /// <summary>
+        /// Obtiene las rutas locales y remotas para archivos de documentos
+        /// </summary>
+        /// <returns>Array con [0] = ruta local, [1] = ruta remota</returns>
+        public static string[] ObtenerRutasDocumentos()
+        {
+            string[] rutas = new string[2];
 
-            return (rutaLocal, rutaRemota);
+            // Ruta local
+            rutas[0] = "/Content/documentos/";
+
+            // Ruta remota (ajustar según la configuración del servidor)
+            try
+            {
+                rutas[1] = ConfigurationManager.AppSettings["RutaRemotaDocumentos"];
+                if (string.IsNullOrEmpty(rutas[1]))
+                {
+                    rutas[1] = "/Content/documentos/";
+                }
+            }
+            catch
+            {
+                rutas[1] = "/Content/documentos/";
+            }
+
+            return rutas;
         }
     }
 }

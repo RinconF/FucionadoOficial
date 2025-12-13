@@ -81,6 +81,7 @@
     <Compile Include="Int_11_EVA_Resultados_BRL.cs" />
     <Compile Include="Int_Aplicativos_BRL.cs" />
     <Compile Include="Int_Control_Acceso_BRL.cs" />
+    <Compile Include="Int_Documentos_BRL.cs" />
     <Compile Include="Int_Nucleo_Familiar_BRL.cs" />
     <Compile Include="Int_Notificaciones_BRL.cs" />
     <Compile Include="Int_Noticias_BRL.cs" />

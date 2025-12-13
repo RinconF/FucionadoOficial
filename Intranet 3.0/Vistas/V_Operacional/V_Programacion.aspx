@@ -88,7 +88,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <link rel="Stylesheet" href="/Styles/css/default_encuestas/default_encuestas.css"/>
+    <link rel="Stylesheet" href="/Styles/css/programacion_plantilla/programacion_plantilla.css"/>
 
     <div class="etiqueta_panel">
         <p><i class="fas fa-tag"></i> Consulta de programación</p>

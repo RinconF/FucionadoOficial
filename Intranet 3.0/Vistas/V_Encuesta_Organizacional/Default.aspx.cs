@@ -1,9 +1,12 @@
-﻿using BRL;
-using DCL;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DCL;
+using BRL;
 
 namespace OfertaEmpleo
 {
@@ -23,7 +26,7 @@ namespace OfertaEmpleo
                     Page.Response.Redirect("~/Login", false);
                     return;
                 }
-
+                
                 if (!IsPostBack)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "alerta();", true);
@@ -34,7 +37,7 @@ namespace OfertaEmpleo
                     txt_cc.Text = Session["cc"].ToString();
 
                     //string[] ss = { "BIENESTAR", "ESTRATÉGICA", "SEGURIDAD Y SALUD EN EL TRABAJO", "TRABAJO EN EQUIPO", "COMUNICACIÓN", "DESARROLLO PERSONAL"}; JGC
-                    string[] ss = { "BIENESTAR", "COMUNICACIÓN", "DESARROLLO PERSONAL", "TRABAJO EN EQUIPO / LIDERAZGO", "SEGURIDAD Y SALUD EN EL TRABAJO", "ESTRATEGIA" };
+                    string[] ss = { "BIENESTAR", "COMUNICACIÓN", "DESARROLLO PERSONAL", "TRABAJO EN EQUIPO / LIDERAZGO", "SEGURIDAD Y SALUD EN EL TRABAJO", "ESTRATEGIA"};
                     Session["nombreC"] = ss;
 
                     llenar_drop_proceso();
@@ -201,12 +204,12 @@ namespace OfertaEmpleo
                 //{
                 //    ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "validacion_msg_defa();", true);
                 //}
-            }
-            catch (Exception ex)
+                   }  
+            catch(Exception ex)
             {
                 throw ex;
             }
-
+            
         }
     }
 }

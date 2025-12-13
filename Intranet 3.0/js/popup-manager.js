@@ -34,6 +34,9 @@ class PopupManager {
 
             if (data.d && data.d.success && data.d.popups) {
                 this.popupsQueue = data.d.popups;
+
+                if (this.popupsQueue.length > 0) {
+                }
             } else {
                 this.popupsQueue = [];
             }

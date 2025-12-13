@@ -2,452 +2,354 @@
 using DCL;
 using Intranet_3._0.Interna;
 using System;
-using System.Data;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
     public partial class V_Control_Tutoriales : System.Web.UI.Page
     {
-        private readonly AG_Utils utilidades = new AG_Utils();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                CargarTablaTutoriales();
+                CargarTutoriales();
+                ProcesarAccionesURL();
             }
         }
 
-        #region Eventos de la UI
-
-        protected void txt_buscar_TextChanged(object sender, EventArgs e)
-        {
-            CargarTablaTutoriales(txt_buscar.Text.Trim());
-        }
-
-        protected void btn_modal_crear_Click(object sender, EventArgs e)
-        {
-            LimpiarFormularioCrear();
-            ScriptManager.RegisterStartupScript(this, GetType(), "modal_crear", "mostrarModalCrear();", true);
-        }
-
-        protected void btn_modal_actualizar_Click(object sender, EventArgs e)
-        {
-            string seleccionado = Request.Form["rd_tutorial"];
-            if (string.IsNullOrWhiteSpace(seleccionado))
-            {
-                MostrarMensaje("Selecciona un tutorial para actualizar.", false);
-                return;
-            }
-
-            DataRow row = ObtenerTutorialPorId(Convert.ToInt32(seleccionado));
-            if (row == null)
-            {
-                MostrarMensaje("No se encontraron datos del tutorial.", false);
-                return;
-            }
-
-            hf_id_Tutorial.Value = seleccionado;
-            txt_titulo_edit.Text = row["Titulo"].ToString();
-            txt_descripcion_edit.Text = row["Descripcion"].ToString();
-            txt_url_edit.Text = row["Url"].ToString();
-            ddl_seccion_edit.SelectedValue = row["Seccion"].ToString();
-            ddl_estado.SelectedValue = row["Estado"] != DBNull.Value && Convert.ToBoolean(row["Estado"]) ? "1" : "0";
-            hf_imagen_actual.Value = row["Imagen"].ToString();
-
-            txt_orden_edit.Text = row["Orden"] != DBNull.Value ? row["Orden"].ToString() : string.Empty;
-
-            ScriptManager.RegisterStartupScript(this, GetType(), "modal_actualizar", "mostrarModalActualizar();", true);
-        }
-
-        protected void btn_modal_eliminar_Click(object sender, EventArgs e)
-        {
-            string seleccionado = Request.Form["rd_tutorial"];
-            if (string.IsNullOrWhiteSpace(seleccionado))
-            {
-                MostrarMensaje("Selecciona un tutorial para eliminar.", false);
-                return;
-            }
-
-            DataRow row = ObtenerTutorialPorId(Convert.ToInt32(seleccionado));
-            if (row == null)
-            {
-                MostrarMensaje("No se encontraron datos del tutorial seleccionado.", false);
-                return;
-            }
-
-            hf_id_Tutorial.Value = seleccionado;
-            lit_tutorial_eliminar.Text = Server.HtmlEncode(row["Titulo"].ToString());
-            ScriptManager.RegisterStartupScript(this, GetType(), "modal_eliminar", "mostrarModalEliminar();", true);
-        }
-
-        protected void lnk_crear_Tutorial_Click(object sender, EventArgs e)
+        private void CargarTutoriales()
         {
             try
             {
-                string rutaImagen = null;
+                Int_Tutoriales obj = new Int_Tutoriales();
+                Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(obj, 0);
 
-                if (fud_imagen.HasFile)
+                if (tutoriales != null && tutoriales.Count > 0)
                 {
-                    int nuevoId = ObtenerProximoId();
-                    rutaImagen = GuardarImagenTutorial(fud_imagen, nuevoId.ToString(), null);
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<table class='tutorial-table'>");
+                    sb.Append("<thead><tr>");
+                    sb.Append("<th>ID</th>");
+                    sb.Append("<th>TÍTULO</th>");
+                    sb.Append("<th>DESCRIPCIÓN</th>");
+                    sb.Append("<th>VIDEO</th>");
+                    sb.Append("<th>SECCIÓN</th>");
+                    sb.Append("<th>FECHA</th>");
+                    sb.Append("<th>ESTADO</th>");
+                    sb.Append("<th>ACCIONES</th>");
+                    sb.Append("</tr></thead><tbody>");
 
-                    if (string.IsNullOrEmpty(rutaImagen))
+                    foreach (Int_Tutoriales tutorial in tutoriales)
                     {
-                        MostrarMensaje("No se pudo guardar la imagen del tutorial.", false);
-                        return;
+                        string descripcion = tutorial.Descripcion ?? "";
+                        if (descripcion.Length > 100)
+                            descripcion = descripcion.Substring(0, 100) + "...";
+
+                        string videoNombre = !string.IsNullOrEmpty(tutorial.Video) ?
+                            Path.GetFileName(tutorial.Video) : "Sin video";
+
+                        string estadoTexto = tutorial.Estado == true ? "Activo" : "Inactivo";
+                        string estadoColor = tutorial.Estado == true ? "green" : "red";
+
+                        sb.Append("<tr>");
+                        sb.AppendFormat("<td>{0}</td>", tutorial.Id_Tutorial);
+                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Titulo));
+                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(descripcion));
+                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(videoNombre));
+                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Seccion));
+                        sb.AppendFormat("<td>{0}</td>", tutorial.Fecha_Creacion?.ToString("dd/MM/yyyy HH:mm") ?? "");
+                        sb.AppendFormat("<td style='color:{1}'>{0}</td>", estadoTexto, estadoColor);
+                        sb.Append("<td>");
+                        sb.AppendFormat("<button class='btn-action btn btn-info' onclick=\"location.href='?action=edit&id={0}'\">Editar</button>", tutorial.Id_Tutorial);
+                        sb.AppendFormat("<button class='btn-action btn btn-danger' onclick=\"if(confirmarEliminacion()) location.href='?action=delete&id={0}'\">Eliminar</button>", tutorial.Id_Tutorial);
+                        sb.Append("</td></tr>");
+                    }
+
+                    sb.Append("</tbody></table>");
+                    lit_tabla_tutoriales.Text = sb.ToString();
+                }
+                else
+                {
+                    lit_tabla_tutoriales.Text = "<p>No hay tutoriales registrados.</p>";
+                }
+            }
+            catch (Exception ex)
+            {
+                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+            }
+        }
+
+        private void ProcesarAccionesURL()
+        {
+            string action = Request.QueryString["action"];
+            string idStr = Request.QueryString["id"];
+
+            if (!string.IsNullOrEmpty(action) && !string.IsNullOrEmpty(idStr))
+            {
+                int id;
+                if (int.TryParse(idStr, out id))
+                {
+                    if (action == "edit")
+                    {
+                        CargarTutorialParaEditar(id);
+                    }
+                    else if (action == "delete")
+                    {
+                        EliminarTutorial(id);
                     }
                 }
+            }
+        }
 
-                int usuarioActual = ObtenerIdUsuarioActual();
-                int? orden = string.IsNullOrWhiteSpace(txt_orden.Text) ? (int?)null : Convert.ToInt32(txt_orden.Text);
+        protected void btn_guardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txt_titulo.Text))
+                {
+                    lbl_mensaje.Text = "El título es obligatorio.";
+                    return;
+                }
 
-                Int_Tutoriales tutorial = new Int_Tutoriales
+                if (ddl_seccion.SelectedValue == "")
+                {
+                    lbl_mensaje.Text = "Debe seleccionar una sección.";
+                    return;
+                }
+
+                Int_Tutoriales obj = new Int_Tutoriales
                 {
                     Titulo = txt_titulo.Text.Trim(),
                     Descripcion = txt_descripcion.Text.Trim(),
-                    Url = txt_url.Text.Trim(),
-                    Imagen = rutaImagen,
                     Seccion = ddl_seccion.SelectedValue,
-                    Orden = orden,
-                    Estado = true,
-                    Usuario_Creacion = usuarioActual
+                    Usuario_Creacion = ObtenerIdUsuarioActual(),
+                    Estado = true
                 };
 
-                Int_Tutoriales_BRL.InsertOrUpdate(tutorial, 3);
-                CargarTablaTutoriales(txt_buscar.Text.Trim());
-                LimpiarFormularioCrear();
-                MostrarMensaje("Tutorial creado correctamente.", true);
-            }
-            catch (Exception ex)
-            {
-                MostrarMensaje("Error al crear el tutorial: " + ex.Message, false);
-            }
-        }
-
-        protected void lnk_actualizar_Tutorial_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(hf_id_Tutorial.Value))
+                if (fud_video.HasFile)
                 {
-                    MostrarMensaje("No se encontró el identificador del tutorial.", false);
-                    return;
-                }
-
-                string rutaImagen = hf_imagen_actual.Value;
-                if (fud_imagen_edit.HasFile)
-                {
-                    rutaImagen = GuardarImagenTutorial(fud_imagen_edit, hf_id_Tutorial.Value, hf_imagen_actual.Value);
-                    if (string.IsNullOrEmpty(rutaImagen))
+                    string rutaVideo = GuardarVideo(fud_video);
+                    if (!string.IsNullOrEmpty(rutaVideo))
                     {
-                        MostrarMensaje("No se pudo guardar la imagen del tutorial.", false);
+                        obj.Video = rutaVideo;
+                    }
+                    else
+                    {
+                        lbl_mensaje.Text = "Error al guardar el video.";
                         return;
                     }
                 }
 
-                int usuarioActual = ObtenerIdUsuarioActual();
-                int? orden = string.IsNullOrWhiteSpace(txt_orden_edit.Text) ? (int?)null : Convert.ToInt32(txt_orden_edit.Text);
+                int resultado = Int_Tutoriales_BRL.InsertOrUpdate(obj, 3);
 
-                Int_Tutoriales tutorial = new Int_Tutoriales
+                if (resultado > 0)
                 {
-                    Id_Tutorial = Convert.ToInt32(hf_id_Tutorial.Value),
-                    Titulo = txt_titulo_edit.Text.Trim(),
-                    Descripcion = txt_descripcion_edit.Text.Trim(),
-                    Url = txt_url_edit.Text.Trim(),
-                    Imagen = rutaImagen,
-                    Seccion = ddl_seccion_edit.SelectedValue,
-                    Orden = orden,
-                    Estado = ddl_estado.SelectedValue == "1",
-                    Usuario_Actualizacion = usuarioActual
-                };
-
-                Int_Tutoriales_BRL.InsertOrUpdate(tutorial, 4);
-                CargarTablaTutoriales(txt_buscar.Text.Trim());
-                MostrarMensaje("Tutorial actualizado correctamente.", true);
+                    Response.Redirect(Request.RawUrl.Split('?')[0]);
+                }
+                else
+                {
+                    lbl_mensaje.Text = "Error al guardar el tutorial.";
+                }
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Error al actualizar el tutorial: " + ex.Message, false);
+                lbl_mensaje.Text = "Error: " + ex.Message;
             }
         }
 
-        protected void lnk_eliminar_Tutorial_Click(object sender, EventArgs e)
+        private void CargarTutorialParaEditar(int id)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(hf_id_Tutorial.Value))
+                Int_Tutoriales obj = new Int_Tutoriales { Id_Tutorial = id };
+                Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(obj, 2);
+
+                if (tutoriales != null && tutoriales.Count > 0)
                 {
-                    MostrarMensaje("No se encontró el identificador del tutorial.", false);
-                    return;
-                }
+                    Int_Tutoriales tutorial = tutoriales[0];
 
-                int usuarioActual = ObtenerIdUsuarioActual();
+                    hf_id_tutorial.Value = tutorial.Id_Tutorial.ToString();
+                    txt_titulo_edit.Text = tutorial.Titulo;
+                    txt_descripcion_edit.Text = tutorial.Descripcion;
+                    ddl_seccion_edit.SelectedValue = tutorial.Seccion;
+                    ddl_estado_edit.SelectedValue = tutorial.Estado == true ? "1" : "0";
 
-                Int_Tutoriales tutorial = new Int_Tutoriales
-                {
-                    Id_Tutorial = Convert.ToInt32(hf_id_Tutorial.Value),
-                    Estado = false,
-                    Usuario_Actualizacion = usuarioActual
-                };
-
-                Int_Tutoriales_BRL.InsertOrUpdate(tutorial, 5);
-                CargarTablaTutoriales(txt_buscar.Text.Trim());
-                MostrarMensaje("Tutorial eliminado correctamente.", true);
-            }
-            catch (Exception ex)
-            {
-                MostrarMensaje("Error al eliminar el tutorial: " + ex.Message, false);
-            }
-        }
-
-        #endregion
-
-        #region Lógica de negocio
-
-        private void CargarTablaTutoriales(string filtro = null)
-        {
-            try
-            {
-                DataTable dt = Int_Tutoriales_BRL.SelectTable(new Int_Tutoriales(), 0);
-
-                if (!string.IsNullOrWhiteSpace(filtro))
-                {
-                    string filtroSeguro = filtro.Replace("'", "''");
-                    DataView dv = dt.DefaultView;
-                    dv.RowFilter = string.Format("Titulo LIKE '%{0}%' OR Descripcion LIKE '%{0}%'", filtroSeguro);
-                    dt = dv.ToTable();
-                }
-
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<table class='tbl_vistas_general'>");
-                sb.Append("<thead><tr>");
-                sb.Append("<th>#</th><th>Título</th><th>Descripción</th><th>Sección</th><th>Orden</th><th>Fecha creación</th><th>Estado</th><th>Acción</th>");
-                sb.Append("</tr></thead><tbody>");
-
-                int contador = 1;
-                foreach (DataRow row in dt.Rows)
-                {
-                    string id = row["Id_Tutorial"].ToString();
-                    string titulo = Server.HtmlEncode(row["Titulo"].ToString());
-                    string descripcion = Server.HtmlEncode(row["Descripcion"].ToString());
-                    string seccion = Server.HtmlEncode(row["Seccion"].ToString());
-                    string orden = row["Orden"] != DBNull.Value ? row["Orden"].ToString() : "-";
-                    string fecha = row["Fecha_Creacion"] != DBNull.Value ?
-                        Convert.ToDateTime(row["Fecha_Creacion"]).ToString("dd/MM/yyyy HH:mm:ss") : "-";
-                    bool estado = row["Estado"] != DBNull.Value && Convert.ToBoolean(row["Estado"]);
-
-                    sb.Append("<tr>");
-                    sb.AppendFormat("<td>{0}</td>", contador);
-                    sb.AppendFormat("<td>{0}</td>", titulo);
-                    sb.AppendFormat("<td>{0}</td>", descripcion);
-                    sb.AppendFormat("<td>{0}</td>", FormatearSeccion(seccion));
-                    sb.AppendFormat("<td>{0}</td>", orden);
-                    sb.AppendFormat("<td>{0}</td>", fecha);
-                    sb.AppendFormat("<td>{0}</td>", estado ?
-                        "<span class='badge badge-success'>Activo</span>" :
-                        "<span class='badge badge-secondary'>Inactivo</span>");
-                    sb.AppendFormat("<td><input type='radio' name='rd_tutorial' value='{0}' /></td>", id);
-                    sb.Append("</tr>");
-                    contador++;
-                }
-
-                if (contador == 1)
-                {
-                    sb.Append("<tr><td colspan='8'>No hay tutoriales registrados.</td></tr>");
-                }
-
-                sb.Append("</tbody></table>");
-                tbl_Tutoriales.InnerHtml = sb.ToString();
-            }
-            catch (Exception ex)
-            {
-                MostrarMensaje("Error al cargar la tabla de tutoriales: " + ex.Message, false);
-            }
-        }
-
-        private DataRow ObtenerTutorialPorId(int idTutorial)
-        {
-            Int_Tutoriales tutorial = new Int_Tutoriales
-            {
-                Id_Tutorial = idTutorial
-            };
-
-            DataTable dt = Int_Tutoriales_BRL.SelectTable(tutorial, 2);
-            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
-        }
-
-        private string GuardarImagenTutorial(FileUpload control, string idTutorial, string imagenActual)
-        {
-            if (control == null || !control.HasFile)
-            {
-                return imagenActual;
-            }
-
-            string rutaImagenLocal = string.Empty;
-            string rutaImagenRemota = string.Empty;
-            string logPath = Server.MapPath("~/App_Data/Logs/");
-
-            try
-            {
-                string extension = Path.GetExtension(control.FileName).ToLower();
-                string[] extensionesPermitidas = { ".jpg", ".jpeg", ".png", ".gif", ".jfif" };
-
-                if (!extensionesPermitidas.Contains(extension))
-                {
-                    utilidades.logError($"Extensión no permitida: {extension}. Usuario: {ObtenerIdUsuarioActual()}", logPath);
-                    return imagenActual;
-                }
-
-                string nombreFinalArchivo = utilidades.AjusteNombreImagenNoticia(
-                    Path.GetFileNameWithoutExtension(control.FileName),
-                    idTutorial,
-                    extension
-                );
-
-                string ambiente = System.Configuration.ConfigurationManager.AppSettings.Get("Ambiente") ?? "DESA";
-                var rutas = utilidades.ObtenerRutasTutoriales(ambiente);
-
-                if (string.IsNullOrEmpty(rutas.rutaLocal) || string.IsNullOrEmpty(rutas.rutaRemota))
-                {
-                    utilidades.logError("No se pudieron obtener las rutas de tutoriales. Verifique la configuración.", logPath);
-                    return imagenActual;
-                }
-
-                var tamanioOriginal = control.FileBytes;
-                if (tamanioOriginal.Length == 0)
-                {
-                    utilidades.logError($"El archivo está vacío. Usuario: {ObtenerIdUsuarioActual()}", logPath);
-                    return imagenActual;
-                }
-
-                if (utilidades.impersonateValidUser())
-                {
-                    rutaImagenLocal = Path.Combine(rutas.rutaLocal, nombreFinalArchivo);
-
-                    if (!Directory.Exists(rutas.rutaLocal))
+                    if (!string.IsNullOrEmpty(tutorial.Video))
                     {
-                        Directory.CreateDirectory(rutas.rutaLocal);
-                    }
-
-                    foreach (var archivo in Directory.GetFiles(rutas.rutaLocal, $"{idTutorial}-*.*"))
-                    {
-                        File.Delete(archivo);
-                    }
-
-                    Thread.Sleep(500);
-                    control.SaveAs(rutaImagenLocal);
-                    Thread.Sleep(500);
-
-                    var tamanioDestLocal = File.ReadAllBytes(rutaImagenLocal);
-                    if (tamanioOriginal.Length != tamanioDestLocal.Length)
-                    {
-                        utilidades.logError("El tamaño del archivo local no coincide con el original.", logPath);
-                        File.Delete(rutaImagenLocal);
-                        utilidades.undoImpersonation();
-                        return imagenActual;
-                    }
-
-                    string ipServerAttach = System.Configuration.ConfigurationManager.AppSettings.Get("IPServerAttach") ?? string.Empty;
-                    if (!string.IsNullOrEmpty(ipServerAttach) && utilidades.Ping(ipServerAttach))
-                    {
-                        rutaImagenRemota = Path.Combine(rutas.rutaRemota, nombreFinalArchivo);
-
-                        if (!Directory.Exists(rutas.rutaRemota))
-                        {
-                            Directory.CreateDirectory(rutas.rutaRemota);
-                        }
-
-                        foreach (var archivo in Directory.GetFiles(rutas.rutaRemota, $"{idTutorial}-*.*"))
-                        {
-                            File.Delete(archivo);
-                        }
-
-                        Thread.Sleep(500);
-                        control.SaveAs(rutaImagenRemota);
-                        Thread.Sleep(500);
-
-                        var tamanioDestRemoto = File.ReadAllBytes(rutaImagenRemota);
-                        if (tamanioOriginal.Length != tamanioDestRemoto.Length)
-                        {
-                            utilidades.logError("El tamaño del archivo remoto no coincide con el original.", logPath);
-                        }
+                        hf_video_actual.Value = tutorial.Video;
+                        lbl_video_actual.Text = Path.GetFileName(tutorial.Video);
                     }
                     else
                     {
-                        utilidades.logError("No se pudo conectar al servidor remoto para guardar la imagen del tutorial.", logPath);
+                        hf_video_actual.Value = "";
+                        lbl_video_actual.Text = "No hay video";
                     }
-
-                    utilidades.undoImpersonation();
-                    return $"/Content/img/tutoriales/{nombreFinalArchivo}";
                 }
-
-                utilidades.logError("No se pudo obtener impersonación para guardar archivos de tutoriales.", logPath);
-                return imagenActual;
             }
             catch (Exception ex)
             {
-                utilidades.logError($"Error al guardar imagen de tutorial: {ex.Message}.", logPath);
-
-                if (File.Exists(rutaImagenLocal))
-                    File.Delete(rutaImagenLocal);
-                if (File.Exists(rutaImagenRemota))
-                    File.Delete(rutaImagenRemota);
-
-                return imagenActual;
+                lbl_mensaje_edit.Text = "Error: " + ex.Message;
             }
         }
 
-        private int ObtenerProximoId()
+        protected void btn_actualizar_Click(object sender, EventArgs e)
         {
             try
             {
-                DataTable dt = Int_Tutoriales_BRL.SelectTable(new Int_Tutoriales(), 0);
-                if (dt.Rows.Count > 0)
+                if (string.IsNullOrWhiteSpace(txt_titulo_edit.Text))
                 {
-                    int maxId = 0;
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        int id = Convert.ToInt32(row["Id_Tutorial"]);
-                        if (id > maxId) maxId = id;
-                    }
-                    return maxId + 1;
+                    lbl_mensaje_edit.Text = "El título es obligatorio.";
+                    return;
                 }
-                return 1;
+
+                if (ddl_seccion_edit.SelectedValue == "")
+                {
+                    lbl_mensaje_edit.Text = "Debe seleccionar una sección.";
+                    return;
+                }
+
+                int idTutorial = Convert.ToInt32(hf_id_tutorial.Value);
+
+                Int_Tutoriales obj = new Int_Tutoriales
+                {
+                    Id_Tutorial = idTutorial,
+                    Titulo = txt_titulo_edit.Text.Trim(),
+                    Descripcion = txt_descripcion_edit.Text.Trim(),
+                    Seccion = ddl_seccion_edit.SelectedValue,
+                    Usuario_Actualizacion = ObtenerIdUsuarioActual(),
+                    Estado = ddl_estado_edit.SelectedValue == "1"
+                };
+
+                if (fud_video_edit.HasFile)
+                {
+                    if (!string.IsNullOrEmpty(hf_video_actual.Value))
+                    {
+                        EliminarArchivoFisico(hf_video_actual.Value);
+                    }
+
+                    string rutaVideo = GuardarVideo(fud_video_edit);
+                    if (!string.IsNullOrEmpty(rutaVideo))
+                    {
+                        obj.Video = rutaVideo;
+                    }
+                    else
+                    {
+                        lbl_mensaje_edit.Text = "Error al guardar el video.";
+                        return;
+                    }
+                }
+                else
+                {
+                    obj.Video = hf_video_actual.Value;
+                }
+
+                int resultado = Int_Tutoriales_BRL.InsertOrUpdate(obj, 4);
+
+                if (resultado > 0)
+                {
+                    Response.Redirect(Request.RawUrl.Split('?')[0]);
+                }
+                else
+                {
+                    lbl_mensaje_edit.Text = "Error al actualizar.";
+                }
+            }
+            catch (Exception ex)
+            {
+                lbl_mensaje_edit.Text = "Error: " + ex.Message;
+            }
+        }
+
+        private void EliminarTutorial(int id)
+        {
+            try
+            {
+                Int_Tutoriales objBuscar = new Int_Tutoriales { Id_Tutorial = id };
+                Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(objBuscar, 2);
+
+                if (tutoriales != null && tutoriales.Count > 0)
+                {
+                    Int_Tutoriales tutorial = tutoriales[0];
+
+                    Int_Tutoriales objEliminar = new Int_Tutoriales
+                    {
+                        Id_Tutorial = id,
+                        Usuario_Actualizacion = ObtenerIdUsuarioActual()
+                    };
+
+                    int resultado = Int_Tutoriales_BRL.InsertOrUpdate(objEliminar, 5);
+
+                    if (resultado > 0 && !string.IsNullOrEmpty(tutorial.Video))
+                    {
+                        EliminarArchivoFisico(tutorial.Video);
+                    }
+                }
+
+                Response.Redirect(Request.RawUrl.Split('?')[0]);
+            }
+            catch (Exception ex)
+            {
+                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+            }
+        }
+
+        private string GuardarVideo(System.Web.UI.WebControls.FileUpload fileUpload)
+        {
+            try
+            {
+                if (!fileUpload.HasFile)
+                    return null;
+
+                string extension = Path.GetExtension(fileUpload.FileName).ToLower();
+                string[] extensionesPermitidas = { ".mp4", ".avi", ".mov", ".wmv", ".flv", ".mkv", ".webm" };
+
+                if (!extensionesPermitidas.Contains(extension))
+                    return null;
+
+                string[] rutas = AG_Utils.ObtenerRutasVideos();
+                string rutaLocal = rutas[0];
+                string carpetaFisica = Server.MapPath(rutaLocal);
+
+                if (!Directory.Exists(carpetaFisica))
+                {
+                    Directory.CreateDirectory(carpetaFisica);
+                }
+
+                string nombreArchivo = "video_" + DateTime.Now.ToString("yyyyMMddHHmmss") +
+                                      "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + extension;
+
+                string rutaCompleta = Path.Combine(carpetaFisica, nombreArchivo);
+                fileUpload.SaveAs(rutaCompleta);
+
+                return rutaLocal + nombreArchivo;
             }
             catch
             {
-                return 1;
+                return null;
             }
         }
 
-        private void LimpiarFormularioCrear()
+        private void EliminarArchivoFisico(string rutaArchivo)
         {
-            txt_titulo.Text = string.Empty;
-            txt_descripcion.Text = string.Empty;
-            txt_url.Text = string.Empty;
-            txt_orden.Text = string.Empty;
-            ddl_seccion.SelectedIndex = 0;
-        }
-
-        private string FormatearSeccion(string seccion)
-        {
-            switch (seccion)
+            try
             {
-                case "EMPRESARIALES":
-                    return "Tutoriales empresariales";
-                case "CONSULTA":
-                    return "Tutoriales consulta";
-                case "SOPORTE":
-                    return "Tutoriales soporte";
-                default:
-                    return seccion;
+                if (!string.IsNullOrEmpty(rutaArchivo))
+                {
+                    string rutaCompleta = Server.MapPath(rutaArchivo);
+                    if (File.Exists(rutaCompleta))
+                    {
+                        File.Delete(rutaCompleta);
+                    }
+                }
+            }
+            catch
+            {
+                // Ignorar errores al eliminar
             }
         }
 
@@ -459,18 +361,5 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
             return 1;
         }
-
-        private void MostrarMensaje(string mensaje, bool exitoso)
-        {
-            ScriptManager.RegisterStartupScript(
-                this,
-                GetType(),
-                "mensajeTutorial",
-                $"alert('{mensaje.Replace("'", "\\'")}');",
-                true
-            );
-        }
-
-        #endregion
     }
 }

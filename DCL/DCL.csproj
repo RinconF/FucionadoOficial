@@ -88,6 +88,8 @@
     <Compile Include="Int_AplicativoCollection.cs" />
     <Compile Include="Int_Control_Acceso.cs" />
     <Compile Include="Int_Control_AccesoCollection.cs" />
+    <Compile Include="Int_Documentos.cs" />
+    <Compile Include="Int_DocumentosCollection.cs" />
     <Compile Include="Int_Nucleo_FamiliarCollection.cs" />
     <Compile Include="Int_Nucleo_Familiar.cs" />
     <Compile Include="Int_Notificaciones.cs" />

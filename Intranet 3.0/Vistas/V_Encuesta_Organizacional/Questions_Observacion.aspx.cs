@@ -1,14 +1,20 @@
-﻿using BRL;
-using DCL;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
+using DCL;
+using BRL;
+using System.Web.UI.HtmlControls;
 
 namespace OfertaEmpleo
 {
     public partial class Questions_Observacion : Page
     {
 
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["Id_Usuario"] == null)
@@ -34,5 +40,5 @@ namespace OfertaEmpleo
             }
             Response.Redirect("/Vistas/V_Encuesta_Organizacional/Question_Observaciones.aspx?Id_Usuario=" + Request.QueryString["Id_Usuario"] + "&Id_Grupo=" + Request.QueryString["Id_Grupo"] + (String.IsNullOrEmpty(Request.QueryString["Id_Vista"]) ? "" : "Id_Vista=" + Request.QueryString["Id_Vista"]), false);
         }
-    }
+        }
 }

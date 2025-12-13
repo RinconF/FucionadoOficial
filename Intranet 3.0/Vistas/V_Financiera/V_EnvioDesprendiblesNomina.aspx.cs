@@ -1,24 +1,35 @@
-﻿using BRL;
-using DCL;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using BRL;
+using Intranet_3._0.Interna;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using System.Threading.Tasks;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using static Intranet_3._0.Vistas.V_Financiera.V_EnvioDesprendiblesNomina;
+using DCL;
+using System.Text;
+using Microsoft.Win32;
+using static System.Net.WebRequestMethods;
+using System.Security.Cryptography;
+using System.Web.Services.Description;
+using System.Web.UI.WebControls.WebParts;
+using System.Threading;
 
 
 namespace Intranet_3._0.Vistas.V_Financiera
 {
     public partial class V_EnvioDesprendiblesNomina : System.Web.UI.Page
     {
-        DataTable tablaDatosNomina;
-        DataTable tablaDatosNominaNoSalarial;
-        DataTable tablaDatosCedula;
+       DataTable tablaDatosNomina;
+       DataTable tablaDatosNominaNoSalarial;
+       DataTable tablaDatosCedula;
 
         // Declaro variables
         string mes = null;
@@ -29,9 +40,9 @@ namespace Intranet_3._0.Vistas.V_Financiera
 
         protected void Page_Init(object sender, EventArgs e)
         {
-
+           
         }
-
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -106,7 +117,7 @@ namespace Intranet_3._0.Vistas.V_Financiera
                 periodo = DropDownListPeriod.SelectedValue;
 
                 // 1. Consultar si hay lotes pendientes
-                DataTable lotesPendientes = Nomina_Desprendibles_BRL.SelectTable(new Nomina_Desprendibles(), 5);
+               DataTable lotesPendientes = Nomina_Desprendibles_BRL.SelectTable(new Nomina_Desprendibles(), 5);
 
                 if (lotesPendientes == null || lotesPendientes.Rows.Count == 0)
                 {
@@ -115,7 +126,7 @@ namespace Intranet_3._0.Vistas.V_Financiera
                 }
 
                 // 2. Consultar el total de lotes generados
-                DataTable totalLotesData = Nomina_Desprendibles_BRL.SelectTable(new Nomina_Desprendibles(), 6);
+               DataTable totalLotesData = Nomina_Desprendibles_BRL.SelectTable(new Nomina_Desprendibles(), 6);
                 int totalLotesCount = totalLotesData != null && totalLotesData.Rows.Count > 0
                     ? Convert.ToInt32(totalLotesData.Rows[0]["TotalLote"])
                     : 0;
@@ -208,7 +219,7 @@ namespace Intranet_3._0.Vistas.V_Financiera
                 while (true)
                 {
                     // Obtener la tabla con los colaboradores 
-                    DataTable tablaDatosCedula = Nomina_Desprendibles_BRL.SelectTable(new DCL.Nomina_Desprendibles()
+                   DataTable tablaDatosCedula = Nomina_Desprendibles_BRL.SelectTable(new DCL.Nomina_Desprendibles()
                     {
                         Periodo = Convert.ToInt32(periodo),
                         Mes = Convert.ToInt32(mes),
@@ -346,7 +357,7 @@ namespace Intranet_3._0.Vistas.V_Financiera
                     }
                 }
 
-                MostrarMensaje("Proceso completado exitosamente para el lote " + Lote + ".");
+                MostrarMensaje("Proceso completado exitosamente para el lote "+ Lote +".");
                 ScriptManager.RegisterStartupScript(this, GetType(), "EnableDropdown", "enableDropdown();", true);
                 AbreSeccion();
             }
@@ -525,8 +536,8 @@ namespace Intranet_3._0.Vistas.V_Financiera
                 }
 
                 // Esperar a que se completen todas las tareas de envío de correos
-
-                await Task.WhenAll(tareasEnvio);
+                
+                await Task.WhenAll(tareasEnvio); 
                 // Llamada a la base de datos para eliminar registros, sin importar el resultado del envío de correos
                 Nomina_Desprendibles_BRL.InsertOrUpdate(new DCL.Nomina_Desprendibles() { Numero_Lote = loteE }, 11);
 
@@ -625,7 +636,7 @@ namespace Intranet_3._0.Vistas.V_Financiera
                         Directory.Delete(pdfDirectory, true);
                         Console.WriteLine("El directorio se ha eliminado correctamente.");
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) 
                     {
                         Console.WriteLine($"Error al eliminar el directorio: {ex.Message}");
                     }

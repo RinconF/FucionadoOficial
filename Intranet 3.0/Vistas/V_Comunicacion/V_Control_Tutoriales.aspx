@@ -38,15 +38,15 @@
         }
 
         function mostrarModalCrear() {
-            toggleModal('modal_crear_Tutorial', true);
+            toggleModal('modal_crear_aplicativo', true);
         }
 
         function mostrarModalActualizar() {
-            toggleModal('modal_actualizar_Tutorial', true);
+            toggleModal('modal_actualizar_aplicativo', true);
         }
 
         function mostrarModalEliminar() {
-            toggleModal('modal_eliminar_Tutorial', true);
+            toggleModal('modal_eliminar_aplicativo', true);
         }
 
         document.addEventListener('click', function (ev) {
@@ -59,188 +59,131 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:UpdatePanel ID="pnlTutoriales" runat="server">
-        <ContentTemplate>
-            <section class="pnl_table">
-                <div class="pnl_tag">
-                    <p><i class="fas fa-tag"></i>Tabla de tutoriales</p>
+    <div class="container">
+        <h2>CONTROL DE TUTORIALES</h2>
+        
+        <button type="button" class="btn btn-primary" onclick="mostrarModal('modalNuevo')">
+            + NUEVO TUTORIAL
+        </button>
+        
+        <asp:Literal ID="lit_tabla_tutoriales" runat="server"></asp:Literal>
+        
+        <!-- Modal Nuevo Tutorial -->
+        <div id="modalNuevo" class="modal">
+            <div class="modal-content">
+                <h3>NUEVO TUTORIAL</h3>
+                
+                <div class="form-group">
+                    <label>TÍTULO:</label>
+                    <asp:TextBox ID="txt_titulo" runat="server" MaxLength="150"></asp:TextBox>
                 </div>
-                <div class="filter">
-                    <div class="box_menu_crear">
-                        <asp:LinkButton
-                            ID="btn_modal_crear"
-                            runat="server"
-                            CssClass="btn-modal"
-                            OnClick="btn_modal_crear_Click">
-                            <i class="fas fa-plus"></i>Nuevo tutorial
-                        </asp:LinkButton>
-                        <asp:LinkButton
-                            ID="btn_modal_actualizar"
-                            runat="server"
-                            CssClass="btn-actu-grupo"
-                            OnClick="btn_modal_actualizar_Click">
-                            <i class="fas fa-cog"></i>Actualizar tutorial
-                        </asp:LinkButton>
-                        <asp:LinkButton
-                            ID="btn_modal_eliminar"
-                            runat="server"
-                            CssClass="button"
-                            Style="background-color: #e74c3c; color: white;"
-                            OnClick="btn_modal_eliminar_Click">
-                            <i class="fas fa-trash"></i>Eliminar tutorial
-                        </asp:LinkButton>
-                    </div>
-                    <div class="box_search">
-                        <i class="fas fa-search"></i>
-                        <asp:TextBox ID="txt_buscar" runat="server" AutoComplete="off" AutoPostBack="true" OnTextChanged="txt_buscar_TextChanged" placeholder="Búsqueda rápida"></asp:TextBox>
-                    </div>
+                
+                <div class="form-group">
+                    <label>DESCRIPCIÓN:</label>
+                    <asp:TextBox ID="txt_descripcion" runat="server" TextMode="MultiLine" Rows="3" MaxLength="300"></asp:TextBox>
                 </div>
-                <div runat="server" id="tbl_Tutoriales"></div>
-            </section>
-
-            <asp:HiddenField ID="hf_id_Tutorial" runat="server" />
-            <asp:HiddenField ID="hf_imagen_actual" runat="server" />
-
-            <!-- MODAL CREAR -->
-            <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_crear_Tutorial">
-                <div class="modal-i-gl-body">
-                    <div class="modal-i-gl-title">
-                        <h1 class="title">Crear nuevo Tutorial</h1>
-                        <div class="modal-i-gl-cerrar">
-                            <button type="button" class="btn-modal-close">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="modal-i-gl-content">
-                        <section class="box_content_crear_vista">
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="far fa-keyboard"></i>
-                                    <asp:TextBox runat="server" ID="txt_titulo" MaxLength="150" placeholder="TÍTULO"></asp:TextBox>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-align-right"></i>
-                                    <asp:TextBox runat="server" ID="txt_descripcion" MaxLength="300" placeholder="DESCRIPCIÓN"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="fas fa-link"></i>
-                                    <asp:TextBox runat="server" ID="txt_url" MaxLength="500" placeholder="URL del Tutorial"></asp:TextBox>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-images"></i>
-                                    <asp:FileUpload runat="server" ID="fud_imagen" accept="image/png, image/gif, image/jpeg, image/jfif" />
-                                </div>
-                            </div>
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="fas fa-list"></i>
-                                    <asp:DropDownList ID="ddl_seccion" runat="server">
-                                        <asp:ListItem Text="Tutoriales empresariales" Value="EMPRESARIALES" />
-                                        <asp:ListItem Text="Tutoriales consulta" Value="CONSULTA" />
-                                        <asp:ListItem Text="Tutoriales soporte" Value="SOPORTE" />
-                                    </asp:DropDownList>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-sort-numeric-down"></i>
-                                    <asp:TextBox runat="server" ID="txt_orden" TextMode="Number" placeholder="ORDEN (Opcional)"></asp:TextBox>
-                                </div>
-                            </div>
-                            <asp:LinkButton runat="server" ID="lnk_crear_Tutorial" OnClick="lnk_crear_Tutorial_Click">CREAR</asp:LinkButton>
-                        </section>
-                    </div>
+                
+                <div class="form-group">
+                    <label>VIDEO:</label>
+                    <asp:FileUpload ID="fud_video" runat="server" accept="video/*" />
                 </div>
+                
+                <div class="form-group">
+                    <label>SECCIÓN:</label>
+                    <asp:DropDownList ID="ddl_seccion" runat="server">
+                        <asp:ListItem Value="" Text="-- Seleccione --"></asp:ListItem>
+                        <asp:ListItem Value="General" Text="General"></asp:ListItem>
+                        <asp:ListItem Value="Básico" Text="Básico"></asp:ListItem>
+                        <asp:ListItem Value="Intermedio" Text="Intermedio"></asp:ListItem>
+                        <asp:ListItem Value="Avanzado" Text="Avanzado"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                
+                <div class="btn-group">
+                    <asp:Button ID="btn_guardar" runat="server" Text="GUARDAR" CssClass="btn btn-success" OnClick="btn_guardar_Click" />
+                    <button type="button" class="btn btn-secondary" onclick="ocultarModal('modalNuevo')">CANCELAR</button>
+                </div>
+                
+                <asp:Label ID="lbl_mensaje" runat="server" CssClass="msg-error"></asp:Label>
             </div>
-
-            <!-- MODAL ACTUALIZAR -->
-            <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_actualizar_Tutorial">
-                <div class="modal-i-gl-body">
-                    <div class="modal-i-gl-title">
-                        <h1 class="title">Actualizar Tutorial</h1>
-                        <div class="modal-i-gl-cerrar">
-                            <button type="button" class="btn-modal-close">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="modal-i-gl-content">
-                        <section class="box_content_crear_vista">
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="far fa-keyboard"></i>
-                                    <asp:TextBox runat="server" ID="txt_titulo_edit" MaxLength="150" placeholder="TÍTULO"></asp:TextBox>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-align-right"></i>
-                                    <asp:TextBox runat="server" ID="txt_descripcion_edit" MaxLength="300" placeholder="DESCRIPCIÓN"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="fas fa-link"></i>
-                                    <asp:TextBox runat="server" ID="txt_url_edit" MaxLength="500" placeholder="URL del Tutorial"></asp:TextBox>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-images"></i>
-                                    <asp:FileUpload runat="server" ID="fud_imagen_edit" accept="image/png, image/gif, image/jpeg, image/jfif" />
-                                </div>
-                            </div>
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="fas fa-list"></i>
-                                    <asp:DropDownList ID="ddl_seccion_edit" runat="server">
-                                        <asp:ListItem Text="Tutoriales empresariales" Value="EMPRESARIALES" />
-                                        <asp:ListItem Text="Tutoriales consulta" Value="CONSULTA" />
-                                        <asp:ListItem Text="Tutoriales soporte" Value="SOPORTE" />
-                                    </asp:DropDownList>
-                                </div>
-                                <div class="pnl_input col">
-                                    <i class="fas fa-sort-numeric-down"></i>
-                                    <asp:TextBox runat="server" ID="txt_orden_edit" TextMode="Number" placeholder="ORDEN (Opcional)"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="content row">
-                                <div class="pnl_input col">
-                                    <i class="fas fa-toggle-on"></i>
-                                    <asp:DropDownList ID="ddl_estado" runat="server">
-                                        <asp:ListItem Text="Activo" Value="1" />
-                                        <asp:ListItem Text="Inactivo" Value="0" />
-                                    </asp:DropDownList>
-                                </div>
-                            </div>
-                            <asp:LinkButton runat="server" ID="lnk_actualizar_Tutorial" OnClick="lnk_actualizar_Tutorial_Click">ACTUALIZAR</asp:LinkButton>
-                        </section>
-                    </div>
+        </div>
+        
+        <!-- Modal Editar Tutorial -->
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <h3>EDITAR TUTORIAL</h3>
+                
+                <asp:HiddenField ID="hf_id_tutorial" runat="server" />
+                <asp:HiddenField ID="hf_video_actual" runat="server" />
+                
+                <div class="form-group">
+                    <label>TÍTULO:</label>
+                    <asp:TextBox ID="txt_titulo_edit" runat="server" MaxLength="150"></asp:TextBox>
                 </div>
-            </div>
-
-            <!-- MODAL ELIMINAR -->
-            <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_eliminar_Tutorial">
-                <div class="modal-i-gl-body modal-i-gl-body-small">
-                    <div class="modal-i-gl-title">
-                        <h1 class="title">Eliminar Tutorial</h1>
-                        <div class="modal-i-gl-cerrar">
-                            <button type="button" class="btn-modal-close">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="modal-i-gl-content">
-                        <section class="box_content_crear_vista">
-                            <p class="modal-i-gl-content-text">¿Estás seguro que deseas eliminar este Tutorial?</p>
-                            <p class="modal-i-gl-content-text">
-                                <asp:Literal ID="lit_tutorial_eliminar" runat="server"></asp:Literal>
-                            </p>
-                            <div class="content row">
-                                <asp:LinkButton runat="server" ID="lnk_eliminar_Tutorial" OnClick="lnk_eliminar_Tutorial_Click" CssClass="lnk_btn_modal btn_guardar">Si, eliminar</asp:LinkButton>
-                                <button type="button" class="lnk_btn_modal btn-modal-close">Cancelar</button>
-                            </div>
-                        </section>
-                    </div>
+                
+                <div class="form-group">
+                    <label>DESCRIPCIÓN:</label>
+                    <asp:TextBox ID="txt_descripcion_edit" runat="server" TextMode="MultiLine" Rows="3" MaxLength="300"></asp:TextBox>
                 </div>
+                
+                <div class="form-group">
+                    <label>VIDEO ACTUAL:</label>
+                    <asp:Label ID="lbl_video_actual" runat="server" Text="No hay video"></asp:Label>
+                </div>
+                
+                <div class="form-group">
+                    <label>NUEVO VIDEO (opcional):</label>
+                    <asp:FileUpload ID="fud_video_edit" runat="server" accept="video/*" />
+                    <small>Dejar vacío para mantener el video actual</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>SECCIÓN:</label>
+                    <asp:DropDownList ID="ddl_seccion_edit" runat="server">
+                        <asp:ListItem Value="" Text="-- Seleccione --"></asp:ListItem>
+                        <asp:ListItem Value="General" Text="General"></asp:ListItem>
+                        <asp:ListItem Value="Básico" Text="Básico"></asp:ListItem>
+                        <asp:ListItem Value="Intermedio" Text="Intermedio"></asp:ListItem>
+                        <asp:ListItem Value="Avanzado" Text="Avanzado"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                
+                <div class="form-group">
+                    <label>ESTADO:</label>
+                    <asp:DropDownList ID="ddl_estado_edit" runat="server">
+                        <asp:ListItem Value="1" Text="Activo"></asp:ListItem>
+                        <asp:ListItem Value="0" Text="Inactivo"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                
+                <div class="btn-group">
+                    <asp:Button ID="btn_actualizar" runat="server" Text="ACTUALIZAR" CssClass="btn btn-success" OnClick="btn_actualizar_Click" />
+                    <button type="button" class="btn btn-secondary" onclick="ocultarModal('modalEditar')">CANCELAR</button>
+                </div>
+                
+                <asp:Label ID="lbl_mensaje_edit" runat="server" CssClass="msg-error"></asp:Label>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function mostrarModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function ocultarModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function confirmarEliminacion() {
+            return confirm('¿Está seguro de eliminar este tutorial?');
+        }
+
+        window.onload = function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'edit') {
+                mostrarModal('modalEditar');
+            }
+        };
+    </script>
 </asp:Content>
