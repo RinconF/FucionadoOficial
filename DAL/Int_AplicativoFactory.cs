@@ -70,8 +70,23 @@ namespace DAL
             {
                 AddParameters(_obj);
                 AddCmdParameter("@Action", Action, ParameterDirection.Input);
-                ExecuteNonQuery();
-                i = 1;
+                if (Action == 3)
+                {
+                    object result = ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        i = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        i = 1;
+                    }
+                }
+                else
+                {
+                    ExecuteNonQuery();
+                    i = 1;
+                }
             }
             catch (Exception e)
             {
