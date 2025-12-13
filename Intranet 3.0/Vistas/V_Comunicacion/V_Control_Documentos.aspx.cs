@@ -21,6 +21,8 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         const string CONST_ERRORCONEXIONSERV = "al intentar conectarse al servidor: ";
         const string CONST_ERRORPERMISOS = "al intentar acceder a archivos. ACCESO DENEGADO. ";
         const string CONST_ERROR = " - ERROR: ";
+        private static readonly string[] ExtensionesPermitidas = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar" };
+        private const int MaximoTamanoArchivo = 20 * 1024 * 1024; // 20 MB
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -147,6 +149,42 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
+        private bool ValidarArchivoSeleccionado(System.Web.UI.WebControls.FileUpload fileUpload, out string mensajeError)
+        {
+            mensajeError = string.Empty;
+
+            if (fileUpload == null || !fileUpload.HasFile)
+            {
+                mensajeError = "Debe seleccionar un archivo.";
+                return false;
+            }
+
+            string extension = Path.GetExtension(fileUpload.FileName).ToLower();
+            if (!ExtensionesPermitidas.Contains(extension))
+            {
+                mensajeError = "Formato no permitido. Solo se admiten PDF, Word, Excel, PowerPoint o archivos comprimidos.";
+                return false;
+            }
+
+            if (fileUpload.PostedFile != null && fileUpload.PostedFile.ContentLength > MaximoTamanoArchivo)
+            {
+                mensajeError = $"El archivo supera el tamaño máximo de {MaximoTamanoArchivo / (1024 * 1024)} MB.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private void MostrarModal(string modalId)
+        {
+            ScriptManager.RegisterStartupScript(
+                this,
+                GetType(),
+                $"mostrar_{modalId}",
+                $"mostrarModal('{modalId}');",
+                true);
+        }
+
         protected void btn_guardar_Click(object sender, EventArgs e)
         {
             try
@@ -154,18 +192,21 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 if (string.IsNullOrWhiteSpace(txt_titulo.Text))
                 {
                     lbl_mensaje.Text = "El título es obligatorio.";
+                    MostrarModal("modalNuevo");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txt_descripcion.Text))
                 {
                     lbl_mensaje.Text = "La descripción es obligatoria.";
+                    MostrarModal("modalNuevo");
                     return;
                 }
 
-                if (!fud_archivo.HasFile)
+                if (!ValidarArchivoSeleccionado(fud_archivo, out string errorArchivoNuevo))
                 {
-                    lbl_mensaje.Text = "Debe seleccionar un archivo.";
+                    lbl_mensaje.Text = errorArchivoNuevo;
+                    MostrarModal("modalNuevo");
                     return;
                 }
 
@@ -178,14 +219,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Estado = true
                 };
 
-                string rutaArchivo = GuardarArchivo(fud_archivo);
+                string rutaArchivo = GuardarArchivo(fud_archivo, out string errorGuardar);
                 if (!string.IsNullOrEmpty(rutaArchivo))
                 {
                     obj.Archivo = rutaArchivo;
                 }
                 else
                 {
-                    lbl_mensaje.Text = "Error al guardar el archivo.";
+                    lbl_mensaje.Text = string.IsNullOrEmpty(errorGuardar) ? "Error al guardar el archivo." : errorGuardar;
+                    MostrarModal("modalNuevo");
                     return;
                 }
 
@@ -203,6 +245,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             catch (Exception ex)
             {
                 lbl_mensaje.Text = "Error: " + ex.Message;
+                MostrarModal("modalNuevo");
             }
         }
 
@@ -248,12 +291,14 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 if (string.IsNullOrWhiteSpace(txt_titulo_edit.Text))
                 {
                     lbl_mensaje_edit.Text = "El título es obligatorio.";
+                    MostrarModal("modalEditar");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txt_descripcion_edit.Text))
                 {
                     lbl_mensaje_edit.Text = "La descripción es obligatoria.";
+                    MostrarModal("modalEditar");
                     return;
                 }
 
@@ -271,19 +316,27 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 if (fud_archivo_edit.HasFile)
                 {
+                    if (!ValidarArchivoSeleccionado(fud_archivo_edit, out string errorArchivoEditar))
+                    {
+                        lbl_mensaje_edit.Text = errorArchivoEditar;
+                        MostrarModal("modalEditar");
+                        return;
+                    }
+
                     if (!string.IsNullOrEmpty(hf_archivo_actual.Value))
                     {
                         EliminarArchivoFisico(hf_archivo_actual.Value);
                     }
 
-                    string rutaArchivo = GuardarArchivo(fud_archivo_edit);
+                    string rutaArchivo = GuardarArchivo(fud_archivo_edit, out string errorGuardar);
                     if (!string.IsNullOrEmpty(rutaArchivo))
                     {
                         obj.Archivo = rutaArchivo;
                     }
                     else
                     {
-                        lbl_mensaje_edit.Text = "Error al guardar el archivo.";
+                        lbl_mensaje_edit.Text = string.IsNullOrEmpty(errorGuardar) ? "Error al guardar el archivo." : errorGuardar;
+                        MostrarModal("modalEditar");
                         return;
                     }
                 }
@@ -301,11 +354,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 else
                 {
                     lbl_mensaje_edit.Text = "Error al actualizar.";
+                    MostrarModal("modalEditar");
                 }
             }
             catch (Exception ex)
             {
                 lbl_mensaje_edit.Text = "Error: " + ex.Message;
+                MostrarModal("modalEditar");
             }
         }
 
@@ -342,19 +397,18 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        private string GuardarArchivo(System.Web.UI.WebControls.FileUpload fileUpload)
+        private string GuardarArchivo(System.Web.UI.WebControls.FileUpload fileUpload, out string mensajeError)
         {
+            mensajeError = string.Empty;
+
+            if (!ValidarArchivoSeleccionado(fileUpload, out mensajeError))
+            {
+                return null;
+            }
+
             try
             {
-                if (!fileUpload.HasFile)
-                    return null;
-
                 string extension = Path.GetExtension(fileUpload.FileName).ToLower();
-                string[] extensionesPermitidas = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar" };
-
-                if (!extensionesPermitidas.Contains(extension))
-                    return null;
-
                 string[] rutas = AG_Utils.ObtenerRutasDocumentos();
                 string rutaLocal = rutas[0];
                 string carpetaFisica = Server.MapPath(rutaLocal);
@@ -372,8 +426,9 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 return rutaLocal + nombreArchivo;
             }
-            catch
+            catch (Exception ex)
             {
+                mensajeError = "Error al guardar el archivo: " + ex.Message;
                 return null;
             }
         }

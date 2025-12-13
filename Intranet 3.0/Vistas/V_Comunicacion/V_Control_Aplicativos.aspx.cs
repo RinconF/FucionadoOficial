@@ -20,30 +20,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             if (!IsPostBack)
             {
                 CargarTablaAplicativos();
-
-                // Vincular eventos JavaScript para los botones
-                Page.ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "BindButtons",
-                    @"
-                    document.getElementById('btn_modal_crear').onclick = function() { mostrarModalCrear(); };
-                    document.getElementById('btn_modal_actualizar').onclick = function() { " + Page.ClientScript.GetPostBackEventReference(this, "actualizar") + @"; };
-                    document.getElementById('btn_modal_eliminar').onclick = function() { " + Page.ClientScript.GetPostBackEventReference(this, "eliminar") + @"; };
-                    ",
-                    true
-                );
-            }
-        }
-
-        public void RaisePostBackEvent(string eventArgument)
-        {
-            if (eventArgument == "actualizar")
-            {
-                btn_modal_actualizar_Click(null, null);
-            }
-            else if (eventArgument == "eliminar")
-            {
-                btn_modal_eliminar_Click(null, null);
             }
         }
 
@@ -118,21 +94,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         {
             try
             {
-                string rutaImagen = null;
-
-                if (fud_imagen.HasFile)
-                {
-                    // Obtener ID del nuevo aplicativo (simulado, después del INSERT retornará el real)
-                    int nuevoId = ObtenerProximoId();
-                    rutaImagen = GuardarImagenAplicativo(fud_imagen, nuevoId.ToString(), null);
-
-                    if (string.IsNullOrEmpty(rutaImagen))
-                    {
-                        MostrarMensaje("Error al guardar la imagen del aplicativo.", false);
-                        return;
-                    }
-                }
-
                 int idUsuarioActual = ObtenerIdUsuarioActual();
 
                 int? orden = null;
@@ -146,14 +107,40 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Titulo = txt_titulo.Text.Trim(),
                     Descripcion = txt_descripcion.Text.Trim(),
                     Url = txt_url.Text.Trim(),
-                    Imagen = rutaImagen,
                     Seccion = ddl_seccion.SelectedValue,
                     Orden = orden,
                     Estado = true,
                     Usuario_Creacion = idUsuarioActual
                 };
 
-                Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 3);
+                int idAplicativoCreado = Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 3);
+
+                if (idAplicativoCreado <= 0)
+                {
+                    MostrarMensaje("No se pudo crear el aplicativo en la base de datos.", false);
+                    return;
+                }
+
+                string rutaImagen = null;
+
+                if (fud_imagen.HasFile)
+                {
+                    rutaImagen = GuardarImagenAplicativo(fud_imagen, idAplicativoCreado.ToString(), null);
+
+                    if (string.IsNullOrEmpty(rutaImagen))
+                    {
+                        MostrarMensaje("Error al guardar la imagen del aplicativo.", false);
+                        return;
+                    }
+
+                    aplicativo.Id_Aplicativo = idAplicativoCreado;
+                    aplicativo.Imagen = rutaImagen;
+                    aplicativo.Usuario_Actualizacion = idUsuarioActual;
+
+                    Int_Aplicativos_BRL.InsertOrUpdate(aplicativo, 4);
+                }
+
+                // En caso de no cargar imagen, ya se insertó el registro básico.
                 CargarTablaAplicativos(txt_buscar.Text.Trim());
                 LimpiarFormularioCrear();
                 MostrarMensaje("Aplicativo creado correctamente.", true);
@@ -479,32 +466,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             catch
             {
                 return (string.Empty, string.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Obtiene el próximo ID disponible para aplicativos
-        /// </summary>
-        private int ObtenerProximoId()
-        {
-            try
-            {
-                DataTable dt = Int_Aplicativos_BRL.SelectTable(new Int_Aplicativos(), 0);
-                if (dt.Rows.Count > 0)
-                {
-                    int maxId = 0;
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        int id = Convert.ToInt32(row["Id_Aplicativo"]);
-                        if (id > maxId) maxId = id;
-                    }
-                    return maxId + 1;
-                }
-                return 1;
-            }
-            catch
-            {
-                return 1;
             }
         }
 
