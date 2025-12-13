@@ -32,18 +32,19 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 if (tutoriales != null && tutoriales.Count > 0)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("<table class='tutorial-table'>");
+                    sb.Append("<table class='tbl_vistas_general'>");
                     sb.Append("<thead><tr>");
-                    sb.Append("<th>ID</th>");
-                    sb.Append("<th>TÍTULO</th>");
-                    sb.Append("<th>DESCRIPCIÓN</th>");
-                    sb.Append("<th>VIDEO</th>");
-                    sb.Append("<th>SECCIÓN</th>");
-                    sb.Append("<th>FECHA</th>");
-                    sb.Append("<th>ESTADO</th>");
-                    sb.Append("<th>ACCIONES</th>");
+                    sb.Append("<th>#</th>");
+                    sb.Append("<th>Título</th>");
+                    sb.Append("<th>Descripción</th>");
+                    sb.Append("<th>Video</th>");
+                    sb.Append("<th>Sección</th>");
+                    sb.Append("<th>Fecha</th>");
+                    sb.Append("<th>Estado</th>");
+                    sb.Append("<th>Acciones</th>");
                     sb.Append("</tr></thead><tbody>");
 
+                    int contador = 1;
                     foreach (Int_Tutoriales tutorial in tutoriales)
                     {
                         string descripcion = tutorial.Descripcion ?? "";
@@ -57,17 +58,25 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                         string estadoColor = tutorial.Estado == true ? "green" : "red";
 
                         sb.Append("<tr>");
-                        sb.AppendFormat("<td>{0}</td>", tutorial.Id_Tutorial);
+                        sb.AppendFormat("<td>{0}</td>", contador);
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Titulo));
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(descripcion));
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(videoNombre));
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Seccion));
                         sb.AppendFormat("<td>{0}</td>", tutorial.Fecha_Creacion?.ToString("dd/MM/yyyy HH:mm") ?? "");
-                        sb.AppendFormat("<td style='color:{1}'>{0}</td>", estadoTexto, estadoColor);
-                        sb.Append("<td>");
-                        sb.AppendFormat("<button class='btn-action btn btn-info' onclick=\"location.href='?action=edit&id={0}'\">Editar</button>", tutorial.Id_Tutorial);
-                        sb.AppendFormat("<button class='btn-action btn btn-danger' onclick=\"if(confirmarEliminacion()) location.href='?action=delete&id={0}'\">Eliminar</button>", tutorial.Id_Tutorial);
+                        sb.AppendFormat("<td>{0}</td>", estadoTexto == "Activo"
+                            ? "<span class='badge badge-success'>Activo</span>"
+                            : "<span class='badge badge-secondary'>Inactivo</span>");
+                        sb.Append("<td class='acciones'>");
+                        sb.AppendFormat("<button class='button' style=\"padding:6px 14px;\" onclick=\"location.href='?action=edit&id={0}'\"><i class='fas fa-edit'></i> Editar</button>", tutorial.Id_Tutorial);
+                        sb.AppendFormat("<button class='button' style=\"padding:6px 14px; background-color:#e74c3c; color:white;\" onclick=\"if(confirmarEliminacion()) location.href='?action=delete&id={0}'\"><i class='fas fa-trash'></i> Eliminar</button>", tutorial.Id_Tutorial);
                         sb.Append("</td></tr>");
+                        contador++;
+                    }
+
+                    if (contador == 1)
+                    {
+                        sb.Append("<tr><td colspan='8'>No hay tutoriales registrados.</td></tr>");
                     }
 
                     sb.Append("</tbody></table>");

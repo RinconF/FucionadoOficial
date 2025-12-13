@@ -1,5 +1,20 @@
 ﻿function cargar_select_address_i() {
-    //Tipo via
+    var existeAlguno = false;
+
+    function cargarSelect(id, valores) {
+        var select = document.getElementById(id);
+        if (!select) {
+            return;
+        }
+
+        existeAlguno = true;
+        for (var i = 0; i < valores.length; i++) {
+            var option = document.createElement("option");
+            option.innerHTML = valores[i];
+            select.appendChild(option);
+        }
+    }
+
     var via = [
         " ",
         "Av. Calle",
@@ -12,15 +27,7 @@
         "Carrera",
         "Transversal"
     ];
-    var select = document.getElementById("tipo_i");
 
-    for (var i = 0; i < via.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = via[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    //Letra
     var letra = [
         " ",
         "A",
@@ -50,31 +57,7 @@
         "Y",
         "Z"
     ];
-    var select = document.getElementById("letra_i");
 
-    for (var i = 0; i < letra.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = letra[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    var select = document.getElementById("letra_a_i");
-
-    for (var i = 0; i < letra.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = letra[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    var select = document.getElementById("letra_i_b");
-
-    for (var i = 0; i < letra.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = letra[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    //Cuadrante
     var cuadrante = [
         " ",
         "Norte",
@@ -82,34 +65,21 @@
         "Este",
         "Oeste"
     ];
-    var select = document.getElementById("cuadrante_i");
 
-    for (var i = 0; i < cuadrante.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = cuadrante[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    var select = document.getElementById("cuadrante_a_i");
-
-    for (var i = 0; i < cuadrante.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = cuadrante[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
-
-    //Cuadrante
     var especial = [
         " ",
         "Bis"
     ];
-    var select = document.getElementById("especial_i");
 
-    for (var i = 0; i < especial.length; i++) {
-        var option = document.createElement("option"); //Crear opcion
-        option.innerHTML = especial[i]; //Cargar array en la opción
-        select.appendChild(option); //Cargar opción en el select
-    }
+    cargarSelect("tipo_i", via);
+    cargarSelect("letra_i", letra);
+    cargarSelect("letra_a_i", letra);
+    cargarSelect("letra_i_b", letra);
+    cargarSelect("cuadrante_i", cuadrante);
+    cargarSelect("cuadrante_a_i", cuadrante);
+    cargarSelect("especial_i", especial);
+
+    return existeAlguno;
 }
 
 //Cargar datos
@@ -169,10 +139,10 @@ $(document).ready(function () {
 
 
     $("body").on("click", ".btn-agregar-address", function () {
-        
+
         let id_input = $(this).attr("data-id");
         if (
-            $("#tipo_i").val().length != 0 && 
+            $("#tipo_i").val().length != 0 &&
             $("#num_a").val().length != 0 &&
             $("#num_b").val().length != 0 &&
             $("#num_c").val().length != 0
@@ -198,36 +168,18 @@ $(document).ready(function () {
                 " " +
                 $("#cuadrante_a_i").val() +
                 " , " +
-                $("#txt_adicional").val(); 
+                $("#cardinal_id").val();
 
             $("#" + id_input).val(valor.toUpperCase());
             $("#address_card_i").attr("style", "display: none;");
         }
         else {
-            alert("No se puede agregar dirección con campos básicos vacios.");
+            $("#" + id_input).val("");
         }
     });
-    
 
     cargar_select_address_i();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
