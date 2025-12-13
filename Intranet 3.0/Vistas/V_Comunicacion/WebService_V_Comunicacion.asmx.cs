@@ -121,6 +121,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 DataRow row = dt.Rows[0];
 
                 // Construir respuesta con nombres de columna para evitar depender del orden
+                var rolesIdsValor = row.Table.Columns.Contains("RolesIds")
+                    ? row["RolesIds"]
+                    : row.Table.Columns.Contains("Roles_Ids")
+                        ? row["Roles_Ids"]
+                        : null;
+
                 var popupDto = new
                 {
                     Id_Popup = row.Table.Columns.Contains("Id_Popup") ? row["Id_Popup"] : null,
@@ -133,7 +139,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
                     Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
                     Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null,
-                    RolesIds = row.Table.Columns.Contains("RolesIds") ? row["RolesIds"] : null
+                    RolesIds = rolesIdsValor
                 };
 
                 lista.Add(popupDto);

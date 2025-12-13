@@ -67,27 +67,28 @@
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">
-                        <button
-                            type="button"
-                            id="btn_modal_crear"
-                            class="btn-modal"
-                            data-id="modal_crear_aplicativo">
+                        <asp:LinkButton
+                            runat="server"
+                            ID="btn_modal_crear"
+                            CssClass="btn-modal"
+                            OnClientClick="mostrarModalCrear(); return false;">
                             <i class="fas fa-plus"></i>Nuevo Aplicativo
-                        </button>
-                        <button
-                            type="button"
-                            id="btn_modal_actualizar"
-                            class="btn-actu-grupo"
-                            data-id="modal_actualizar_aplicativo">
+                        </asp:LinkButton>
+                        <asp:LinkButton
+                            runat="server"
+                            ID="btn_modal_actualizar"
+                            CssClass="btn-actu-grupo"
+                            OnClick="btn_modal_actualizar_Click">
                             <i class="fas fa-cog"></i>Actualizar Aplicativo
-                        </button>
-                        <button
-                            type="button"
-                            id="btn_modal_eliminar"
-                            class="button"
-                            style="background-color: #e74c3c; color: white;">
+                        </asp:LinkButton>
+                        <asp:LinkButton
+                            runat="server"
+                            ID="btn_modal_eliminar"
+                            CssClass="button"
+                            Style="background-color: #e74c3c; color: white;"
+                            OnClick="btn_modal_eliminar_Click">
                             <i class="fas fa-trash"></i>Eliminar Aplicativo
-                        </button>
+                        </asp:LinkButton>
                     </div>
                     <div class="box_search">
                         <i class="fas fa-search"></i>
