@@ -1,0 +1,732 @@
+﻿/* ========================================
+   SELECTOR DE MULTIMEDIA MODERNO
+   ======================================== */
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.section-description {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.multimedia-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.multimedia-option,
+.multimedia-option-edit {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.multimedia-option:hover,
+.multimedia-option-edit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: #16a085;
+}
+
+.multimedia-option.active,
+.multimedia-option-edit.active {
+    background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+    border-color: #16a085;
+    box-shadow: 0 8px 20px rgba(22, 160, 133, 0.3);
+}
+
+.multimedia-option.active .multimedia-icon,
+.multimedia-option-edit.active .multimedia-icon,
+.multimedia-option.active .multimedia-label,
+.multimedia-option-edit.active .multimedia-label {
+    color: white;
+}
+
+.multimedia-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #16a085;
+    transition: all 0.3s ease;
+}
+
+.multimedia-option:hover .multimedia-icon,
+.multimedia-option-edit:hover .multimedia-icon {
+    transform: scale(1.1);
+}
+
+.multimedia-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+/* Efecto de brillo al seleccionar */
+.multimedia-option.active::before,
+.multimedia-option-edit.active::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: shine 0.6s ease-out;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* ========================================
+   SECCIÓN DE UPLOAD MEJORADA
+   ======================================== */
+.upload-section,
+.upload-section-edit {
+    margin-top: 20px;
+    animation: fadeInDown 0.4s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.upload-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 2px dashed #16a085;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-container:hover {
+    border-color: #1abc9c;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 4px 12px rgba(22, 160, 133, 0.1);
+}
+
+.upload-container > i {
+    font-size: 48px;
+    color: #16a085;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.upload-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.upload-input {
+    margin: 10px 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.upload-hint {
+    display: block;
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+/* ========================================
+   ROLES GRID MODERNO - ESTILO SIMPLE
+   ======================================== */
+.roles-grid {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.roles-checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+/* IMPORTANTE: Asegurar que el label sea flex para mantener checkbox y texto en línea */
+.roles-checkbox-list tr,
+.roles-checkbox-list td {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.roles-checkbox-list label {
+    display: flex !important;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    padding: 4px 0;
+    transition: all 0.2s ease;
+    user-select: none;
+    width: 100%;
+    margin: 0 !important;
+}
+
+.roles-checkbox-list label:hover {
+    color: #2563eb;
+}
+
+/* Estilos del checkbox */
+.roles-checkbox-list input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    margin-right: 12px;
+    margin-left: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    background-color: white;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.roles-checkbox-list input[type="checkbox"]:hover {
+    border-color: #2563eb;
+}
+
+/* Checkbox checked */
+.roles-checkbox-list input[type="checkbox"]:checked {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Checkmark (✓) */
+.roles-checkbox-list input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Span del texto del rol */
+.roles-checkbox-list label span {
+    display: inline-block;
+    line-height: 1.4;
+    flex: 1;
+}
+
+/* Texto del rol cuando está checked */
+.roles-checkbox-list input[type="checkbox"]:checked + span {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+/* Animación al hacer check */
+.roles-checkbox-list input[type="checkbox"]:checked {
+    animation: checkBounce 0.3s ease;
+}
+
+@keyframes checkBounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Focus para accesibilidad */
+.roles-checkbox-list input[type="checkbox"]:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Scroll personalizado */
+.roles-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.roles-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.roles-grid::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+.roles-grid::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ========================================
+   BOTONES MEJORADOS
+   ======================================== */
+.btn-guardar-popup {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-guardar-popup:hover {
+    background: linear-gradient(135deg, #229954 0%, #27ae60 100%);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+.btn-actualizar-popup {
+    background: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-actualizar-popup:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.btn-eliminar-popup {
+    border-color: #ff7052 !important;
+    color: #ff7052 !important;
+}
+
+.btn-eliminar-popup:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* ========================================
+   CLASES AUXILIARES
+   ======================================== */
+
+.input-busqueda-rapida {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: 250px;
+}
+
+.form-label-bold {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.modal-small {
+    max-width: 500px;
+}
+
+.modal-title-danger {
+    color: #e74c3c;
+}
+
+.text-center-padded {
+    text-align: center;
+    padding: 20px;
+}
+
+.text-confirmation {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.text-popup-title {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.flex-center-gap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-eliminar-confirm {
+    background-color: #ff7052;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+}
+
+.btn-cancelar {
+    background-color: #95a5a6;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: none;
+}
+
+/* ========================================
+   MEJORAS PARA EL MODAL
+   ======================================== */
+.modal-i-gl-body {
+    max-width: 600px;
+    width: 90%;
+}
+
+.box_content_crear_vista {
+    padding: 20px;
+}
+
+.content.row {
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flow !important;
+}
+
+    /* ========================================
+   RESPONSIVE
+   ======================================== */
+    /* Tablets grandes y desktop pequeño (hasta 1024px) */
+    @media (max-width: 1024px) {
+        .modal-i-gl-body {
+            max-width: 550px;
+            width: 85%;
+        }
+    }
+    /* Tablets (hasta 768px) */
+    @media (max-width: 768px) {
+        .modal-i-gl-body {
+            max-width: 95%;
+            width: 95%;
+            margin: 10px;
+        }
+
+        .box_content_crear_vista {
+            padding: 15px;
+        }
+
+        .multimedia-selector {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .multimedia-option,
+        .multimedia-option-edit {
+            padding: 15px 10px;
+            min-height: 100px;
+        }
+
+        .multimedia-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .multimedia-label {
+            font-size: 13px;
+        }
+
+        .upload-container {
+            padding: 20px 15px;
+        }
+
+            .upload-container > i {
+                font-size: 40px;
+            }
+
+        .roles-grid {
+            padding: 15px;
+            max-height: 250px;
+        }
+
+        .roles-checkbox-list {
+            gap: 14px;
+        }
+
+            .roles-checkbox-list label {
+                font-size: 14px;
+            }
+
+            .roles-checkbox-list input[type="checkbox"] {
+                width: 22px;
+                height: 22px;
+                min-width: 22px;
+            }
+
+                .roles-checkbox-list input[type="checkbox"]:checked::after {
+                    left: 6px;
+                    top: 2px;
+                    width: 5px;
+                    height: 10px;
+                }
+
+        .section-label {
+            font-size: 15px;
+        }
+
+        .section-description {
+            font-size: 12px;
+        }
+
+        .input-busqueda-rapida {
+            width: 200px;
+        }
+    }
+    /* Móviles (hasta 576px) */
+    @media (max-width: 576px) {
+        .modal-i-gl-body {
+            max-width: 98%;
+            width: 98%;
+            margin: 5px;
+        }
+
+        .box_content_crear_vista {
+            padding: 12px;
+        }
+
+        .content.row {
+            margin-bottom: 15px;
+        }
+
+        .multimedia-selector {
+            gap: 10px;
+        }
+
+        .multimedia-option,
+        .multimedia-option-edit {
+            padding: 12px 8px;
+            min-height: 90px;
+        }
+
+        .multimedia-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .multimedia-label {
+            font-size: 12px;
+        }
+
+        .upload-container {
+            padding: 15px 10px;
+        }
+
+            .upload-container > i {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+
+        .upload-label {
+            font-size: 14px;
+        }
+
+        .upload-hint {
+            font-size: 11px;
+        }
+
+        .roles-grid {
+            padding: 12px;
+            max-height: 200px;
+        }
+
+        .roles-checkbox-list {
+            gap: 12px;
+        }
+
+            .roles-checkbox-list label {
+                font-size: 13px;
+                padding: 2px 0;
+            }
+
+            .roles-checkbox-list input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                margin-right: 10px;
+            }
+
+                .roles-checkbox-list input[type="checkbox"]:checked::after {
+                    left: 5px;
+                    top: 2px;
+                    width: 5px;
+                    height: 9px;
+                }
+
+        .section-label {
+            font-size: 14px;
+            gap: 6px;
+        }
+
+        .section-description {
+            font-size: 11px;
+            margin-bottom: 15px;
+        }
+
+        .form-label-bold {
+            font-size: 13px;
+        }
+
+        .input-busqueda-rapida {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .btn-guardar-popup,
+        .btn-actualizar-popup {
+            padding: 10px 30px;
+            font-size: 14px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .flex-center-gap {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn-eliminar-confirm,
+        .btn-cancelar {
+            width: 100%;
+            padding: 10px 20px;
+        }
+    }
+    /* Móviles muy pequeños (hasta 400px) */
+    @media (max-width: 400px) {
+        .modal-i-gl-body {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .box_content_crear_vista {
+            padding: 10px;
+        }
+
+        .multimedia-option,
+        .multimedia-option-edit {
+            min-height: 80px;
+            padding: 10px 6px;
+        }
+
+        .multimedia-icon {
+            font-size: 22px;
+        }
+
+        .multimedia-label {
+            font-size: 11px;
+        }
+
+        .roles-grid {
+            padding: 10px;
+        }
+
+        .roles-checkbox-list label {
+            font-size: 12px;
+        }
+
+        .section-label {
+            font-size: 13px;
+        }
+    }
+    /* ========================================
+   FIX PARA ASP.NET CHECKBOXLIST
+   ======================================== */
+    /* Asegurar que el CheckBoxList de ASP.NET mantenga el layout correcto */
+    .roles-checkbox-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.roles-checkbox-list table tbody,
+.roles-checkbox-list table tr,
+.roles-checkbox-list table td {
+    display: flex !important;
+    width: 100%;
+}
+
+.roles-checkbox-list table td {
+    padding: 0 !important;
+    margin-bottom: 16px !important;
+}
+
+@media (max-width: 768px) {
+    .roles-checkbox-list table td {
+        margin-bottom: 14px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .roles-checkbox-list table td {
+        margin-bottom: 12px !important;
+    }
+}

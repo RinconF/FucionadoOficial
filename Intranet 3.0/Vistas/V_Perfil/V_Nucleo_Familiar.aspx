@@ -1182,23 +1182,7 @@
             setTimeout(function () {
                 $(".modal-noti").addClass("modal-noti-hide");
                 $(".modal-noti").removeClass("modal-noti-show");
-            }, 4000);
-        }
-
-        btn_agregar.addEventListener('click', () => {
-            txt_nombre.value === '' ? txt_nombre.classList.add('required__input') : txt_nombre.classList.remove('required__input')
-            txt_apellido.value === '' ? txt_apellido.classList.add('required__input') : txt_apellido.classList.remove('required__input')
-            drop_tipo.value === '0' ? drop_tipo.classList.add('required__input') : drop_tipo.classList.remove('required__input')
-            txt_id.value === '' ? txt_id.classList.add('required__input') : txt_id.classList.remove('required__input')
-            txt_edad.value === '' ? txt_edad.classList.add('required__input') : txt_edad.classList.remove('required__input')
-            txt_celular.value === '' ? txt_celular.classList.add('required__input') : txt_celular.classList.remove('required__input')
-            drop_genero.value === '0' ? drop_genero.classList.add('required__input') : drop_genero.classList.remove('required__input')
-            drop_parentesco.value === '0' ? drop_parentesco.classList.add('required__input') : drop_parentesco.classList.remove('required__input')
-            drop_escolaridad.value === '0' ? drop_ocupacion.classList.add('required__input') : drop_escolaridad.classList.remove('required__input')
-            drop_ocupacion.value === '0' ? drop_ocupacion.classList.add('required__input') : drop_ocupacion.classList.remove('required__input')
-        })
-        function quitarPadding() {
-            let doc = document.getElementById('container');
+            }, 4000);d('container');
             doc.removeAttribute('style');
         }
         document.addEventListener('load', quitarPadding);

@@ -21,14 +21,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         const string CONST_ERRORCONEXIONSERV = "al intentar conectarse al servidor: ";
         const string CONST_ERRORPERMISOS = "al intentar acceder a archivos. ACCESO DENEGADO. ";
         const string CONST_ERROR = " - ERROR: ";
-        private static readonly string[] ExtensionesPermitidas = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar" };
-        private const int MaximoTamanoArchivo = 20 * 1024 * 1024; // 20 MB
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 CargarDocumentos();
-                ProcesarAccionesURL();
             }
         }
 
@@ -37,52 +35,67 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             try
             {
                 Int_Documentos obj = new Int_Documentos();
-                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 0);
+                // Action 5: SELECT ALL - Lista todos los documentos activos
+                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 5);
 
                 if (documentos != null && documentos.Count > 0)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("<table class='tabla-documentos'>");
+                    sb.Append("<table class='tbl_vistas_general table table-striped table-hover'>");
                     sb.Append("<thead><tr>");
-                    sb.Append("<th>ID</th>");
-                    sb.Append("<th>TÍTULO</th>");
-                    sb.Append("<th>DESCRIPCIÓN</th>");
-                    sb.Append("<th>ARCHIVO</th>");
-                    sb.Append("<th>URL</th>");
-                    sb.Append("<th>FECHA</th>");
-                    sb.Append("<th>ESTADO</th>");
-                    sb.Append("<th>ACCIONES</th>");
+                    sb.Append("<th style='width: 50px;'>#</th>"); // Número de fila
+                    sb.Append("<th style='width: 60px;'>ID</th>");
+                    sb.Append("<th>TITULO</th>");
+                    sb.Append("<th>DESCRIPCION</th>");
+                    sb.Append("<th style='width: 80px;'>URL</th>");
+                    sb.Append("<th style='width: 80px;'>Archivo</th>");
+                    sb.Append("<th style='width: 180px;'>FECHA DE CREACION</th>");
+                    sb.Append("<th style='width: 80px;'>ACCION</th>"); // Radio button
                     sb.Append("</tr></thead><tbody>");
 
+                    int contador = 1;
                     foreach (Int_Documentos doc in documentos)
                     {
                         string descripcion = doc.Descripcion ?? "";
                         if (descripcion.Length > 80)
                             descripcion = descripcion.Substring(0, 80) + "...";
 
-                        string archivoNombre = !string.IsNullOrEmpty(doc.Archivo) ?
-                            Path.GetFileName(doc.Archivo) : "Sin archivo";
+                        string urlIcono = !string.IsNullOrEmpty(doc.Url) ?
+                            "<a href='" + doc.Url + "' target='_blank' title='Ver enlace' style='color: #3498db;'><i class='fas fa-external-link-alt'></i></a>" :
+                            "-";
 
-                        string urlMostrar = !string.IsNullOrEmpty(doc.Url) ?
-                            "<a href='" + doc.Url + "' target='_blank'><i class='fas fa-external-link-alt'></i></a>" : "-";
-
-                        string estadoTexto = doc.Estado == true ? "Activo" : "Inactivo";
-                        string estadoColor = doc.Estado == true ? "green" : "red";
-
-                        string iconoArchivo = ObtenerIconoArchivo(doc.Archivo);
+                        string archivoIcono = !string.IsNullOrEmpty(doc.Archivo) ?
+                            "<a href='" + ResolveUrl(doc.Archivo) + "' download title='Descargar archivo' style='color: #27ae60;'><i class='fas fa-download'></i></a>" :
+                            "-";
 
                         sb.Append("<tr>");
+                        // Número consecutivo
+                        sb.AppendFormat("<td class='text-center'>{0}</td>", contador);
+                        // ID
                         sb.AppendFormat("<td>{0}</td>", doc.Id_Documentos);
+                        // TITULO
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(doc.Titulo));
+                        // DESCRIPCION
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(descripcion));
-                        sb.AppendFormat("<td><i class='{0}'></i> {1}</td>", iconoArchivo, HttpUtility.HtmlEncode(archivoNombre));
-                        sb.AppendFormat("<td class='text-center'>{0}</td>", urlMostrar);
-                        sb.AppendFormat("<td>{0}</td>", doc.FechaCreacion?.ToString("dd/MM/yyyy HH:mm") ?? "");
-                        sb.AppendFormat("<td style='color:{1}'><strong>{0}</strong></td>", estadoTexto, estadoColor);
-                        sb.Append("<td class='acciones'>");
-                        sb.AppendFormat("<button class='btn-action btn-info' onclick=\"location.href='?action=edit&id={0}'\"><i class='fas fa-edit'></i></button>", doc.Id_Documentos);
-                        sb.AppendFormat("<button class='btn-action btn-danger' onclick=\"if(confirmarEliminacion()) location.href='?action=delete&id={0}'\"><i class='fas fa-trash'></i></button>", doc.Id_Documentos);
-                        sb.Append("</td></tr>");
+                        // URL
+                        sb.AppendFormat("<td class='text-center'>{0}</td>", urlIcono);
+                        // Archivo
+                        sb.AppendFormat("<td class='text-center'>{0}</td>", archivoIcono);
+                        // FECHA DE CREACION
+                        sb.AppendFormat("<td>{0}</td>", doc.FechaCreacion?.ToString("dd/MM/yyyy h:mm:ss tt") ?? "");
+                        // ACCION - Radio button con datos ocultos
+                        sb.Append("<td class='text-center'>");
+                        sb.AppendFormat("<input type='radio' name='rd_documento' value='{0}' ", doc.Id_Documentos);
+                        sb.AppendFormat("data-titulo='{0}' ", HttpUtility.HtmlEncode(doc.Titulo));
+                        sb.AppendFormat("data-descripcion='{0}' ", HttpUtility.HtmlEncode(doc.Descripcion ?? ""));
+                        sb.AppendFormat("data-url='{0}' ", HttpUtility.HtmlEncode(doc.Url ?? ""));
+                        sb.AppendFormat("data-archivo='{0}' ", HttpUtility.HtmlEncode(doc.Archivo ?? ""));
+                        sb.AppendFormat("data-estado='{0}' ", doc.Estado == true ? "1" : "0");
+                        sb.Append("/>");
+                        sb.Append("</td>");
+                        sb.Append("</tr>");
+
+                        contador++;
                     }
 
                     sb.Append("</tbody></table>");
@@ -90,12 +103,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 }
                 else
                 {
-                    lit_tabla_documentos.Text = "<p class='text-center'>No hay documentos registrados.</p>";
+                    lit_tabla_documentos.Text = "<p class='text-center' style='padding: 30px;'>No hay documentos registrados.</p>";
                 }
             }
             catch (Exception ex)
             {
-                lit_tabla_documentos.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+                lit_tabla_documentos.Text = "<p class='msg-error'>Error al cargar documentos: " + ex.Message + "</p>";
             }
         }
 
@@ -127,89 +140,33 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        private void ProcesarAccionesURL()
-        {
-            string action = Request.QueryString["action"];
-            string idStr = Request.QueryString["id"];
-
-            if (!string.IsNullOrEmpty(action) && !string.IsNullOrEmpty(idStr))
-            {
-                int id;
-                if (int.TryParse(idStr, out id))
-                {
-                    if (action == "edit")
-                    {
-                        CargarDocumentoParaEditar(id);
-                    }
-                    else if (action == "delete")
-                    {
-                        EliminarDocumento(id);
-                    }
-                }
-            }
-        }
-
-        private bool ValidarArchivoSeleccionado(System.Web.UI.WebControls.FileUpload fileUpload, out string mensajeError)
-        {
-            mensajeError = string.Empty;
-
-            if (fileUpload == null || !fileUpload.HasFile)
-            {
-                mensajeError = "Debe seleccionar un archivo.";
-                return false;
-            }
-
-            string extension = Path.GetExtension(fileUpload.FileName).ToLower();
-            if (!ExtensionesPermitidas.Contains(extension))
-            {
-                mensajeError = "Formato no permitido. Solo se admiten PDF, Word, Excel, PowerPoint o archivos comprimidos.";
-                return false;
-            }
-
-            if (fileUpload.PostedFile != null && fileUpload.PostedFile.ContentLength > MaximoTamanoArchivo)
-            {
-                mensajeError = $"El archivo supera el tamaño máximo de {MaximoTamanoArchivo / (1024 * 1024)} MB.";
-                return false;
-            }
-
-            return true;
-        }
-
-        private void MostrarModal(string modalId)
-        {
-            ScriptManager.RegisterStartupScript(
-                this,
-                GetType(),
-                $"mostrar_{modalId}",
-                $"mostrarModal('{modalId}');",
-                true);
-        }
-
         protected void btn_guardar_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validaciones
                 if (string.IsNullOrWhiteSpace(txt_titulo.Text))
                 {
                     lbl_mensaje.Text = "El título es obligatorio.";
-                    MostrarModal("modalNuevo");
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txt_descripcion.Text))
                 {
                     lbl_mensaje.Text = "La descripción es obligatoria.";
-                    MostrarModal("modalNuevo");
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
-                if (!ValidarArchivoSeleccionado(fud_archivo, out string errorArchivoNuevo))
+                if (!fud_archivo.HasFile)
                 {
-                    lbl_mensaje.Text = errorArchivoNuevo;
-                    MostrarModal("modalNuevo");
+                    lbl_mensaje.Text = "Debe seleccionar un archivo.";
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
+                // Crear objeto
                 Int_Documentos obj = new Int_Documentos
                 {
                     Titulo = txt_titulo.Text.Trim(),
@@ -219,68 +176,44 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Estado = true
                 };
 
-                string rutaArchivo = GuardarArchivo(fud_archivo, out string errorGuardar);
+                // Guardar archivo físico
+                string rutaArchivo = GuardarArchivo(fud_archivo);
                 if (!string.IsNullOrEmpty(rutaArchivo))
                 {
                     obj.Archivo = rutaArchivo;
                 }
                 else
                 {
-                    lbl_mensaje.Text = string.IsNullOrEmpty(errorGuardar) ? "Error al guardar el archivo." : errorGuardar;
-                    MostrarModal("modalNuevo");
+                    lbl_mensaje.Text = "Error al guardar el archivo.";
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
+                // Action 3: INSERT - Insertar nuevo documento
                 int resultado = Int_Documentos_BRL.InsertOrUpdate(obj, 3);
 
                 if (resultado > 0)
                 {
-                    Response.Redirect(Request.RawUrl.Split('?')[0]);
+                    // Limpiar campos
+                    txt_titulo.Text = "";
+                    txt_descripcion.Text = "";
+                    txt_url.Text = "";
+                    lbl_mensaje.Text = "Documento creado exitosamente.";
+                    lbl_mensaje.CssClass = "msg-success";
+
+                    // Recargar tabla
+                    CargarDocumentos();
                 }
                 else
                 {
                     lbl_mensaje.Text = "Error al guardar el documento.";
+                    lbl_mensaje.CssClass = "msg-error";
                 }
             }
             catch (Exception ex)
             {
                 lbl_mensaje.Text = "Error: " + ex.Message;
-                MostrarModal("modalNuevo");
-            }
-        }
-
-        private void CargarDocumentoParaEditar(int id)
-        {
-            try
-            {
-                Int_Documentos obj = new Int_Documentos { Id_Documentos = id };
-                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 2);
-
-                if (documentos != null && documentos.Count > 0)
-                {
-                    Int_Documentos doc = documentos[0];
-
-                    hf_id_documento.Value = doc.Id_Documentos.ToString();
-                    txt_titulo_edit.Text = doc.Titulo;
-                    txt_descripcion_edit.Text = doc.Descripcion;
-                    txt_url_edit.Text = doc.Url;
-                    ddl_estado_edit.SelectedValue = doc.Estado == true ? "1" : "0";
-
-                    if (!string.IsNullOrEmpty(doc.Archivo))
-                    {
-                        hf_archivo_actual.Value = doc.Archivo;
-                        lbl_archivo_actual.Text = Path.GetFileName(doc.Archivo);
-                    }
-                    else
-                    {
-                        hf_archivo_actual.Value = "";
-                        lbl_archivo_actual.Text = "No hay archivo";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lbl_mensaje_edit.Text = "Error: " + ex.Message;
+                lbl_mensaje.CssClass = "msg-error";
             }
         }
 
@@ -288,22 +221,31 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         {
             try
             {
+                // Validaciones
                 if (string.IsNullOrWhiteSpace(txt_titulo_edit.Text))
                 {
                     lbl_mensaje_edit.Text = "El título es obligatorio.";
-                    MostrarModal("modalEditar");
+                    lbl_mensaje_edit.CssClass = "msg-error";
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txt_descripcion_edit.Text))
                 {
                     lbl_mensaje_edit.Text = "La descripción es obligatoria.";
-                    MostrarModal("modalEditar");
+                    lbl_mensaje_edit.CssClass = "msg-error";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(hf_id_documento.Value))
+                {
+                    lbl_mensaje_edit.Text = "ID de documento no válido.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
                     return;
                 }
 
                 int idDocumento = Convert.ToInt32(hf_id_documento.Value);
 
+                // Crear objeto para actualizar
                 Int_Documentos obj = new Int_Documentos
                 {
                     Id_Documentos = idDocumento,
@@ -314,121 +256,151 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Estado = ddl_estado_edit.SelectedValue == "1"
                 };
 
+                // Verificar si hay nuevo archivo
                 if (fud_archivo_edit.HasFile)
                 {
-                    if (!ValidarArchivoSeleccionado(fud_archivo_edit, out string errorArchivoEditar))
-                    {
-                        lbl_mensaje_edit.Text = errorArchivoEditar;
-                        MostrarModal("modalEditar");
-                        return;
-                    }
-
-                    if (!string.IsNullOrEmpty(hf_archivo_actual.Value))
+                    // Eliminar archivo anterior si existe
+                    if (!string.IsNullOrEmpty(hf_archivo_actual.Value) && hf_archivo_actual.Value != "Sin archivo")
                     {
                         EliminarArchivoFisico(hf_archivo_actual.Value);
                     }
 
-                    string rutaArchivo = GuardarArchivo(fud_archivo_edit, out string errorGuardar);
+                    // Guardar nuevo archivo
+                    string rutaArchivo = GuardarArchivo(fud_archivo_edit);
                     if (!string.IsNullOrEmpty(rutaArchivo))
                     {
                         obj.Archivo = rutaArchivo;
                     }
                     else
                     {
-                        lbl_mensaje_edit.Text = string.IsNullOrEmpty(errorGuardar) ? "Error al guardar el archivo." : errorGuardar;
-                        MostrarModal("modalEditar");
+                        lbl_mensaje_edit.Text = "Error al guardar el nuevo archivo.";
+                        lbl_mensaje_edit.CssClass = "msg-error";
                         return;
                     }
                 }
                 else
                 {
+                    // Mantener archivo actual
                     obj.Archivo = hf_archivo_actual.Value;
                 }
 
+                // Action 4: UPDATE - Actualizar documento
                 int resultado = Int_Documentos_BRL.InsertOrUpdate(obj, 4);
 
                 if (resultado > 0)
                 {
-                    Response.Redirect(Request.RawUrl.Split('?')[0]);
+                    lbl_mensaje_edit.Text = "Documento actualizado exitosamente.";
+                    lbl_mensaje_edit.CssClass = "msg-success";
+
+                    // Recargar tabla
+                    CargarDocumentos();
                 }
                 else
                 {
-                    lbl_mensaje_edit.Text = "Error al actualizar.";
-                    MostrarModal("modalEditar");
+                    lbl_mensaje_edit.Text = "Error al actualizar el documento.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
                 }
             }
             catch (Exception ex)
             {
                 lbl_mensaje_edit.Text = "Error: " + ex.Message;
-                MostrarModal("modalEditar");
+                lbl_mensaje_edit.CssClass = "msg-error";
             }
         }
 
-        private void EliminarDocumento(int id)
+        protected void btn_eliminar_Click(object sender, EventArgs e)
         {
             try
             {
-                Int_Documentos objBuscar = new Int_Documentos { Id_Documentos = id };
-                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(objBuscar, 2);
-
-                if (documentos != null && documentos.Count > 0)
+                if (string.IsNullOrWhiteSpace(hf_id_documento_eliminar.Value))
                 {
-                    Int_Documentos doc = documentos[0];
+                    CargarDocumentos();
+                    return;
+                }
 
+                int idDocumento = Convert.ToInt32(hf_id_documento_eliminar.Value);
+
+                // Primero obtener el documento para eliminar el archivo físico
+                Int_Documentos objBuscar = new Int_Documentos { Id_Documentos = idDocumento };
+                // Action 2: LOAD - Cargar documento por ID
+                Int_Documentos doc = Int_Documentos_BRL.Load(objBuscar);
+
+                if (doc != null)
+                {
+                    // Crear objeto para eliminación lógica
                     Int_Documentos objEliminar = new Int_Documentos
                     {
-                        Id_Documentos = id,
+                        Id_Documentos = idDocumento,
                         UsuarioActualizacion = ObtenerIdUsuarioActual()
                     };
 
-                    int resultado = Int_Documentos_BRL.InsertOrUpdate(objEliminar, 5);
+                    // Action 1: DELETE - Eliminación lógica (cambia Estado a 0)
+                    int resultado = Int_Documentos_BRL.InsertOrUpdate(objEliminar, 1);
 
-                    if (resultado > 0 && !string.IsNullOrEmpty(doc.Archivo))
+                    if (resultado > 0)
                     {
-                        EliminarArchivoFisico(doc.Archivo);
+                        // Eliminar archivo físico si existe
+                        if (!string.IsNullOrEmpty(doc.Archivo))
+                        {
+                            EliminarArchivoFisico(doc.Archivo);
+                        }
                     }
                 }
 
-                Response.Redirect(Request.RawUrl.Split('?')[0]);
+                // Recargar tabla
+                CargarDocumentos();
             }
             catch (Exception ex)
             {
-                lit_tabla_documentos.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+                lit_tabla_documentos.Text = "<p class='msg-error'>Error al eliminar: " + ex.Message + "</p>";
             }
         }
 
-        private string GuardarArchivo(System.Web.UI.WebControls.FileUpload fileUpload, out string mensajeError)
+        private string GuardarArchivo(System.Web.UI.WebControls.FileUpload fileUpload)
         {
-            mensajeError = string.Empty;
-
-            if (!ValidarArchivoSeleccionado(fileUpload, out mensajeError))
-            {
-                return null;
-            }
-
             try
             {
+                if (!fileUpload.HasFile)
+                    return null;
+
                 string extension = Path.GetExtension(fileUpload.FileName).ToLower();
+                string[] extensionesPermitidas = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar" };
+
+                if (!extensionesPermitidas.Contains(extension))
+                {
+                    return null;
+                }
+
+                // Tamaño máximo: 10 MB
+                if (fileUpload.PostedFile.ContentLength > 10 * 1024 * 1024)
+                {
+                    return null;
+                }
+
+                // Obtener rutas desde configuración
                 string[] rutas = AG_Utils.ObtenerRutasDocumentos();
                 string rutaLocal = rutas[0];
                 string carpetaFisica = Server.MapPath(rutaLocal);
 
+                // Crear carpeta si no existe
                 if (!Directory.Exists(carpetaFisica))
                 {
                     Directory.CreateDirectory(carpetaFisica);
                 }
 
+                // Generar nombre único para el archivo
                 string nombreArchivo = "doc_" + DateTime.Now.ToString("yyyyMMddHHmmss") +
                                       "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + extension;
 
                 string rutaCompleta = Path.Combine(carpetaFisica, nombreArchivo);
                 fileUpload.SaveAs(rutaCompleta);
 
+                // Retornar ruta relativa
                 return rutaLocal + nombreArchivo;
             }
             catch (Exception ex)
             {
-                mensajeError = "Error al guardar el archivo: " + ex.Message;
+                // Log del error si es necesario
                 return null;
             }
         }
@@ -448,7 +420,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
             catch
             {
-                // Ignorar errores al eliminar
+                // Ignorar errores al eliminar archivo físico
             }
         }
 
@@ -458,7 +430,18 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             {
                 return Convert.ToInt32(Session["Id_Usuario"]);
             }
-            return 1;
+            return 1; // Usuario por defecto
+        }
+
+        private string ResolveUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return "#";
+
+            if (url.StartsWith("~"))
+                return VirtualPathUtility.ToAbsolute(url);
+
+            return url;
         }
     }
 }

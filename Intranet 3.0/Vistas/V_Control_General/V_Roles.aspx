@@ -94,7 +94,9 @@
                         <asp:TextBox runat="server" ID="txt_filter_grupo" placeholder="Búsqueda rápida" OnTextChanged="txt_filter_grupo_TextChanged" AutoPostBack="true"></asp:TextBox>
                     </div>
                 </div>
+                <div class="table-responsive">
                 <table runat="server" id="tbl_roles" class="tbl_roles tbl_vistas_general"></table>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>

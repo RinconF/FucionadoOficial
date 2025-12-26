@@ -271,7 +271,9 @@
                         <asp:TextBox runat="server" ID="txt_filter_grupo" placeholder="Búsqueda rápida" OnTextChanged="txt_filter_grupo_TextChanged" AutoPostBack="true" AutoCompleteType="Disabled"></asp:TextBox>
                     </div>
                 </div>
-                <table runat="server" id="tbl_grupos" class="tbl_vistas_general"></table>
+                <div class="table-responsive">
+                <table runat="server" id="tbl_grupos" class="tbl_vistas_general"></table>                
+                </div>
             </section>
             </ContentTemplate>
     </asp:UpdatePanel>
@@ -304,7 +306,9 @@
                         <asp:TextBox runat="server" ID="txt_filter_vista" placeholder="Búsqueda rápida" OnTextChanged="txt_filter_vista_TextChanged" AutoPostBack="true" AutoCompleteType="Disabled"></asp:TextBox>
                     </div>
                 </div>
+                <div class="table-responsive">
                 <table runat="server" id="tbl_vistas" class="tbl_vistas_general"></table>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>

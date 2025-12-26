@@ -1,15 +1,19 @@
-﻿using BRL;
-using Intranet_3._0.Interna;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Data;
+using BRL;
+using System.Web.UI.HtmlControls;
+using System.IO;
+using System.Configuration;
+using System.Security.Principal;
+using System.Runtime.InteropServices;
+using Intranet_3._0.Interna;
+using System.Net.NetworkInformation;
+using System.Threading;
 
 namespace Intranet_3._0
 {
@@ -22,7 +26,7 @@ namespace Intranet_3._0
         {
             try
             {
-                if (Request.QueryString["Id_Usuario"] != null && Session["cerrar"] != null)
+                if (Request.QueryString["Id_Usuario"] != null && Session["cerrar"] !=null)
                 {
                     pathLog = Server.MapPath(@"~/logs");
                     int tiempoSesion = Convert.ToInt32(ConfigurationManager.AppSettings.Get("tiempoSesion"));
@@ -468,13 +472,13 @@ namespace Intranet_3._0
                                     string rutaUsuario = $"{pathServer}{arrayAnexoFoto[0]}\\{arrayAnexoFoto[1]}\\{arrayAnexoFoto[2]}\\{numDocumento}\\";
 
                                     string[] files = null;
-                                    files = System.IO.Directory.GetFiles(rutaUsuario, "*.*", SearchOption.AllDirectories);
+                                    files = System.IO.Directory.GetFiles(rutaUsuario,"*.*",SearchOption.AllDirectories);
 
                                     string carpetaOmitir = "Perfil";
 
                                     //AGR 12-May-2021: INICIO MANEJO DE ARCHIVOS
                                     //Si la ruta local contiene más de un archivo, procede a verificar imagenes y/o documentos y eliminarlos exceptuando imagen de perfil si (existe). Si en el servidor remoto NO existe el archivo, se envía.
-                                    if (files.Length > 1)
+                                    if (files.Length >1)
                                     {
                                         utilidades.limpiezaCarpetas(rutaUsuario, ubicacionRemota, carpetaOmitir, numDocumento, pathLog);
                                     }
@@ -482,7 +486,7 @@ namespace Intranet_3._0
                                 }
                                 else
                                 {
-                                    utilidades.logError($"{DateTime.Now}{CONST_ERROR}{anexoFoto[2]} no responde.\nRuta: {rutaPerfilRemoto.Replace(@"\\", @"\")}\n{CONST_USOIMAGENDEFAULT}\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {numDocumento}", pathLog);
+                                    utilidades.logError($"{DateTime.Now}{CONST_ERROR}{anexoFoto[2]} no responde.\nRuta: {rutaPerfilRemoto.Replace(@"\\",@"\")}\n{CONST_USOIMAGENDEFAULT}\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario:  {numDocumento}", pathLog);
                                 }
 
 
@@ -544,7 +548,7 @@ namespace Intranet_3._0
             }
             catch (Exception ex)
             {
-                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{id_user}", pathLog);
+                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{ id_user}", pathLog);
 
                 HtmlGenericControl divHtml1 = new HtmlGenericControl();
                 Image image1 = new Image();
@@ -641,7 +645,7 @@ namespace Intranet_3._0
             }
             catch (Exception ex)
             {
-                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{id_user}", pathLog);
+                utilidades.logError($"{DateTime.Now}{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nUsuario:{ id_user}", pathLog);
                 //string url_ = Final.Replace(Final, $@"~/Login");
                 Page.Response.Redirect($@"~/Login", false);
                 Console.WriteLine(ex);

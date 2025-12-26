@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\pasante.desarrollo1\Desktop\Publicacion MIETIB (volatil)</_PublishTargetUrl>
-    <History>True|2025-12-03T19:10:19.3553282Z||;True|2025-12-02T07:53:21.9767491-05:00||;True|2025-11-21T16:18:35.0770082-05:00||;True|2025-11-21T14:49:43.8858056-05:00||;</History>
+    <History>True|2025-12-24T19:32:04.5109725Z||;True|2025-12-24T08:05:35.1590516-05:00||;True|2025-12-22T15:54:49.0951273-05:00||;True|2025-12-22T13:56:50.6189220-05:00||;True|2025-12-19T09:32:18.8527696-05:00||;True|2025-12-18T08:46:48.1034582-05:00||;True|2025-12-16T16:37:46.2515414-05:00||;True|2025-12-15T14:33:20.4169735-05:00||;True|2025-12-03T14:10:19.3553282-05:00||;True|2025-12-02T07:53:21.9767491-05:00||;True|2025-11-21T16:18:35.0770082-05:00||;True|2025-11-21T14:49:43.8858056-05:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -23,22 +23,22 @@
       <publishTime>12/08/2020 13:05:32</publishTime>
     </File>
     <File Include="bin/BRL.dll">
-      <publishTime>12/03/2025 14:09:09</publishTime>
+      <publishTime>12/24/2025 14:31:07</publishTime>
     </File>
     <File Include="bin/BRL.pdb">
-      <publishTime>12/03/2025 14:09:09</publishTime>
+      <publishTime>12/24/2025 14:31:07</publishTime>
     </File>
     <File Include="bin/DAL.dll">
-      <publishTime>12/03/2025 14:09:09</publishTime>
+      <publishTime>12/24/2025 14:31:06</publishTime>
     </File>
     <File Include="bin/DAL.pdb">
-      <publishTime>12/03/2025 14:09:09</publishTime>
+      <publishTime>12/24/2025 14:31:06</publishTime>
     </File>
     <File Include="bin/DCL.dll">
-      <publishTime>12/03/2025 14:09:08</publishTime>
+      <publishTime>12/24/2025 14:31:06</publishTime>
     </File>
     <File Include="bin/DCL.pdb">
-      <publishTime>12/03/2025 14:09:08</publishTime>
+      <publishTime>12/24/2025 14:31:06</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>11/22/2024 13:50:12</publishTime>
@@ -53,10 +53,10 @@
       <publishTime>02/11/2014 10:28:40</publishTime>
     </File>
     <File Include="bin/Intranet 3.0.dll">
-      <publishTime>12/03/2025 14:09:11</publishTime>
+      <publishTime>12/24/2025 14:31:08</publishTime>
     </File>
     <File Include="bin/Intranet 3.0.pdb">
-      <publishTime>12/03/2025 14:09:11</publishTime>
+      <publishTime>12/24/2025 14:31:08</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>02/24/2022 08:50:06</publishTime>
@@ -280,6 +280,9 @@
     <File Include="Content/bootstrap.min.css.map">
       <publishTime>11/11/2025 15:27:01</publishTime>
     </File>
+    <File Include="Content/img/0001%281%29.jpeg">
+      <publishTime>12/03/2025 15:22:35</publishTime>
+    </File>
     <File Include="Content/img/0001.jpg">
       <publishTime>11/11/2025 15:27:02</publishTime>
     </File>
@@ -350,10 +353,10 @@
       <publishTime>11/11/2025 15:27:02</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/24/2025 14:59:30</publishTime>
+      <publishTime>12/22/2025 14:46:23</publishTime>
     </File>
     <File Include="Content/Site_Mobile.css">
-      <publishTime>11/24/2025 14:10:40</publishTime>
+      <publishTime>12/24/2025 11:35:03</publishTime>
     </File>
     <File Include="Content/svg_fontawesome/css/all.css">
       <publishTime>11/11/2025 15:27:03</publishTime>
@@ -5330,7 +5333,7 @@
       <publishTime>11/11/2025 15:27:50</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>12/02/2025 09:08:15</publishTime>
+      <publishTime>12/17/2025 15:32:19</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>11/11/2025 15:26:58</publishTime>
@@ -5375,13 +5378,13 @@
       <publishTime>11/11/2025 15:27:54</publishTime>
     </File>
     <File Include="js/popup-manager.js">
-      <publishTime>12/03/2025 13:35:23</publishTime>
+      <publishTime>12/23/2025 07:36:08</publishTime>
     </File>
     <File Include="js/sweetalert2.min.js">
       <publishTime>11/11/2025 15:27:54</publishTime>
     </File>
     <File Include="Login.aspx">
-      <publishTime>11/11/2025 15:26:58</publishTime>
+      <publishTime>12/03/2025 15:12:50</publishTime>
     </File>
     <File Include="roslyn/csc.exe">
       <publishTime>11/11/2025 15:28:54</publishTime>
@@ -5576,7 +5579,7 @@
       <publishTime>11/11/2025 15:28:55</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.min.js">
-      <publishTime>11/11/2025 15:28:55</publishTime>
+      <publishTime>12/15/2025 08:49:44</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.min.map">
       <publishTime>11/11/2025 15:28:55</publishTime>
@@ -5606,7 +5609,7 @@
       <publishTime>11/11/2025 15:28:56</publishTime>
     </File>
     <File Include="Scripts/js/for-direccion/address-i.js">
-      <publishTime>11/11/2025 15:28:56</publishTime>
+      <publishTime>12/15/2025 14:02:22</publishTime>
     </File>
     <File Include="Scripts/js/html2pdf.bundle.min.js">
       <publishTime>11/11/2025 15:28:56</publishTime>
@@ -5933,7 +5936,7 @@
       <publishTime>11/11/2025 15:28:57</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>12/02/2025 09:49:01</publishTime>
+      <publishTime>12/16/2025 09:00:28</publishTime>
     </File>
     <File Include="Styles/adapting.ui.timepicker.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
@@ -5954,13 +5957,16 @@
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
     <File Include="Styles/css/aplicativos/aplicativos.css">
-      <publishTime>11/12/2025 10:34:34</publishTime>
+      <publishTime>12/22/2025 12:11:26</publishTime>
+    </File>
+    <File Include="Styles/css/aplicativos/Control_Aplicativos.css">
+      <publishTime>12/24/2025 14:16:26</publishTime>
     </File>
     <File Include="Styles/css/copasst/copasst.css">
-      <publishTime>11/11/2025 15:28:58</publishTime>
+      <publishTime>12/03/2025 14:19:51</publishTime>
     </File>
     <File Include="Styles/css/default/default.css">
-      <publishTime>12/02/2025 08:34:12</publishTime>
+      <publishTime>12/17/2025 15:08:18</publishTime>
     </File>
     <File Include="Styles/css/default_encuestas/default_encuestas.css">
       <publishTime>11/21/2025 15:25:12</publishTime>
@@ -5968,20 +5974,35 @@
     <File Include="Styles/css/desprendibles_pago/desprendibles_pago.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
+    <File Include="Styles/css/Documentos/Control_Documentos.css">
+      <publishTime>12/24/2025 14:16:08</publishTime>
+    </File>
+    <File Include="Styles/css/Documentos/Documentos.css">
+      <publishTime>12/24/2025 14:24:12</publishTime>
+    </File>
     <File Include="Styles/css/encuesta_organizacional/encuesta_organizacional.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
+    </File>
+    <File Include="Styles/css/login/login.css">
+      <publishTime>12/23/2025 11:39:34</publishTime>
     </File>
     <File Include="Styles/css/nucleo_familiar/nucleo_familiar.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
+    <File Include="Styles/css/Popup/Control_Popup.css">
+      <publishTime>12/24/2025 14:15:09</publishTime>
+    </File>
     <File Include="Styles/css/programacion_plantilla/programacion_plantilla.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/23/2025 07:58:13</publishTime>
     </File>
     <File Include="Styles/css/sweetalert2/sweetalert2.min.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
     </File>
+    <File Include="Styles/css/tutoriales/Control_Tutoriales.css">
+      <publishTime>12/24/2025 14:17:27</publishTime>
+    </File>
     <File Include="Styles/css/tutoriales/tutoriales.css">
-      <publishTime>11/21/2025 12:02:43</publishTime>
+      <publishTime>12/24/2025 14:25:47</publishTime>
     </File>
     <File Include="Styles/DocumentInArchive.css">
       <publishTime>11/11/2025 15:28:58</publishTime>
@@ -6169,20 +6190,26 @@
     <File Include="Vistas/V_Comites/V_CSV.aspx">
       <publishTime>11/11/2025 15:29:03</publishTime>
     </File>
+    <File Include="Vistas/V_Comunicacion/V_Control_Aplicativos.aspx">
+      <publishTime>12/24/2025 11:19:27</publishTime>
+    </File>
+    <File Include="Vistas/V_Comunicacion/V_Control_Documentos.aspx">
+      <publishTime>12/24/2025 11:43:58</publishTime>
+    </File>
     <File Include="Vistas/V_Comunicacion/V_Control_Noticia.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:28:47</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Control_Popup.aspx">
-      <publishTime>12/02/2025 15:09:53</publishTime>
+      <publishTime>12/23/2025 13:48:08</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Control_SlideShow.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:02:11</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Control_Tutoriales.aspx">
-      <publishTime>12/02/2025 10:39:16</publishTime>
+      <publishTime>12/23/2025 12:12:19</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Noticias.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:05:29</publishTime>
     </File>
     <File Include="Vistas/V_Comunicacion/V_Nueva_Noticia.aspx">
       <publishTime>11/11/2025 15:29:03</publishTime>
@@ -6191,25 +6218,31 @@
       <publishTime>11/11/2025 15:29:03</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/V_Crear_Modulo.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:09:27</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/V_Restablecer.aspx">
       <publishTime>11/11/2025 15:29:03</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/V_Roles.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:12:23</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/V_Sesiones.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:23:23</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/V_Usuarios.aspx">
-      <publishTime>11/11/2025 15:29:03</publishTime>
+      <publishTime>12/23/2025 10:19:29</publishTime>
     </File>
     <File Include="Vistas/V_Control_General/WebService_V_Control_General.asmx">
       <publishTime>11/11/2025 15:29:03</publishTime>
     </File>
+    <File Include="Vistas/V_Documentos/V_Documentos.aspx">
+      <publishTime>12/19/2025 10:04:01</publishTime>
+    </File>
+    <File Include="Vistas/V_Documentos/WebService_V_Documentos.asmx">
+      <publishTime>12/16/2025 14:47:50</publishTime>
+    </File>
     <File Include="Vistas/V_Encuestas/V_Info_Encuestas.aspx">
-      <publishTime>11/21/2025 08:14:19</publishTime>
+      <publishTime>12/24/2025 09:32:59</publishTime>
     </File>
     <File Include="Vistas/V_Encuesta_Organizacional/Default.aspx">
       <publishTime>11/11/2025 15:29:03</publishTime>
@@ -6230,7 +6263,7 @@
       <publishTime>11/11/2025 15:29:04</publishTime>
     </File>
     <File Include="Vistas/V_Gestion_Humana/V_Directorio_Empresarial.aspx">
-      <publishTime>11/11/2025 15:29:04</publishTime>
+      <publishTime>12/22/2025 07:49:02</publishTime>
     </File>
     <File Include="Vistas/V_Gestion_Humana/V_Evaluacion_Desempeño.aspx">
       <publishTime>11/11/2025 15:29:04</publishTime>
@@ -6242,16 +6275,16 @@
       <publishTime>11/11/2025 15:29:04</publishTime>
     </File>
     <File Include="Vistas/V_Operacional/V_Programacion.aspx">
-      <publishTime>12/02/2025 14:32:12</publishTime>
+      <publishTime>12/10/2025 15:24:08</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/V_Aplicativos.aspx">
-      <publishTime>11/11/2025 15:29:04</publishTime>
+      <publishTime>12/22/2025 12:06:22</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/V_Datos_Perfil.aspx">
       <publishTime>11/24/2025 13:55:25</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/V_Nucleo_Familiar.aspx">
-      <publishTime>11/24/2025 14:23:40</publishTime>
+      <publishTime>12/17/2025 13:50:44</publishTime>
     </File>
     <File Include="Vistas/V_Perfil/WebService_V_Perfil.asmx">
       <publishTime>11/11/2025 15:29:04</publishTime>
@@ -6266,10 +6299,10 @@
       <publishTime>11/11/2025 15:29:04</publishTime>
     </File>
     <File Include="Vistas/V_Tutoriales/V_Ayuda.aspx">
-      <publishTime>11/11/2025 15:29:05</publishTime>
+      <publishTime>12/22/2025 13:49:08</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/03/2025 14:09:45</publishTime>
+      <publishTime>12/24/2025 14:31:37</publishTime>
     </File>
     <File Include="WebService_Default.asmx">
       <publishTime>11/11/2025 15:26:58</publishTime>

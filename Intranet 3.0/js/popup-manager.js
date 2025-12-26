@@ -1,386 +1,401 @@
-﻿// ========================================
-// POPUP - SISTEMA DE AUTO-CIERRE
-// ========================================
+﻿var popupManager = (function () {
+    let popupsActivos = [];
+    let indiceActual = 0;
+    let usuarioId = null;
+    let popupMostrandose = false;
 
-class PopupManager {
-    constructor() {
-        this.popupsQueue = [];
-        this.currentIndex = 0;
-        this.autoCloseTimer = null;
-        this.progressInterval = null;
-        this.userId = null;
+    function init(idUsuario) {
+        usuarioId = idUsuario;
+
+        // VERIFICAR que estamos en la página Default.aspx
+        const rutaActual = window.location.pathname.toLowerCase();
+                
+        const esHome = rutaActual.endsWith('default.aspx') ||
+            rutaActual.endsWith('default') ||
+            rutaActual.endsWith('/default') ||
+            rutaActual === '/' ||
+            rutaActual === '/intranet_3._0/' ||
+            rutaActual === '/intranet_3._0';
+
+        if (!esHome) {
+            console.log('PopupManager: No está en Home, no se mostrarán popups');
+            return;
+        }
+
+        cargarPopupsActivos();
     }
 
-    // Inicializar sistema
-    init(userId) {
-        this.userId = userId;
-        this.cargarPopupsPendientes();
-    }
-
-    // Obtener popups del servidor (Action 0)
-    async cargarPopupsPendientes() {
+    async function cargarPopupsActivos() {
         try {
-            const response = await fetch('WebService_Default.asmx/Obtener_Popups_Usuario', {
+
+            const response = await fetch('/WebService_Default.asmx/Obtener_Popups_Usuario', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json; charset=utf-8'
                 },
                 body: JSON.stringify({
-                    Id_Usuario: this.userId
+                    Id_Usuario: parseInt(usuarioId)
                 })
             });
 
-            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-            if (data.d && data.d.success && data.d.popups) {
-                this.popupsQueue = data.d.popups;
+            const datos = await response.json();
 
-                if (this.popupsQueue.length > 0) {
+            if (datos.d && datos.d.success && Array.isArray(datos.d.popups)) {
+                popupsActivos = datos.d.popups;
+
+                // Si hay popups, mostrar el primero automáticamente después de 500ms
+                if (popupsActivos.length > 0) {
+                    setTimeout(() => {
+                        mostrarSiguientePopup();
+                    }, 500);
                 }
             } else {
-                this.popupsQueue = [];
+                console.warn('PopupManager: No hay popups o formato incorrecto:', datos);
+                popupsActivos = [];
             }
         } catch (error) {
-            console.error('Error al cargar popups:', error);
+            console.error('PopupManager: Error al cargar popups:', error);
+            popupsActivos = [];
         }
     }
 
-    // Mostrar popup actual con auto-cierre
-    mostrarSiguientePopup() {
-        if (this.currentIndex >= this.popupsQueue.length) {
-            return; // No hay más popups
+    function mostrarSiguientePopup() {
+        if (popupMostrandose) {
+            return;
         }
 
-        const popup = this.popupsQueue[this.currentIndex];
-        const tiempoVisualizacion = Number(popup.Tiempo_Visualizacion) || 5;
+        if (indiceActual >= popupsActivos.length) {
+            return;
+        }
 
-        // Construir HTML del popup
-        this.renderizarPopup(popup);
-
-        // Registrar vista inicial (Action 7)
-        this.registrarInteraccion(popup.Id_Popup, 'visto');
-
-        // Iniciar auto-cierre
-        this.iniciarAutoClose(popup.Id_Popup, tiempoVisualizacion);
+        const popup = popupsActivos[indiceActual];
+        mostrarPopup(popup);
     }
 
-    // Renderizar HTML del popup
-    renderizarPopup(popup) {
-        const totalPopups = this.popupsQueue.length;
-        const currentNumber = this.currentIndex + 1;
+    function mostrarPopup(popup) {
+        popupMostrandose = true;
 
-        const popupHTML = `
-            <div id="popupOverlay" style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.7);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 9999;
-                animation: fadeIn 0.3s ease;
-            ">
-                <div class="popup-container" style="
-                    background: white;
-                    border-radius: 15px;
-                    padding: 30px;
-                    max-width: 600px;
-                    width: 90%;
-                    position: relative;
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-                    animation: slideUp 0.4s ease;
-                ">
-                    <!-- Contador -->
-                    <div style="
-                        position: absolute;
-                        top: 15px;
-                        left: 15px;
-                        background: rgba(22, 160, 133, 0.9);
-                        color: white;
-                        padding: 5px 12px;
-                        border-radius: 20px;
-                        font-size: 12px;
-                        font-weight: bold;
-                    ">
-                        ${currentNumber}/${totalPopups}
-                    </div>
-
-                    <!-- Botón cerrar -->
-                    <button 
-                        onclick="popupManager.cerrarPopupManual(${popup.Id_Popup})"
-                        style="
-                            position: absolute;
-                            top: 15px;
-                            right: 15px;
-                            background: #e74c3c;
-                            color: white;
-                            border: none;
-                            width: 30px;
-                            height: 30px;
-                            border-radius: 50%;
-                            cursor: pointer;
-                            font-size: 18px;
-                            line-height: 1;
-                        "
-                    >
-                        ✕
-                    </button>
-
-                     <!-- Imagen / Video -->
-                    ${popup.Tipo === 'video' && popup.RutaMultimedia ? `
-                        <video
-                            src="${popup.RutaMultimedia}"
-                            controls
-                            autoplay
-                            playsinline
-                            style="
-                                width: 100%;
-                                max-height: 300px;
-                                object-fit: cover;
-                                border-radius: 10px;
-                                margin-bottom: 20px;
-                                background: #000;
-                            "
-                        ></video>
-                    ` : popup.RutaMultimedia ? `
-                        <img
-                            src="${popup.RutaMultimedia}"
-                            alt="${popup.Titulo}"
-                            style="
-                                width: 100%;
-                                max-height: 300px;
-                                object-fit: cover;
-                                border-radius: 10px;
-                                margin-bottom: 20px;
-                            "
-                        />
-                    ` : ''}
-
-                    <!-- Contenido -->
-                    <h2 style="
-                        color: #2c3e50;
-                        margin: 0 0 15px 0;
-                        font-size: 24px;
-                    ">
-                        ${popup.Titulo}
-                    </h2>
-
-                    <p style="
-                        color: #7f8c8d;
-                        line-height: 1.6;
-                        margin: 0 0 25px 0;
-                    ">
-                        ${popup.Descripcion}
-                    </p>
-
-                    <!-- Botones -->
-                    <div style="display: flex; gap: 10px; justify-content: center;">
-                        ${popup.Url ? `
-                            <button 
-                                onclick="popupManager.abrirURL('${popup.Url}', ${popup.Id_Popup})"
-                                style="
-                                    background: #3498db;
-                                    color: white;
-                                    border: none;
-                                    padding: 12px 24px;
-                                    border-radius: 25px;
-                                    cursor: pointer;
-                                    font-weight: bold;
-                                    transition: all 0.3s;
-                                "
-                            >
-                                📄 Más información
-                            </button>
-                        ` : ''}
-
-                        ${totalPopups > 1 ? `
-                            <button 
-                                onclick="popupManager.siguientePopup(${popup.Id_Popup})"
-                                style="
-                                    background: #16a085;
-                                    color: white;
-                                    border: none;
-                                    padding: 12px 24px;
-                                    border-radius: 25px;
-                                    cursor: pointer;
-                                    font-weight: bold;
-                                "
-                            >
-                                ➡️ Siguiente
-                            </button>
-                        ` : ''}
-                    </div>
-
-                    <!-- Barra de progreso -->
-                    <div style="
-                        margin-top: 20px;
-                        height: 6px;
-                        background: #ecf0f1;
-                        border-radius: 3px;
-                        overflow: hidden;
-                    ">
-                        <div 
-                            id="timerProgress"
-                            style="
-                                height: 100%;
-                                background: linear-gradient(90deg, #16a085, #3498db);
-                                width: 0%;
-                                transition: width 0.1s linear;
-                            "
-                        ></div>
-                    </div>
-
-                    <p style="
-                        text-align: center;
-                        color: #95a5a6;
-                        font-size: 12px;
-                        margin: 10px 0 0 0;
-                    ">
-                        Se cerrará en <span id="countdown">${popup.Tiempo_Visualizacion}</span>s
-                    </p>
-                </div>
-            </div>
+        // Crear contenedor del popup
+        const contenedor = document.createElement('div');
+        contenedor.id = `popup-${popup.Id_Popup}`;
+        contenedor.className = 'popup-overlay';
+        contenedor.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease-in;
         `;
 
-        // Insertar en el DOM
-        const existingOverlay = document.getElementById('popupOverlay');
-        if (existingOverlay) {
-            existingOverlay.remove();
+        // Crear modal del popup
+        const modal = document.createElement('div');
+        modal.className = 'popup-modal';
+        modal.style.cssText = `
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        `;
+
+        // Contador de popups (arriba a la izquierda)
+        if (popupsActivos.length > 1) {
+            const contador = document.createElement('div');
+            contador.className = 'popup-contador';
+            contador.textContent = `${indiceActual + 1}/${popupsActivos.length}`;
+            contador.style.cssText = `
+                position: absolute;
+                top: 15px;
+                left: 20px;
+                background: rgba(52, 152, 219, 0.9);
+                color: white;
+                padding: 5px 12px;
+                border-radius: 15px;
+                font-size: 13px;
+                font-weight: bold;
+                z-index: 10;
+            `;
+            modal.appendChild(contador);
         }
 
-        document.body.insertAdjacentHTML('beforeend', popupHTML);
-        document.body.style.overflow = 'hidden';
-    }
+        // Botón cerrar (X)
+        const btnCerrar = document.createElement('button');
+        btnCerrar.innerHTML = '×';
+        btnCerrar.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            z-index: 10;
+        `;
+        btnCerrar.onmouseover = () => btnCerrar.style.color = '#333';
+        btnCerrar.onmouseout = () => btnCerrar.style.color = '#999';
+        btnCerrar.onclick = () => cerrarPopup(popup.Id_Popup, 'cerrado_manual');
 
-    // Iniciar auto-cierre con barra de progreso
-    iniciarAutoClose(idPopup, tiempoSegundos) {
-        this.limpiarTimers();
+        // Título
+        const titulo = document.createElement('h2');
+        titulo.textContent = popup.Titulo;
+        titulo.style.cssText = `
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 24px;
+            padding-right: 30px;
+        `;
 
-        const tiempoMs = tiempoSegundos * 1000;
-        const startTime = Date.now();
-        const progressBar = document.getElementById('timerProgress');
-        const countdown = document.getElementById('countdown');
+        // Descripción
+        const descripcion = document.createElement('p');
+        descripcion.textContent = popup.Descripcion;
+        descripcion.style.cssText = `
+            margin: 0 0 20px 0;
+            color: #555;
+            line-height: 1.6;
+        `;
 
-        // Actualizar barra cada 100ms
-        this.progressInterval = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min((elapsed / tiempoMs) * 100, 100);
-            const remaining = Math.max(Math.ceil((tiempoMs - elapsed) / 1000), 0);
+        // Multimedia (imagen o video)
+        let multimedia = null;
 
-            if (progressBar) progressBar.style.width = progress + '%';
-            if (countdown) countdown.textContent = remaining;
+        if (popup.Tipo === 'imagen' && popup.RutaMultimedia) {
+            multimedia = document.createElement('img');
+            multimedia.src = popup.RutaMultimedia;
+            multimedia.alt = popup.Titulo;
+            multimedia.style.cssText = `
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                display: block;
+            `;
+        } else if (popup.Tipo === 'video' && popup.RutaMultimedia) {
+            multimedia = document.createElement('video');
+            multimedia.src = popup.RutaMultimedia;
+            multimedia.controls = true;
+            multimedia.autoplay = false;
+            multimedia.style.cssText = `
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                display: block;
+            `;
 
-            if (progress >= 100) {
-                clearInterval(this.progressInterval);
+            // Para video: cerrar cuando termine (si no hay botón Siguiente)
+            if (indiceActual >= popupsActivos.length - 1) {
+                multimedia.addEventListener('ended', () => {
+                    cerrarPopup(popup.Id_Popup, 'auto_cerrado');
+                });
             }
-        }, 100);
-
-        // Timer principal
-        this.autoCloseTimer = setTimeout(() => {
-            this.registrarInteraccion(idPopup, 'auto_cerrado');
-            this.cerrarYSiguiente();
-        }, tiempoMs);
-    }
-
-    // Limpiar timers
-    limpiarTimers() {
-        if (this.autoCloseTimer) {
-            clearTimeout(this.autoCloseTimer);
-            this.autoCloseTimer = null;
         }
-        if (this.progressInterval) {
-            clearInterval(this.progressInterval);
-            this.progressInterval = null;
+
+        // Contenedor de botones
+        const contenedorBotones = document.createElement('div');
+        contenedorBotones.style.cssText = `
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        `;
+
+        // Botón "Más información" (si hay URL)
+        if (popup.Url) {
+            const btnMasInfo = document.createElement('a');
+            btnMasInfo.href = popup.Url;
+            btnMasInfo.target = '_blank';
+            btnMasInfo.textContent = 'Más información';
+            btnMasInfo.style.cssText = `
+                display: inline-block;
+                padding: 12px 25px;
+                background: #3498db;
+                color: white;
+                text-decoration: none;
+                border-radius: 25px;
+                font-weight: 600;
+                transition: all 0.3s;
+                border: 2px solid #3498db;
+            `;
+            btnMasInfo.onmouseover = () => {
+                btnMasInfo.style.background = '#2980b9';
+                btnMasInfo.style.borderColor = '#2980b9';
+            };
+            btnMasInfo.onmouseout = () => {
+                btnMasInfo.style.background = '#3498db';
+                btnMasInfo.style.borderColor = '#3498db';
+            };
+            btnMasInfo.onclick = () => {
+                registrarInteraccion(popup.Id_Popup, 'clic_url');
+            };
+            contenedorBotones.appendChild(btnMasInfo);
         }
-    }
 
-    // Cerrar manual
-    cerrarPopupManual(idPopup) {
-        this.limpiarTimers();
-        this.registrarInteraccion(idPopup, 'cerrado_manual');
-        this.cerrarYSiguiente();
-    }
+        // Botón "Siguiente" (si hay más popups)
+        if (indiceActual < popupsActivos.length - 1) {
+            const btnSiguiente = document.createElement('button');
+            btnSiguiente.textContent = 'Siguiente';
+            btnSiguiente.style.cssText = `
+                padding: 12px 25px;
+                background: #27ae60;
+                color: white;
+                border: 2px solid #27ae60;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+            `;
+            btnSiguiente.onmouseover = () => {
+                btnSiguiente.style.background = '#229954';
+                btnSiguiente.style.borderColor = '#229954';
+            };
+            btnSiguiente.onmouseout = () => {
+                btnSiguiente.style.background = '#27ae60';
+                btnSiguiente.style.borderColor = '#27ae60';
+            };
+            btnSiguiente.onclick = () => {
+                cerrarPopup(popup.Id_Popup, 'siguiente');
+            };
+            contenedorBotones.appendChild(btnSiguiente);
+        }
 
-    // Abrir URL
-    abrirURL(url, idPopup) {
-        this.limpiarTimers();
-        this.registrarInteraccion(idPopup, 'clic_url');
-        window.open(url, '_blank');
-        this.cerrarYSiguiente();
-    }
+        // Ensamblar el modal
+        modal.appendChild(btnCerrar);
+        modal.appendChild(titulo);
+        modal.appendChild(descripcion);
+        if (multimedia) modal.appendChild(multimedia);
+        if (contenedorBotones.children.length > 0) {
+            modal.appendChild(contenedorBotones);
+        }
 
-    // Siguiente popup
-    siguientePopup(idPopup) {
-        this.limpiarTimers();
-        this.registrarInteraccion(idPopup, 'visto');
-        this.cerrarYSiguiente();
-    }
+        contenedor.appendChild(modal);
+        document.body.appendChild(contenedor);
 
-    // Cerrar y mostrar siguiente
-    cerrarYSiguiente() {
-        const overlay = document.getElementById('popupOverlay');
-        if (overlay) {
-            overlay.style.animation = 'fadeOut 0.3s ease';
+        // Registrar visualización
+        registrarInteraccion(popup.Id_Popup, 'visto');
+
+        // Cerrar automáticamente si tiene tiempo definido Y NO es video Y no hay más popups
+        if (popup.Tipo !== 'video' &&
+            popup.Tiempo_Visualizacion &&
+            popup.Tiempo_Visualizacion > 0 &&
+            indiceActual >= popupsActivos.length - 1) {
             setTimeout(() => {
-                overlay.remove();
-                document.body.style.overflow = '';
+                cerrarPopup(popup.Id_Popup, 'auto_cerrado');
+            }, popup.Tiempo_Visualizacion * 1000);
+        }
+
+        // Cerrar al hacer clic fuera del modal
+        contenedor.onclick = (e) => {
+            if (e.target === contenedor) {
+                cerrarPopup(popup.Id_Popup, 'cerrado_manual');
+            }
+        };
+    }
+
+    function cerrarPopup(idPopup, tipoInteraccion) {
+        const contenedor = document.getElementById(`popup-${idPopup}`);
+        if (contenedor) {
+            // Registrar cómo se cerró (si no es 'visto' que ya se registró)
+            if (tipoInteraccion && tipoInteraccion !== 'visto') {
+                registrarInteraccion(idPopup, tipoInteraccion);
+            }
+
+            contenedor.style.animation = 'fadeOut 0.3s ease-out';
+            setTimeout(() => {
+                contenedor.remove();
+                popupMostrandose = false;
+                indiceActual++;
+
+                // Si fue "Siguiente" o hay más popups, mostrar el siguiente inmediatamente
+                if (tipoInteraccion === 'siguiente' || indiceActual < popupsActivos.length) {
+                    setTimeout(() => {
+                        mostrarSiguientePopup();
+                    }, 500);
+                }
             }, 300);
         }
-
-        this.currentIndex++;
-        setTimeout(() => {
-            this.mostrarSiguientePopup();
-        }, 500);
     }
 
-    // Registrar interacción (Action 7)
-    async registrarInteraccion(idPopup, tipoInteraccion) {
+    async function registrarInteraccion(idPopup, tipoInteraccion) {
         try {
-            await fetch('WebService_Default.asmx/Registrar_Interaccion_Popup', {
+            console.log(`PopupManager: Registrando interacción '${tipoInteraccion}' para popup:`, idPopup);
+
+            const response = await fetch('/WebService_Default.asmx/Registrar_Interaccion_Popup', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json; charset=utf-8'
                 },
                 body: JSON.stringify({
-                    Id_Popup: idPopup,
-                    Id_Usuario: this.userId,
+                    Id_Popup: parseInt(idPopup),
+                    Id_Usuario: parseInt(usuarioId),
                     Interaccion: tipoInteraccion
                 })
             });
+
+            const resultado = await response.json();
+            console.log('PopupManager: Interacción registrada:', resultado);
         } catch (error) {
-            console.error('Error al registrar interacción:', error);
+            console.error('PopupManager: Error al registrar interacción:', error);
         }
     }
-}
 
-// Animaciones CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-
-    @keyframes slideUp {
-        from {
-            transform: translateY(50px);
-            opacity: 0;
+    // CSS para animaciones
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        to {
-            transform: translateY(0);
-            opacity: 1;
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
-    }
-`;
-document.head.appendChild(style);
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Estilos responsivos para móvil */
+        @media (max-width: 768px) {
+            .popup-modal {
+                max-width: 90% !important;
+                max-height: 85vh !important;
+                padding: 20px !important;
+                margin: 0 10px;
+            }
+            .popup-contador {
+                font-size: 11px !important;
+                padding: 4px 10px !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
 
-// Instancia global
-const popupManager = new PopupManager();
+    return {
+        init: init,
+        mostrarSiguientePopup: mostrarSiguientePopup
+    };
+})();

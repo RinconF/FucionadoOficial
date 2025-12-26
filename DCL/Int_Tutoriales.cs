@@ -77,6 +77,28 @@ namespace DCL
             set { mvarEstado = value; }
         }
 
+        /// <summary>
+        /// Roles para filtrar/asignar. Formato: "1" o "1,2,3" (IDs separados por coma)
+        /// Usado en Actions 1, 6, 7, 8, 9
+        /// </summary>
+        String mvarRoles = null;
+        public String Roles
+        {
+            get { return mvarRoles; }
+            set { mvarRoles = value; }
+        }
+
+        /// <summary>
+        /// Roles asignados al tutorial (solo lectura desde Action 0)
+        /// Viene como string concatenado del SP, ejemplo: "Admin, Usuario, Supervisor"
+        /// </summary>
+        String mvarRoles_Asignados = null;
+        public String Roles_Asignados
+        {
+            get { return mvarRoles_Asignados; }
+            set { mvarRoles_Asignados = value; }
+        }
+
         #endregion
 
         #region Constructores
@@ -93,7 +115,9 @@ namespace DCL
             DateTime? varFecha_Actualizacion,
             Int32? varUsuario_Creacion,
             Int32? varUsuario_Actualizacion,
-            Boolean? varEstado
+            Boolean? varEstado,
+            String varRoles = null,
+            String varRoles_Asignados = null
         )
         {
             mvarId_Tutorial = varId_Tutorial;
@@ -106,6 +130,8 @@ namespace DCL
             mvarUsuario_Creacion = varUsuario_Creacion;
             mvarUsuario_Actualizacion = varUsuario_Actualizacion;
             mvarEstado = varEstado;
+            mvarRoles = varRoles;
+            mvarRoles_Asignados = varRoles_Asignados;
         }
 
         public Int_Tutoriales(IDataRecord obj)
@@ -139,6 +165,17 @@ namespace DCL
 
             mvarEstado = obj["Estado"] != DBNull.Value ?
                 Convert.ToBoolean(obj["Estado"]) : (Boolean?)null;
+
+            try
+            {
+                mvarRoles_Asignados = obj["Roles_Asignados"] != DBNull.Value ?
+                    Convert.ToString(obj["Roles_Asignados"]) : null;
+            }
+            catch
+            {
+                // Columna no existe en otros Actions
+                mvarRoles_Asignados = null;
+            }
         }
 
         public Int_Tutoriales(DataRow obj)
@@ -172,6 +209,12 @@ namespace DCL
 
             mvarEstado = obj["Estado"] != DBNull.Value ?
                 Convert.ToBoolean(obj["Estado"]) : (Boolean?)null;
+
+            if (obj.Table.Columns.Contains("Roles_Asignados"))
+            {
+                mvarRoles_Asignados = obj["Roles_Asignados"] != DBNull.Value ?
+                    Convert.ToString(obj["Roles_Asignados"]) : null;
+            }
         }
 
         #endregion

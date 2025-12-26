@@ -1,29 +1,23 @@
 ﻿<%@ Page Title="Informes Encuestas" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Info_Encuestas.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Encuestas.V_Info_Encuestas" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <link rel="Stylesheet" href="Styles\css\default_encuestas\default_encuestas.css" /> 
+    <link rel="Stylesheet" href="/Styles/css/default_encuestas/default_encuestas.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- TAG BANNER -->
     <div class="banner-container">
         <div class="pnl_tag">
             <p><i class="fas fa-chart-pie"></i>Informes Encuestas</p>
         </div>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL -->
     <div class="ContainerEn">
-        <!-- TÍTULO DE LA ENCUESTA -->
 
         <h3 class="page-title-encuesta"><%= NombreEncuesta %></h3>
 
-        <!-- MENSAJE (CUANDO NO HAY ENCUESTAS) -->
         <asp:Label ID="lblMensaje" runat="server" CssClass="mensaje" Visible="false" />
 
-        <!-- PANEL PRINCIPAL DE LA ENCUESTA -->
         <asp:Panel ID="encuestaPanel" runat="server" Visible="false" CssClass="panel-encuesta">
             
-            <!-- GRID DASHBOARD -->
             <div class="dashboard-grid-encuesta">
                 
                 <!-- CARD PRINCIPAL DEL GRÁFICO -->
@@ -38,7 +32,7 @@
                         <canvas id="pieChart" width="300" height="300"></canvas>
                     </div>
 
-                    <!-- LEYENDA DEL GRÁFICO -->
+                    <!-- RESUMEN DEL GRÁFICO -->
                     <div id="legend" class="chart-legend">
                         <div class="legend-items">
                             <div class="legend-item-wrapper">
@@ -97,7 +91,6 @@
                 <h4 class="actions-title">Acciones Disponibles</h4>
                 
                 <div class="actions-controls">
-                    <!-- DROPDOWN -->
                     <div class="dropdown-wrapper">
                         <asp:DropDownList ID="ddlTipoInformeEnc" runat="server" CssClass="form-select-encuesta">
                             <asp:ListItem Text="Seleccione informe..." Value="" Selected="True" />
@@ -108,7 +101,6 @@
                         </asp:DropDownList>
                     </div>
 
-                    <!-- BOTONES -->
                     <div class="buttons-wrapper">
                         <!-- BOTÓN DESCARGAR -->
                         <asp:Button ID="btnDescargarExcel" runat="server" 
@@ -128,14 +120,11 @@
         </asp:Panel>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script type="text/javascript">
-        // Función para refrescar la página
         function refreshPage() {
             window.location.reload(true);
         }
 
-        // Función de confirmación de descarga
         function confirmarDescargaInforme() {
             var ddl = document.getElementById('<%= ddlTipoInformeEnc.ClientID %>');
             var tipo = ddl ? ddl.value : '';

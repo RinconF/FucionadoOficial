@@ -20,9 +20,9 @@ namespace Intranet_3._0.Vistas.V_Documentos
         {
             try
             {
-                // Action 1: Solo documentos activos
                 Int_Documentos obj = new Int_Documentos();
-                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 1);
+                // Action 5: SELECT ALL - Solo documentos activos
+                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 5);
 
                 if (documentos != null && documentos.Count > 0)
                 {
@@ -39,7 +39,7 @@ namespace Intranet_3._0.Vistas.V_Documentos
             }
             catch (Exception ex)
             {
-                // Log error
+                // Log error si es necesario
                 rptDocumentos.DataSource = null;
                 rptDocumentos.DataBind();
                 phDocumentosVacio.Visible = true;

@@ -1,12 +1,13 @@
-﻿using BRL;
-using Intranet_3._0.Interna;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Services;
+using System.Data;
+using BRL;
+using Intranet_3._0.Interna;
+using System.Configuration;
+using System.IO;
 
 namespace Intranet_3._0.Vistas.V_Gestion_Humana
 {
@@ -32,7 +33,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                 string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
                 string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
                 ipServer = ConfigurationManager.AppSettings.Get("IPServerAttach").ToString();
-
+    
                 AG_Utils utilidades = new AG_Utils();
                 bool conectaAdjuntos = utilidades.Ping(ipServer);
                 string archivoRemoto = "";
@@ -74,7 +75,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                             {
                                 array[4] = row["Anexo_Foto"].ToString();
                             }
-
+                            
                             array[5] = row["Celular"].ToString() + row["Ext"].ToString();
 
                             list.Add(array);
@@ -180,7 +181,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                                             utilidades.undoImpersonation();
                                         }
                                         rutaCompleta = rutaCompleta.Replace(@"\", "/");
-
+                                       
                                     }
                                     else
                                     {
@@ -274,7 +275,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                                             utilidades.undoImpersonation();
                                         }
                                         rutaCompleta = rutaCompleta.Replace(@"\", "/");
-
+                                        
                                     }
                                     else
                                     {
@@ -316,7 +317,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                 string pathRemote = ConfigurationManager.AppSettings.Get("pathRemote");
                 string ambiente = ConfigurationManager.AppSettings.Get("ambiente");
                 string pathServer = Server.MapPath(ConfigurationManager.AppSettings.Get("pathServer"));
-
+    
                 string archivoRemoto = "";
                 string rutaCompleta = "";
                 string archivoLocal = "";
@@ -410,7 +411,7 @@ namespace Intranet_3._0.Vistas.V_Gestion_Humana
                         return list;
                     }
 
-
+                  
                     else
                     {
                         string[] array = new string[1];

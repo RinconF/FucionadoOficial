@@ -3,21 +3,173 @@ using DCL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 
+
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
+    /// <summary>
+    /// Web Service para gestión de documentos corporativos
+    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     [System.Web.Script.Services.ScriptService]
     public class WebService_V_Comunicacion : System.Web.Services.WebService
     {
-        //vistas
+        #region DOCUMENTOS
+        
+        /// <summary>
+        /// Obtiene todos los documentos activos
+        /// </summary>
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> ObtenerDocumentos()
+        {
+            try
+            {
+                List<string[]> list = new List<string[]>();
+                Int_Documentos obj = new Int_Documentos();
+                
+                // Action 5: SELECT ALL - Documentos activos
+                Int_DocumentosCollection documentos = Int_Documentos_BRL.SelectByParams(obj, 5);
+
+                if (documentos != null && documentos.Count > 0)
+                {
+                    foreach (Int_Documentos doc in documentos)
+                    {
+                        string[] array = new string[8];
+                        array[0] = doc.Id_Documentos?.ToString() ?? "0";
+                        array[1] = doc.Titulo ?? "";
+                        array[2] = doc.Descripcion ?? "";
+                        array[3] = doc.Archivo ?? "";
+                        array[4] = !string.IsNullOrEmpty(doc.Archivo) ? Path.GetFileName(doc.Archivo) : "Sin archivo";
+                        array[5] = doc.Url ?? "";
+                        array[6] = doc.FechaCreacion?.ToString("dd/MM/yyyy HH:mm") ?? "";
+                        array[7] = (doc.Estado ?? false) ? "Activo" : "Inactivo";
+
+                        list.Add(array);
+                    }
+                }
+                else
+                {
+                    string[] array = new string[1];
+                    array[0] = "0";
+                    list.Add(array);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                List<string[]> list = new List<string[]>();
+                string[] array = new string[1];
+                array[0] = "Error: " + ex.Message;
+                list.Add(array);
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un documento específico por ID
+        /// </summary>
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> ObtenerDocumentoPorId(string Id_Documento)
+        {
+            try
+            {
+                List<string[]> list = new List<string[]>();
+                Int_Documentos obj = new Int_Documentos();
+                obj.Id_Documentos = Convert.ToInt32(Id_Documento);
+                
+                // Action 2: LOAD - Cargar documento por ID
+                Int_Documentos doc = Int_Documentos_BRL.Load(obj);
+
+                if (doc != null && doc.Id_Documentos != null)
+                {
+                    string[] array = new string[8];
+                    array[0] = doc.Id_Documentos?.ToString() ?? "0";
+                    array[1] = doc.Titulo ?? "";
+                    array[2] = doc.Descripcion ?? "";
+                    array[3] = doc.Archivo ?? "";
+                    array[4] = !string.IsNullOrEmpty(doc.Archivo) ? Path.GetFileName(doc.Archivo) : "Sin archivo";
+                    array[5] = doc.Url ?? "";
+                    array[6] = doc.FechaCreacion?.ToString("dd/MM/yyyy HH:mm") ?? "";
+                    array[7] = (doc.Estado ?? false) ? "Activo" : "Inactivo";
+
+                    list.Add(array);
+                }
+                else
+                {
+                    string[] array = new string[1];
+                    array[0] = "0";
+                    list.Add(array);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                List<string[]> list = new List<string[]>();
+                string[] array = new string[1];
+                array[0] = "Error: " + ex.Message;
+                list.Add(array);
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// Valida un archivo antes de subirlo
+        /// </summary>
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string ValidarArchivo(string nombreArchivo, int tamanoBytes)
+        {
+            try
+            {
+                // Validar extensión
+                string extension = Path.GetExtension(nombreArchivo).ToLower();
+                string[] extensionesPermitidas = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar" };
+
+                bool extensionValida = false;
+                foreach (string ext in extensionesPermitidas)
+                {
+                    if (ext == extension)
+                    {
+                        extensionValida = true;
+                        break;
+                    }
+                }
+
+                if (!extensionValida)
+                {
+                    return "Error: Extensión no permitida. Solo se permiten: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, ZIP, RAR";
+                }
+
+                // Validar tamaño (10 MB máximo)
+                int tamanoMaximo = 10 * 1024 * 1024; // 10 MB
+                if (tamanoBytes > tamanoMaximo)
+                {
+                    return "Error: El archivo excede el tamaño máximo de 10 MB";
+                }
+
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+        }
+
+        #endregion
+
+        #region METODOS ORIGINALES (NOTICIAS, POPUP, ETC)
+        
+        // Mantener los métodos originales del WebService_V_Comunicacion
         [WebMethod]
         public List<string[]> cargar_datos_modal_actualizar_noticia(string Id_Noticia)
         {
@@ -59,7 +211,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        //vistas
         [WebMethod]
         public List<string[]> cargar_datos_modal_actualizar_slidernoticia(string Id_Noticia)
         {
@@ -100,7 +251,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        #region POPUP
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<object> cargar_datos_modal_actualizar_Popup(int Id_Popup)
@@ -110,7 +260,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             try
             {
                 var obj = new Int_Popup { Id_Popup = Id_Popup };
-                DataTable dt = Int_Popup_BRL.SelectTable(obj, 3); // Action 3
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 3);
 
                 if (dt.Rows.Count == 0)
                 {
@@ -120,7 +270,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
 
                 DataRow row = dt.Rows[0];
 
-                // Construir respuesta con nombres de columna para evitar depender del orden
                 var rolesIdsValor = row.Table.Columns.Contains("RolesIds")
                     ? row["RolesIds"]
                     : row.Table.Columns.Contains("Roles_Ids")
@@ -153,7 +302,6 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
         }
 
-        // Estadísticas (Action 8)
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<string[]> Obtener_Estadisticas_Popup(int Id_Popup)
@@ -183,6 +331,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 return list;
             }
         }
+
         #endregion
     }
 }

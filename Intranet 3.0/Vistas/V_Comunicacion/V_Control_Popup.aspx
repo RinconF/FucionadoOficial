@@ -4,142 +4,20 @@
     Inherits="Intranet_3._0.Vistas.V_Comunicacion.V_Control_Popup" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts_css" runat="server">
-    <style>
-        /* Estilos base */
-        .button {
-            background: none;
-            border: 1px solid rgba(22, 160, 133, 1);
-            color: rgba(22, 160, 133, 1);
-            padding: 10px 25px;
-            margin-left: 5px;
-            border-radius: 50px;
-            outline: none;
-            box-shadow: 2px 2px 5px rgb(0 0 0 / 20%);
-        }
-
-        /* Badges de estado */
-        .badge {
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-            display: inline-block;
-        }
-        .badge-success {
-            background-color: #27ae60;
-            color: white;
-        }
-        .badge-secondary {
-            background-color: #95a5a6;
-            color: white;
-        }
-
-        /* Selector de roles */
-        .roles-selector {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .roles-selector label {
-            display: contents;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-        .roles-selector input[type="checkbox"] {
-            margin-right: 8px;
-        }
-
-        .body-content .tbl_vistas_general th {
-            background-color: rgb(40 55 71 / 50%);
-            color: #343a40;
-            font-weight: bold;
-        }
-
-        .body-content .tbl_vistas_general tr {
-            background: #fff;
-        }
-
-        /* Campos de fecha y número */
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .input-group > div {
-            flex: 1;
-        }
-        .input-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        /* NUEVO: Selector de tipo de multimedia */
-        .media-type-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .media-type-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-weight: 600;
-        }
-        .media-type-btn:hover {
-            border-color: #3498db;
-            background: #ecf0f1;
-        }
-        .media-type-btn.active-ninguno {
-            border-color: #3498db;
-            background: #e3f2fd;
-            color: #2980b9;
-        }
-        .media-type-btn.active-imagen {
-            border-color: #27ae60;
-            background: #e8f8f5;
-            color: #27ae60;
-        }
-        .media-type-btn.active-video {
-            border-color: #9b59b6;
-            background: #f4ecf7;
-            color: #9b59b6;
-        }
-        .media-upload-area {
-            display: none;
-            margin-top: 15px;
-        }
-        .media-upload-area.show {
-            display: block;
-        }
-
-        /* Textarea con ancho completo */
-        .pnl_input textarea {
-            width: 100% !important;
-            box-sizing: border-box;
-            resize: vertical;
-        }
-    </style>
+    <link rel="Stylesheet" href="/Styles/css/Popup/Control_Popup.css" />
+    <link rel="Stylesheet" href="/Styles/css/Popup/Control_Popup_Modern.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="scripts_js" runat="server">
     <script>
         $(document).ready(function () {
-            const extensionesImagen = ["jpg", "jpeg", "gif", "png", "jfif"];
-            const extensionesVideo = ["mp4", "webm", "ogg"];
+            const extensionesImagen = ["jpg", "jpeg", "png", "gif", "jfif"];
+            const extensionesVideo = ["mp4", "webm", "ogg", "avi", "mov", "wmv", "flv", "mkv"];
             const limiteImagen = 3 * 1024 * 1024; // 3 MB
             const limiteVideo = 50 * 1024 * 1024; // 50 MB
 
-            $('body').on('change', 'input[type="file"]', function () {
+            // Validación de imágenes
+            $('body').on('change', '#MainContent_fud_imagen, #MainContent_fud_imagen_edit', function () {
                 const inputFile = $(this)[0];
                 if (!inputFile.files || inputFile.files.length === 0) {
                     return;
@@ -148,67 +26,93 @@
                 const archivo = inputFile.files[0];
                 const ext = archivo.name.split('.').pop().toLowerCase();
 
-                if (extensionesImagen.includes(ext)) {
-                    if (archivo.size > limiteImagen) {
-                        alert("La imagen excede el tamaño máximo de 3MB");
-                        inputFile.value = '';
-                    }
+                if (!extensionesImagen.includes(ext)) {
+                    alert("Extensión no permitida: " + ext + ". Solo se permiten imágenes (JPG, JPEG, PNG, GIF, JFIF)");
+                    inputFile.value = '';
                     return;
                 }
 
-                if (extensionesVideo.includes(ext)) {
-                    if (archivo.size > limiteVideo) {
-                        alert("El video excede el tamaño máximo de 50MB");
-                        inputFile.value = '';
-                    }
-                    return;
+                if (archivo.size > limiteImagen) {
+                    alert("La imagen excede el tamaño máximo de 3MB");
+                    inputFile.value = '';
                 }
-
-                alert("Extensión no permitida: " + ext + ". Solo se permiten imágenes (JPG, PNG, GIF, JFIF) o videos (MP4, WEBM, OGG).");
-                inputFile.value = '';
             });
 
-            // ========================================
-            // SELECTOR DE TIPO DE MULTIMEDIA - CREAR
-            // ========================================
-            window.setupMediaSelector = function (prefix) {
-                const btnNinguno = document.getElementById('btn_media_ninguno_' + prefix);
-                const btnImagen = document.getElementById('btn_media_imagen_' + prefix);
-                const btnVideo = document.getElementById('btn_media_video_' + prefix);
-                const areaImagen = document.getElementById('area_imagen_' + prefix);
-                const areaVideo = document.getElementById('area_video_' + prefix);
-
-                function setActiveMedia(type) {
-                    // Remover todas las clases activas
-                    btnNinguno.classList.remove('active-ninguno');
-                    btnImagen.classList.remove('active-imagen');
-                    btnVideo.classList.remove('active-video');
-                    areaImagen.classList.remove('show');
-                    areaVideo.classList.remove('show');
-
-                    // Activar el seleccionado
-                    if (type === 'ninguno') {
-                        btnNinguno.classList.add('active-ninguno');
-                    } else if (type === 'imagen') {
-                        btnImagen.classList.add('active-imagen');
-                        areaImagen.classList.add('show');
-                    } else if (type === 'video') {
-                        btnVideo.classList.add('active-video');
-                        areaVideo.classList.add('show');
-                    }
+            // Validación de videos
+            $('body').on('change', '#MainContent_fud_video, #MainContent_fud_video_edit', function () {
+                const inputFile = $(this)[0];
+                if (!inputFile.files || inputFile.files.length === 0) {
+                    return;
                 }
 
-                btnNinguno.addEventListener('click', () => setActiveMedia('ninguno'));
-                btnImagen.addEventListener('click', () => setActiveMedia('imagen'));
-                btnVideo.addEventListener('click', () => setActiveMedia('video'));
+                const archivo = inputFile.files[0];
+                const ext = archivo.name.split('.').pop().toLowerCase();
 
-                // Por defecto: ninguno
-                setActiveMedia('ninguno');
-            };
+                if (!extensionesVideo.includes(ext)) {
+                    alert("Extensión no permitida: " + ext + ". Solo se permiten videos (MP4, WEBM, OGG, AVI, MOV, WMV, FLV, MKV)");
+                    inputFile.value = '';
+                    return;
+                }
 
-            // Inicializar selectores al cargar la página
-            setupMediaSelector('crear');
-            setupMediaSelector('actualizar');
+                if (archivo.size > limiteVideo) {
+                    alert("El video excede el tamaño máximo de 50MB");
+                    inputFile.value = '';
+                }
+            });
+
+            // Búsqueda rápida en la tabla
+            $('#txt_busqueda_rapida').on('keyup', function () {
+                const valor = $(this).val().toLowerCase();
+                $('.tbl_vistas_general tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+                });
+            });
+
+            // ===============================================
+            // MANEJO DE TIPOS DE MULTIMEDIA - MODAL CREAR
+            // ===============================================
+            $('.multimedia-option').on('click', function () {
+                // Remover selección previa
+                $('.multimedia-option').removeClass('active');
+                $(this).addClass('active');
+
+                const tipo = $(this).data('tipo');
+
+                // Ocultar todos los uploads
+                $('.upload-section').hide();
+
+                // Mostrar el upload correspondiente
+                if (tipo === 'imagen') {
+                    $('#upload-imagen').show();
+                } else if (tipo === 'video') {
+                    $('#upload-video').show();
+                }
+                // Si es 'ninguno', no mostramos nada
+            });
+
+            // ===============================================
+            // MANEJO DE TIPOS DE MULTIMEDIA - MODAL EDITAR
+            // ===============================================
+            $('.multimedia-option-edit').on('click', function () {
+                // Remover selección previa
+                $('.multimedia-option-edit').removeClass('active');
+                $(this).addClass('active');
+
+                const tipo = $(this).data('tipo');
+
+                // Ocultar todos los uploads
+                $('.upload-section-edit').hide();
+
+                // Mostrar el upload correspondiente
+                if (tipo === 'imagen') {
+                    $('#upload-imagen-edit').show();
+                } else if (tipo === 'video') {
+                    $('#upload-video-edit').show();
+                }
+            });
+
+            // Seleccionar "Sin multimedia" por defecto
+            $('.multimedia-option[data-tipo="ninguno"]').click();
         });
     </script>
 </asp:Content>
@@ -218,7 +122,7 @@
         <ContentTemplate>
             <section class="pnl_table">
                 <div class="pnl_tag">
-                    <p><i class="fas fa-tag"></i>Tabla de publicaciones</p>
+                    <p><i class="fas fa-window-restore"></i>Tabla de Popups</p>
                 </div>
                 <div class="filter">
                     <div class="box_menu_crear">
@@ -233,25 +137,27 @@
                             type="button" 
                             ID="btn_modal_actualizar" 
                             class="btn-actu-grupo" 
-                            data-id="modal_actualizar_Click">
+                            data-id="modal_actualizar_popup">
                             <i class="fas fa-cog"></i>Actualizar Popup
                         </button>
                         <button 
                             type="button" 
-                            id="btn_nodal_popup" 
-                            class="btn-modal"
-                            style="background-color: #e74c3c; color: white;">
+                            id="btn_modal_eliminar" 
+                            class="btn-modal btn-eliminar-popup">
                             <i class="fas fa-trash"></i>Eliminar Popup
                         </button>
-                        <button 
-                            type="button" 
-                            id="btn_estadisticas_popup" 
-                            class="btn-modal">
-                            <i class="fas fa-chart-bar"></i>Estadísticas
-                        </button>
+                    </div>
+                    <div class="contenedor-busqueda">
+                        <input 
+                            type="text" 
+                            id="txt_busqueda_rapida" 
+                            class="input-busqueda-rapida"
+                            placeholder="Búsqueda rápida" />
                     </div>
                 </div>
-                <div runat="server" id="tbl_grupos"></div>
+                <div class="table-responsive">
+                    <asp:Literal ID="lit_tabla_popups" runat="server"></asp:Literal>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -292,43 +198,109 @@
                                 ID="txt_descripcion"
                                 TextMode="MultiLine"
                                 Rows="4"
+                                MaxLength="500"
                                 placeholder="Descripción del popup"></asp:TextBox>
                         </div>
                     </div>
 
-                    <!-- URL y Tiempo de visualización -->
-                    <div class="input-group">
-                        <div class="pnl_input">
-                            <label><i class="fas fa-link"></i> URL (opcional)</label>
+                    <!-- CONTENIDO MULTIMEDIA MEJORADO -->
+                    <div class="content row">
+                        <div class="col">
+                            <label class="section-label">
+                                <i class="fas fa-photo-video"></i> Contenido Multimedia (Opcional)
+                            </label>
+                            <p class="section-description">Selecciona el tipo de contenido que deseas agregar</p>
+                            
+                            <!-- Opciones de multimedia -->
+                            <div class="multimedia-selector">
+                                <div class="multimedia-option" data-tipo="ninguno">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-ban"></i>
+                                    </div>
+                                    <div class="multimedia-label">Sin multimedia</div>
+                                </div>
+                                
+                                <div class="multimedia-option" data-tipo="imagen">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                    <div class="multimedia-label">Imagen</div>
+                                </div>
+                                
+                                <div class="multimedia-option" data-tipo="video">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                    <div class="multimedia-label">Video</div>
+                                </div>
+                            </div>
+
+                            <!-- Upload de Imagen -->
+                            <div id="upload-imagen" class="upload-section" style="display: none;">
+                                <div class="upload-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <label class="upload-label">Cargar Imagen</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_imagen"
+                                        accept="image/*"
+                                        CssClass="upload-input" />
+                                    <small class="upload-hint">Máx: 3MB. Formatos: JPG, PNG, GIF</small>
+                                </div>
+                            </div>
+
+                            <!-- Upload de Video -->
+                            <div id="upload-video" class="upload-section" style="display: none;">
+                                <div class="upload-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <label class="upload-label">Cargar Video</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_video"
+                                        accept="video/*"
+                                        CssClass="upload-input" />
+                                    <small class="upload-hint">Máx: 50MB. Formatos: MP4, WEBM, OGG</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL y Tiempo -->
+                    <div class="content row">
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-link"></i>
+                            <label class="form-label-bold">URL (opcional)</label>
                             <asp:TextBox
                                 runat="server"
                                 ID="txt_url"
                                 placeholder="https://ejemplo.com"></asp:TextBox>
                         </div>
-                        <div class="pnl_input">
-                            <label><i class="fas fa-clock"></i> Tiempo de visualización (segundos)</label>
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-clock"></i>
+                            <label class="form-label-bold">Tiempo visualización (seg)</label>
                             <asp:TextBox
                                 runat="server"
                                 ID="txt_tiempo"
                                 TextMode="Number"
                                 Text="5"
                                 min="1"
-                                max="60"
-                                placeholder="5"></asp:TextBox>
+                                max="60"></asp:TextBox>
                         </div>
                     </div>
 
-                    <!-- Vigencia: Fecha Inicio y Fecha Fin -->
-                    <div class="input-group">
-                        <div class="pnl_input">
-                            <label><i class="fas fa-calendar-alt"></i> Fecha inicio</label>
+                    <!-- Fechas -->
+                    <div class="content row">
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-calendar-alt"></i>
+                            <label class="form-label-bold">Fecha Inicio</label>
                             <asp:TextBox
                                 runat="server"
                                 ID="txt_fecha_inicio"
                                 TextMode="Date"></asp:TextBox>
                         </div>
-                        <div class="pnl_input">
-                            <label><i class="fas fa-calendar-times"></i> Fecha fin (opcional)</label>
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-calendar-check"></i>
+                            <label class="form-label-bold">Fecha Fin (opcional)</label>
                             <asp:TextBox
                                 runat="server"
                                 ID="txt_fecha_fin"
@@ -336,73 +308,36 @@
                         </div>
                     </div>
 
-                    <!-- Selector de Roles (CheckBoxList) -->
-                    <div class="roles-selector">
-                        <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-                            <i class="fas fa-users"></i> Roles que pueden visualizar:
-                        </label>
-                        <asp:CheckBoxList ID="chkl_roles" runat="server"></asp:CheckBoxList>
-                        <small style="color: #7f8c8d;">Si no seleccionas ningún rol, será visible para todos</small>
-                    </div>
-
-                    <!-- NUEVO: Selector de Tipo de Multimedia -->
+                    <!-- ROLES MEJORADOS -->
                     <div class="content row">
                         <div class="col">
-                            <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-                                <i class="fas fa-photo-video"></i> Contenido Multimedia (Opcional)
+                            <label class="section-label">
+                                <i class="fas fa-users-cog"></i> Roles que pueden visualizar
                             </label>
+                            <p class="section-description">
+                                Si no seleccionas ningún rol, el popup será visible para todos los usuarios
+                            </p>
                             
-                            <div class="media-type-selector">
-                                <button type="button" id="btn_media_ninguno_crear" class="media-type-btn">
-                                    <i class="fas fa-times"></i><br>Sin multimedia
-                                </button>
-                                <button type="button" id="btn_media_imagen_crear" class="media-type-btn">
-                                    <i class="fas fa-image"></i><br>Imagen
-                                </button>
-                                <button type="button" id="btn_media_video_crear" class="media-type-btn">
-                                    <i class="fas fa-video"></i><br>Video
-                                </button>
-                            </div>
-
-                            <!-- Área de carga de Imagen -->
-                            <div id="area_imagen_crear" class="media-upload-area">
-                                <div class="pnl_input">
-                                    <label><i class="fas fa-images"></i> Cargar imagen</label>
-                                    <asp:FileUpload
-                                        runat="server"
-                                        ID="fud_Adjunto"
-                                        accept="image/png, image/gif, image/jpeg, image/jfif" />
-                                    <small style="color: #7f8c8d;">Tamaño máximo: 3MB. Formatos: JPG, PNG, GIF, JFIF</small>
-                                </div>
-                            </div>
-
-                            <!-- Área de carga de Video -->
-                            <div id="area_video_crear" class="media-upload-area">
-                                <div class="pnl_input">
-                                    <label><i class="fas fa-video"></i> Cargar video</label>
-                                    <asp:FileUpload
-                                        runat="server"
-                                        ID="fud_Video"
-                                        accept="video/mp4, video/webm, video/ogg" />
-                                    <small style="color: #7f8c8d;">Tamaño máximo:  4.7 MB. Formatos: MP4, WEBM, OGG</small>
-                                </div>
+                            <div class="roles-grid">
+                                <asp:CheckBoxList ID="cbl_roles" runat="server" CssClass="roles-checkbox-list"></asp:CheckBoxList>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Botón Crear -->
-                    <div class="content row" style="margin-top: 20px;">
-                        <div class="col" style="text-align: right;">
+                    <!-- Botón Guardar -->
+                    <div class="content row mt-20">
+                        <div class="col text-right">
                             <asp:LinkButton
                                 runat="server"
-                                ID="lnk_crear_popup"
-                                CssClass="button"
-                                OnClick="lnk_crear_popup_Click"
-                                Style="background-color: #27ae60; color: white; padding: 12px 40px;">
-                                <i class="fas fa-save"></i> Crear Popup
+                                ID="btn_guardar"
+                                CssClass="button btn-guardar-popup"
+                                OnClick="btn_guardar_Click">
+                                <i class="fas fa-save"></i> Guardar Popup
                             </asp:LinkButton>
                         </div>
                     </div>
+
+                    <asp:Label ID="lbl_mensaje" runat="server" CssClass="msg-error"></asp:Label>
                 </section>
             </div>
         </div>
@@ -423,8 +358,10 @@
             </div>
             <div class="modal-i-gl-content">
                 <section class="box_content_crear_vista">
-                    <!-- ID oculto del popup a actualizar -->
                     <asp:HiddenField ID="hf_id_popup" runat="server" />
+                    <asp:HiddenField ID="hf_imagen_actual" runat="server" />
+                    <asp:HiddenField ID="hf_video_actual" runat="server" />
+                    <asp:HiddenField ID="hf_roles_actuales" runat="server" />
 
                     <!-- Título -->
                     <div class="content row">
@@ -432,7 +369,7 @@
                             <i class="far fa-keyboard"></i>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_titulo_pub"
+                                ID="txt_titulo_edit"
                                 MaxLength="200"
                                 placeholder="Título del popup"></asp:TextBox>
                         </div>
@@ -444,130 +381,174 @@
                             <i class="fas fa-align-right"></i>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_descripcion_pub"
+                                ID="txt_descripcion_edit"
                                 TextMode="MultiLine"
                                 Rows="4"
+                                MaxLength="500"
                                 placeholder="Descripción del popup"></asp:TextBox>
                         </div>
                     </div>
 
+                    <!-- Archivos actuales -->
+                    <div class="content row">
+                        <div class="col-md-6">
+                            <label class="form-label-bold">Imagen Actual:</label>
+                            <div class="archivo-actual">
+                                <i class="fas fa-image"></i>
+                                <asp:Label ID="lbl_imagen_actual" runat="server" Text="No hay imagen"></asp:Label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-bold">Video Actual:</label>
+                            <div class="archivo-actual">
+                                <i class="fas fa-video"></i>
+                                <asp:Label ID="lbl_video_actual" runat="server" Text="No hay video"></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO MULTIMEDIA MEJORADO - EDITAR -->
+                    <div class="content row">
+                        <div class="col">
+                            <label class="section-label">
+                                <i class="fas fa-photo-video"></i> Actualizar Contenido Multimedia
+                            </label>
+                            
+                            <!-- Opciones de multimedia -->
+                            <div class="multimedia-selector">
+                                <div class="multimedia-option-edit" data-tipo="ninguno">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-ban"></i>
+                                    </div>
+                                    <div class="multimedia-label">Mantener actual</div>
+                                </div>
+                                
+                                <div class="multimedia-option-edit" data-tipo="imagen">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                    <div class="multimedia-label">Cambiar imagen</div>
+                                </div>
+                                
+                                <div class="multimedia-option-edit" data-tipo="video">
+                                    <div class="multimedia-icon">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                    <div class="multimedia-label">Cambiar video</div>
+                                </div>
+                            </div>
+
+                            <!-- Upload de Imagen -->
+                            <div id="upload-imagen-edit" class="upload-section-edit" style="display: none;">
+                                <div class="upload-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <label class="upload-label">Nueva Imagen</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_imagen_edit"
+                                        accept="image/*"
+                                        CssClass="upload-input" />
+                                    <small class="upload-hint">Dejar vacío para mantener actual</small>
+                                </div>
+                            </div>
+
+                            <!-- Upload de Video -->
+                            <div id="upload-video-edit" class="upload-section-edit" style="display: none;">
+                                <div class="upload-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <label class="upload-label">Nuevo Video</label>
+                                    <asp:FileUpload
+                                        runat="server"
+                                        ID="fud_video_edit"
+                                        accept="video/*"
+                                        CssClass="upload-input" />
+                                    <small class="upload-hint">Dejar vacío para mantener actual</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- URL y Tiempo -->
-                    <div class="input-group">
-                        <div class="pnl_input">
-                            <label><i class="fas fa-link"></i> URL (opcional)</label>
+                    <div class="content row">
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-link"></i>
+                            <label class="form-label-bold">URL</label>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_url_pub"
+                                ID="txt_url_edit"
                                 placeholder="https://ejemplo.com"></asp:TextBox>
                         </div>
-                        <div class="pnl_input">
-                            <label><i class="fas fa-clock"></i> Tiempo (segundos)</label>
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-clock"></i>
+                            <label class="form-label-bold">Tiempo visualización (seg)</label>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_tiempo_pub"
+                                ID="txt_tiempo_edit"
                                 TextMode="Number"
                                 min="1"
                                 max="60"></asp:TextBox>
                         </div>
                     </div>
 
-                    <!-- Vigencia -->
-                    <div class="input-group">
-                        <div class="pnl_input">
-                            <label><i class="fas fa-calendar-alt"></i> Fecha inicio</label>
+                    <!-- Fechas -->
+                    <div class="content row">
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-calendar-alt"></i>
+                            <label class="form-label-bold">Fecha Inicio</label>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_fecha_inicio_pub"
+                                ID="txt_fecha_inicio_edit"
                                 TextMode="Date"></asp:TextBox>
                         </div>
-                        <div class="pnl_input">
-                            <label><i class="fas fa-calendar-times"></i> Fecha fin</label>
+                        <div class="pnl_input col-md-6">
+                            <i class="fas fa-calendar-check"></i>
+                            <label class="form-label-bold">Fecha Fin</label>
                             <asp:TextBox
                                 runat="server"
-                                ID="txt_fecha_fin_pub"
+                                ID="txt_fecha_fin_edit"
                                 TextMode="Date"></asp:TextBox>
                         </div>
                     </div>
 
-                    <!-- Estado Activo/Inactivo -->
+                    <!-- ROLES MEJORADOS -->
+                    <div class="content row">
+                        <div class="col">
+                            <label class="section-label">
+                                <i class="fas fa-users-cog"></i> Roles que pueden visualizar
+                            </label>
+                            
+                            <div class="roles-grid">
+                                <asp:CheckBoxList ID="cbl_roles_edit" runat="server" CssClass="roles-checkbox-list"></asp:CheckBoxList>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
                     <div class="content row">
                         <div class="pnl_input col">
-                            <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-                                <i class="fas fa-toggle-on"></i> Estado
-                            </label>
-                            <asp:DropDownList runat="server" ID="ddl_estado_pub" CssClass="form-control">
+                            <i class="fas fa-toggle-on"></i>
+                            <label class="form-label-bold">Estado</label>
+                            <asp:DropDownList runat="server" ID="ddl_estado_edit" CssClass="form-control">
                                 <asp:ListItem Value="1" Text="Activo"></asp:ListItem>
                                 <asp:ListItem Value="0" Text="Inactivo"></asp:ListItem>
                             </asp:DropDownList>
                         </div>
                     </div>
 
-                    <!-- Selector de Roles -->
-                    <div class="roles-selector">
-                        <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-                            <i class="fas fa-users"></i> Roles que pueden visualizar:
-                        </label>
-                        <asp:CheckBoxList ID="chkl_roles_pub" runat="server"></asp:CheckBoxList>
-                    </div>
-
-                    <!-- NUEVO: Selector de Tipo de Multimedia para Actualizar -->
-                    <div class="content row">
-                        <div class="col">
-                            <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-                                <i class="fas fa-photo-video"></i> Cambiar Multimedia (Opcional)
-                            </label>
-                            
-                            <div class="media-type-selector">
-                                <button type="button" id="btn_media_ninguno_actualizar" class="media-type-btn">
-                                    <i class="fas fa-times"></i><br>Sin cambios
-                                </button>
-                                <button type="button" id="btn_media_imagen_actualizar" class="media-type-btn">
-                                    <i class="fas fa-image"></i><br>Cambiar Imagen
-                                </button>
-                                <button type="button" id="btn_media_video_actualizar" class="media-type-btn">
-                                    <i class="fas fa-video"></i><br>Cambiar Video
-                                </button>
-                            </div>
-
-                            <!-- Área de carga de Imagen -->
-                            <div id="area_imagen_actualizar" class="media-upload-area">
-                                <div class="pnl_input">
-                                    <label><i class="fas fa-images"></i> Nueva imagen</label>
-                                    <asp:FileUpload
-                                        runat="server"
-                                        ID="fud_Adjunto_pub"
-                                        accept="image/png, image/gif, image/jpeg, image/jfif" />
-                                    <small style="color: #7f8c8d;">Deja vacío para mantener la imagen actual</small>
-                                </div>
-                            </div>
-
-                            <!-- Área de carga de Video -->
-                            <div id="area_video_actualizar" class="media-upload-area">
-                                <div class="pnl_input">
-                                    <label><i class="fas fa-video"></i> Nuevo video</label>
-                                    <asp:FileUpload
-                                        runat="server"
-                                        ID="fud_Video_pub"
-                                        accept="video/mp4, video/webm, video/ogg" />
-                                    <small style="color: #7f8c8d;">Deja vacío para conservar el video actual</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Botón Actualizar -->
-                    <div class="content row" style="margin-top: 20px;">
-                        <div class="col" style="text-align: right;">
+                    <div class="content row mt-20">
+                        <div class="col text-right">
                             <asp:LinkButton
                                 runat="server"
-                                ID="lnk_actualizar_popup"
-                                CssClass="button"
-                                OnClick="lnk_actualizar_popup_Click"
-                                Style="background-color: #3498db; color: white; padding: 12px 40px;">
+                                ID="btn_actualizar"
+                                CssClass="button btn-actualizar-popup"
+                                OnClick="btn_actualizar_Click">
                                 <i class="fas fa-sync-alt"></i> Actualizar Popup
                             </asp:LinkButton>
                         </div>
                     </div>
+
+                    <asp:Label ID="lbl_mensaje_edit" runat="server" CssClass="msg-error"></asp:Label>
                 </section>
             </div>
         </div>
@@ -577,9 +558,9 @@
          MODAL: CONFIRMAR ELIMINACIÓN
          ======================================== -->
     <div class="modal-i-gl modal-i-gl-hide animated fadeIn" id="modal_eliminar_popup">
-        <div class="modal-i-gl-body" style="max-width: 500px;">
+        <div class="modal-i-gl-body modal-small">
             <div class="modal-i-gl-title">
-                <h1 class="title" style="color: #e74c3c;">
+                <h1 class="title modal-title-danger">
                     <i class="fas fa-exclamation-triangle"></i> Eliminar Popup
                 </h1>
                 <div class="modal-i-gl-cerrar">
@@ -589,27 +570,25 @@
                 </div>
             </div>
             <div class="modal-i-gl-content">
-                <section style="text-align: center; padding: 20px;">
+                <section class="text-center-padded">
                     <asp:HiddenField ID="hf_id_popup_eliminar" runat="server" />
-                    <p style="font-size: 16px; margin-bottom: 10px;">
-                        ¿Está seguro que deseas eliminar este Popup?
+                    <p class="text-confirmation">
+                        ¿Está seguro que desea eliminar este popup?
                     </p>
-                    <p id="popup_titulo_eliminar" style="font-weight: bold; color: #2c3e50; margin-bottom: 20px;">
+                    <p id="popup_titulo_eliminar" class="text-popup-title">
                         <!-- Se llenará por JavaScript -->
                     </p>
-                    <div style="display: flex; gap: 10px; justify-content: center;">
+                    <div class="flex-center-gap">
                         <asp:LinkButton
                             runat="server"
-                            ID="lnk_eliminar_popup"
-                            CssClass="button"
-                            OnClick="lnk_eliminar_popup_Click"
-                            Style="background-color: #e74c3c; color: white; padding: 12px 30px; border-radius: 25px;">
+                            ID="btn_eliminar"
+                            CssClass="button btn-eliminar-confirm"
+                            OnClick="btn_eliminar_Click">
                             <i class="fas fa-trash"></i> Eliminar
                         </asp:LinkButton>
                         <button 
                             type="button" 
-                            class="btn btn-modal-close"
-                            style="background-color: #95a5a6; color: white; padding: 12px 30px; border-radius: 25px; border: none;">
+                            class="btn btn-modal-close btn-cancelar">
                             <i class="fas fa-times"></i> Cancelar
                         </button>
                     </div>
@@ -619,75 +598,44 @@
     </div>
 
     <!-- ========================================
-         JAVASCRIPT: Manejo de Modales y AJAX
+         JAVASCRIPT: Manejo de Modales
          ======================================== -->
     <script defer>
-        // Helper: formato fecha yyyy-MM-dd
-        function formatearFecha(fecha) {
-            if (!fecha) return '';
-            const d = new Date(fecha);
-            if (isNaN(d)) return '';
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
         // Devuelve el radio actualmente seleccionado
         function getPopupSeleccionado() {
-            return document.querySelector('input[name="rd_estado_vista"]:checked');
-        }
-
-        function toggleModal(modal, mostrar = true) {
-            if (!modal) return;
-            if (mostrar) {
-                modal.classList.add('modal-i-gl-show');
-                modal.classList.remove('modal-i-gl-hide');
-            } else {
-                modal.classList.add('modal-i-gl-hide');
-                modal.classList.remove('modal-i-gl-show');
-            }
+            return document.querySelector('input[name="rd_popup"]:checked');
         }
 
         // Función principal para enganchar eventos
         function ejecutarDatos() {
             // Botones principales
-            const btnCrearPopup = document.querySelector('#btn_modal_crear');
             const btnActualizarPopup = document.querySelector('#btn_modal_actualizar');
-            const btnEliminarPopup = document.querySelector('#btn_nodal_popup');
-            const btnEstadisticas = document.querySelector('#btn_estadisticas_popup');
+            const btnEliminarPopup = document.querySelector('#btn_modal_eliminar');
 
             // Modales
-            const modalCrearPopup = document.querySelector('#modal_crear_popup');
             const modalActualizarPopup = document.querySelector('#modal_actualizar_popup');
             const modalEliminarPopup = document.querySelector('#modal_eliminar_popup');
 
             // Controles del modal Actualizar
-            const tituloPublicacion = document.querySelector('#MainContent_txt_titulo_pub');
-            const descripcionPublicacion = document.querySelector('#MainContent_txt_descripcion_pub');
-            const urlPublicacion = document.querySelector('#MainContent_txt_url_pub');
-            const tiempoPublicacion = document.querySelector('#MainContent_txt_tiempo_pub');
-            const fechaInicioPublicacion = document.querySelector('#MainContent_txt_fecha_inicio_pub');
-            const fechaFinPublicacion = document.querySelector('#MainContent_txt_fecha_fin_pub');
-            const estadoPublicacion = document.querySelector('#MainContent_ddl_estado_pub');
-            const rolesPublicacion = document.querySelector('#MainContent_chkl_roles_pub');
+            const tituloEdit = document.querySelector('#MainContent_txt_titulo_edit');
+            const descripcionEdit = document.querySelector('#MainContent_txt_descripcion_edit');
+            const urlEdit = document.querySelector('#MainContent_txt_url_edit');
+            const tiempoEdit = document.querySelector('#MainContent_txt_tiempo_edit');
+            const fechaInicioEdit = document.querySelector('#MainContent_txt_fecha_inicio_edit');
+            const fechaFinEdit = document.querySelector('#MainContent_txt_fecha_fin_edit');
+            const estadoEdit = document.querySelector('#MainContent_ddl_estado_edit');
+            const imagenActualLabel = document.querySelector('#MainContent_lbl_imagen_actual');
+            const videoActualLabel = document.querySelector('#MainContent_lbl_video_actual');
             const hfIdPopup = document.querySelector('#MainContent_hf_id_popup');
-
-            // ================================
-            // BOTÓN: CREAR POPUP
-            // ================================
-            if (btnCrearPopup && modalCrearPopup) {
-                btnCrearPopup.onclick = function (e) {
-                    e.preventDefault();
-                    toggleModal(modalCrearPopup, true);
-                };
-            }
+            const hfImagenActual = document.querySelector('#MainContent_hf_imagen_actual');
+            const hfVideoActual = document.querySelector('#MainContent_hf_video_actual');
+            const hfRolesActuales = document.querySelector('#MainContent_hf_roles_actuales');
 
             // ================================
             // BOTÓN: ACTUALIZAR POPUP
             // ================================
             if (btnActualizarPopup && modalActualizarPopup && hfIdPopup) {
-                btnActualizarPopup.onclick = async function (e) {
+                btnActualizarPopup.onclick = function (e) {
                     e.preventDefault();
 
                     const popupSeleccionado = getPopupSeleccionado();
@@ -696,57 +644,40 @@
                         return;
                     }
 
+                    // Obtener datos de los atributos data-
                     hfIdPopup.value = popupSeleccionado.value;
+                    tituloEdit.value = popupSeleccionado.getAttribute('data-titulo') || '';
+                    descripcionEdit.value = popupSeleccionado.getAttribute('data-descripcion') || '';
+                    urlEdit.value = popupSeleccionado.getAttribute('data-url') || '';
+                    tiempoEdit.value = popupSeleccionado.getAttribute('data-tiempo') || '5';
+                    estadoEdit.value = popupSeleccionado.getAttribute('data-estado') || '1';
+
+                    const imagenNombre = popupSeleccionado.getAttribute('data-imagen') || 'No hay imagen';
+                    imagenActualLabel.innerText = imagenNombre;
+                    hfImagenActual.value = imagenNombre;
+
+                    const videoNombre = popupSeleccionado.getAttribute('data-video') || 'No hay video';
+                    videoActualLabel.innerText = videoNombre;
+                    hfVideoActual.value = videoNombre;
+
+                    // Fechas
+                    fechaInicioEdit.value = popupSeleccionado.getAttribute('data-fecha-inicio') || '';
+                    fechaFinEdit.value = popupSeleccionado.getAttribute('data-fecha-fin') || '';
+
+                    // Roles
+                    const rolesIds = popupSeleccionado.getAttribute('data-roles') || '';
+                    hfRolesActuales.value = rolesIds;
+
+                    // Marcar checkboxes de roles
+                    const rolesArray = rolesIds.split(',').filter(r => r);
+                    const checkboxes = document.querySelectorAll('#MainContent_cbl_roles_edit input[type="checkbox"]');
+                    checkboxes.forEach(cb => {
+                        cb.checked = rolesArray.includes(cb.value);
+                    });
 
                     // Mostrar modal
-                    toggleModal(modalActualizarPopup, true);
-
-                    try {
-                        const response = await fetch('WebService_V_Comunicacion.asmx/cargar_datos_modal_actualizar_Popup', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                            body: JSON.stringify({ Id_Popup: parseInt(popupSeleccionado.value) })
-                        });
-
-                        const datos = await response.json();
-                        const item = datos.d && datos.d[0];
-
-                        if (Array.isArray(item)) {
-                            // Compatibilidad con la antigua respuesta tipo arreglo
-                            tituloPublicacion.value = item[1] || '';
-                            descripcionPublicacion.value = item[2] || '';
-                            urlPublicacion.value = item[5] || '';
-                            tiempoPublicacion.value = item[6] || 5;
-                            fechaInicioPublicacion.value = formatearFecha(item[7]);
-                            fechaFinPublicacion.value = formatearFecha(item[8]);
-                            estadoPublicacion.value = item[9] ? '1' : '0';
-
-                            // El índice 11 corresponde a RolesIds en el SP (luego de Tiempo_Visualizacion)
-                            const rolesIds = item[11] ? item[11].split(',') : [];
-                            const checkboxes = rolesPublicacion.querySelectorAll('input[type="checkbox"]');
-                            checkboxes.forEach(cb => {
-                                cb.checked = rolesIds.includes(cb.value);
-                            });
-                        } else if (item) {
-                            // Nueva respuesta con propiedades nombradas
-                            tituloPublicacion.value = item.Titulo || '';
-                            descripcionPublicacion.value = item.Descripcion || '';
-                            urlPublicacion.value = item.Url || '';
-                            tiempoPublicacion.value = item.Tiempo_Visualizacion || 5;
-                            fechaInicioPublicacion.value = formatearFecha(item.Fecha_Inicio);
-                            fechaFinPublicacion.value = formatearFecha(item.Fecha_Fin);
-                            estadoPublicacion.value = item.Estado ? '1' : '0';
-
-                            const rolesIds = item.RolesIds ? item.RolesIds.toString().split(',') : [];
-                            const checkboxes = rolesPublicacion.querySelectorAll('input[type="checkbox"]');
-                            checkboxes.forEach(cb => {
-                                cb.checked = rolesIds.includes(cb.value);
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Error al cargar popup:', error);
-                        alert('Error al cargar los datos del popup');
-                    }
+                    modalActualizarPopup.classList.add('modal-i-gl-show');
+                    modalActualizarPopup.classList.remove('modal-i-gl-hide');
                 };
             }
 
@@ -769,9 +700,8 @@
                         hfEliminar.value = popupSeleccionado.value;
                     }
 
-                    // Obtener título del popup desde la fila
-                    const fila = popupSeleccionado.closest('tr');
-                    const titulo = fila && fila.cells[2] ? fila.cells[2].innerText : '';
+                    // Obtener título del atributo data-
+                    const titulo = popupSeleccionado.getAttribute('data-titulo') || '';
 
                     // Mostrar en modal de confirmación
                     const lblTituloEliminar = document.getElementById('popup_titulo_eliminar');
@@ -780,65 +710,14 @@
                     }
 
                     // Mostrar modal
-                    toggleModal(modalEliminarPopup, true);
+                    modalEliminarPopup.classList.add('modal-i-gl-show');
+                    modalEliminarPopup.classList.remove('modal-i-gl-hide');
                 };
             }
-
-            // ================================
-            // BOTÓN: ESTADÍSTICAS
-            // ================================
-            if (btnEstadisticas) {
-                btnEstadisticas.onclick = async function (e) {
-                    e.preventDefault();
-
-                    const popupSeleccionado = getPopupSeleccionado();
-                    if (!popupSeleccionado) {
-                        alert('Por favor, selecciona un popup de la tabla');
-                        return;
-                    }
-
-                    try {
-                        const response = await fetch('WebService_V_Comunicacion.asmx/Obtener_Estadisticas_Popup', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                            body: JSON.stringify({ Id_Popup: parseInt(popupSeleccionado.value) })
-                        });
-
-                        const datos = await response.json();
-                        const stats = datos.d || [];
-
-                        const texto = stats
-                            .map(s => `${s[0]}: ${s[1]} (${s[2]}%)`)
-                            .join('\n');
-
-                        alert('Estadísticas:\n\n' + texto);
-                    }
-                    catch (error) {
-                        console.error('Error estadísticas:', error);
-                        alert('Error al cargar estadísticas');
-                    }
-                };
-            }
-
-            document.querySelectorAll('.btn-modal-close').forEach(btn => {
-                btn.onclick = function (ev) {
-                    ev.preventDefault();
-                    const modal = this.closest('.modal-i-gl');
-                    toggleModal(modal, false);
-                }
-            });
         }
 
-        // Prevenir doble submit SOLO en el botón de crear
+        // Ejecutar al cargar la página
         window.addEventListener('load', function () {
-            const lnk_crear_ = document.querySelector('#MainContent_lnk_crear_popup');
-            if (lnk_crear_) {
-                lnk_crear_.addEventListener('click', () => {
-                    lnk_crear_.disabled = true;
-                    setTimeout(() => { lnk_crear_.disabled = false; }, 2000);
-                });
-            }
-
             ejecutarDatos();
         });
 
@@ -853,5 +732,4 @@
             });
         }
     </script>
-
 </asp:Content>

@@ -15,6 +15,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
     {
 
         /// <summary>
+        /// Control PanelUpdate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel PanelUpdate;
+
+        /// <summary>
         /// Control lit_tabla_tutoriales.
         /// </summary>
         /// <remarks>
@@ -60,13 +69,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.DropDownList ddl_seccion;
 
         /// <summary>
+        /// Control cbl_roles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cbl_roles;
+
+        /// <summary>
         /// Control btn_guardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_guardar;
+        protected global::System.Web.UI.WebControls.LinkButton btn_guardar;
 
         /// <summary>
         /// Control lbl_mensaje.
@@ -150,13 +168,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.DropDownList ddl_estado_edit;
 
         /// <summary>
+        /// Control cbl_roles_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cbl_roles_edit;
+
+        /// <summary>
         /// Control btn_actualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_actualizar;
+        protected global::System.Web.UI.WebControls.LinkButton btn_actualizar;
 
         /// <summary>
         /// Control lbl_mensaje_edit.
@@ -166,5 +193,23 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mensaje_edit;
+
+        /// <summary>
+        /// Control hf_id_tutorial_eliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_tutorial_eliminar;
+
+        /// <summary>
+        /// Control btn_eliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_eliminar;
     }
 }

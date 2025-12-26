@@ -329,9 +329,9 @@ table tr:nth-child(even) td {
     background-color: #f8f9fa ;
 }
 
-table tr:nth-child(odd) td {
-    background-color: hsl(220deg 15.02% 86.28%) ;
-}
+    table tr:nth-child(odd) td {
+        background-color: hsl(220deg 15.9% 82.39%);
+    }
 
 /* Columnas específicas */
 table td:first-child {
@@ -350,7 +350,7 @@ table td:nth-child(2) {
 table td:nth-child(3) {
     width: auto !important;
     min-width: 60px !important;
-    font-weight: 60 !important;
+    font-weight: 600 !important;
 }
 
 table td:nth-child(4) {
@@ -740,11 +740,6 @@ div.seccion_filtros .complemento_grupo_entrada {
             padding: 15px 8px;
             font-size: 16px;
         }
-
-    div.seccion_filtros .grupo_entrada {
-        position: relative;
-        display: inline-table;
-    }
 }
 
     @media (max-width: 480px) {

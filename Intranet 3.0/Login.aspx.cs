@@ -1,11 +1,15 @@
-﻿using BRL;
-using System;
-using System.Configuration;
-using System.Data;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using BRL;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.UI.HtmlControls;
+using System.Configuration;
 
 namespace Intranet_3._0
 {
@@ -90,6 +94,8 @@ namespace Intranet_3._0
                                 Response.Cookies.Add(httpCookie);
                                 Session["cerrar"] = "1";
                                 Session["cc"] = txt_user.Text;
+                                //Guardar Id_Usuario en la sesión
+                                Session["Id_Usuario"] = db.Rows[0]["Id_Usuario"].ToString();
 
                                 //Inserta automaticamente el codigo_sae 
                                 Int_Usuarios_BRL.InsertOrUpdate(int_Usuarios, 68);
@@ -155,6 +161,7 @@ namespace Intranet_3._0
                         httpCookie.Expires = DateTime.Now.AddMinutes(tiempoSesion);
                         Response.Cookies.Add(httpCookie);
                         Session["cerrar"] = "1";
+                        Session["Id_Usuario"] = dataTable.Rows[0]["Id_Usuario"].ToString();
                         //se crea un objeto cambio pass y una tabla cambio pass para colocar de contraseña el numero de documento y al ingresar se dispare el evento Cambio de contraseña obligatorio JGC
                         DCL.Int_Usuarios obj_cambiopass = new DCL.Int_Usuarios();
                         obj_cambiopass.Id_Usuario = obj_.Id_Usuario;

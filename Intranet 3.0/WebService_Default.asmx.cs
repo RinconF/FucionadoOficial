@@ -1,19 +1,26 @@
 ﻿using BRL;
 using DCL;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Intranet_3._0.Interna;
+using iTextSharp.text;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
+using System.Security.Principal;
 
 namespace Intranet_3._0
 {
@@ -1487,25 +1494,142 @@ namespace Intranet_3._0
 
         #region POPUP
 
-        // Lista para la tabla (Action 1)
+        // =====================================================
+        // MÉTODO 1: Obtener Popups para Usuario
+        // =====================================================
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string[]> Obtener_Popups_Para_Grid()
+        public object Obtener_Popups_Usuario(int Id_Usuario)
+        {
+            try
+            {
+                // Obtener popups activos para el usuario usando Action 0
+                DCL.Int_Popup obj = new DCL.Int_Popup { Id_Usuario = Id_Usuario };
+                DataTable dt = BRL.Int_Popup_BRL.SelectTable(obj, 0);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    return new
+                    {
+                        success = true,
+                        popups = new object[] { },
+                        mensaje = "No hay popups disponibles"
+                    };
+                }
+
+                // Convertir DataTable a lista de objetos anónimos
+                var popups = new List<object>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    // Determinar el tipo de popup (imagen o video)
+                    string tipo = "imagen"; // Por defecto
+                    string rutaMultimedia = null;
+
+                    // Si tiene video, usar video
+                    if (row["Video"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["Video"].ToString()))
+                    {
+                        tipo = "video";
+                        rutaMultimedia = row["Video"].ToString();
+                    }
+                    // Si no tiene video pero tiene imagen, usar imagen
+                    else if (row["Imagen"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["Imagen"].ToString()))
+                    {
+                        tipo = "imagen";
+                        rutaMultimedia = row["Imagen"].ToString();
+                    }
+
+                    popups.Add(new
+                    {
+                        Id_Popup = Convert.ToInt32(row["Id_Popup"]),
+                        Titulo = row["Titulo"].ToString(),
+                        Descripcion = row["Descripcion"].ToString(),
+                        Tipo = tipo,
+                        RutaMultimedia = rutaMultimedia,
+                        Url = row["Url"] != DBNull.Value ? row["Url"].ToString() : null,
+                        Tiempo_Visualizacion = row["Tiempo_Visualizacion"] != DBNull.Value
+                            ? Convert.ToInt32(row["Tiempo_Visualizacion"])
+                            : 5
+                    });
+                }
+
+                return new
+                {
+                    success = true,
+                    popups = popups,
+                    mensaje = $"{popups.Count} popup(s) disponible(s)"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Log del error
+                System.Diagnostics.Debug.WriteLine($"Error en Obtener_Popups_Usuario: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                return new
+                {
+                    success = false,
+                    popups = new object[] { },
+                    mensaje = "Error al obtener popups: " + ex.Message
+                };
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public object Registrar_Interaccion_Popup(int Id_Popup, int Id_Usuario, string Interaccion)
+        {
+            try
+            {
+                // Registrar la interacción usando Action 7
+                DCL.Int_Popup obj = new DCL.Int_Popup
+                {
+                    Id_Popup = Id_Popup,
+                    Id_Usuario = Id_Usuario,
+                    Interaccion = Interaccion
+                };
+
+                int resultado = BRL.Int_Popup_BRL.InsertOrUpdate(obj, 7);
+
+                return new
+                {
+                    success = resultado > 0,
+                    mensaje = resultado > 0 ? "Interacción registrada" : "Error al registrar interacción"
+                };
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en Registrar_Interaccion_Popup: {ex.Message}");
+
+                return new
+                {
+                    success = false,
+                    mensaje = "Error al registrar interacción: " + ex.Message
+                };
+            }
+        }
+
+        // =====================================================
+        // MÉTODO 3: Obtener Estadísticas de Popup
+        // Usa Action 8 de tu SP
+        // =====================================================
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string[]> Obtener_Estadisticas_Popup(int Id_Popup)
         {
             var list = new List<string[]>();
 
             try
             {
-                var obj = new Int_Popup();
-                DataTable dt = Int_Popup_BRL.SelectTable(obj, 1);
+                var obj = new Int_Popup { Id_Popup = Id_Popup };
+                DataTable dt = Int_Popup_BRL.SelectTable(obj, 8);
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    // ajusta el tamaño si en el front ocupas más/menos columnas
-                    string[] arr = new string[dt.Columns.Count];
-                    for (int i = 0; i < dt.Columns.Count; i++)
-                        arr[i] = row[i].ToString();
-
+                    string[] arr = new string[3];
+                    arr[0] = row["Tipo_Interaccion"]?.ToString() ?? "";
+                    arr[1] = row["Cantidad"]?.ToString() ?? "0";
+                    arr[2] = row["Porcentaje"]?.ToString() ?? "0";
                     list.Add(arr);
                 }
 
@@ -1514,98 +1638,109 @@ namespace Intranet_3._0
             catch (Exception ex)
             {
                 list.Clear();
-                list.Add(new[] { ex.Message });
+                list.Add(new[] { "Error", ex.Message, "0" });
                 return list;
             }
         }
 
+        // =====================================================
+        // MÉTODO 4: Cargar Datos para Modal de Actualización
+        // Usa Action 3 de tu SP
+        // =====================================================
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<object> Obtener_Popups_Usuario(int Id_Usuario)
+        public List<object> cargar_datos_modal_actualizar_Popup(int Id_Popup)
         {
-            var respuesta = new List<object>();
+            var lista = new List<object>();
+
             try
             {
-                var obj = new Int_Popup { Id_Usuario = Id_Usuario };
-                DataTable dt = Int_Popup_BRL.SelectTable(obj, 0); // Action 0: popups para usuario
+                var obj = new Int_Popup { Id_Popup = Id_Popup };
 
-                foreach (DataRow row in dt.Rows)
+                // Usar Load que internamente usa Action 3
+                Int_Popup popup = Int_Popup_BRL.Load(obj);
+
+                if (popup == null || popup.Id_Popup == null)
                 {
-                    string imagen = row.Table.Columns.Contains("Imagen") ? row["Imagen"].ToString() : null;
-                    string video = row.Table.Columns.Contains("Video") ? row["Video"].ToString() : null;
-
-                    string rutaPublica = !string.IsNullOrWhiteSpace(video)
-                        ? ResolverRutaPublicaPopup(video)
-                        : ResolverRutaPublicaPopup(imagen);
-
-                    string rolesIds = row.Table.Columns.Contains("RolesIds") ? row["RolesIds"].ToString() : null;
-                    var rolesSeparados = rolesIds?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    respuesta.Add(new
-                    {
-                        Id_Popup = row["Id_Popup"],
-                        Titulo = row.Table.Columns.Contains("Titulo") ? row["Titulo"] : null,
-                        Descripcion = row.Table.Columns.Contains("Descripcion") ? row["Descripcion"] : null,
-                        Url = row.Table.Columns.Contains("Url") ? row["Url"] : null,
-                        Tiempo_Visualizacion = row.Table.Columns.Contains("Tiempo_Visualizacion") ? row["Tiempo_Visualizacion"] : null,
-                        Fecha_Inicio = row.Table.Columns.Contains("Fecha_Inicio") ? row["Fecha_Inicio"] : null,
-                        Fecha_Fin = row.Table.Columns.Contains("Fecha_Fin") ? row["Fecha_Fin"] : null,
-                        Imagen = imagen,
-                        Video = video,
-                        RutaMultimedia = rutaPublica,
-                        Tipo = !string.IsNullOrWhiteSpace(video) ? "video" : "imagen",
-                        Estado = row.Table.Columns.Contains("Estado") ? row["Estado"] : null,
-                        RolesIds = rolesIds,
-                        Roles = rolesSeparados
-                    });
+                    lista.Add(new { Id_Popup = 0 });
+                    return lista;
                 }
 
-                return respuesta;
+                // Obtener roles asignados
+                DataTable dtRoles = Int_Popup_BRL.SelectTable(obj, 14); // Action 14: obtener roles del popup
+                string rolesIds = "";
+
+                foreach (DataRow row in dtRoles.Rows)
+                {
+                    if (!string.IsNullOrEmpty(rolesIds)) rolesIds += ",";
+                    rolesIds += row["Id_Rol"].ToString();
+                }
+
+                var popupDto = new
+                {
+                    Id_Popup = popup.Id_Popup,
+                    Titulo = popup.Titulo,
+                    Descripcion = popup.Descripcion,
+                    Imagen = popup.Imagen,
+                    Video = popup.Video,
+                    Url = popup.Url,
+                    Tiempo_Visualizacion = popup.Tiempo_Visualizacion,
+                    Fecha_Inicio = popup.Fecha_Inicio,
+                    Fecha_Fin = popup.Fecha_Fin,
+                    Estado = popup.Estado,
+                    RolesIds = rolesIds
+                };
+
+                lista.Add(popupDto);
+                return lista;
             }
             catch (Exception ex)
             {
-                respuesta.Clear();
-                respuesta.Add(new { Error = ex.Message });
-                return respuesta;
+                lista.Clear();
+                lista.Add(new { Error = ex.Message });
+                return lista;
             }
         }
 
-        /// <summary>
-        /// Convierte la ruta UNC almacenada para un popup a una URL accesible desde la UI.
-        /// No modifica la ruta guardada, solo entrega una versión navegable basada en la carpeta local de imágenes.
-        /// </summary>
+        // =====================================================
+        // MÉTODO AUXILIAR: Resolver Ruta Pública
+        // Convierte rutas UNC a URLs accesibles
+        // =====================================================
         private string ResolverRutaPublicaPopup(string rutaRemota)
         {
             if (string.IsNullOrWhiteSpace(rutaRemota) || HttpContext.Current == null)
                 return null;
 
-            string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
-            string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
-
-            string segmentoDesdeAmbiente = null;
-            int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
-            if (idx >= 0)
+            try
             {
-                segmentoDesdeAmbiente = rutaRemota.Substring(idx);
-            }
-            else if (!string.IsNullOrWhiteSpace(baseRemota) && rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
-            {
-                segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
-            }
+                string ambiente = ConfigurationManager.AppSettings.Get("ambiente") ?? "DESA";
+                string baseRemota = ConfigurationManager.AppSettings.Get("pathRemote") ?? string.Empty;
 
-            if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
+                string segmentoDesdeAmbiente = null;
+                int idx = rutaRemota.IndexOf(ambiente, StringComparison.OrdinalIgnoreCase);
+
+                if (idx >= 0)
+                {
+                    segmentoDesdeAmbiente = rutaRemota.Substring(idx);
+                }
+                else if (!string.IsNullOrWhiteSpace(baseRemota) &&
+                         rutaRemota.StartsWith(baseRemota, StringComparison.OrdinalIgnoreCase))
+                {
+                    segmentoDesdeAmbiente = rutaRemota.Substring(baseRemota.Length);
+                }
+
+                if (string.IsNullOrWhiteSpace(segmentoDesdeAmbiente))
+                    return null;
+
+                // Construir ruta web
+                string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
+                return VirtualPathUtility.ToAbsolute(rutaRelativa);
+            }
+            catch
+            {
                 return null;
-
-            string rutaRelativa = $"~/Imagenes/{segmentoDesdeAmbiente.Replace("\\", "/")}";
-            return VirtualPathUtility.ToAbsolute(rutaRelativa);
+            }
         }
-
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void Registrar_Interaccion_Popup(int Id_Popup, int Id_Usuario, string Interaccion)
-        {
-            Int_Popup_BRL.RegistrarInteraccion(Id_Popup, Id_Usuario, Interaccion);
-        }
-        #endregion
+        #endregion popup
     }
 }

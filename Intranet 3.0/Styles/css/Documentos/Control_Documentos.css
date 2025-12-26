@@ -1,0 +1,262 @@
+﻿/* ========================================
+   ESTILOS BASE
+   ======================================== */
+.button {
+    background: none;
+    border: 1px solid rgba(22, 160, 133, 1);
+    color: rgba(22, 160, 133, 1);
+    padding: 10px 25px;
+    margin-left: 5px;
+    border-radius: 50px;
+    outline: none;
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 20%);
+    transition: all 0.3s ease;
+}
+
+    .button:hover {
+        background: rgba(22, 160, 133, 1);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+.row {
+    display: flow !important;
+}
+
+/* ========================================
+   CONTENEDOR DE FILTROS
+   ======================================== */
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+/* ========================================
+   BADGES DE ESTADO
+   ======================================== */
+.badge {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: #27ae60;
+    color: white;
+}
+
+.badge-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* ========================================
+   TABLA
+   ======================================== */
+.body-content .tbl_vistas_general th {
+    background-color: rgb(40 55 71 / 50%);
+    color: #343a40;
+    font-weight: bold;
+}
+
+.body-content .tbl_vistas_general tr {
+    background: #fff;
+}
+
+/* ========================================
+   CAMPOS DE FORMULARIO
+   ======================================== */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+    .input-group > div {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+.pnl_input textarea {
+    width: 100% !important;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.pnl_input label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ========================================
+   INFORMACIÓN DE ARCHIVO ACTUAL
+   ======================================== */
+.archivo-actual {
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    word-break: break-word;
+}
+
+    .archivo-actual i {
+        color: #e74c3c;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+/* ========================================
+   BOTONES ESPECÍFICOS
+   ======================================== */
+.btn-eliminar-documento {
+    border-color: #e74c3c !important;
+    color: #e74c3c !important;
+}
+
+    .btn-eliminar-documento:hover {
+        background: #e74c3c;
+        color: white;
+    }
+
+.btn-guardar-documento {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 40px;
+}
+
+    .btn-guardar-documento:hover {
+        background-color: #229954;
+    }
+
+.btn-actualizar-documento {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 40px;
+}
+
+    .btn-actualizar-documento:hover {
+        background-color: #2980b9;
+    }
+
+.btn-eliminar-confirm {
+    background-color: #ff7052;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: none;
+}
+
+.btn-cancelar {
+    background-color: #95a5a6;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: none;
+}
+
+/* ========================================
+   CLASES AUXILIARES
+   ======================================== */
+
+.input-busqueda-rapida {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: 250px;
+}
+
+.form-label-bold {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-help-text {
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center-padded {
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-small {
+    max-width: 500px;
+}
+
+.modal-title-danger {
+    color: #e74c3c;
+}
+
+.text-confirmation {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.text-documento-title {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.flex-center-gap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .input-busqueda-rapida {
+        width: 200px;
+    }
+
+    .button,
+    .btn-guardar-documento,
+    .btn-actualizar-documento {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .input-busqueda-rapida {
+        width: 100%;
+    }
+
+    .flex-center-gap {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-eliminar-confirm,
+    .btn-cancelar {
+        width: 100%;
+    }
+}

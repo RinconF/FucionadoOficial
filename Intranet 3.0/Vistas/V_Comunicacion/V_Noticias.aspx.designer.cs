@@ -7,9 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Intranet_3._0.Vistas.V_Comunicacion {
-    
-    
-    public partial class V_Noticias {
+namespace Intranet_3._0.Vistas.V_Comunicacion
+{
+
+
+    public partial class V_Noticias
+    {
     }
 }

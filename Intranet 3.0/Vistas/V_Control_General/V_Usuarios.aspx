@@ -140,52 +140,54 @@
                     </div>--%>
                 </div>
                 <%--<table runat="server" id="tbl_usuarios" class="tbl_roles tbl_vistas_general"></table>--%>
-                <asp:GridView runat="server" ID="tbl_usuarios" AutoGenerateColumns="False" Width="100%" CssClass="display"  ForeColor="#333333" GridLines="None" HorizontalAlign="Center">
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-                    <Columns>
-                        <asp:BoundField DataField="Id_Usuario" HeaderText="#" >
-                        <ControlStyle Font-Overline="False" Font-Underline="True" />
-                        <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="True" />
-                        <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" >
-                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
-                        <%--<asp:BoundField DataField="Contraseña" HeaderText="Contraseña" />--%>
-                        <asp:BoundField DataField="Nombre_Rol" HeaderText="Rol" />
-                        <asp:BoundField DataField="Usuario_Creacion" HeaderText="Usuario Creacion" >
-                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="Fecha_Creacion" HeaderText="Fecha Creacion" />
-                        <asp:BoundField DataField="Estado Contrato" HeaderText="Estado Contrato">
-                          <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                          <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" >
-                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                <div class="table-responsive">
+                    <asp:GridView runat="server" ID="tbl_usuarios" AutoGenerateColumns="False" Width="100%" CssClass="display"  ForeColor="#333333" GridLines="None" HorizontalAlign="Center">
+                        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                        <Columns>
+                            <asp:BoundField DataField="Id_Usuario" HeaderText="#" >
+                            <ControlStyle Font-Overline="False" Font-Underline="True" />
+                            <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="True" />
+                            <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="Nombre" HeaderText="Nombre" >
                             <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        </asp:BoundField>
-                        <asp:TemplateField HeaderText="Seleccionar">
-                            <ItemTemplate>
-                                <input type="radio" name="rd_estado_usu" value="<%#Eval("Id_Usuario")%>" />
-                            </ItemTemplate>
-                            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="Usuario" HeaderText="Usuario" />
+                            <%--<asp:BoundField DataField="Contraseña" HeaderText="Contraseña" />--%>
+                            <asp:BoundField DataField="Nombre_Rol" HeaderText="Rol" />
+                            <asp:BoundField DataField="Usuario_Creacion" HeaderText="Usuario Creacion" >
                             <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                        </asp:TemplateField>
-                    </Columns>
-                    <EditRowStyle BackColor="#999999" />
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <HeaderStyle BackColor="#273747" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" VerticalAlign="Middle" />
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-                </asp:GridView>
+                            </asp:BoundField>
+                            <asp:BoundField DataField="Fecha_Creacion" HeaderText="Fecha Creacion" />
+                            <asp:BoundField DataField="Estado Contrato" HeaderText="Estado Contrato">
+                              <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                              <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="Estado" HeaderText="Estado" >
+                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            </asp:BoundField>
+                            <asp:TemplateField HeaderText="Seleccionar">
+                                <ItemTemplate>
+                                    <input type="radio" name="rd_estado_usu" value="<%#Eval("Id_Usuario")%>" />
+                                </ItemTemplate>
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            </asp:TemplateField>
+                        </Columns>
+                        <EditRowStyle BackColor="#999999" />
+                        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#273747" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" VerticalAlign="Middle" />
+                        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                        <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                        <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                        <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                        <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                    </asp:GridView>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>

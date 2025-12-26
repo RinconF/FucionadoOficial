@@ -46,11 +46,6 @@
                 }
             });
 
-
-
-
-
-
             $('body').on('change', 'input[type="file"]', function () {
                 var ext = $(this).val().split('.').pop();
                 if ($(this).val() != '') {
@@ -67,9 +62,13 @@
                 }
             });
 
-
-
-
+            // Búsqueda rápida en la tabla
+            //$('#MainContent_txt_filter_grupo').on('keyup', function () {
+            //    const valor = $(this).val().toLowerCase();
+            //    $('#MainContent_tbl_grupos tbody tr').filter(function () {
+            //        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+            //    });
+            //});
         });
     </script>
 </asp:Content>
@@ -84,7 +83,7 @@
                 <div class="filter">
                     <div class="box_menu_crear">
                         <button 
-                            type="button" 
+                            type="button"
                             id="btn_crear_publicacion" 
                             class="btn-modal" 
                             data-id="modal_crear_noticia">
@@ -103,7 +102,9 @@
                         <asp:TextBox runat="server" ID="txt_filter_grupo" placeholder="Búsqueda rápida" OnTextChanged="txt_filter_grupo_TextChanged" AutoPostBack="true"></asp:TextBox>
                     </div>
                 </div>
-                <table runat="server" id="tbl_grupos" class="tbl_vistas_general"></table>
+                <div class="table-responsive">
+                    <table runat="server" id="tbl_grupos" class="tbl_vistas_general"></table>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>

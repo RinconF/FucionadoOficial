@@ -1,10 +1,11 @@
-﻿<%@ Page Title="Documentos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Documento.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Documentos.V_Documentos" %>
+﻿<%@ Page ValidateRequest="false" Title="Módulos" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Documentos.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Documentos.V_Documentos" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts_css" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="scripts_js" runat="server">
-    <link rel="Stylesheet" href="/Styles/css/documentos/documentos.css" />
+    <link rel="Stylesheet" href="/Styles/css/Documentos/Documentos.css" />
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
@@ -28,7 +29,7 @@
                             <h4 class="documento-titulo"><%# Eval("Titulo") %></h4>
                             <p class="documento-descripcion"><%# Eval("Descripcion") %></p>
                             <div class="documento-meta">
-                                <span class="documento-fecha">
+                                <span class="documento-fecha">s
                                     <i class="far fa-calendar"></i>
                                     <%# Eval("FechaCreacion", "{0:dd/MM/yyyy}") %>
                                 </span>

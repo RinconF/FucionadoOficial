@@ -83,7 +83,7 @@ namespace DAL
                         i = 1;
                     }
                 }
-                else // Update/Delete
+                else // Update/Delete/Gestión de roles
                 {
                     ExecuteNonQuery();
                     i = 1;
@@ -108,6 +108,7 @@ namespace DAL
             AddCmdParameter("@Usuario_Creacion", _obj.Usuario_Creacion, ParameterDirection.Input);
             AddCmdParameter("@Usuario_Actualizacion", _obj.Usuario_Actualizacion, ParameterDirection.Input);
             AddCmdParameter("@Estado", _obj.Estado, ParameterDirection.Input);
+            AddCmdParameter("@Roles", _obj.Roles, ParameterDirection.Input);
         }
     }
 }

@@ -24,13 +24,13 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.UpdatePanel PanelUpdate;
 
         /// <summary>
-        /// Control tbl_grupos.
+        /// Control lit_tabla_popups.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbl_grupos;
+        protected global::System.Web.UI.WebControls.Literal lit_tabla_popups;
 
         /// <summary>
         /// Control txt_titulo.
@@ -49,6 +49,24 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_descripcion;
+
+        /// <summary>
+        /// Control fud_imagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fud_imagen;
+
+        /// <summary>
+        /// Control fud_video.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fud_video;
 
         /// <summary>
         /// Control txt_url.
@@ -87,40 +105,31 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_fecha_fin;
 
         /// <summary>
-        /// Control chkl_roles.
+        /// Control cbl_roles.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList chkl_roles;
+        protected global::System.Web.UI.WebControls.CheckBoxList cbl_roles;
 
         /// <summary>
-        /// Control fud_Adjunto.
+        /// Control btn_guardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_Adjunto;
+        protected global::System.Web.UI.WebControls.LinkButton btn_guardar;
 
         /// <summary>
-        /// Control fud_Video.
+        /// Control lbl_mensaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_Video;
-
-        /// <summary>
-        /// Control lnk_crear_popup.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_crear_popup;
+        protected global::System.Web.UI.WebControls.Label lbl_mensaje;
 
         /// <summary>
         /// Control hf_id_popup.
@@ -132,103 +141,157 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.HiddenField hf_id_popup;
 
         /// <summary>
-        /// Control txt_titulo_pub.
+        /// Control hf_imagen_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_titulo_pub;
+        protected global::System.Web.UI.WebControls.HiddenField hf_imagen_actual;
 
         /// <summary>
-        /// Control txt_descripcion_pub.
+        /// Control hf_video_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_descripcion_pub;
+        protected global::System.Web.UI.WebControls.HiddenField hf_video_actual;
 
         /// <summary>
-        /// Control txt_url_pub.
+        /// Control hf_roles_actuales.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_url_pub;
+        protected global::System.Web.UI.WebControls.HiddenField hf_roles_actuales;
 
         /// <summary>
-        /// Control txt_tiempo_pub.
+        /// Control txt_titulo_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_tiempo_pub;
+        protected global::System.Web.UI.WebControls.TextBox txt_titulo_edit;
 
         /// <summary>
-        /// Control txt_fecha_inicio_pub.
+        /// Control txt_descripcion_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_fecha_inicio_pub;
+        protected global::System.Web.UI.WebControls.TextBox txt_descripcion_edit;
 
         /// <summary>
-        /// Control txt_fecha_fin_pub.
+        /// Control lbl_imagen_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_fecha_fin_pub;
+        protected global::System.Web.UI.WebControls.Label lbl_imagen_actual;
 
         /// <summary>
-        /// Control ddl_estado_pub.
+        /// Control lbl_video_actual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_estado_pub;
+        protected global::System.Web.UI.WebControls.Label lbl_video_actual;
 
         /// <summary>
-        /// Control chkl_roles_pub.
+        /// Control fud_imagen_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList chkl_roles_pub;
+        protected global::System.Web.UI.WebControls.FileUpload fud_imagen_edit;
 
         /// <summary>
-        /// Control fud_Adjunto_pub.
+        /// Control fud_video_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_Adjunto_pub;
+        protected global::System.Web.UI.WebControls.FileUpload fud_video_edit;
 
         /// <summary>
-        /// Control fud_Video_pub.
+        /// Control txt_url_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fud_Video_pub;
+        protected global::System.Web.UI.WebControls.TextBox txt_url_edit;
 
         /// <summary>
-        /// Control lnk_actualizar_popup.
+        /// Control txt_tiempo_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_actualizar_popup;
+        protected global::System.Web.UI.WebControls.TextBox txt_tiempo_edit;
+
+        /// <summary>
+        /// Control txt_fecha_inicio_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_fecha_inicio_edit;
+
+        /// <summary>
+        /// Control txt_fecha_fin_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_fecha_fin_edit;
+
+        /// <summary>
+        /// Control cbl_roles_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cbl_roles_edit;
+
+        /// <summary>
+        /// Control ddl_estado_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_estado_edit;
+
+        /// <summary>
+        /// Control btn_actualizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_actualizar;
+
+        /// <summary>
+        /// Control lbl_mensaje_edit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_mensaje_edit;
 
         /// <summary>
         /// Control hf_id_popup_eliminar.
@@ -240,12 +303,12 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.HiddenField hf_id_popup_eliminar;
 
         /// <summary>
-        /// Control lnk_eliminar_popup.
+        /// Control btn_eliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_eliminar_popup;
+        protected global::System.Web.UI.WebControls.LinkButton btn_eliminar;
     }
 }

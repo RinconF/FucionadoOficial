@@ -45,7 +45,6 @@
             max-width: 20rem;
             min-width: 20rem;
             margin: 5px;
-            box-shadow: 0 4px 16px rgb(53 103 193 / 94%), 0 2px 8px rgba(0, 0, 0, 0.06);
         }
         .card-title {
             padding: 10px 10px 0px 10px;

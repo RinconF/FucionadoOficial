@@ -1,5 +1,4 @@
-﻿/* Variables CSS idénticas a aplicativos */
-:root {
+﻿:root {
     --etib-primary: #4a6fa5;
     --etib-secondary: #166a8f;
     --etib-dark: #2c5f7d;
@@ -18,179 +17,175 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Reset y configuración base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: white;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 40% 70%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
 /* ==========================================
-   ESTRUCTURA PRINCIPAL
+   SECCIONES PRINCIPALES 
    ========================================== */
 
-/* Contenedor principal */
 .pnl_table {
     background: var(--etib-card-bg);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 16px rgb(53 103 193 / 60%), 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 16px rgb(53 103 193 / 60%), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
     margin: 24px auto;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
     max-width: 1200px;
 }
 
-/* Tag superior */
 .pnl_tag {
-    background: linear-gradient(90deg, rgba(255,112,82,1) 0%, rgba(251,135,111,1) 100%);
-    color: #fff;
-    text-transform: uppercase;
-    padding: 12px 24px;
+    background: rgb(255,112,82);
+    color: white;
+    padding: 7px 24px;
+    position: relative;
+    width: 260px;
+    overflow: hidden;
     border-radius: 25px;
+    margin: 20px;
+    margin-bottom: 0;
     box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
-    position: absolute;
-    margin-top: -15px;
-    margin-left: 20px;
-    z-index: 2;
 }
 
+    .pnl_tag::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, rgba(255,112,82,1) 0%, rgba(251,135,111,1) 100%);
+        pointer-events: none;
+    }
+
     .pnl_tag p {
+        font-size: 16px;
+        font-weight: 600;
         margin: 0;
-        font-size: 14px;
-        font-weight: 700;
+        position: relative;
+        z-index: 1;
         display: flex;
         align-items: center;
         gap: 8px;
+        text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
     .pnl_tag i {
-        font-size: 12px;
+        font-size: 14px;
         opacity: 0.9;
     }
 
-/* ==========================================
-   CONTENEDOR DE VIDEOS
-   ========================================== */
-
-/* anuncios-body */
-.anuncios-body {
-    padding: 40px 24px 24px;
+.pnl_body {
+    padding: 30px 20px;
     background: transparent;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 16px rgb(53 103 193 / 29%), 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-/* anuncios-content */
-.anuncios-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
-    justify-items: center;
     align-items: start;
-    text-align: center;
 }
 
 /* ==========================================
-   VIDEO THUMBNAILS
+   MENSAJE VACÍO
    ========================================== */
 
-/* video-tumb - diseño compacto como la imagen */
-.video-tumb {
-    position: relative;
+.text-center {
+    text-align: center;
+    color: var(--etib-text-secondary);
+    font-size: 16px;
+    padding: 40px 20px;
+    font-weight: 500;
+}
+
+/* ==========================================
+   CARDS DE TUTORIALES (ESTILO DOCUMENTOS)
+   ========================================== */
+
+.tutorial-card {
+    background: var(--etib-card-bg);
     border-radius: var(--border-radius);
-    overflow: hidden;
     box-shadow: var(--card-shadow);
-    cursor: pointer;
-    width: 100%;
-    max-width: 280px;
-    height: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 24px 20px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    cursor: pointer;
+    min-height: 260px;
+    width: 280px;
+    max-width: 100%;
 }
 
-    /* Efectos hover */
-    .video-tumb:hover {
+    .tutorial-card:hover {
+        transform: translateY(-8px);
         box-shadow: var(--card-shadow-hover);
     }
 
-    /* Tag superior en la esquina */
-    .video-tumb::before {
-        content: attr(data-category);
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(255, 112, 82, 0.9);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        z-index: 3;
-    }
-
-/* Información del video en la parte inferior */
-.video-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: transparent;
-    backdrop-filter: blur(20px);
-    padding: 16px;
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    z-index: 2;
-}
-
-.video-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--etib-text-primary);
-    margin: 0 0 4px 0;
-    line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.video-duration {
-    font-size: 12px;
-    margin: 0 0 -6px 0;
-    color: var(--etib-text-secondary);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-    .video-duration::before {
-        content: '⏱';
-        font-size: 10px;
-    }
-
-/* ==========================================
-   VIDEOS
-   ========================================== */
-
-.pnl_table .anuncios-body video,
-.anuncios-body video {
-    width: 100%;
-    border: 1px solid #e1e1e1;
-    border-radius: 20px 20px 0 0;
-    height: 67%;
-    aspect-ratio: 16/9;
-    object-fit: contain;
-    background: #000;
-    transition: var(--transition);
-}
-
-.video-tumb:hover video {
-    transform: scale(1.02);
-}
-
-/* ==========================================
-   ANIMACIONES DE ENTRADA
-   ========================================== */
-
-.video-tumb {
+/* Animación de entrada */
+.tutorial-card {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.6s ease-out forwards;
 }
+
+    .tutorial-card:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .tutorial-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .tutorial-card:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .tutorial-card:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .tutorial-card:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .tutorial-card:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+
+    .tutorial-card:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+
+    .tutorial-card:nth-child(8) {
+        animation-delay: 0.8s;
+    }
 
 @keyframes fadeInUp {
     to {
@@ -200,155 +195,340 @@
 }
 
 /* ==========================================
+   ICONO DEL TUTORIAL
+   ========================================== */
+
+.tutorial-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--border-radius-sm);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
+    margin-bottom: 16px;
+}
+
+.tutorial-card:hover .tutorial-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.tutorial-icon i {
+    font-size: 48px;
+    color: var(--etib-danger);
+    transition: var(--transition);
+}
+
+.tutorial-card:hover .tutorial-icon i {
+    color: var(--etib-accent);
+}
+
+/* Colores de íconos por sección */
+.tutorial-icon.seccion-general i {
+    color: #667eea;
+}
+
+.tutorial-icon.seccion-ventas i {
+    color: #27ae60;
+}
+
+.tutorial-icon.seccion-marketing i {
+    color: #f39c12;
+}
+
+.tutorial-icon.seccion-recursos i {
+    color: #3498db;
+}
+
+.tutorial-icon.seccion-finanzas i {
+    color: #16a085;
+}
+
+.tutorial-icon.seccion-ti i {
+    color: #8e44ad;
+}
+
+/* ==========================================
+   INFORMACIÓN DEL TUTORIAL
+   ========================================== */
+
+.tutorial-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    flex: 1;
+}
+
+.tutorial-titulo {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--etib-text-primary);
+    margin: 0;
+    line-height: 1.3;
+    transition: var(--transition);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tutorial-card:hover .tutorial-titulo {
+    color: var(--etib-accent);
+}
+
+.tutorial-descripcion {
+    font-size: 13px;
+    color: var(--etib-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tutorial-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.tutorial-fecha {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--etib-text-secondary);
+    font-weight: 500;
+}
+
+    .tutorial-fecha i {
+        font-size: 11px;
+        opacity: 0.8;
+    }
+
+.tutorial-seccion {
+    display: inline-block;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, #e8f4fd 0%, #d4e9f7 100%);
+    color: var(--etib-accent);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* ==========================================
+   ACCIONES DEL TUTORIAL
+   ========================================== */
+
+.tutorial-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--etib-primary), var(--etib-secondary));
+    color: white;
+    box-shadow: 0 4px 12px rgba(74, 111, 165, 0.3);
+    padding: 10px 16px;
+    border-radius: var(--border-radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+}
+
+    .btn i {
+        font-size: 12px;
+    }
+
+.btn-ver-tutorial {
+    background: linear-gradient(135deg, var(--etib-danger), #c0392b);
+    color: white;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+    .btn-ver-tutorial:hover {
+        background: linear-gradient(135deg, #c0392b, var(--etib-danger));
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        transform: translateY(-2px);
+    }
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
    RESPONSIVE
    ========================================== */
 
-@media only screen and (max-width: 1400px) {
-    .pnl_table .anuncios-body video,
-    .anuncios-body video {
-        width: 100%;
-    }
-
-    .anuncios-content {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-    }
-}
-
-/* Tablets grandes */
-@media screen and (max-width: 1200px) {
-    .anuncios-content {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+@media (max-width: 992px) {
+    .pnl_body {
         gap: 18px;
     }
 
-    .pnl_table {
-        max-width: 95%;
-        margin: 20px auto;
+    .tutorial-card {
+        min-height: 240px;
+        padding: 20px 18px;
+        width: 260px;
+    }
+
+    .tutorial-icon {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 14px;
+    }
+
+        .tutorial-icon i {
+            font-size: 42px;
+        }
+
+    .tutorial-titulo {
+        font-size: 15px;
+    }
+
+    .tutorial-descripcion {
+        font-size: 12px;
     }
 }
 
-/* Tablets */
-@media screen and (max-width: 1024px) {
-    .anuncios-body {
-        padding: 32px 20px 20px;
-    }
-
-    .anuncios-content {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+@media (max-width: 768px) {
+    .pnl_body {
+        padding: 20px 16px;
         gap: 16px;
     }
 
-    .video-tumb {
-        max-width: none;
-    }
-
     .pnl_tag {
-        margin-top: -12px;
-        margin-left: 16px;
-        padding: 10px 20px;
+        margin: 16px;
+        padding: 14px 20px;
+        width: auto;
+        max-width: calc(100% - 32px);
     }
 
-        .pnl_tag p {
-            font-size: 13px;
+    .tutorial-card {
+        padding: 18px 16px;
+        min-height: 220px;
+        width: 100%;
+    }
+
+    .tutorial-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px;
+    }
+
+        .tutorial-icon i {
+            font-size: 36px;
         }
+
+    .tutorial-titulo {
+        font-size: 14px;
+    }
+
+    .tutorial-descripcion {
+        font-size: 12px;
+    }
+
+    .tutorial-acciones {
+        margin-top: 10px;
+        padding-top: 10px;
+        gap: 6px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 9px 14px;
+    }
 }
 
-/* Tablets pequeñas */
-@media screen and (max-width: 768px) {
-    .anuncios-body {
-        padding: 28px 16px 16px;
-    }
-
-    .anuncios-content {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+@media (max-width: 480px) {
+    .pnl_body {
+        padding: 16px 12px;
         gap: 14px;
     }
 
-    .video-tumb::before {
+    .pnl_tag {
+        margin: 12px;
+        padding: 12px 16px;
+    }
+
+        .pnl_tag p {
+            font-size: 14px;
+        }
+
+    .tutorial-card {
+        padding: 16px 14px;
+        min-height: 200px;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .tutorial-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
+    }
+
+        .tutorial-icon i {
+            font-size: 32px;
+        }
+
+    .tutorial-titulo {
+        font-size: 13px;
+    }
+
+    .tutorial-descripcion {
         font-size: 11px;
-        padding: 10px 16px;
-        letter-spacing: 0.5px;
-    }
-}
-
-/* Móviles */
-@media screen and (max-width: 600px) {
-    .anuncios-content {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        -webkit-line-clamp: 1;
     }
 
-    .pnl_table {
-        margin: 16px auto;
-        border-radius: 16px;
+    .tutorial-fecha {
+        font-size: 11px;
     }
 
-    .video-tumb {
-        border-radius: 16px;
-        max-width: 100%;
+    .tutorial-acciones {
+        margin-top: 8px;
+        padding-top: 8px;
+        gap: 6px;
     }
 
-    .anuncios-body video {
-        border-radius: 16px;
-    }
-
-    .pnl_tag {
-        margin-top: -10px;
-        margin-left: 12px;
-        padding: 8px 16px;
-        border-radius: 20px;
-    }
-
-        .pnl_tag p {
-            font-size: 12px;
-        }
-}
-
-/* Móviles pequeños */
-@media screen and (max-width: 480px) {
-    .anuncios-body {
-        padding: 24px 12px 12px;
-    }
-
-    .anuncios-content {
-        gap: 12px;
-    }
-
-    .video-tumb {
-        border-radius: 14px;
-    }
-
-    .anuncios-body video {
-        border-radius: 14px;
-    }
-
-    .video-tumb::before {
-        font-size: 10px;
+    .btn {
+        font-size: 11px;
         padding: 8px 12px;
-        letter-spacing: 0.3px;
     }
 
-    .pnl_tag {
-        margin-top: -8px;
-        margin-left: 10px;
-        padding: 7px 14px;
-    }
-
-        .pnl_tag p {
-            font-size: 11px;
-        }
-
-        .pnl_tag i {
+        .btn i {
             font-size: 10px;
         }
 }
 
 /* ==========================================
-   COMPATIBILIDAD CON MASTER PAGE ASPX
+   UTILIDADES
    ========================================== */
 
-/* Asegurar compatibilidad con MainContent */
 #MainContent .pnl_table:first-child {
     margin-top: 0;
 }
@@ -357,52 +537,78 @@
     margin-bottom: 0;
 }
 
-/* Soporte para br tags del ASPX */
 #MainContent br {
     display: block;
     height: 20px;
 }
 
+.pnl_tag .fas,
+.pnl_tag .fa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    font-size: 12px;
+}
+
 /* ==========================================
-   ACCESIBILIDAD Y MEJORAS
+   ACCESIBILIDAD
    ========================================== */
 
-.video-tumb:focus-within {
+.tutorial-card:focus-within {
     outline: 2px solid var(--etib-accent);
     outline-offset: 2px;
 }
 
-.video-tumb video:focus {
+.btn:focus {
     outline: 2px solid var(--etib-accent);
     outline-offset: 2px;
 }
 
-/* Soporte para movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-    }
-
-    .video-tumb {
-        opacity: 1;
-        transform: none;
+        transition-duration: 0.01ms !important;
     }
 }
 
-/* Mejoras para dispositivos táctiles */
-@media (hover: none) and (pointer: coarse) {
-    .video-tumb::before {
-        opacity: 1;
+/* ==========================================
+   ESTADOS ADICIONALES
+   ========================================== */
+
+.btn-ver-tutorial:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.tutorial-card.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+    .tutorial-card.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(231, 76, 60, 0.2);
+        border-top-color: var(--etib-danger);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
     }
 
-    .video-tumb:hover {
-        transform: none;
-    }
-
-    .video-tumb:active {
-        transform: scale(0.98);
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
     }
 }

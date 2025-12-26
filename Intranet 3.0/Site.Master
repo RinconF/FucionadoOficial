@@ -315,7 +315,7 @@
     <script type="text/javascript" src="/Scripts/popper.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
     <script defer>
-        $(document).ready(function () {
+        $(document).ready(async function () {
             //MODAL
             //README class="btn-modal" y data-id="aquí id modal" en el botón para abrir modal
             $('body').on('click', '.btn-modal', function () {

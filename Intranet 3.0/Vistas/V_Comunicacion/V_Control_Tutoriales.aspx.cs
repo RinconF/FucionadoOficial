@@ -2,12 +2,14 @@
 using DCL;
 using Intranet_3._0.Interna;
 using System;
-using System.Configuration;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Intranet_3._0.Vistas.V_Comunicacion
 {
@@ -17,57 +19,130 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         {
             if (!IsPostBack)
             {
+                CargarRolesDisponibles();
                 CargarTutoriales();
-                ProcesarAccionesURL();
             }
         }
 
+        // =============================================
+        // NUEVO: Cargar lista de roles disponibles
+        // =============================================
+        private void CargarRolesDisponibles()
+        {
+            try
+            {
+                Int_Tutoriales obj = new Int_Tutoriales();
+                // Action 10: SELECT ROLES - Obtener todos los roles activos
+                DataTable dtRoles = Int_Tutoriales_BRL.SelectTable(obj, 10);
+
+                if (dtRoles != null && dtRoles.Rows.Count > 0)
+                {
+                    // Cargar CheckBoxList para modal CREAR
+                    cbl_roles.DataSource = dtRoles;
+                    cbl_roles.DataTextField = "Nombre_Rol";
+                    cbl_roles.DataValueField = "Id_Rol";
+                    cbl_roles.DataBind();
+
+                    // Cargar CheckBoxList para modal EDITAR
+                    cbl_roles_edit.DataSource = dtRoles;
+                    cbl_roles_edit.DataTextField = "Nombre_Rol";
+                    cbl_roles_edit.DataValueField = "Id_Rol";
+                    cbl_roles_edit.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log del error si es necesario
+                lbl_mensaje.Text = "Error al cargar roles: " + ex.Message;
+                lbl_mensaje.CssClass = "msg-error";
+            }
+        }
+
+        // =============================================
+        // ACTUALIZADO: Cargar tutoriales CON ROLES
+        // =============================================
         private void CargarTutoriales()
         {
             try
             {
                 Int_Tutoriales obj = new Int_Tutoriales();
+                // Action 0: SELECT ALL - Lista todos los tutoriales con roles asignados
                 Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(obj, 0);
 
                 if (tutoriales != null && tutoriales.Count > 0)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("<table class='tutorial-table'>");
+                    sb.Append("<table class='tbl_vistas_general table table-striped table-hover'>");
                     sb.Append("<thead><tr>");
-                    sb.Append("<th>ID</th>");
-                    sb.Append("<th>TÍTULO</th>");
-                    sb.Append("<th>DESCRIPCIÓN</th>");
-                    sb.Append("<th>VIDEO</th>");
-                    sb.Append("<th>SECCIÓN</th>");
-                    sb.Append("<th>FECHA</th>");
-                    sb.Append("<th>ESTADO</th>");
-                    sb.Append("<th>ACCIONES</th>");
+                    sb.Append("<th style='width: 50px;'>#</th>");
+                    sb.Append("<th style='width: 60px;'>ID</th>");
+                    sb.Append("<th>TITULO</th>");
+                    sb.Append("<th>DESCRIPCION</th>");
+                    sb.Append("<th style='width: 80px;'>Video</th>");
+                    sb.Append("<th style='width: 150px;'>Sección</th>");
+                    sb.Append("<th style='width: 200px;'>Roles</th>"); // ← NUEVA COLUMNA
+                    sb.Append("<th style='width: 180px;'>FECHA DE CREACION</th>");
+                    sb.Append("<th style='width: 80px;'>ACCION</th>");
                     sb.Append("</tr></thead><tbody>");
 
+                    int contador = 1;
                     foreach (Int_Tutoriales tutorial in tutoriales)
                     {
                         string descripcion = tutorial.Descripcion ?? "";
-                        if (descripcion.Length > 100)
-                            descripcion = descripcion.Substring(0, 100) + "...";
+                        if (descripcion.Length > 80)
+                            descripcion = descripcion.Substring(0, 80) + "...";
 
-                        string videoNombre = !string.IsNullOrEmpty(tutorial.Video) ?
-                            Path.GetFileName(tutorial.Video) : "Sin video";
+                        string videoIcono = !string.IsNullOrEmpty(tutorial.Video) ?
+                            "<a href='" + ResolveUrl(tutorial.Video) + "' target='_blank' title='Ver video' style='color: #e74c3c;'><i class='fas fa-play'></i></a>" :
+                            "-";
 
-                        string estadoTexto = tutorial.Estado == true ? "Activo" : "Inactivo";
-                        string estadoColor = tutorial.Estado == true ? "green" : "red";
+                        // ================================
+                        // NUEVO: Mostrar roles asignados
+                        // ================================
+                        string rolesHtml = "";
+                        if (!string.IsNullOrEmpty(tutorial.Roles_Asignados))
+                        {
+                            string[] roles = tutorial.Roles_Asignados.Split(',');
+                            foreach (string rol in roles)
+                            {
+                                rolesHtml += $"<span class='roles-badge'>{HttpUtility.HtmlEncode(rol.Trim())}</span>";
+                            }
+                        }
+                        else
+                        {
+                            rolesHtml = "<span style='color: red;'>Sin roles</span>";
+                        }
 
                         sb.Append("<tr>");
+                        sb.AppendFormat("<td class='text-center'>{0}</td>", contador);
                         sb.AppendFormat("<td>{0}</td>", tutorial.Id_Tutorial);
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Titulo));
                         sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(descripcion));
-                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(videoNombre));
-                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Seccion));
-                        sb.AppendFormat("<td>{0}</td>", tutorial.Fecha_Creacion?.ToString("dd/MM/yyyy HH:mm") ?? "");
-                        sb.AppendFormat("<td style='color:{1}'>{0}</td>", estadoTexto, estadoColor);
-                        sb.Append("<td>");
-                        sb.AppendFormat("<button class='btn-action btn btn-info' onclick=\"location.href='?action=edit&id={0}'\">Editar</button>", tutorial.Id_Tutorial);
-                        sb.AppendFormat("<button class='btn-action btn btn-danger' onclick=\"if(confirmarEliminacion()) location.href='?action=delete&id={0}'\">Eliminar</button>", tutorial.Id_Tutorial);
-                        sb.Append("</td></tr>");
+                        sb.AppendFormat("<td class='text-center'>{0}</td>", videoIcono);
+                        sb.AppendFormat("<td>{0}</td>", HttpUtility.HtmlEncode(tutorial.Seccion ?? ""));
+                        sb.AppendFormat("<td>{0}</td>", rolesHtml); // ← NUEVA COLUMNA
+                        sb.AppendFormat("<td>{0}</td>", tutorial.Fecha_Creacion?.ToString("dd/MM/yyyy h:mm:ss tt") ?? "");
+
+                        // ================================
+                        // ACTUALIZADO: Agregar data-roles
+                        // ================================
+                        sb.Append("<td class='text-center'>");
+                        sb.AppendFormat("<input type='radio' name='rd_tutorial' value='{0}' ", tutorial.Id_Tutorial);
+                        sb.AppendFormat("data-titulo='{0}' ", HttpUtility.HtmlEncode(tutorial.Titulo));
+                        sb.AppendFormat("data-descripcion='{0}' ", HttpUtility.HtmlEncode(tutorial.Descripcion ?? ""));
+                        sb.AppendFormat("data-video='{0}' ", HttpUtility.HtmlEncode(tutorial.Video ?? ""));
+                        sb.AppendFormat("data-seccion='{0}' ", HttpUtility.HtmlEncode(tutorial.Seccion ?? ""));
+                        sb.AppendFormat("data-estado='{0}' ", tutorial.Estado == true ? "1" : "0");
+
+                        // NUEVO: Guardar IDs de roles (separados por coma) para JavaScript
+                        string rolesIds = ObtenerIdsRoles(tutorial.Id_Tutorial.Value);
+                        sb.AppendFormat("data-roles='{0}' ", HttpUtility.HtmlEncode(rolesIds));
+
+                        sb.Append("/>");
+                        sb.Append("</td>");
+                        sb.Append("</tr>");
+
+                        contador++;
                     }
 
                     sb.Append("</tbody></table>");
@@ -75,53 +150,92 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 }
                 else
                 {
-                    lit_tabla_tutoriales.Text = "<p>No hay tutoriales registrados.</p>";
+                    lit_tabla_tutoriales.Text = "<p class='text-center' style='padding: 30px;'>No hay tutoriales registrados.</p>";
                 }
             }
             catch (Exception ex)
             {
-                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error al cargar tutoriales: " + ex.Message + "</p>";
             }
         }
 
-        private void ProcesarAccionesURL()
+        // =============================================
+        // NUEVO: Obtener IDs de roles de un tutorial
+        // =============================================
+        private string ObtenerIdsRoles(int idTutorial)
         {
-            string action = Request.QueryString["action"];
-            string idStr = Request.QueryString["id"];
-
-            if (!string.IsNullOrEmpty(action) && !string.IsNullOrEmpty(idStr))
+            try
             {
-                int id;
-                if (int.TryParse(idStr, out id))
+                Int_Tutoriales obj = new Int_Tutoriales { Id_Tutorial = idTutorial };
+
+                // Action 11: SELECT ROLES IDS - Retorna solo los IDs de roles
+                DataTable dtRoles = Int_Tutoriales_BRL.SelectTable(obj, 11);
+
+                if (dtRoles != null && dtRoles.Rows.Count > 0)
                 {
-                    if (action == "edit")
+                    List<string> rolesIds = new List<string>();
+                    foreach (DataRow row in dtRoles.Rows)
                     {
-                        CargarTutorialParaEditar(id);
+                        rolesIds.Add(row["Id_Rol"].ToString());
                     }
-                    else if (action == "delete")
-                    {
-                        EliminarTutorial(id);
-                    }
+                    return string.Join(",", rolesIds);
                 }
             }
+            catch
+            {
+                // Si hay error, retornar vacío
+            }
+            return "";
         }
 
+        // =============================================
+        // ACTUALIZADO: Guardar tutorial CON ROLES
+        // =============================================
         protected void btn_guardar_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validaciones existentes
                 if (string.IsNullOrWhiteSpace(txt_titulo.Text))
                 {
                     lbl_mensaje.Text = "El título es obligatorio.";
+                    lbl_mensaje.CssClass = "msg-error";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txt_descripcion.Text))
+                {
+                    lbl_mensaje.Text = "La descripción es obligatoria.";
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
                 if (ddl_seccion.SelectedValue == "")
                 {
                     lbl_mensaje.Text = "Debe seleccionar una sección.";
+                    lbl_mensaje.CssClass = "msg-error";
                     return;
                 }
 
+                if (!fud_video.HasFile)
+                {
+                    lbl_mensaje.Text = "Debe seleccionar un video.";
+                    lbl_mensaje.CssClass = "msg-error";
+                    return;
+                }
+
+                // ================================
+                // NUEVA VALIDACIÓN: Roles
+                // ================================
+                List<string> rolesSeleccionados = ObtenerRolesSeleccionados(cbl_roles);
+                if (rolesSeleccionados.Count == 0)
+                {
+                    lbl_mensaje.Text = "Debe seleccionar al menos un rol.";
+                    lbl_mensaje.CssClass = "msg-error";
+                    return;
+                }
+
+                // Crear objeto
                 Int_Tutoriales obj = new Int_Tutoriales
                 {
                     Titulo = txt_titulo.Text.Trim(),
@@ -131,90 +245,119 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Estado = true
                 };
 
-                if (fud_video.HasFile)
+                // Guardar video físico
+                string rutaVideo = GuardarVideo(fud_video);
+                if (!string.IsNullOrEmpty(rutaVideo))
                 {
-                    string rutaVideo = GuardarVideo(fud_video);
-                    if (!string.IsNullOrEmpty(rutaVideo))
+                    obj.Video = rutaVideo;
+                }
+                else
+                {
+                    lbl_mensaje.Text = "Error al guardar el video.";
+                    lbl_mensaje.CssClass = "msg-error";
+                    return;
+                }
+
+                // Action 3: INSERT - Insertar nuevo tutorial
+                int idNuevo = Int_Tutoriales_BRL.InsertOrUpdate(obj, 3);
+
+                if (idNuevo > 0)
+                {
+                    // ================================
+                    // NUEVO: Asignar roles al tutorial
+                    // ================================
+                    Int_Tutoriales objRoles = new Int_Tutoriales
                     {
-                        obj.Video = rutaVideo;
+                        Id_Tutorial = idNuevo,
+                        Roles = string.Join(",", rolesSeleccionados) // "1,2,3"
+                    };
+
+                    // Action 7: ASIGNAR ROLES
+                    int resultadoRoles = Int_Tutoriales_BRL.InsertOrUpdate(objRoles, 7);
+
+                    if (resultadoRoles > 0)
+                    {
+                        // Limpiar campos
+                        txt_titulo.Text = "";
+                        txt_descripcion.Text = "";
+                        ddl_seccion.SelectedIndex = 0;
+                        cbl_roles.ClearSelection();
+
+                        lbl_mensaje.Text = "Tutorial creado y roles asignados exitosamente.";
+                        lbl_mensaje.CssClass = "msg-success";
+
+                        // Recargar tabla
+                        CargarTutoriales();
                     }
                     else
                     {
-                        lbl_mensaje.Text = "Error al guardar el video.";
-                        return;
+                        lbl_mensaje.Text = "Tutorial creado pero hubo un error al asignar roles.";
+                        lbl_mensaje.CssClass = "msg-warning";
                     }
-                }
-
-                int resultado = Int_Tutoriales_BRL.InsertOrUpdate(obj, 3);
-
-                if (resultado > 0)
-                {
-                    Response.Redirect(Request.RawUrl.Split('?')[0]);
                 }
                 else
                 {
                     lbl_mensaje.Text = "Error al guardar el tutorial.";
+                    lbl_mensaje.CssClass = "msg-error";
                 }
             }
             catch (Exception ex)
             {
                 lbl_mensaje.Text = "Error: " + ex.Message;
+                lbl_mensaje.CssClass = "msg-error";
             }
         }
 
-        private void CargarTutorialParaEditar(int id)
-        {
-            try
-            {
-                Int_Tutoriales obj = new Int_Tutoriales { Id_Tutorial = id };
-                Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(obj, 2);
-
-                if (tutoriales != null && tutoriales.Count > 0)
-                {
-                    Int_Tutoriales tutorial = tutoriales[0];
-
-                    hf_id_tutorial.Value = tutorial.Id_Tutorial.ToString();
-                    txt_titulo_edit.Text = tutorial.Titulo;
-                    txt_descripcion_edit.Text = tutorial.Descripcion;
-                    ddl_seccion_edit.SelectedValue = tutorial.Seccion;
-                    ddl_estado_edit.SelectedValue = tutorial.Estado == true ? "1" : "0";
-
-                    if (!string.IsNullOrEmpty(tutorial.Video))
-                    {
-                        hf_video_actual.Value = tutorial.Video;
-                        lbl_video_actual.Text = Path.GetFileName(tutorial.Video);
-                    }
-                    else
-                    {
-                        hf_video_actual.Value = "";
-                        lbl_video_actual.Text = "No hay video";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lbl_mensaje_edit.Text = "Error: " + ex.Message;
-            }
-        }
-
+        // =============================================
+        // ACTUALIZADO: Actualizar tutorial CON ROLES
+        // =============================================
         protected void btn_actualizar_Click(object sender, EventArgs e)
         {
             try
             {
+                // Validaciones
+                if (string.IsNullOrWhiteSpace(hf_id_tutorial.Value))
+                {
+                    lbl_mensaje_edit.Text = "No se encontró el identificador del tutorial.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
+                    return;
+                }
+
                 if (string.IsNullOrWhiteSpace(txt_titulo_edit.Text))
                 {
                     lbl_mensaje_edit.Text = "El título es obligatorio.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txt_descripcion_edit.Text))
+                {
+                    lbl_mensaje_edit.Text = "La descripción es obligatoria.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
                     return;
                 }
 
                 if (ddl_seccion_edit.SelectedValue == "")
                 {
                     lbl_mensaje_edit.Text = "Debe seleccionar una sección.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
+                    return;
+                }
+
+                // ================================
+                // NUEVA VALIDACIÓN: Roles
+                // ================================
+                List<string> rolesSeleccionados = ObtenerRolesSeleccionados(cbl_roles_edit);
+                if (rolesSeleccionados.Count == 0)
+                {
+                    lbl_mensaje_edit.Text = "Debe seleccionar al menos un rol.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
                     return;
                 }
 
                 int idTutorial = Convert.ToInt32(hf_id_tutorial.Value);
 
+                // Crear objeto para actualizar
                 Int_Tutoriales obj = new Int_Tutoriales
                 {
                     Id_Tutorial = idTutorial,
@@ -225,13 +368,16 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     Estado = ddl_estado_edit.SelectedValue == "1"
                 };
 
+                // Verificar si hay nuevo video
                 if (fud_video_edit.HasFile)
                 {
-                    if (!string.IsNullOrEmpty(hf_video_actual.Value))
+                    // Eliminar video anterior si existe
+                    if (!string.IsNullOrEmpty(hf_video_actual.Value) && hf_video_actual.Value != "Sin video")
                     {
                         EliminarArchivoFisico(hf_video_actual.Value);
                     }
 
+                    // Guardar nuevo video
                     string rutaVideo = GuardarVideo(fud_video_edit);
                     if (!string.IsNullOrEmpty(rutaVideo))
                     {
@@ -239,65 +385,131 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                     }
                     else
                     {
-                        lbl_mensaje_edit.Text = "Error al guardar el video.";
+                        lbl_mensaje_edit.Text = "Error al guardar el nuevo video.";
+                        lbl_mensaje_edit.CssClass = "msg-error";
                         return;
                     }
                 }
                 else
                 {
+                    // Mantener video actual
                     obj.Video = hf_video_actual.Value;
                 }
 
+                // Action 4: UPDATE - Actualizar tutorial
                 int resultado = Int_Tutoriales_BRL.InsertOrUpdate(obj, 4);
 
                 if (resultado > 0)
                 {
-                    Response.Redirect(Request.RawUrl.Split('?')[0]);
+                    // ================================
+                    // NUEVO: Reemplazar roles del tutorial
+                    // ================================
+                    Int_Tutoriales objRoles = new Int_Tutoriales
+                    {
+                        Id_Tutorial = idTutorial,
+                        Roles = string.Join(",", rolesSeleccionados) // "1,2,3"
+                    };
+
+                    // Action 9: REEMPLAZAR TODOS LOS ROLES
+                    int resultadoRoles = Int_Tutoriales_BRL.InsertOrUpdate(objRoles, 9);
+
+                    if (resultadoRoles > 0)
+                    {
+                        lbl_mensaje_edit.Text = "Tutorial y roles actualizados exitosamente.";
+                        lbl_mensaje_edit.CssClass = "msg-success";
+
+                        // Recargar tabla
+                        CargarTutoriales();
+                    }
+                    else
+                    {
+                        lbl_mensaje_edit.Text = "Tutorial actualizado pero hubo un error al actualizar roles.";
+                        lbl_mensaje_edit.CssClass = "msg-warning";
+                    }
                 }
                 else
                 {
-                    lbl_mensaje_edit.Text = "Error al actualizar.";
+                    lbl_mensaje_edit.Text = "Error al actualizar el tutorial.";
+                    lbl_mensaje_edit.CssClass = "msg-error";
                 }
             }
             catch (Exception ex)
             {
                 lbl_mensaje_edit.Text = "Error: " + ex.Message;
+                lbl_mensaje_edit.CssClass = "msg-error";
             }
         }
 
-        private void EliminarTutorial(int id)
+        protected void btn_eliminar_Click(object sender, EventArgs e)
         {
             try
             {
-                Int_Tutoriales objBuscar = new Int_Tutoriales { Id_Tutorial = id };
+                if (string.IsNullOrWhiteSpace(hf_id_tutorial_eliminar.Value))
+                {
+                    CargarTutoriales();
+                    return;
+                }
+
+                int idTutorial = Convert.ToInt32(hf_id_tutorial_eliminar.Value);
+
+                // Primero obtener el tutorial para eliminar el video físico
+                Int_Tutoriales objBuscar = new Int_Tutoriales { Id_Tutorial = idTutorial };
                 Int_TutorialesCollection tutoriales = Int_Tutoriales_BRL.SelectByParams(objBuscar, 2);
 
                 if (tutoriales != null && tutoriales.Count > 0)
                 {
                     Int_Tutoriales tutorial = tutoriales[0];
 
+                    // Crear objeto para eliminación lógica
                     Int_Tutoriales objEliminar = new Int_Tutoriales
                     {
-                        Id_Tutorial = id,
+                        Id_Tutorial = idTutorial,
                         Usuario_Actualizacion = ObtenerIdUsuarioActual()
                     };
 
+                    // Action 5: DELETE - Eliminación lógica (cambia Estado a 0)
                     int resultado = Int_Tutoriales_BRL.InsertOrUpdate(objEliminar, 5);
 
-                    if (resultado > 0 && !string.IsNullOrEmpty(tutorial.Video))
+                    if (resultado > 0)
                     {
-                        EliminarArchivoFisico(tutorial.Video);
+                        // Eliminar video físico si existe
+                        if (!string.IsNullOrEmpty(tutorial.Video))
+                        {
+                            EliminarArchivoFisico(tutorial.Video);
+                        }
+
+                        // NOTA: Los roles se eliminan automáticamente por CASCADE DELETE
                     }
                 }
 
-                Response.Redirect(Request.RawUrl.Split('?')[0]);
+                // Recargar tabla
+                CargarTutoriales();
             }
             catch (Exception ex)
             {
-                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error: " + ex.Message + "</p>";
+                lit_tabla_tutoriales.Text = "<p class='msg-error'>Error al eliminar: " + ex.Message + "</p>";
             }
         }
 
+        // =============================================
+        // NUEVO: Obtener roles seleccionados
+        // =============================================
+        private List<string> ObtenerRolesSeleccionados(CheckBoxList cbl)
+        {
+            List<string> roles = new List<string>();
+            foreach (ListItem item in cbl.Items)
+            {
+                if (item.Selected)
+                {
+                    roles.Add(item.Value);
+                }
+            }
+            return roles;
+        }
+
+        // =============================================
+        // Métodos auxiliares (sin cambios)
+        // =============================================
         private string GuardarVideo(System.Web.UI.WebControls.FileUpload fileUpload)
         {
             try
@@ -309,27 +521,40 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
                 string[] extensionesPermitidas = { ".mp4", ".avi", ".mov", ".wmv", ".flv", ".mkv", ".webm" };
 
                 if (!extensionesPermitidas.Contains(extension))
+                {
                     return null;
+                }
 
+                // Tamaño máximo: 50 MB
+                if (fileUpload.PostedFile.ContentLength > 50 * 1024 * 1024)
+                {
+                    return null;
+                }
+
+                // Obtener rutas desde configuración
                 string[] rutas = AG_Utils.ObtenerRutasVideos();
                 string rutaLocal = rutas[0];
                 string carpetaFisica = Server.MapPath(rutaLocal);
 
+                // Crear carpeta si no existe
                 if (!Directory.Exists(carpetaFisica))
                 {
                     Directory.CreateDirectory(carpetaFisica);
                 }
 
+                // Generar nombre único para el archivo
                 string nombreArchivo = "video_" + DateTime.Now.ToString("yyyyMMddHHmmss") +
                                       "_" + Guid.NewGuid().ToString("N").Substring(0, 8) + extension;
 
                 string rutaCompleta = Path.Combine(carpetaFisica, nombreArchivo);
                 fileUpload.SaveAs(rutaCompleta);
 
+                // Retornar ruta relativa
                 return rutaLocal + nombreArchivo;
             }
-            catch
+            catch (Exception ex)
             {
+                // Log del error si es necesario
                 return null;
             }
         }
@@ -349,7 +574,7 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             }
             catch
             {
-                // Ignorar errores al eliminar
+                // Ignorar errores al eliminar archivo físico
             }
         }
 
@@ -359,7 +584,18 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
             {
                 return Convert.ToInt32(Session["Id_Usuario"]);
             }
-            return 1;
+            return 1; // Usuario por defecto
+        }
+
+        private string ResolveUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return "#";
+
+            if (url.StartsWith("~"))
+                return VirtualPathUtility.ToAbsolute(url);
+
+            return url;
         }
     }
 }

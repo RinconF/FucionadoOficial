@@ -15,49 +15,22 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
     {
 
         /// <summary>
-        /// Control pnlAplicativos.
+        /// Control PanelUpdate.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel pnlAplicativos;
+        protected global::System.Web.UI.UpdatePanel PanelUpdate;
 
         /// <summary>
-        /// Control txt_buscar.
+        /// Control lit_tabla_aplicativos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_buscar;
-
-        /// <summary>
-        /// Control tbl_aplicativos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tbl_aplicativos;
-
-        /// <summary>
-        /// Control hf_id_aplicativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_id_aplicativo;
-
-        /// <summary>
-        /// Control hf_imagen_actual.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_imagen_actual;
+        protected global::System.Web.UI.WebControls.Literal lit_tabla_aplicativos;
 
         /// <summary>
         /// Control txt_titulo.
@@ -114,13 +87,40 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_orden;
 
         /// <summary>
-        /// Control lnk_crear_aplicativo.
+        /// Control btn_guardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_crear_aplicativo;
+        protected global::System.Web.UI.WebControls.LinkButton btn_guardar;
+
+        /// <summary>
+        /// Control lbl_mensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_mensaje;
+
+        /// <summary>
+        /// Control hf_id_aplicativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_aplicativo;
+
+        /// <summary>
+        /// Control hf_imagen_actual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_imagen_actual;
 
         /// <summary>
         /// Control txt_titulo_edit.
@@ -150,6 +150,15 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_url_edit;
 
         /// <summary>
+        /// Control lbl_imagen_actual.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_imagen_actual;
+
+        /// <summary>
         /// Control fud_imagen_edit.
         /// </summary>
         /// <remarks>
@@ -177,30 +186,48 @@ namespace Intranet_3._0.Vistas.V_Comunicacion
         protected global::System.Web.UI.WebControls.TextBox txt_orden_edit;
 
         /// <summary>
-        /// Control ddl_estado.
+        /// Control ddl_estado_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_estado;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_estado_edit;
 
         /// <summary>
-        /// Control lnk_actualizar_aplicativo.
+        /// Control btn_actualizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_actualizar_aplicativo;
+        protected global::System.Web.UI.WebControls.LinkButton btn_actualizar;
 
         /// <summary>
-        /// Control lnk_eliminar_aplicativo.
+        /// Control lbl_mensaje_edit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnk_eliminar_aplicativo;
+        protected global::System.Web.UI.WebControls.Label lbl_mensaje_edit;
+
+        /// <summary>
+        /// Control hf_id_aplicativo_eliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_id_aplicativo_eliminar;
+
+        /// <summary>
+        /// Control btn_eliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_eliminar;
     }
 }

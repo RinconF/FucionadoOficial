@@ -1902,14 +1902,19 @@
     <Content Include="Styles\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Styles\bootstrap\bootstrap.min.css" />
     <Content Include="Styles\css\aplicativos\aplicativos.css" />
+    <Content Include="Styles\css\aplicativos\Control_Aplicativos.css" />
     <Content Include="Styles\css\copasst\copasst.css" />
     <Content Include="Styles\css\default\default.css" />
     <Content Include="Styles\css\default_encuestas\default_encuestas.css" />
     <Content Include="Styles\css\desprendibles_pago\desprendibles_pago.css" />
+    <Content Include="Styles\css\Documentos\Control_Documentos.css" />
+    <Content Include="Styles\css\Documentos\Documentos.css" />
     <Content Include="Styles\css\login\login.css" />
     <Content Include="Styles\css\nucleo_familiar\nucleo_familiar.css" />
+    <Content Include="Styles\css\Popup\Control_Popup.css" />
     <Content Include="Styles\css\programacion_plantilla\programacion_plantilla.css" />
     <Content Include="Styles\css\sweetalert2\sweetalert2.min.css" />
+    <Content Include="Styles\css\tutoriales\Control_Tutoriales.css" />
     <Content Include="Styles\css\tutoriales\tutoriales.css" />
     <Content Include="Vistas\Img\Comites\CCL\Default.png" />
     <Content Include="Vistas\Img\Comites\CCL\Principal1-1.png" />
@@ -2046,7 +2051,7 @@
     <Content Include="Vistas\V_Comunicacion\V_Control_Tutoriales.aspx" />
     <Content Include="Vistas\V_Comunicacion\V_Noticias.aspx" />
     <Content Include="Vistas\V_Comunicacion\WebService_V_Comunicacion.asmx" />
-    <Content Include="Vistas\V_Documentos\V_Documento.aspx" />
+    <Content Include="Vistas\V_Documentos\V_Documentos.aspx" />
     <Content Include="Vistas\V_Encuestas\V_Info_Encuestas.aspx" />
     <Content Include="Vistas\V_Encuesta_Organizacional\Default.aspx" />
     <Content Include="Vistas\V_Encuesta_Organizacional\Questions_Observacion.aspx" />
@@ -2395,12 +2400,12 @@
       <DependentUpon>WebService_V_Control_General.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Vistas\V_Documentos\V_Documento.aspx.cs">
-      <DependentUpon>V_Documento.aspx</DependentUpon>
+    <Compile Include="Vistas\V_Documentos\V_Documentos.aspx.cs">
+      <DependentUpon>V_Documentos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\V_Documentos\V_Documento.aspx.designer.cs">
-      <DependentUpon>V_Documento.aspx</DependentUpon>
+    <Compile Include="Vistas\V_Documentos\V_Documentos.aspx.designer.cs">
+      <DependentUpon>V_Documentos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\V_Encuestas\V_Info_Encuestas.aspx.cs">
       <DependentUpon>V_Info_Encuestas.aspx</DependentUpon>

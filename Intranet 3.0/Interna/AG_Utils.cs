@@ -184,7 +184,7 @@ namespace Intranet_3._0.Interna
             }
             catch (Exception e)
             {
-                logError($" - ERROR: {e.Message}.", log);
+                logError($" - ERROR: {e.Message}.",log);
                 return false;
             }
         }
@@ -576,7 +576,7 @@ namespace Intranet_3._0.Interna
                         Thread.Sleep(500);
                         archivoAguardar.SaveAs(imagenNoticiaLocal);
                         Thread.Sleep(500);
-                        var tamanioDestLocal = File.ReadAllBytes(imagenNoticiaLocal);
+                        var tamanioDestLocal= File.ReadAllBytes(imagenNoticiaLocal);
 
                         if (tamanioOrig.Length == tamanioDestLocal.Length)
                         {
@@ -655,6 +655,163 @@ namespace Intranet_3._0.Interna
                 if (File.Exists(imagenNoticiaLocal))
                     File.Delete(imagenNoticiaLocal);
                 return (bl_GuardaImagenLocal, bl_GuardaImagenLocal, imagenNoticiaRemoto);
+            }
+        }
+
+        /// <summary>
+        /// Tratamiento específico para archivos de Popups (Imágenes y Videos)
+        /// Guarda archivos local y remotamente con validación de tamaño
+        /// </summary>
+        /// <param name="nombreFinalArchivo">Nombre del archivo ya normalizado</param>
+        /// <param name="consecutivo">ID del popup</param>
+        /// <param name="rutaPopupsLocal">Ruta local donde guardar</param>
+        /// <param name="rutaPopupsRemoto">Ruta remota donde guardar</param>
+        /// <param name="archivoAguardar">FileUpload con el archivo</param>
+        /// <param name="Id_Usuario">ID del usuario que sube el archivo</param>
+        /// <param name="log">Ruta del log de errores</param>
+        /// <returns>Tupla con (archivo guardado local exitosamente, archivo guardado remoto exitosamente, ruta remota del archivo)</returns>
+        public (bool bl_GuardaArchivoLocal, bool bl_GuardaArchivoRemoto, string rutaArchivoRemoto) TratamientoPopups(
+            string nombreFinalArchivo,
+            string consecutivo,
+            string rutaPopupsLocal,
+            string rutaPopupsRemoto,
+            System.Web.UI.WebControls.FileUpload archivoAguardar,
+            string Id_Usuario,
+            string log)
+        {
+            bool bl_GuardaArchivoLocal = false;
+            bool bl_GuardaArchivoRemoto = false;
+            string archivoPopupRemoto = "";
+            string archivoPopupLocal = "";
+            AG_Utils utilidades = new AG_Utils();
+            var tamanioOrig = archivoAguardar.FileBytes;
+
+            try
+            {
+                if (utilidades.impersonateValidUser())
+                {
+                    archivoPopupLocal = Path.Combine(rutaPopupsLocal, nombreFinalArchivo);
+
+                    // Crear directorio local si no existe
+                    if (!Directory.Exists(rutaPopupsLocal))
+                    {
+                        Directory.CreateDirectory(rutaPopupsLocal);
+                    }
+                    else
+                    {
+                        // Eliminar archivo existente con el mismo nombre
+                        if (File.Exists(archivoPopupLocal))
+                        {
+                            File.Delete(archivoPopupLocal);
+                        }
+
+                        // Eliminar archivos previos del mismo popup (por ID)
+                        var archivosPopupsLocal = Directory.GetFiles(rutaPopupsLocal, "*.*");
+                        foreach (var item in archivosPopupsLocal)
+                        {
+                            if (item.Contains($"{consecutivo}-"))
+                            {
+                                File.Delete(item);
+                            }
+                        }
+                    }
+
+                    // Validar que el archivo tiene contenido
+                    if (tamanioOrig.Length > 0)
+                    {
+                        Thread.Sleep(500);
+                        archivoAguardar.SaveAs(archivoPopupLocal);
+                        Thread.Sleep(500);
+
+                        var tamanioDestLocal = File.ReadAllBytes(archivoPopupLocal);
+
+                        if (tamanioOrig.Length == tamanioDestLocal.Length)
+                        {
+                            bl_GuardaArchivoLocal = true;
+                        }
+                        else
+                        {
+                            logError($"El archivo almacenado no coincide con el tamaño original.\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario: {Id_Usuario}", log);
+                        }
+                    }
+                    else
+                    {
+                        logError($"El archivo a cargar está dañado.\nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario: {Id_Usuario}", log);
+                    }
+
+                    // Si se guardó localmente, intentar guardar remotamente
+                    if (bl_GuardaArchivoLocal)
+                    {
+                        if (Ping(ipServerAttach))
+                        {
+                            archivoPopupRemoto = Path.Combine(rutaPopupsRemoto, nombreFinalArchivo);
+
+                            // Crear directorio remoto si no existe
+                            if (!Directory.Exists(rutaPopupsRemoto))
+                            {
+                                Directory.CreateDirectory(rutaPopupsRemoto);
+                            }
+                            else
+                            {
+                                // Eliminar archivo existente
+                                if (File.Exists(archivoPopupRemoto))
+                                {
+                                    File.Delete(archivoPopupRemoto);
+                                }
+
+                                // Eliminar archivos previos del mismo popup
+                                var archivosPopupsRemoto = Directory.GetFiles(rutaPopupsRemoto, "*.*");
+                                foreach (var item in archivosPopupsRemoto)
+                                {
+                                    if (item.Contains($"{consecutivo}-"))
+                                    {
+                                        File.Delete(item);
+                                    }
+                                }
+                            }
+
+                            Thread.Sleep(500);
+                            archivoAguardar.SaveAs(archivoPopupRemoto);
+                            Thread.Sleep(500);
+
+                            var tamanioDestRemoto = File.ReadAllBytes(archivoPopupRemoto);
+
+                            if (tamanioOrig.Length == tamanioDestRemoto.Length)
+                            {
+                                bl_GuardaArchivoRemoto = true;
+                            }
+                        }
+                        else
+                        {
+                            logError($"{CONST_ERRORCONEXIONSERV} {ipServerAttach}. \nMétodo: {System.Reflection.MethodBase.GetCurrentMethod().Name}. \nUsuario: {Id_Usuario}", log);
+                        }
+                    }
+
+                    utilidades.undoImpersonation();
+                    return (bl_GuardaArchivoLocal, bl_GuardaArchivoRemoto, archivoPopupRemoto);
+                }
+                else
+                {
+                    logError($"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\nRegistro no almacenado en BD. Los archivos no fueron almacenados.", log);
+
+                    if (File.Exists(archivoPopupRemoto))
+                        File.Delete(archivoPopupRemoto);
+                    if (File.Exists(archivoPopupLocal))
+                        File.Delete(archivoPopupLocal);
+
+                    return (bl_GuardaArchivoLocal, bl_GuardaArchivoRemoto, archivoPopupRemoto);
+                }
+            }
+            catch (Exception ex)
+            {
+                logError($"{CONST_ERROR}{System.Reflection.MethodBase.GetCurrentMethod().Name}\n{ex.Message}\nStack: {ex.StackTrace}", log);
+
+                if (File.Exists(archivoPopupRemoto))
+                    File.Delete(archivoPopupRemoto);
+                if (File.Exists(archivoPopupLocal))
+                    File.Delete(archivoPopupLocal);
+
+                return (bl_GuardaArchivoLocal, bl_GuardaArchivoRemoto, archivoPopupRemoto);
             }
         }
 
@@ -745,6 +902,34 @@ namespace Intranet_3._0.Interna
             catch
             {
                 rutas[1] = "/Content/documentos/";
+            }
+
+            return rutas;
+        }
+
+        /// <summary>
+        /// Obtiene las rutas locales y remotas para imágenes de aplicativos
+        /// </summary>
+        /// <returns>Array con [0] = ruta local, [1] = ruta remota</returns>
+        public static string[] ObtenerRutasImagenesaplicativos()
+        {
+            string[] rutas = new string[2];
+
+            // Ruta local
+            rutas[0] = "/Content/img/aplicativos/";
+
+            // Ruta remota (ajustar según la configuración del servidor)
+            try
+            {
+                rutas[1] = ConfigurationManager.AppSettings["RutaRemotaImagenesAplicativos"];
+                if (string.IsNullOrEmpty(rutas[1]))
+                {
+                    rutas[1] = "/Content/img/aplicativos/";
+                }
+            }
+            catch
+            {
+                rutas[1] = "/Content/img/aplicativos/";
             }
 
             return rutas;

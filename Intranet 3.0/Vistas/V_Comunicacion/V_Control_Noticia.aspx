@@ -118,11 +118,13 @@
                             placeholder="Búsqueda rápida"></asp:TextBox>
                     </div>
                 </div>
+                <div class="table-responsive">
                 <table
                     runat="server"
                     id="tbl_grupos"
                     class="tbl_vistas_general">
                 </table>
+                </div>
             </section>
         </ContentTemplate>
     </asp:UpdatePanel>

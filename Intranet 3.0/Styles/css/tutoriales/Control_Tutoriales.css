@@ -1,0 +1,200 @@
+﻿.button {
+    background: none;
+    border: 1px solid rgba(22, 160, 133, 1);
+    color: rgba(22, 160, 133, 1);
+    padding: 10px 25px;
+    margin-left: 5px;
+    border-radius: 50px;
+    outline: none;
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 20%);
+}
+
+.row {
+    display: flow !important;
+}
+
+/* ========================================
+   BOTONES
+   ======================================== */
+.btn-eliminar-tutorial {
+    border-color: #ff7052!important;
+    color: #ff7052!important;
+}
+
+.btn-guardar-tutorial {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 40px;
+}
+
+.btn-actualizar-tutorial {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 40px;
+}
+
+.btn-eliminar-confirm {
+    background-color: #ff7052;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+}
+
+.btn-cancelar {
+    background-color: #95a5a6;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    border: none;
+}
+
+/* ========================================
+   BÚSQUEDA
+   ======================================== */
+.input-busqueda-rapida {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: 250px;
+}
+
+.contenedor-busqueda {
+    margin-left: auto;
+}
+
+/* ========================================
+   FORMULARIOS
+   ======================================== */
+.form-label-bold {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-help-text {
+    color: #7f8c8d;
+}
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+.mt-20 {
+    margin-top: 20px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center-padded {
+    text-align: center;
+    padding: 20px;
+}
+
+.flex-center-gap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ========================================
+   MODALES
+   ======================================== */
+.modal-small {
+    max-width: 500px;
+}
+
+.modal-title-danger {
+    color: #e74c3c;
+}
+
+/* ========================================
+   TEXTOS
+   ======================================== */
+.text-confirmation {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.text-tutorial-title {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Badges de estado */
+.badge {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: #27ae60;
+    color: white;
+}
+
+.badge-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.body-content .tbl_vistas_general th {
+    background-color: rgb(40 55 71 / 50%);
+    color: #343a40;
+    font-weight: bold;
+}
+
+.body-content .tbl_vistas_general tr {
+    background: #fff;
+}
+
+/* Campos de formulario */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+    .input-group > div {
+        flex: 1;
+    }
+
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+/* Textarea con ancho completo */
+.pnl_input textarea {
+    width: 100% !important;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+/* Información de video actual */
+.video-actual {
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .video-actual i {
+        color: #e74c3c;
+        font-size: 20px;
+    }
+
+/* Preview de video */
+.video-preview {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    margin-top: 10px;
+}

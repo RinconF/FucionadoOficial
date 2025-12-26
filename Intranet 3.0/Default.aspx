@@ -244,8 +244,8 @@
                 </ul>
             </div>
             <div class="pnl_slide_btn_next_prev">
-                <button type="button" class="btn_prev" style="background-color: transparent; color: rgb(161 153 153 / 70%);"><i class="fas fa-angle-left"></i></button>
-                <button type="button" class="btn_next" style="background-color: transparent; color: rgb(161 153 153 / 70%);"><i class="fas fa-angle-right"></i></button>
+                <button type="button" class="btn_prev"><i class="fas fa-angle-left"></i></button>
+                <button type="button" class="btn_next"><i class="fas fa-angle-right"></i></button>
                 <%--<p class="lbl_estado" style="opacity: 0;">Pausado</p>--%>
             </div>
         </div>
@@ -1847,15 +1847,25 @@
     <script src="<%= ResolveUrl("/js/popup-manager.js") %>" type="text/javascript"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var userId = <%= Request.QueryString["Id_Usuario"] ?? "0" %>;
+        // ✅ CORRECCIÓN: Obtener ID desde Session en lugar de QueryString
+        var userId = <%= Session["Id_Usuario"] ?? "0" %>;
+
+        console.log('PopupManager: ID de usuario:', userId);
 
         if (userId > 0) {
+            // Esperar 2 segundos después de cargar la página
             setTimeout(function () {
+                console.log('PopupManager: Inicializando...');
                 popupManager.init(userId);
-                setTimeout(function () {
-                    popupManager.mostrarSiguientePopup();
 
+                // Esperar otros 2 segundos antes de mostrar el primer popup
+                setTimeout(function () {
+                    console.log('PopupManager: Mostrando popups...');
+                    popupManager.mostrarSiguientePopup();
+                }, 2000);
             }, 2000);
+        } else {
+            console.warn('PopupManager: No hay usuario logueado');
         }
     });
 </script>

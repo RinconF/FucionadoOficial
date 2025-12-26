@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Tutoriales" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Ayuda.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Tutoriales.V_Ayuda" %>
+﻿<%@ Page ValidateRequest="false" Title="Tutoriales" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="V_Ayuda.aspx.cs" Inherits="Intranet_3._0.Vistas.V_Tutoriales.V_Ayuda" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="scripts_css" runat="server">
 </asp:Content>
@@ -21,24 +21,24 @@
             <asp:Repeater ID="rptTutoriales" runat="server">
                 <ItemTemplate>
                     <div class="tutorial-card">
-                        <div class="tutorial-header">
-                            <h3 class="tutorial-title"><%# Eval("Titulo") %></h3>
-                            <span class="tutorial-seccion"><%# Eval("Seccion") %></span>
+                        <div class="tutorial-icon">
+                            <i class='<%# ObtenerIconoSeccion(Eval("Seccion") as string) %>'></i>
                         </div>
-                        <div class="tutorial-body">
-                            <p class="tutorial-description"><%# Eval("Descripcion") %></p>
-                            <div class="tutorial-video-container">
-                                <video class="tutorial-video" controls>
-                                    <source src='<%# ResolveUrl(Eval("Video") as string ?? "") %>' type="video/mp4">
-                                    Tu navegador no soporta el elemento de video.
-                                </video>
+                        <div class="tutorial-info">
+                            <h4 class="tutorial-titulo"><%# Eval("Titulo") %></h4>
+                            <span class="tutorial-seccion-badge"><%# Eval("Seccion") %></span>
+                            <p class="tutorial-descripcion"><%# Eval("Descripcion") %></p>
+                            <div class="tutorial-meta">
+                                <span class="tutorial-fecha">
+                                    <i class="far fa-calendar"></i>
+                                    <%# Eval("Fecha_Creacion", "{0:dd/MM/yyyy}") %>
+                                </span>
                             </div>
                         </div>
-                        <div class="tutorial-footer">
-                            <small class="text-muted">
-                                <i class="far fa-calendar-alt"></i> 
-                                <%# Eval("Fecha_Creacion", "{0:dd/MM/yyyy}") %>
-                            </small>
+                        <div class="tutorial-acciones">
+                            <%# !string.IsNullOrEmpty(Eval("Video") as string) ? 
+                                "<a href='" + ResolveUrl(Eval("Video") as string) + "' class='btn btn-ver-video' target='_blank' title='Ver tutorial'><i class='fas fa-play'></i> Ver Tutorial</a>" : 
+                                "<span class='btn btn-disabled'>Sin video</span>" %>
                         </div>
                     </div>
                 </ItemTemplate>
